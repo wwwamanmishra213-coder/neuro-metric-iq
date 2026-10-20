@@ -1,0 +1,1895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEURO-METRIC | 3D Holographic Cognitive Assessment & FSIQ Engine</title>
+  
+  <!-- 3D WebGL Library (Hardware-accelerated in Chromium) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Robust Layout & Fallback Rules */
+    .hidden { display: none !important; }
+    .flex { display: flex !important; }
+    .grid { display: grid !important; }
+    .block { display: block !important; }
+    .inline-block { display: inline-block !important; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #030611;
+      color: #e2e8f0;
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+    }
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Fixed Background 3D Canvas */
+    #canvas3d {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Holographic CRT Scanline Filter */
+    .scanline {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0, 0, 0, 0.25) 50%, rgba(0, 0, 0, 0.25));
+      background-size: 100% 4px;
+      pointer-events: none;
+      z-index: 99;
+      opacity: 0.35;
+    }
+
+    /* Holographic Translucent Glassmorphism */
+    .holo-card {
+      background: rgba(8, 15, 35, 0.55);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      box-shadow: 0 0 35px -5px rgba(56, 189, 248, 0.15), inset 0 0 20px rgba(56, 189, 248, 0.05);
+      position: relative;
+    }
+    .holo-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.8), transparent);
+    }
+    .holo-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.6), transparent);
+    }
+
+    .holo-glow-cyan {
+      box-shadow: 0 0 30px rgba(56, 189, 248, 0.4);
+    }
+    .holo-glow-violet {
+      box-shadow: 0 0 30px rgba(168, 85, 247, 0.4);
+    }
+
+    .matrix-holo-tile {
+      background: rgba(10, 20, 45, 0.6);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .matrix-holo-tile:hover {
+      border-color: #38bdf8;
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.5);
+      transform: translateY(-2px) scale(1.02);
+    }
+    .matrix-holo-tile.selected {
+      border-color: #38bdf8 !important;
+      background: rgba(56, 189, 248, 0.2) !important;
+      box-shadow: 0 0 30px rgba(56, 189, 248, 0.6) !important;
+    }
+
+    /* Corsi Interactive Blocks */
+    .corsi-block {
+      background: rgba(13, 21, 39, 0.7);
+      border: 2px solid rgba(56, 189, 248, 0.3);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .corsi-block.flash {
+      background: #38bdf8 !important;
+      border-color: #ffffff !important;
+      box-shadow: 0 0 35px #38bdf8;
+      transform: scale(1.06);
+    }
+    .corsi-block.user-selected {
+      background: #34d399 !important;
+      border-color: #ffffff !important;
+      box-shadow: 0 0 30px #34d399;
+    }
+    .corsi-block.disabled {
+      cursor: not-allowed;
+      opacity: 0.8;
+    }
+
+    /* Clean Isolated PDF & Print Styling */
+    @media print {
+      body {
+        background-color: #ffffff !important;
+        color: #0f172a !important;
+      }
+      .no-print, header, footer, #screenIntro, #screenWorkspace, #topProgressContainer, #canvas3d, #bgVideo, .scanline {
+        display: none !important;
+      }
+      #screenReport {
+        display: block !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .holo-card {
+        background: #ffffff !important;
+        border: 1px solid #94a3b8 !important;
+        color: #0f172a !important;
+        box-shadow: none !important;
+        page-break-inside: avoid;
+      }
+      .holo-card::before, .holo-card::after {
+        display: none !important;
+      }
+      .text-white {
+        color: #0f172a !important;
+      }
+      .text-slate-300, .text-slate-400, .text-slate-500 {
+        color: #334155 !important;
+      }
+      .bg-slate-900, .bg-slate-950, .bg-slate-900\/60, .bg-slate-900\/50, .bg-slate-900\/40 {
+        background: #f8fafc !important;
+        border-color: #cbd5e1 !important;
+      }
+      .text-cyan-400, .text-cyan-300 {
+        color: #0284c7 !important;
+      }
+      .text-emerald-400 {
+        color: #059669 !important;
+      }
+      .text-indigo-400 {
+        color: #4f46e5 !important;
+      }
+      .text-purple-400 {
+        color: #7c3aed !important;
+      }
+      #reportBellCurveSvg text {
+        fill: #334155 !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen relative flex flex-col justify-between selection:bg-cyan-500 selection:text-black">
+
+  <!-- ==================== BACKGROUND 3D VIDEO LAYER ==================== -->
+  <video autoplay loop muted playsinline id="bgVideo" class="fixed inset-0 w-full h-full object-cover z-0 opacity-55 pointer-events-none">
+    <source src="background.mp4" type="video/mp4">
+  </video>
+
+  <!-- ==================== 3D HARDWARE-ACCELERATED WEBGL CANVAS ==================== -->
+  <canvas id="canvas3d"></canvas>
+
+  <!-- ==================== HOLOGRAPHIC CRT SCANLINE LAYER ==================== -->
+  <div class="scanline"></div>
+
+  <!-- ==================== HOLOGRAPHIC TOP HUD BAR ==================== -->
+  <header class="relative z-10 no-print border-b border-cyan-500/20 bg-slate-950/50 backdrop-blur-md px-6 py-3 flex items-center justify-between">
+    <div class="flex items-center space-x-4">
+      <div class="flex items-center space-x-2.5">
+        <div class="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-400/40 flex items-center justify-center font-bold text-cyan-400 font-mono text-base holo-glow-cyan">
+          Ψ
+        </div>
+        <div>
+          <span class="font-extrabold tracking-widest text-base text-white">NEURO<span class="text-cyan-400">METRIC</span></span>
+          <span class="text-[9px] font-mono block text-purple-300 uppercase tracking-widest">3D Holographic Cognitive Engine v3.0</span>
+        </div>
+      </div>
+      <div class="h-5 w-px bg-cyan-500/20"></div>
+      <span id="sessionBadge" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+        <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
+        <span id="sessionStatusText">Neural Synapse Online</span>
+      </span>
+    </div>
+
+    <!-- Center Battery Tracker -->
+    <div id="topProgressContainer" class="hidden md:flex items-center space-x-6 text-xs font-mono">
+      <div class="flex items-center space-x-2">
+        <span class="text-slate-400">ACTIVE:</span>
+        <span id="topActiveSubtestName" class="text-cyan-300 font-semibold px-2 py-0.5 rounded bg-cyan-950/40 border border-cyan-500/30">
+          Fluid Matrices (Gf)
+        </span>
+      </div>
+      <div class="flex items-center space-x-2">
+        <span class="text-slate-400">BATTERY:</span>
+        <span id="topSubtestCounter" class="text-cyan-400 font-bold">1 / 4</span>
+      </div>
+    </div>
+
+    <!-- Timer & Controls -->
+    <div class="flex items-center space-x-3">
+      <button onclick="toggleBgVideo()" id="btnVideoToggle" class="text-xs font-mono bg-cyan-950/50 text-cyan-300 hover:text-white px-3 py-1.5 rounded-lg border border-cyan-500/30 transition">
+        3D Video: ON
+      </button>
+      <div class="flex items-center space-x-2 bg-slate-950/70 border border-cyan-500/30 px-3 py-1.5 rounded-lg font-mono holo-glow-cyan">
+        <svg class="w-4 h-4 text-cyan-400 animate-spin" style="animation-duration: 6s;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" opacity="0.3"></circle>
+          <path d="M12 3a9 9 0 0 1 9 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+        </svg>
+        <span id="globalTimer" class="text-sm font-bold text-white tracking-wider">00:00</span>
+      </div>
+      <button onclick="app.abortSession()" class="text-xs font-mono bg-slate-950 text-slate-400 hover:text-red-400 px-3 py-1.5 rounded-lg border border-slate-800 hover:border-red-900/40 transition">
+        Reset
+      </button>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN SPATIAL CONTENT CONTAINER ==================== -->
+  <main class="relative z-10 flex-1 w-full max-w-[1550px] mx-auto p-4 sm:p-6 flex flex-col justify-center">
+
+    <!-- SCREEN 1: ONBOARDING / SCIENTIFIC OVERVIEW -->
+    <section id="screenIntro" class="max-w-4xl mx-auto w-full space-y-6">
+      <div class="holo-card rounded-3xl p-8 sm:p-10 text-center relative overflow-hidden">
+        
+        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-400/40 text-cyan-300 text-xs font-mono mb-4 holo-glow-cyan">
+          <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+          <span>Wechsler-Calibrated Norming Engine (μ = 100, σ = 15) • 3D Spatial HUD</span>
+        </div>
+
+        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-4">
+          Holographic Cognitive & <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-300 to-purple-400">IQ Intelligence Battery</span>
+        </h1>
+        
+        <p class="text-slate-300 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed mb-8">
+          Built upon Cattell–Horn–Carroll (CHC) theory and clinical neurocognitive standards. Evaluates four fundamental cognitive dimensions with millisecond response latency, non-verbal culture-fair item calibration, and automated General Ability Index (GAI) detection.
+        </p>
+
+        <!-- 4 Subtest Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-left mb-8">
+          <div class="p-4 rounded-2xl bg-cyan-950/20 border border-cyan-500/20 hover:border-cyan-400/50 transition">
+            <div class="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-400/30 text-cyan-300 font-mono text-xs flex items-center justify-center font-bold mb-3">
+              Gf
+            </div>
+            <h3 class="font-bold text-white text-sm">Fluid Matrix Reasoning</h3>
+            <p class="text-xs text-slate-400 mt-1">Raven's & JCTI non-verbal pattern induction, XOR boolean logic, and rotations.</p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-indigo-950/20 border border-indigo-500/20 hover:border-indigo-400/50 transition">
+            <div class="w-8 h-8 rounded-lg bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 font-mono text-xs flex items-center justify-center font-bold mb-3">
+              Gwm
+            </div>
+            <h3 class="font-bold text-white text-sm">Spatial Working Memory</h3>
+            <p class="text-xs text-slate-400 mt-1">Corsi Block-Tapping span testing prefrontal buffer capacity and sequence recall.</p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-emerald-950/20 border border-emerald-500/20 hover:border-emerald-400/50 transition">
+            <div class="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 font-mono text-xs flex items-center justify-center font-bold mb-3">
+              Gq
+            </div>
+            <h3 class="font-bold text-white text-sm">Quantitative Induction</h3>
+            <p class="text-xs text-slate-400 mt-1">High-order numerical series and abstract mathematical deduction.</p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-purple-950/20 border border-purple-500/20 hover:border-purple-400/50 transition">
+            <div class="w-8 h-8 rounded-lg bg-purple-500/20 border border-purple-400/30 text-purple-300 font-mono text-xs flex items-center justify-center font-bold mb-3">
+              Gs
+            </div>
+            <h3 class="font-bold text-white text-sm">Processing Speed</h3>
+            <p class="text-xs text-slate-400 mt-1">Rapid-fire visual discrimination measuring cognitive throughput and reaction latency.</p>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <button onclick="app.startFullBattery()" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-400 via-indigo-400 to-purple-500 hover:from-cyan-300 hover:to-purple-400 text-black font-extrabold text-sm font-mono tracking-wide transition holo-glow-cyan">
+            INITIALIZE HOLOGRAPHIC BATTERY →
+          </button>
+        </div>
+
+        <div class="mt-6 text-[11px] font-mono text-slate-400 flex items-center justify-center space-x-4">
+          <span>• Non-verbal Culture-Fair</span>
+          <span>• Interactive 3D WebGL Neural Matrix</span>
+          <span>• Automated WAIS-IV GAI Detection</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 2: ACTIVE TEST WORKSPACE (DYNAMIC SUBTESTS) -->
+    <section id="screenWorkspace" class="hidden grid grid-cols-12 gap-6 items-start">
+      
+      <!-- Left Subtest & Question Navigation -->
+      <aside class="col-span-12 lg:col-span-3 space-y-4">
+        <div class="holo-card rounded-3xl p-5">
+          <h3 class="text-xs font-mono uppercase tracking-wider text-cyan-400 mb-3 flex items-center justify-between font-bold">
+            <span>Spatial Subtest Suite</span>
+            <span id="batteryProgressPct" class="text-cyan-300">0%</span>
+          </h3>
+          <div class="space-y-2">
+            <div id="navSubtest1" class="p-3 rounded-2xl border border-cyan-400/40 bg-cyan-950/40 flex items-center justify-between">
+              <div class="flex items-center space-x-2.5">
+                <span class="w-6 h-6 rounded bg-cyan-500/20 text-cyan-300 font-mono text-xs flex items-center justify-center font-bold">1</span>
+                <div>
+                  <p class="text-xs font-bold text-white">Fluid Matrix Reasoning</p>
+                  <p class="text-[10px] text-cyan-300 font-mono">Gf Factor • 8 Puzzles</p>
+                </div>
+              </div>
+              <span id="navStatus1" class="text-[10px] font-mono text-cyan-300 font-bold px-2 py-0.5 rounded bg-cyan-500/20">LIVE</span>
+            </div>
+
+            <div id="navSubtest2" class="p-3 rounded-2xl border border-slate-700/40 bg-slate-900/30 opacity-50 flex items-center justify-between">
+              <div class="flex items-center space-x-2.5">
+                <span class="w-6 h-6 rounded bg-slate-800 text-slate-400 font-mono text-xs flex items-center justify-center font-bold">2</span>
+                <div>
+                  <p class="text-xs font-semibold text-slate-300">Spatial Working Memory</p>
+                  <p class="text-[10px] text-slate-400 font-mono">Gwm Factor • Corsi Span</p>
+                </div>
+              </div>
+              <span id="navStatus2" class="text-[10px] font-mono text-slate-500">STANDBY</span>
+            </div>
+
+            <div id="navSubtest3" class="p-3 rounded-2xl border border-slate-700/40 bg-slate-900/30 opacity-50 flex items-center justify-between">
+              <div class="flex items-center space-x-2.5">
+                <span class="w-6 h-6 rounded bg-slate-800 text-slate-400 font-mono text-xs flex items-center justify-center font-bold">3</span>
+                <div>
+                  <p class="text-xs font-semibold text-slate-300">Quantitative Induction</p>
+                  <p class="text-[10px] text-slate-400 font-mono">Gq Factor • 6 Series</p>
+                </div>
+              </div>
+              <span id="navStatus3" class="text-[10px] font-mono text-slate-500">STANDBY</span>
+            </div>
+
+            <div id="navSubtest4" class="p-3 rounded-2xl border border-slate-700/40 bg-slate-900/30 opacity-50 flex items-center justify-between">
+              <div class="flex items-center space-x-2.5">
+                <span class="w-6 h-6 rounded bg-slate-800 text-slate-400 font-mono text-xs flex items-center justify-center font-bold">4</span>
+                <div>
+                  <p class="text-xs font-semibold text-slate-300">Symbolic Processing Speed</p>
+                  <p class="text-[10px] text-slate-400 font-mono">Gs Factor • 45s Burst</p>
+                </div>
+              </div>
+              <span id="navStatus4" class="text-[10px] font-mono text-slate-500">STANDBY</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dynamic Item Matrix Tracker -->
+        <div id="itemTrackerBox" class="holo-card rounded-3xl p-5">
+          <div class="flex items-center justify-between mb-3 text-xs font-mono text-slate-400">
+            <span>Item Index</span>
+            <span id="itemAnsweredBadge" class="text-cyan-400">Item 1 of 8</span>
+          </div>
+          <div id="itemPillContainer" class="flex flex-wrap gap-1.5 font-mono text-xs">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </aside>
+
+      <!-- Center Dynamic Subtest Viewport -->
+      <section class="col-span-12 lg:col-span-6 space-y-6">
+        
+        <!-- SUBTEST CONTAINER: FLUID MATRIX (Gf) & QUANTITATIVE (Gq) -->
+        <div id="matrixContainer" class="holo-card rounded-3xl p-6 relative">
+          <div class="flex items-center justify-between mb-4 border-b border-cyan-500/20 pb-3">
+            <div>
+              <span id="stimulusSubtestTitle" class="text-xs font-mono text-cyan-400 uppercase tracking-widest font-semibold flex items-center space-x-2">
+                <span class="inline-block w-2 h-2 rounded-full bg-cyan-400"></span>
+                <span>Fluid Matrix Induction (Gf)</span>
+              </span>
+              <p id="stimulusInstructions" class="text-xs text-slate-300 mt-0.5">Determine the logical transformation and select the completing holographic piece.</p>
+            </div>
+            <span id="itemTimeElapsed" class="text-xs font-mono text-cyan-300">Item Latency: 0.0s</span>
+          </div>
+
+          <!-- Stimulus Canvas Area -->
+          <div id="stimulusCanvas" class="p-4 bg-slate-950/60 rounded-2xl border border-cyan-500/20 flex items-center justify-center min-h-[300px]">
+            <!-- Dynamic 3x3 Matrix or Quantitative problem injected here -->
+          </div>
+        </div>
+
+        <!-- SUBTEST CONTAINER: SPATIAL WORKING MEMORY (CORSI BLOCK-TAPPING) -->
+        <div id="corsiContainer" class="hidden holo-card rounded-3xl p-6 relative">
+          <div class="flex items-center justify-between mb-4 border-b border-indigo-500/20 pb-3">
+            <div>
+              <span class="text-xs font-mono text-indigo-400 uppercase tracking-widest font-semibold flex items-center space-x-2">
+                <span class="inline-block w-2 h-2 rounded-full bg-indigo-400"></span>
+                <span>Visuospatial Memory Span (Gwm)</span>
+              </span>
+              <p id="corsiStatusMsg" class="text-xs text-slate-300 mt-0.5">Observe the sequence of illuminated blocks carefully.</p>
+            </div>
+            <span id="corsiSpanBadge" class="text-xs font-mono text-indigo-300 font-bold bg-indigo-950/60 px-2.5 py-1 rounded-lg border border-indigo-500/30">
+              Span Length: 4 Blocks
+            </span>
+          </div>
+
+          <div class="p-6 bg-slate-950/60 rounded-2xl border border-indigo-500/20">
+            <div id="corsiBoard" class="grid grid-cols-4 gap-4 aspect-square max-w-[360px] mx-auto p-4">
+              <!-- 16 Corsi Blocks injected here -->
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between mt-4">
+            <span id="corsiRecallIndicator" class="text-xs font-mono text-slate-400">Waiting for pattern playback...</span>
+            <button id="corsiSubmitBtn" onclick="app.submitCorsiTrial()" disabled class="px-5 py-2 rounded-xl bg-slate-800 text-slate-500 font-mono text-xs font-semibold cursor-not-allowed">
+              Submit Sequence
+            </button>
+          </div>
+        </div>
+
+        <!-- SUBTEST CONTAINER: SYMBOLIC PROCESSING SPEED (Gs) -->
+        <div id="speedContainer" class="hidden holo-card rounded-3xl p-6 relative">
+          <div class="flex items-center justify-between mb-4 border-b border-purple-500/20 pb-3">
+            <div>
+              <span class="text-xs font-mono text-purple-400 uppercase tracking-widest font-semibold flex items-center space-x-2">
+                <span class="inline-block w-2 h-2 rounded-full bg-purple-400"></span>
+                <span>Symbolic Processing Speed (Gs)</span>
+              </span>
+              <p class="text-xs text-slate-300 mt-0.5">Determine instantly: Does the Target Symbol appear inside the Search Array?</p>
+            </div>
+            <div class="flex items-center space-x-2 bg-purple-950/40 border border-purple-500/30 px-3 py-1 rounded-lg font-mono text-xs text-purple-300 holo-glow-violet">
+              <span>TIME REMAINING:</span>
+              <span id="speedCountdown" class="font-bold text-white text-sm">45s</span>
+            </div>
+          </div>
+
+          <div class="p-8 bg-slate-950/60 rounded-2xl border border-purple-500/20 flex flex-col items-center justify-center space-y-8">
+            <div class="text-center">
+              <span class="text-[11px] font-mono text-purple-300 uppercase tracking-widest block mb-2">TARGET GLYPH</span>
+              <div id="speedTargetSymbol" class="w-20 h-20 rounded-2xl bg-slate-900 border-2 border-purple-400/50 flex items-center justify-center text-4xl font-mono text-white holo-glow-violet mx-auto">
+                ⬡
+              </div>
+            </div>
+
+            <div class="w-full">
+              <span class="text-[11px] font-mono text-slate-400 uppercase tracking-widest block mb-2 text-center">SEARCH ARRAY</span>
+              <div id="speedSearchArray" class="flex flex-wrap items-center justify-center gap-4 p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+                <!-- Distractor symbols -->
+              </div>
+            </div>
+
+            <div class="flex items-center justify-center space-x-6 w-full pt-4">
+              <button onclick="app.recordSpeedResponse(true)" class="flex-1 max-w-xs py-3.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-300 font-mono text-sm font-bold transition flex items-center justify-center space-x-2">
+                <span>[YES] PRESENT (Key: Y)</span>
+              </button>
+              <button onclick="app.recordSpeedResponse(false)" class="flex-1 max-w-xs py-3.5 rounded-xl bg-red-500/20 hover:bg-red-500/30 border border-red-500/40 text-red-300 font-mono text-sm font-bold transition flex items-center justify-center space-x-2">
+                <span>[NO] ABSENT (Key: N)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- RESPONSE OPTION BANK (Used for Matrix & Quantitative) -->
+        <div id="responseBankCard" class="holo-card rounded-3xl p-6">
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-mono uppercase tracking-wider text-slate-300">Holographic Response Bank (Click or Press [1-6])</span>
+            <span id="selectedOptionIndicator" class="text-xs font-mono text-cyan-400">None selected</span>
+          </div>
+
+          <div id="optionsGrid" class="grid grid-cols-3 sm:grid-cols-6 gap-3">
+            <!-- Dynamic option tiles injected here -->
+          </div>
+
+          <div class="flex items-center justify-between mt-6 pt-4 border-t border-cyan-500/20">
+            <button onclick="app.previousItem()" id="btnPrevItem" class="px-5 py-2.5 rounded-xl border border-slate-700/60 text-slate-400 hover:text-white text-xs font-mono transition">
+              ← Previous
+            </button>
+            <button onclick="app.confirmNextItem()" id="btnNextItem" disabled class="px-6 py-2.5 rounded-xl bg-slate-800 text-slate-500 font-bold text-xs font-mono transition cursor-not-allowed">
+              Confirm & Next →
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Right Telemetry & 3D Gaussian Distribution -->
+      <aside class="col-span-12 lg:col-span-3 space-y-4">
+        
+        <!-- Live Cognitive Telemetry -->
+        <div class="holo-card rounded-3xl p-5">
+          <h3 class="text-xs font-mono uppercase tracking-wider text-cyan-400 mb-4 flex items-center justify-between font-bold">
+            <span>Cognitive Telemetry</span>
+            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+          </h3>
+
+          <div class="space-y-4">
+            <div>
+              <div class="flex justify-between text-xs font-mono mb-1">
+                <span class="text-slate-400">Subtest Progress:</span>
+                <span id="telemetrySubtestPct" class="text-white font-bold">12.5%</span>
+              </div>
+              <div class="w-full bg-slate-900/80 h-1.5 rounded-full overflow-hidden">
+                <div id="telemetryProgressBar" class="bg-cyan-400 h-full rounded-full transition-all duration-300" style="width: 12.5%;"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs font-mono mb-1">
+                <span class="text-slate-400">Mean Item Latency:</span>
+                <span id="telemetryMeanLatency" class="text-white font-bold">--</span>
+              </div>
+              <div class="w-full bg-slate-900/80 h-1.5 rounded-full overflow-hidden">
+                <div id="telemetryLatencyBar" class="bg-indigo-400 h-full rounded-full transition-all duration-300" style="width: 40%;"></div>
+              </div>
+            </div>
+
+            <div class="p-3.5 rounded-2xl bg-slate-950/60 border border-cyan-500/20 text-xs font-mono space-y-2">
+              <div class="flex justify-between">
+                <span class="text-slate-400">Culture Fair:</span>
+                <span class="text-emerald-400">Non-Verbal / Visual</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-400">Standard Deviation:</span>
+                <span class="text-slate-300">σ = 15 (Wechsler)</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-400">Standard Error (SEM):</span>
+                <span class="text-slate-300">~ 3.67 IQ Points</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gaussian Distribution Preview Card -->
+        <div class="holo-card rounded-3xl p-5">
+          <h3 class="text-xs font-mono uppercase tracking-wider text-cyan-400 mb-3 flex items-center justify-between font-bold">
+            <span>Gaussian Bell Distribution</span>
+            <span class="text-[10px] font-mono text-purple-300">HOLO-CURVE</span>
+          </h3>
+
+          <div class="relative w-full h-28 flex items-center justify-center">
+            <svg class="w-full h-full" viewBox="0 0 240 90">
+              <defs>
+                <linearGradient id="bellGradMini" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.6"/>
+                  <stop offset="100%" stop-color="#a855f7" stop-opacity="0.0"/>
+                </linearGradient>
+              </defs>
+              <line x1="10" y1="80" x2="230" y2="80" stroke="#38bdf8" stroke-width="1.5" opacity="0.4"/>
+              <path d="M 10,80 Q 70,78 100,42 T 120,10 T 140,42 Q 170,78 230,80 Z" fill="url(#bellGradMini)"/>
+              <path d="M 10,80 Q 70,78 100,42 T 120,10 T 140,42 Q 170,78 230,80" fill="none" stroke="#38bdf8" stroke-width="2"/>
+              <line x1="120" y1="10" x2="120" y2="80" stroke="#64748b" stroke-dasharray="2,2"/>
+              <line x1="185" y1="35" x2="185" y2="80" stroke="#a855f7" stroke-width="1.5"/>
+              <text x="120" y="88" fill="#94a3b8" font-size="7" font-family="JetBrains Mono" text-anchor="middle">μ = 100</text>
+              <text x="185" y="88" fill="#c084fc" font-size="7" font-family="JetBrains Mono" text-anchor="middle">130</text>
+            </svg>
+          </div>
+
+          <div class="mt-2 text-[11px] text-cyan-300 text-center font-mono">
+            Mensa Cutoff: Top 2.2% (IQ 130+)
+          </div>
+        </div>
+
+      </aside>
+
+    </section>
+
+    <!-- SCREEN 3: CLINICAL DIAGNOSTIC REPORT (FINAL ASSESSMENT) -->
+    <section id="screenReport" class="hidden max-w-5xl mx-auto w-full space-y-6">
+      
+      <!-- Top Action Bar for PDF / Print -->
+      <div class="flex items-center justify-between no-print">
+        <button onclick="window.print()" class="px-5 py-2.5 rounded-xl bg-slate-900 border border-cyan-500/40 hover:border-cyan-400 text-white font-mono text-xs flex items-center space-x-2 transition holo-glow-cyan">
+          <svg class="w-4 h-4 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+          </svg>
+          <span>Export / Print Clinical Certificate</span>
+        </button>
+        <button onclick="app.abortSession()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-400 to-indigo-500 hover:from-cyan-300 text-black font-mono text-xs font-bold transition holo-glow-cyan">
+          Retest Cognitive Battery
+        </button>
+      </div>
+
+      <!-- Main Clinical Dossier Card -->
+      <div class="holo-card rounded-3xl p-8 sm:p-10 space-y-8">
+        
+        <!-- Header -->
+        <div class="border-b border-cyan-500/20 pb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center space-x-3 mb-1">
+              <span class="w-3 h-3 rounded-full bg-cyan-400"></span>
+              <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Full-Scale Cognitive Report (FSIQ)</h2>
+            </div>
+            <p class="text-xs font-mono text-slate-400">Psychometric Norming Calibration • CHC Clinical Model & Automated GAI Index</p>
+          </div>
+          <div class="text-right">
+            <span class="text-xs font-mono text-slate-400 block">Assessment Timestamp</span>
+            <span id="reportTimestamp" class="text-xs font-mono text-cyan-300 font-bold">2026-10-20 20:45:00 UTC</span>
+          </div>
+        </div>
+
+        <!-- Clinical Discrepancy & GAI Alert (Shown if |Gf - Gs| >= 20) -->
+        <div id="gaiAlertBanner" class="hidden p-4 rounded-2xl bg-amber-950/40 border border-amber-500/50 text-amber-200 text-xs font-mono space-y-1.5">
+          <div class="flex items-center space-x-2 font-bold text-amber-400 text-sm">
+            <svg class="w-4 h-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+            </svg>
+            <span>CLINICAL DISCREPANCY DETECTED: NON-UNITARY FSIQ PROFILE</span>
+          </div>
+          <p id="gaiAlertText" class="text-slate-300 leading-relaxed">
+            <!-- Dynamically populated -->
+          </p>
+        </div>
+
+        <!-- Big Score Hero Display -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+          
+          <!-- FSIQ Number -->
+          <div class="p-6 rounded-2xl bg-gradient-to-b from-slate-950 to-slate-900 border border-cyan-500/40 text-center relative overflow-hidden holo-glow-cyan">
+            <div class="text-xs font-mono text-cyan-400 uppercase tracking-widest font-semibold mb-2">FULL SCALE IQ (FSIQ)</div>
+            <div id="reportFSIQScore" class="text-6xl sm:text-7xl font-extrabold font-mono text-white tracking-tight my-2">
+              112
+            </div>
+            <div id="reportClassificationBadge" class="inline-block px-3 py-1 rounded-full text-xs font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">
+              High Average
+            </div>
+            <div class="text-[11px] font-mono text-slate-400 mt-3">
+              95% CI: <span id="reportConfInterval" class="text-slate-200 font-bold">108 — 116</span>
+            </div>
+          </div>
+
+          <!-- Percentile & Rarity -->
+          <div class="p-6 rounded-2xl bg-slate-950/60 border border-cyan-500/20 text-center">
+            <div class="text-xs font-mono text-slate-400 uppercase tracking-widest font-semibold mb-2">POPULATION PERCENTILE</div>
+            <div id="reportPercentileScore" class="text-5xl sm:text-6xl font-extrabold font-mono text-emerald-400 tracking-tight my-2">
+              78.8%
+            </div>
+            <p id="reportRarityText" class="text-xs text-slate-300 mt-2 font-mono">
+              Performs higher than approximately 79 out of 100 individuals in the reference population.
+            </p>
+            <div class="mt-4 pt-3 border-t border-slate-800 flex justify-around text-xs font-mono">
+              <span class="text-slate-400">Mensa Cutoff: <span class="text-purple-400 font-bold">≥ 130</span></span>
+              <span id="reportMensaStatus" class="text-cyan-300 font-bold">Standard Norm</span>
+            </div>
+          </div>
+
+          <!-- Dynamic Normal Curve Visualization -->
+          <div class="p-6 rounded-2xl bg-slate-950/60 border border-cyan-500/20 flex flex-col justify-between">
+            <div class="text-xs font-mono text-slate-400 uppercase tracking-widest font-semibold mb-2 text-center">
+              GAUSSIAN NORMAL CURVE (WECHSLER)
+            </div>
+            <div class="relative w-full h-32 flex items-center justify-center">
+              <svg id="reportBellCurveSvg" class="w-full h-full overflow-visible" viewBox="0 0 240 90">
+                <!-- Dynamically rendered -->
+              </svg>
+            </div>
+            <div class="text-[10px] font-mono text-slate-400 text-center mt-2">
+              Mean: 100 • Standard Deviation: 15
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 4 Sub-Factor Indexes (CHC Breakdown) -->
+        <div class="space-y-4">
+          <h3 class="text-xs font-mono uppercase tracking-wider text-cyan-400 font-bold">
+            CHC Cognitive Factor Breakdown
+          </h3>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            
+            <!-- Gf -->
+            <div class="p-4 rounded-2xl bg-slate-950/60 border border-cyan-500/20 space-y-2">
+              <div class="flex justify-between items-center">
+                <span class="text-xs font-bold text-white">Fluid Reasoning (Gf)</span>
+                <span id="scoreGf" class="font-mono text-base font-bold text-cyan-400">123</span>
+              </div>
+              <p class="text-[11px] text-slate-400">Abstract pattern induction, novel problem solving, matrix XOR logic.</p>
+              <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                <div id="barGf" class="bg-cyan-400 h-full rounded-full" style="width: 80%;"></div>
+              </div>
+            </div>
+
+            <!-- Gwm -->
+            <div class="p-4 rounded-2xl bg-slate-950/60 border border-indigo-500/20 space-y-2">
+              <div class="flex justify-between items-center">
+                <span class="text-xs font-bold text-white">Working Memory (Gwm)</span>
+                <span id="scoreGwm" class="font-mono text-base font-bold text-indigo-400">114</span>
+              </div>
+              <p class="text-[11px] text-slate-400">Prefrontal visuospatial buffer span and sequence retention under load.</p>
+              <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                <div id="barGwm" class="bg-indigo-400 h-full rounded-full" style="width: 75%;"></div>
+              </div>
+            </div>
+
+            <!-- Gq -->
+            <div class="p-4 rounded-2xl bg-slate-950/60 border border-emerald-500/20 space-y-2">
+              <div class="flex justify-between items-center">
+                <span class="text-xs font-bold text-white">Quantitative (Gq)</span>
+                <span id="scoreGq" class="font-mono text-base font-bold text-emerald-400">109</span>
+              </div>
+              <p class="text-[11px] text-slate-400">Higher-order numerical series synthesis and algorithmic deduction.</p>
+              <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                <div id="barGq" class="bg-emerald-400 h-full rounded-full" style="width: 70%;"></div>
+              </div>
+            </div>
+
+            <!-- Gs -->
+            <div class="p-4 rounded-2xl bg-slate-950/60 border border-purple-500/20 space-y-2">
+              <div class="flex justify-between items-center">
+                <span class="text-xs font-bold text-white">Processing Speed (Gs)</span>
+                <span id="scoreGs" class="font-mono text-base font-bold text-purple-400">78</span>
+              </div>
+              <p class="text-[11px] text-slate-400">Rapid visual scanning throughput and reaction latency.</p>
+              <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                <div id="barGs" class="bg-purple-400 h-full rounded-full" style="width: 40%;"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Neurocognitive Analysis Notes from Neuroscientist & Memory Engineer -->
+        <div class="p-6 rounded-2xl bg-slate-950/60 border border-cyan-500/20 space-y-3">
+          <div class="flex items-center space-x-2 text-cyan-400 text-xs font-mono font-bold uppercase tracking-wider">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <span>Neurocognitive & Memory Systems Interpretation</span>
+          </div>
+          <div id="neuroscientistFeedback" class="text-xs text-slate-300 leading-relaxed space-y-2">
+            <!-- Dynamic feedback generated from score profile -->
+          </div>
+        </div>
+
+        <!-- Psychometric Limitations & Clinical Disclaimer -->
+        <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 text-[11px] text-slate-400 space-y-1.5 font-mono">
+          <div class="font-bold text-slate-300 flex items-center space-x-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+            <span>Psychometric Norming & Methodology Transparency Notice</span>
+          </div>
+          <p class="leading-relaxed">
+            This tool is an experimental self-administered neurocognitive screener utilizing Cattell–Horn–Carroll (CHC) factor weightings and Wechsler Gaussian scaling (μ=100, σ=15). In clinical neuropsychological practice (e.g. WAIS-IV / Woodcock-Johnson IV), when large discrepancies occur across subtests (such as between high fluid reasoning and low processing speed), an overall FSIQ score is mathematically non-unitary. A full clinical diagnosis of giftedness, twice-exceptionality (2e), or cognitive impairment requires in-person proctored testing by a licensed clinical neuropsychologist.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="no-print border-t border-cyan-500/20 bg-slate-950/70 backdrop-blur px-6 py-2.5 flex items-center justify-between text-xs font-mono text-slate-400">
+    <div class="flex items-center space-x-4">
+      <span>CALIBRATION: <span class="text-emerald-400">IRT / CHC Model</span></span>
+      <span>3D ACCELERATION: <span class="text-cyan-300">Three.js WebGL</span></span>
+      <span>CHROMIUM APP: <span class="text-cyan-400 font-bold">Active</span></span>
+    </div>
+    <div>
+      <span>PSYCHOMETRIC INTEGRITY: WECHSLER SCALE (μ=100, σ=15)</span>
+    </div>
+  </footer>
+
+  <!-- ==================== 3D THREE.JS WEBGL BACKGROUND SCRIPT ==================== -->
+  <script>
+    const canvas = document.getElementById('canvas3d');
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x030611, 0.0018);
+
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
+    camera.position.z = 240;
+
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    // Rotating Neural Synaptic Sphere
+    const particleCount = 750;
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(particleCount * 3);
+    const colors = new Float32Array(particleCount * 3);
+
+    const colorCyan = new THREE.Color(0x38bdf8);
+    const colorViolet = new THREE.Color(0xa855f7);
+
+    for (let i = 0; i < particleCount; i++) {
+      const radius = 90 + Math.random() * 30;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos((Math.random() * 2) - 1);
+
+      positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+      positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+      positions[i * 3 + 2] = radius * Math.cos(phi);
+
+      const mixedColor = colorCyan.clone().lerp(colorViolet, Math.random());
+      colors[i * 3] = mixedColor.r;
+      colors[i * 3 + 1] = mixedColor.g;
+      colors[i * 3 + 2] = mixedColor.b;
+    }
+
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+    const pMaterial = new THREE.PointsMaterial({
+      size: 3.2,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.85,
+      blending: THREE.AdditiveBlending
+    });
+
+    const particleSystem = new THREE.Points(geometry, pMaterial);
+    scene.add(particleSystem);
+
+    // Inner Wireframe Core
+    const wireGeo = new THREE.IcosahedronGeometry(75, 2);
+    const wireMat = new THREE.MeshBasicMaterial({
+      color: 0x38bdf8,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.14
+    });
+    const wireMesh = new THREE.Mesh(wireGeo, wireMat);
+    scene.add(wireMesh);
+
+    // Deep Ambient Starfield
+    const starGeo = new THREE.BufferGeometry();
+    const starCount = 1200;
+    const starPos = new Float32Array(starCount * 3);
+    for (let i = 0; i < starCount * 3; i += 3) {
+      starPos[i] = (Math.random() - 0.5) * 800;
+      starPos[i + 1] = (Math.random() - 0.5) * 800;
+      starPos[i + 2] = (Math.random() - 0.5) * 800;
+    }
+    starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+    const starMat = new THREE.PointsMaterial({
+      color: 0x64748b,
+      size: 1.5,
+      transparent: true,
+      opacity: 0.45
+    });
+    const starField = new THREE.Points(starGeo, starMat);
+    scene.add(starField);
+
+    // Mouse Tracking Parallax
+    let mouseX = 0;
+    let mouseY = 0;
+    let targetX = 0;
+    let targetY = 0;
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = (e.clientX - window.innerWidth / 2) * 0.0006;
+      mouseY = (e.clientY - window.innerHeight / 2) * 0.0006;
+    });
+
+    function animate3D() {
+      requestAnimationFrame(animate3D);
+
+      targetX += (mouseX - targetX) * 0.05;
+      targetY += (mouseY - targetY) * 0.05;
+
+      particleSystem.rotation.y += 0.002 + targetX * 0.5;
+      particleSystem.rotation.x += 0.001 + targetY * 0.5;
+
+      wireMesh.rotation.y -= 0.0016;
+      wireMesh.rotation.x -= 0.0008;
+
+      starField.rotation.y += 0.0003;
+
+      renderer.render(scene, camera);
+    }
+    animate3D();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+
+  <!-- ==================== COGNITIVE ASSESSMENT & PSYCHOMETRIC SCRIPT ==================== -->
+  <script>
+    const app = {
+      state: {
+        currentSubtestIndex: 0, // 0: Gf, 1: Gwm, 2: Gq, 3: Gs
+        currentItemIndex: 0,
+        selectedOption: null,
+        startTime: null,
+        itemStartTime: null,
+        timerInterval: null,
+        itemElapsedInterval: null,
+        
+        subtestScores: {
+          Gf: { raw: 0, total: 8, latencies: [] },
+          Gwm: { spanReached: 4, trialsSuccess: 0, totalTrials: 5 },
+          Gq: { raw: 0, total: 6, latencies: [] },
+          Gs: { correct: 0, incorrect: 0, totalTrials: 0 }
+        },
+
+        corsi: {
+          currentSpan: 4,
+          maxSpan: 8,
+          sequence: [],
+          userSequence: [],
+          isFlashing: false,
+          trialNumber: 0
+        },
+
+        speed: {
+          active: false,
+          timeLeft: 45,
+          timerId: null,
+          currentTarget: '',
+          currentArray: [],
+          currentHasTarget: false,
+          trialStart: 0,
+          latencies: []
+        }
+      },
+
+      // 8 Non-Verbal Fluid Matrix Puzzles (Gf)
+      gfItems: [
+        {
+          id: 1,
+          rule: "Single element horizontal translation",
+          difficulty: 1,
+          questionRender: () => `
+            <div class="grid grid-cols-3 gap-3 w-72 h-72">
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-start p-3"><div class="w-8 h-8 rounded-full bg-cyan-400"></div></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><div class="w-8 h-8 rounded-full bg-cyan-400"></div></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-end p-3"><div class="w-8 h-8 rounded-full bg-cyan-400"></div></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-start p-3"><div class="w-8 h-8 rounded-md bg-indigo-400"></div></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><div class="w-8 h-8 rounded-md bg-indigo-400"></div></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-end p-3"><div class="w-8 h-8 rounded-md bg-indigo-400"></div></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-start p-3"><div class="w-8 h-8 rotate-45 bg-emerald-400"></div></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><div class="w-8 h-8 rotate-45 bg-emerald-400"></div></div>
+              <div class="aspect-square rounded-xl border-2 border-dashed border-cyan-400 bg-cyan-950/30 flex flex-col items-center justify-center holo-glow-cyan animate-pulse">
+                <span class="text-2xl font-mono text-cyan-300 font-bold">?</span>
+              </div>
+            </div>
+          `,
+          options: [
+            { id: 1, correct: false, svg: `<div class="w-6 h-6 rounded-full bg-cyan-400"></div>` },
+            { id: 2, correct: false, svg: `<div class="w-6 h-6 rotate-45 bg-emerald-400"></div>` },
+            { id: 3, correct: true,  svg: `<div class="w-full flex justify-end"><div class="w-6 h-6 rotate-45 bg-emerald-400"></div></div>` },
+            { id: 4, correct: false, svg: `<div class="w-6 h-6 rounded-md bg-indigo-400"></div>` },
+            { id: 5, correct: false, svg: `<div class="w-full flex justify-start"><div class="w-6 h-6 rotate-45 bg-emerald-400"></div></div>` },
+            { id: 6, correct: false, svg: `<div class="w-6 h-6 rounded-full bg-emerald-400"></div>` }
+          ]
+        },
+        {
+          id: 2,
+          rule: "Rotational Progression (90-degree clockwise tick)",
+          difficulty: 2,
+          questionRender: () => `
+            <div class="grid grid-cols-3 gap-3 w-72 h-72">
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-cyan-400" viewBox="0 0 100 100"><line x1="50" y1="50" x2="50" y2="15" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><circle cx="50" cy="50" r="10" fill="currentColor"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-cyan-400" viewBox="0 0 100 100"><line x1="50" y1="50" x2="85" y2="50" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><circle cx="50" cy="50" r="10" fill="currentColor"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-cyan-400" viewBox="0 0 100 100"><line x1="50" y1="50" x2="50" y2="85" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><circle cx="50" cy="50" r="10" fill="currentColor"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-indigo-400" viewBox="0 0 100 100"><line x1="50" y1="50" x2="85" y2="50" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><circle cx="50" cy="50" r="10" fill="currentColor"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-indigo-400" viewBox="0 0 100 100"><line x1="50" y1="50" x2="50" y2="85" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><circle cx="50" cy="50" r="10" fill="currentColor"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-indigo-400" viewBox="0 0 100 100"><line x1="50" y1="50" x2="15" y2="50" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><circle cx="50" cy="50" r="10" fill="currentColor"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-emerald-400" viewBox="0 0 100 100"><line x1="50" y1="50" x2="50" y2="85" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><circle cx="50" cy="50" r="10" fill="currentColor"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-emerald-400" viewBox="0 0 100 100"><line x1="50" y1="50" x2="15" y2="50" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><circle cx="50" cy="50" r="10" fill="currentColor"/></svg></div>
+              <div class="aspect-square rounded-xl border-2 border-dashed border-cyan-400 bg-cyan-950/30 flex flex-col items-center justify-center holo-glow-cyan animate-pulse">
+                <span class="text-2xl font-mono text-cyan-300 font-bold">?</span>
+              </div>
+            </div>
+          `,
+          options: [
+            { id: 1, correct: true,  svg: `<svg class="w-10 h-10 text-emerald-400" viewBox="0 0 100 100"><line x1="50" y1="50" x2="50" y2="15" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><circle cx="50" cy="50" r="10" fill="currentColor"/></svg>` },
+            { id: 2, correct: false, svg: `<svg class="w-10 h-10 text-emerald-400" viewBox="0 0 100 100"><line x1="50" y1="50" x2="85" y2="50" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><circle cx="50" cy="50" r="10" fill="currentColor"/></svg>` },
+            { id: 3, correct: false, svg: `<svg class="w-10 h-10 text-emerald-400" viewBox="0 0 100 100"><line x1="50" y1="50" x2="50" y2="85" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><circle cx="50" cy="50" r="10" fill="currentColor"/></svg>` },
+            { id: 4, correct: false, svg: `<svg class="w-10 h-10 text-cyan-400" viewBox="0 0 100 100"><line x1="50" y1="50" x2="15" y2="50" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><circle cx="50" cy="50" r="10" fill="currentColor"/></svg>` },
+            { id: 5, correct: false, svg: `<svg class="w-10 h-10 text-purple-400" viewBox="0 0 100 100"><line x1="50" y1="50" x2="75" y2="25" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><circle cx="50" cy="50" r="10" fill="currentColor"/></svg>` },
+            { id: 6, correct: false, svg: `<svg class="w-10 h-10 text-slate-400" viewBox="0 0 100 100"><circle cx="50" cy="50" r="10" fill="currentColor"/></svg>` }
+          ]
+        },
+        {
+          id: 3,
+          rule: "Additive superposition of elements across row",
+          difficulty: 3,
+          questionRender: () => `
+            <div class="grid grid-cols-3 gap-3 w-72 h-72">
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-cyan-400" viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" stroke="currentColor" stroke-width="5" fill="none"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-cyan-400" viewBox="0 0 100 100"><line x1="20" y1="50" x2="80" y2="50" stroke="currentColor" stroke-width="6"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-cyan-400" viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" stroke="currentColor" stroke-width="5" fill="none"/><line x1="20" y1="50" x2="80" y2="50" stroke="currentColor" stroke-width="6"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-indigo-400" viewBox="0 0 100 100"><rect x="25" y="25" width="50" height="50" stroke="currentColor" stroke-width="5" fill="none"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-indigo-400" viewBox="0 0 100 100"><line x1="50" y1="20" x2="50" y2="80" stroke="currentColor" stroke-width="6"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-indigo-400" viewBox="0 0 100 100"><rect x="25" y="25" width="50" height="50" stroke="currentColor" stroke-width="5" fill="none"/><line x1="50" y1="20" x2="50" y2="80" stroke="currentColor" stroke-width="6"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-emerald-400" viewBox="0 0 100 100"><polygon points="50,20 80,75 20,75" stroke="currentColor" stroke-width="5" fill="none"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-emerald-400" viewBox="0 0 100 100"><line x1="20" y1="50" x2="80" y2="50" stroke="currentColor" stroke-width="6"/><line x1="50" y1="20" x2="50" y2="80" stroke="currentColor" stroke-width="6"/></svg></div>
+              <div class="aspect-square rounded-xl border-2 border-dashed border-cyan-400 bg-cyan-950/30 flex flex-col items-center justify-center holo-glow-cyan animate-pulse">
+                <span class="text-2xl font-mono text-cyan-300 font-bold">?</span>
+              </div>
+            </div>
+          `,
+          options: [
+            { id: 1, correct: false, svg: `<svg class="w-10 h-10 text-emerald-400" viewBox="0 0 100 100"><polygon points="50,20 80,75 20,75" stroke="currentColor" stroke-width="4" fill="none"/></svg>` },
+            { id: 2, correct: true,  svg: `<svg class="w-10 h-10 text-emerald-400" viewBox="0 0 100 100"><polygon points="50,20 80,75 20,75" stroke="currentColor" stroke-width="4" fill="none"/><line x1="20" y1="50" x2="80" y2="50" stroke="currentColor" stroke-width="5"/><line x1="50" y1="20" x2="50" y2="80" stroke="currentColor" stroke-width="5"/></svg>` },
+            { id: 3, correct: false, svg: `<svg class="w-10 h-10 text-indigo-400" viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" stroke="currentColor" stroke-width="4" fill="none"/></svg>` },
+            { id: 4, correct: false, svg: `<svg class="w-10 h-10 text-emerald-400" viewBox="0 0 100 100"><line x1="20" y1="50" x2="80" y2="50" stroke="currentColor" stroke-width="5"/><line x1="50" y1="20" x2="50" y2="80" stroke="currentColor" stroke-width="5"/></svg>` },
+            { id: 5, correct: false, svg: `<svg class="w-10 h-10 text-emerald-400" viewBox="0 0 100 100"><polygon points="50,20 80,75 20,75" stroke="currentColor" stroke-width="4" fill="none"/><line x1="20" y1="50" x2="80" y2="50" stroke="currentColor" stroke-width="5"/></svg>` },
+            { id: 6, correct: false, svg: `<svg class="w-10 h-10 text-cyan-400" viewBox="0 0 100 100"><rect x="25" y="25" width="50" height="50" stroke="currentColor" stroke-width="4" fill="none"/></svg>` }
+          ]
+        },
+        {
+          id: 4,
+          rule: "Exclusive OR (XOR) logic cancellation",
+          difficulty: 4,
+          questionRender: () => `
+            <div class="grid grid-cols-3 gap-3 w-72 h-72">
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-cyan-400" viewBox="0 0 100 100"><line x1="50" y1="15" x2="50" y2="85" stroke="currentColor" stroke-width="6"/><line x1="15" y1="50" x2="85" y2="50" stroke="currentColor" stroke-width="6"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-cyan-400" viewBox="0 0 100 100"><line x1="15" y1="50" x2="85" y2="50" stroke="currentColor" stroke-width="6"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-cyan-400" viewBox="0 0 100 100"><line x1="50" y1="15" x2="50" y2="85" stroke="currentColor" stroke-width="6"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-indigo-400" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="currentColor" stroke-width="6"/><line x1="80" y1="20" x2="20" y2="80" stroke="currentColor" stroke-width="6"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-indigo-400" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="currentColor" stroke-width="6"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-indigo-400" viewBox="0 0 100 100"><line x1="80" y1="20" x2="20" y2="80" stroke="currentColor" stroke-width="6"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-emerald-400" viewBox="0 0 100 100"><rect x="25" y="25" width="50" height="50" stroke="currentColor" stroke-width="5" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="currentColor" stroke-width="5"/><line x1="15" y1="50" x2="85" y2="50" stroke="currentColor" stroke-width="5"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-emerald-400" viewBox="0 0 100 100"><rect x="25" y="25" width="50" height="50" stroke="currentColor" stroke-width="5" fill="none"/></svg></div>
+              <div class="aspect-square rounded-xl border-2 border-dashed border-cyan-400 bg-cyan-950/30 flex flex-col items-center justify-center holo-glow-cyan animate-pulse">
+                <span class="text-2xl font-mono text-cyan-300 font-bold">?</span>
+              </div>
+            </div>
+          `,
+          options: [
+            { id: 1, correct: false, svg: `<svg class="w-10 h-10 text-emerald-400" viewBox="0 0 100 100"><rect x="25" y="25" width="50" height="50" stroke="currentColor" stroke-width="4" fill="none"/></svg>` },
+            { id: 2, correct: true,  svg: `<svg class="w-10 h-10 text-emerald-400" viewBox="0 0 100 100"><line x1="50" y1="15" x2="50" y2="85" stroke="currentColor" stroke-width="5"/><line x1="15" y1="50" x2="85" y2="50" stroke="currentColor" stroke-width="5"/></svg>` },
+            { id: 3, correct: false, svg: `<svg class="w-10 h-10 text-emerald-400" viewBox="0 0 100 100"><line x1="50" y1="15" x2="50" y2="85" stroke="currentColor" stroke-width="5"/></svg>` },
+            { id: 4, correct: false, svg: `<svg class="w-10 h-10 text-cyan-400" viewBox="0 0 100 100"><line x1="15" y1="50" x2="85" y2="50" stroke="currentColor" stroke-width="5"/></svg>` },
+            { id: 5, correct: false, svg: `<svg class="w-10 h-10 text-indigo-400" viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" stroke="currentColor" stroke-width="4" fill="none"/></svg>` },
+            { id: 6, correct: false, svg: `<svg class="w-10 h-10 text-purple-400" viewBox="0 0 100 100"><rect x="25" y="25" width="50" height="50" stroke="currentColor" stroke-width="4" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="currentColor" stroke-width="5"/></svg>` }
+          ]
+        },
+        {
+          id: 5,
+          rule: "Feature distribution & dot progression",
+          difficulty: 3,
+          questionRender: () => `
+            <div class="grid grid-cols-3 gap-3 w-72 h-72">
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><div class="w-4 h-4 rounded-full bg-cyan-400"></div></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center space-x-2 p-3"><div class="w-4 h-4 rounded-full bg-cyan-400"></div><div class="w-4 h-4 rounded-full bg-cyan-400"></div></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center space-x-1.5 p-3"><div class="w-3.5 h-3.5 rounded-full bg-cyan-400"></div><div class="w-3.5 h-3.5 rounded-full bg-cyan-400"></div><div class="w-3.5 h-3.5 rounded-full bg-cyan-400"></div></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><div class="w-4 h-4 bg-indigo-400"></div></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center space-x-2 p-3"><div class="w-4 h-4 bg-indigo-400"></div><div class="w-4 h-4 bg-indigo-400"></div></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center space-x-1.5 p-3"><div class="w-3.5 h-3.5 bg-indigo-400"></div><div class="w-3.5 h-3.5 bg-indigo-400"></div><div class="w-3.5 h-3.5 bg-indigo-400"></div></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><div class="w-4 h-4 rotate-45 bg-emerald-400"></div></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center space-x-2 p-3"><div class="w-4 h-4 rotate-45 bg-emerald-400"></div><div class="w-4 h-4 rotate-45 bg-emerald-400"></div></div>
+              <div class="aspect-square rounded-xl border-2 border-dashed border-cyan-400 bg-cyan-950/30 flex flex-col items-center justify-center holo-glow-cyan animate-pulse">
+                <span class="text-2xl font-mono text-cyan-300 font-bold">?</span>
+              </div>
+            </div>
+          `,
+          options: [
+            { id: 1, correct: false, svg: `<div class="flex space-x-1"><div class="w-4 h-4 bg-indigo-400"></div><div class="w-4 h-4 bg-indigo-400"></div></div>` },
+            { id: 2, correct: false, svg: `<div class="w-4 h-4 rotate-45 bg-emerald-400"></div>` },
+            { id: 3, correct: true,  svg: `<div class="flex space-x-1"><div class="w-3 h-3 rotate-45 bg-emerald-400"></div><div class="w-3 h-3 rotate-45 bg-emerald-400"></div><div class="w-3 h-3 rotate-45 bg-emerald-400"></div></div>` },
+            { id: 4, correct: false, svg: `<div class="flex space-x-1"><div class="w-3 h-3 rounded-full bg-emerald-400"></div><div class="w-3 h-3 rounded-full bg-emerald-400"></div><div class="w-3 h-3 rounded-full bg-emerald-400"></div></div>` },
+            { id: 5, correct: false, svg: `<div class="w-4 h-4 bg-cyan-400"></div>` },
+            { id: 6, correct: false, svg: `<div class="flex space-x-1"><div class="w-3 h-3 rotate-45 bg-cyan-400"></div><div class="w-3 h-3 rotate-45 bg-cyan-400"></div></div>` }
+          ]
+        },
+        {
+          id: 6,
+          rule: "Nested geometric concentric inversion",
+          difficulty: 4,
+          questionRender: () => `
+            <div class="grid grid-cols-3 gap-3 w-72 h-72">
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-cyan-400" viewBox="0 0 100 100"><circle cx="50" cy="50" r="35" stroke="currentColor" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="15" fill="currentColor"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-cyan-400" viewBox="0 0 100 100"><circle cx="50" cy="50" r="35" fill="currentColor"/><circle cx="50" cy="50" r="15" fill="#090e1a"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-cyan-400" viewBox="0 0 100 100"><circle cx="50" cy="50" r="35" stroke="currentColor" stroke-width="4" fill="none"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-indigo-400" viewBox="0 0 100 100"><rect x="20" y="20" width="60" height="60" stroke="currentColor" stroke-width="4" fill="none"/><rect x="40" y="40" width="20" height="20" fill="currentColor"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-indigo-400" viewBox="0 0 100 100"><rect x="20" y="20" width="60" height="60" fill="currentColor"/><rect x="40" y="40" width="20" height="20" fill="#090e1a"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-indigo-400" viewBox="0 0 100 100"><rect x="20" y="20" width="60" height="60" stroke="currentColor" stroke-width="4" fill="none"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-emerald-400" viewBox="0 0 100 100"><polygon points="50,15 85,80 15,80" stroke="currentColor" stroke-width="4" fill="none"/><polygon points="50,45 65,75 35,75" fill="currentColor"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-emerald-400" viewBox="0 0 100 100"><polygon points="50,15 85,80 15,80" fill="currentColor"/><polygon points="50,45 65,75 35,75" fill="#090e1a"/></svg></div>
+              <div class="aspect-square rounded-xl border-2 border-dashed border-cyan-400 bg-cyan-950/30 flex flex-col items-center justify-center holo-glow-cyan animate-pulse">
+                <span class="text-2xl font-mono text-cyan-300 font-bold">?</span>
+              </div>
+            </div>
+          `,
+          options: [
+            { id: 1, correct: false, svg: `<svg class="w-10 h-10 text-emerald-400" viewBox="0 0 100 100"><polygon points="50,15 85,80 15,80" fill="currentColor"/></svg>` },
+            { id: 2, correct: false, svg: `<svg class="w-10 h-10 text-indigo-400" viewBox="0 0 100 100"><rect x="25" y="25" width="50" height="50" stroke="currentColor" stroke-width="4" fill="none"/></svg>` },
+            { id: 3, correct: true,  svg: `<svg class="w-10 h-10 text-emerald-400" viewBox="0 0 100 100"><polygon points="50,15 85,80 15,80" stroke="currentColor" stroke-width="4" fill="none"/></svg>` },
+            { id: 4, correct: false, svg: `<svg class="w-10 h-10 text-emerald-400" viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" stroke="currentColor" stroke-width="4" fill="none"/></svg>` },
+            { id: 5, correct: false, svg: `<svg class="w-10 h-10 text-cyan-400" viewBox="0 0 100 100"><polygon points="50,45 65,75 35,75" fill="currentColor"/></svg>` },
+            { id: 6, correct: false, svg: `<svg class="w-10 h-10 text-slate-400" viewBox="0 0 100 100"><polygon points="50,15 85,80 15,80" stroke="currentColor" stroke-width="4" fill="none"/><circle cx="50" cy="55" r="10" fill="currentColor"/></svg>` }
+          ]
+        },
+        {
+          id: 7,
+          rule: "High Ceiling Mensa: Complex Matrix Arithmetic (Vertices Sum)",
+          difficulty: 5,
+          questionRender: () => `
+            <div class="grid grid-cols-3 gap-3 w-72 h-72">
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-2"><svg class="w-10 h-10 text-cyan-400" viewBox="0 0 100 100"><polygon points="50,20 80,75 20,75" stroke="currentColor" stroke-width="5" fill="none"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-2"><svg class="w-10 h-10 text-cyan-400" viewBox="0 0 100 100"><polygon points="50,20 80,75 20,75" stroke="currentColor" stroke-width="5" fill="none"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-2"><svg class="w-10 h-10 text-cyan-400" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="currentColor" stroke-width="5" fill="none"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-2"><svg class="w-10 h-10 text-indigo-400" viewBox="0 0 100 100"><polygon points="50,20 80,75 20,75" stroke="currentColor" stroke-width="5" fill="none"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-2"><svg class="w-10 h-10 text-indigo-400" viewBox="0 0 100 100"><rect x="25" y="25" width="50" height="50" stroke="currentColor" stroke-width="5" fill="none"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-2"><svg class="w-10 h-10 text-indigo-400" viewBox="0 0 100 100"><polygon points="50,15 80,28 90,60 65,85 35,85 10,60 20,28" stroke="currentColor" stroke-width="4" fill="none"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-2"><svg class="w-10 h-10 text-emerald-400" viewBox="0 0 100 100"><rect x="25" y="25" width="50" height="50" stroke="currentColor" stroke-width="5" fill="none"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-2"><svg class="w-10 h-10 text-emerald-400" viewBox="0 0 100 100"><rect x="25" y="25" width="50" height="50" stroke="currentColor" stroke-width="5" fill="none"/></svg></div>
+              <div class="aspect-square rounded-xl border-2 border-dashed border-cyan-400 bg-cyan-950/30 flex flex-col items-center justify-center holo-glow-cyan animate-pulse">
+                <span class="text-2xl font-mono text-cyan-300 font-bold">?</span>
+              </div>
+            </div>
+          `,
+          options: [
+            { id: 1, correct: false, svg: `<svg class="w-10 h-10 text-emerald-400" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="currentColor" stroke-width="4" fill="none"/></svg>` },
+            { id: 2, correct: true,  svg: `<svg class="w-10 h-10 text-emerald-400" viewBox="0 0 100 100"><polygon points="30,15 70,15 85,30 85,70 70,85 30,85 15,70 15,30" stroke="currentColor" stroke-width="4" fill="none"/></svg>` },
+            { id: 3, correct: false, svg: `<svg class="w-10 h-10 text-emerald-400" viewBox="0 0 100 100"><rect x="25" y="25" width="50" height="50" stroke="currentColor" stroke-width="4" fill="none"/></svg>` },
+            { id: 4, correct: false, svg: `<svg class="w-10 h-10 text-cyan-400" viewBox="0 0 100 100"><polygon points="50,20 80,75 20,75" stroke="currentColor" stroke-width="4" fill="none"/></svg>` },
+            { id: 5, correct: false, svg: `<svg class="w-10 h-10 text-purple-400" viewBox="0 0 100 100"><circle cx="50" cy="50" r="35" stroke="currentColor" stroke-width="4" fill="none"/></svg>` },
+            { id: 6, correct: false, svg: `<svg class="w-10 h-10 text-slate-400" viewBox="0 0 100 100"><polygon points="50,15 90,50 50,85 10,50" stroke="currentColor" stroke-width="4" fill="none"/></svg>` }
+          ]
+        },
+        {
+          id: 8,
+          rule: "Top-Tier Ceiling: Dynamic Line Crossing & Directional Vector Sum",
+          difficulty: 5,
+          questionRender: () => `
+            <div class="grid grid-cols-3 gap-3 w-72 h-72">
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-2"><svg class="w-10 h-10 text-cyan-400" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="currentColor" stroke-width="6"/><circle cx="20" cy="20" r="8" fill="currentColor"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-2"><svg class="w-10 h-10 text-cyan-400" viewBox="0 0 100 100"><line x1="20" y1="80" x2="80" y2="20" stroke="currentColor" stroke-width="6"/><circle cx="80" cy="20" r="8" fill="currentColor"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-2"><svg class="w-10 h-10 text-cyan-400" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="currentColor" stroke-width="5"/><line x1="20" y1="80" x2="80" y2="20" stroke="currentColor" stroke-width="5"/><circle cx="20" cy="20" r="7" fill="currentColor"/><circle cx="80" cy="20" r="7" fill="currentColor"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-2"><svg class="w-10 h-10 text-indigo-400" viewBox="0 0 100 100"><line x1="20" y1="50" x2="80" y2="50" stroke="currentColor" stroke-width="6"/><circle cx="80" cy="50" r="8" fill="currentColor"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-2"><svg class="w-10 h-10 text-indigo-400" viewBox="0 0 100 100"><line x1="50" y1="20" x2="50" y2="80" stroke="currentColor" stroke-width="6"/><circle cx="50" cy="80" r="8" fill="currentColor"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-2"><svg class="w-10 h-10 text-indigo-400" viewBox="0 0 100 100"><line x1="20" y1="50" x2="80" y2="50" stroke="currentColor" stroke-width="5"/><line x1="50" y1="20" x2="50" y2="80" stroke="currentColor" stroke-width="5"/><circle cx="80" cy="50" r="7" fill="currentColor"/><circle cx="50" cy="80" r="7" fill="currentColor"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-2"><svg class="w-10 h-10 text-emerald-400" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="currentColor" stroke-width="6"/><circle cx="80" cy="80" r="8" fill="currentColor"/></svg></div>
+              <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-2"><svg class="w-10 h-10 text-emerald-400" viewBox="0 0 100 100"><line x1="20" y1="80" x2="80" y2="20" stroke="currentColor" stroke-width="6"/><circle cx="20" cy="80" r="8" fill="currentColor"/></svg></div>
+              <div class="aspect-square rounded-xl border-2 border-dashed border-cyan-400 bg-cyan-950/30 flex flex-col items-center justify-center holo-glow-cyan animate-pulse">
+                <span class="text-2xl font-mono text-cyan-300 font-bold">?</span>
+              </div>
+            </div>
+          `,
+          options: [
+            { id: 1, correct: true,  svg: `<svg class="w-10 h-10 text-emerald-400" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="currentColor" stroke-width="5"/><line x1="20" y1="80" x2="80" y2="20" stroke="currentColor" stroke-width="5"/><circle cx="80" cy="80" r="7" fill="currentColor"/><circle cx="20" cy="80" r="7" fill="currentColor"/></svg>` },
+            { id: 2, correct: false, svg: `<svg class="w-10 h-10 text-emerald-400" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="currentColor" stroke-width="5"/><circle cx="80" cy="80" r="7" fill="currentColor"/></svg>` },
+            { id: 3, correct: false, svg: `<svg class="w-10 h-10 text-cyan-400" viewBox="0 0 100 100"><line x1="20" y1="50" x2="80" y2="50" stroke="currentColor" stroke-width="5"/><circle cx="50" cy="50" r="7" fill="currentColor"/></svg>` },
+            { id: 4, correct: false, svg: `<svg class="w-10 h-10 text-indigo-400" viewBox="0 0 100 100"><line x1="20" y1="80" x2="80" y2="20" stroke="currentColor" stroke-width="5"/><circle cx="20" cy="80" r="7" fill="currentColor"/></svg>` },
+            { id: 5, correct: false, svg: `<svg class="w-10 h-10 text-purple-400" viewBox="0 0 100 100"><circle cx="50" cy="50" r="25" stroke="currentColor" stroke-width="4" fill="none"/></svg>` },
+            { id: 6, correct: false, svg: `<svg class="w-10 h-10 text-slate-400" viewBox="0 0 100 100"><rect x="25" y="25" width="50" height="50" stroke="currentColor" stroke-width="4" fill="none"/></svg>` }
+          ]
+        }
+      ],
+
+      // 6 Quantitative Induction Series (Gq)
+      gqItems: [
+        {
+          id: 1,
+          question: "3, 6, 12, 24, 48, [ ? ]",
+          rule: "Multiplication by 2",
+          options: [
+            { id: 1, text: "72", correct: false },
+            { id: 2, text: "96", correct: true },
+            { id: 3, text: "84", correct: false },
+            { id: 4, text: "108", correct: false },
+            { id: 5, text: "92", correct: false },
+            { id: 6, text: "64", correct: false }
+          ]
+        },
+        {
+          id: 2,
+          question: "2, 5, 10, 17, 26, [ ? ]",
+          rule: "n^2 + 1 sequence (+3, +5, +7, +9, +11)",
+          options: [
+            { id: 1, text: "35", correct: false },
+            { id: 2, text: "36", correct: false },
+            { id: 3, text: "37", correct: true },
+            { id: 4, text: "38", correct: false },
+            { id: 5, text: "39", correct: false },
+            { id: 6, text: "41", correct: false }
+          ]
+        },
+        {
+          id: 3,
+          question: "4, 9, 25, 49, 121, [ ? ]",
+          rule: "Squares of consecutive prime numbers (13^2 = 169)",
+          options: [
+            { id: 1, text: "144", correct: false },
+            { id: 2, text: "169", correct: true },
+            { id: 3, text: "196", correct: false },
+            { id: 4, text: "225", correct: false },
+            { id: 5, text: "131", correct: false },
+            { id: 6, text: "181", correct: false }
+          ]
+        },
+        {
+          id: 4,
+          question: "8, 6, 9, 23, 87, [ ? ]",
+          rule: "Recursive function: x_{n+1} = x_n * n - (n+1) => 87*5-6 = 429",
+          options: [
+            { id: 1, text: "348", correct: false },
+            { id: 2, text: "412", correct: false },
+            { id: 3, text: "429", correct: true },
+            { id: 4, text: "435", correct: false },
+            { id: 5, text: "441", correct: false },
+            { id: 6, text: "522", correct: false }
+          ]
+        },
+        {
+          id: 5,
+          question: "1, 2, 6, 24, 120, [ ? ]",
+          rule: "Factorial growth (6! = 720)",
+          options: [
+            { id: 1, text: "600", correct: false },
+            { id: 2, text: "720", correct: true },
+            { id: 3, text: "840", correct: false },
+            { id: 4, text: "480", correct: false },
+            { id: 5, text: "960", correct: false },
+            { id: 6, text: "360", correct: false }
+          ]
+        },
+        {
+          id: 6,
+          question: "11, 13, 17, 25, 32, 37, 47, [ ? ]",
+          rule: "Add sum of digits to number (47 + 11 = 58)",
+          options: [
+            { id: 1, text: "56", correct: false },
+            { id: 2, text: "58", correct: true },
+            { id: 3, text: "59", correct: false },
+            { id: 4, text: "61", correct: false },
+            { id: 5, text: "54", correct: false },
+            { id: 6, text: "63", correct: false }
+          ]
+        }
+      ],
+
+      startFullBattery() {
+        document.getElementById('screenIntro').classList.add('hidden');
+        document.getElementById('screenWorkspace').classList.remove('hidden');
+        document.getElementById('topProgressContainer').classList.remove('hidden');
+        
+        this.state.startTime = Date.now();
+        this.startGlobalTimer();
+        this.loadSubtest(0);
+      },
+
+      startGlobalTimer() {
+        clearInterval(this.state.timerInterval);
+        this.state.timerInterval = setInterval(() => {
+          const totalSec = Math.floor((Date.now() - app.state.startTime) / 1000);
+          const m = Math.floor(totalSec / 60).toString().padStart(2, '0');
+          const s = (totalSec % 60).toString().padStart(2, '0');
+          document.getElementById('globalTimer').textContent = `${m}:${s}`;
+        }, 1000);
+      },
+
+      loadSubtest(subtestIdx) {
+        this.state.currentSubtestIndex = subtestIdx;
+        this.state.currentItemIndex = 0;
+        this.state.selectedOption = null;
+
+        document.getElementById('matrixContainer').classList.add('hidden');
+        document.getElementById('corsiContainer').classList.add('hidden');
+        document.getElementById('speedContainer').classList.add('hidden');
+        document.getElementById('responseBankCard').classList.add('hidden');
+
+        for (let i = 1; i <= 4; i++) {
+          const navEl = document.getElementById(`navSubtest${i}`);
+          const statusEl = document.getElementById(`navStatus${i}`);
+          if (i - 1 === subtestIdx) {
+            navEl.className = 'p-3 rounded-2xl border border-cyan-400/40 bg-cyan-950/40 flex items-center justify-between';
+            statusEl.textContent = 'LIVE';
+            statusEl.className = 'text-[10px] font-mono text-cyan-300 font-bold px-2 py-0.5 rounded bg-cyan-500/20';
+          } else if (i - 1 < subtestIdx) {
+            navEl.className = 'p-3 rounded-2xl border border-emerald-500/20 bg-emerald-950/20 flex items-center justify-between';
+            statusEl.textContent = 'COMPLETE';
+            statusEl.className = 'text-[10px] font-mono text-emerald-400 font-bold';
+          } else {
+            navEl.className = 'p-3 rounded-2xl border border-slate-700/40 bg-slate-900/30 opacity-40 flex items-center justify-between';
+            statusEl.textContent = 'STANDBY';
+            statusEl.className = 'text-[10px] font-mono text-slate-500';
+          }
+        }
+
+        document.getElementById('topSubtestCounter').textContent = `${subtestIdx + 1} / 4`;
+
+        if (subtestIdx === 0) {
+          document.getElementById('topActiveSubtestName').textContent = 'Fluid Matrices (Gf)';
+          document.getElementById('matrixContainer').classList.remove('hidden');
+          document.getElementById('responseBankCard').classList.remove('hidden');
+          document.getElementById('itemTrackerBox').classList.remove('hidden');
+          this.renderItemPills(this.gfItems.length);
+          this.loadMatrixItem(0);
+        } else if (subtestIdx === 1) {
+          document.getElementById('topActiveSubtestName').textContent = 'Working Memory (Gwm)';
+          document.getElementById('corsiContainer').classList.remove('hidden');
+          document.getElementById('itemTrackerBox').classList.add('hidden');
+          this.startCorsiSubtest();
+        } else if (subtestIdx === 2) {
+          document.getElementById('topActiveSubtestName').textContent = 'Quantitative Induction (Gq)';
+          document.getElementById('matrixContainer').classList.remove('hidden');
+          document.getElementById('responseBankCard').classList.remove('hidden');
+          document.getElementById('itemTrackerBox').classList.remove('hidden');
+          this.renderItemPills(this.gqItems.length);
+          this.loadQuantitativeItem(0);
+        } else if (subtestIdx === 3) {
+          document.getElementById('topActiveSubtestName').textContent = 'Processing Speed (Gs)';
+          document.getElementById('speedContainer').classList.remove('hidden');
+          document.getElementById('itemTrackerBox').classList.add('hidden');
+          this.startSpeedSubtest();
+        }
+
+        this.updateBatteryProgress();
+      },
+
+      updateBatteryProgress() {
+        const totalSteps = 4;
+        const pct = Math.round((this.state.currentSubtestIndex / totalSteps) * 100);
+        document.getElementById('batteryProgressPct').textContent = `${pct}%`;
+        document.getElementById('telemetrySubtestPct').textContent = `${pct}%`;
+        document.getElementById('telemetryProgressBar').style.width = `${pct}%`;
+      },
+
+      renderItemPills(count) {
+        const container = document.getElementById('itemPillContainer');
+        container.innerHTML = '';
+        for (let i = 0; i < count; i++) {
+          const pill = document.createElement('span');
+          pill.id = `itemPill_${i}`;
+          pill.className = `w-7 h-7 rounded-lg flex items-center justify-center font-bold text-[11px] border ${i === 0 ? 'bg-cyan-400 text-black border-cyan-300' : 'bg-slate-900 text-slate-500 border-slate-800'}`;
+          pill.textContent = i + 1;
+          container.appendChild(pill);
+        }
+      },
+
+      updateItemPillActive(activeIndex, count) {
+        for (let i = 0; i < count; i++) {
+          const pill = document.getElementById(`itemPill_${i}`);
+          if (!pill) continue;
+          if (i < activeIndex) {
+            pill.className = 'w-7 h-7 rounded-lg flex items-center justify-center font-bold text-[11px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30';
+          } else if (i === activeIndex) {
+            pill.className = 'w-7 h-7 rounded-lg flex items-center justify-center font-bold text-[11px] bg-cyan-400 text-black border-cyan-300 ring-2 ring-cyan-400/50';
+          } else {
+            pill.className = 'w-7 h-7 rounded-lg flex items-center justify-center font-bold text-[11px] bg-slate-900 text-slate-500 border border-slate-800';
+          }
+        }
+        document.getElementById('itemAnsweredBadge').textContent = `Item ${activeIndex + 1} of ${count}`;
+      },
+
+      loadMatrixItem(index) {
+        this.state.currentItemIndex = index;
+        this.state.selectedOption = null;
+        this.state.itemStartTime = Date.now();
+        this.startItemLatencyTicker();
+
+        const item = this.gfItems[index];
+        document.getElementById('stimulusSubtestTitle').innerHTML = `
+          <span class="inline-block w-2 h-2 rounded-full bg-cyan-400"></span>
+          <span>Fluid Matrix Induction (Gf) — Item ${index + 1} / ${this.gfItems.length}</span>
+        `;
+        document.getElementById('stimulusInstructions').textContent = 'Determine the logical transformation and select the completing holographic piece.';
+        document.getElementById('stimulusCanvas').innerHTML = item.questionRender();
+
+        this.renderOptions(item.options);
+        this.updateItemPillActive(index, this.gfItems.length);
+        this.resetResponseButtons();
+      },
+
+      loadQuantitativeItem(index) {
+        this.state.currentItemIndex = index;
+        this.state.selectedOption = null;
+        this.state.itemStartTime = Date.now();
+        this.startItemLatencyTicker();
+
+        const item = this.gqItems[index];
+        document.getElementById('stimulusSubtestTitle').innerHTML = `
+          <span class="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span>Quantitative Induction (Gq) — Item ${index + 1} / ${this.gqItems.length}</span>
+        `;
+        document.getElementById('stimulusInstructions').textContent = 'Deduce the mathematical function governing the series.';
+
+        document.getElementById('stimulusCanvas').innerHTML = `
+          <div class="flex flex-col items-center justify-center py-8 space-y-4">
+            <span class="text-xs font-mono text-cyan-400 uppercase tracking-widest font-bold">Mathematical Sequence Problem</span>
+            <div class="px-8 py-5 rounded-2xl bg-slate-950/80 border border-cyan-400/40 font-mono text-2xl sm:text-3xl font-extrabold text-white tracking-wider holo-glow-cyan">
+              ${item.question}
+            </div>
+            <span class="text-xs font-mono text-cyan-300">Identify the correct value replacing [ ? ]</span>
+          </div>
+        `;
+
+        this.renderOptions(item.options.map(opt => ({
+          id: opt.id,
+          correct: opt.correct,
+          svg: `<span class="font-mono text-base font-bold text-white">${opt.text}</span>`
+        })));
+        this.updateItemPillActive(index, this.gqItems.length);
+        this.resetResponseButtons();
+      },
+
+      startItemLatencyTicker() {
+        clearInterval(this.state.itemElapsedInterval);
+        const latencyEl = document.getElementById('itemTimeElapsed');
+        this.state.itemElapsedInterval = setInterval(() => {
+          const s = ((Date.now() - app.state.itemStartTime) / 1000).toFixed(1);
+          latencyEl.textContent = `Item Latency: ${s}s`;
+        }, 100);
+      },
+
+      renderOptions(options) {
+        const grid = document.getElementById('optionsGrid');
+        grid.innerHTML = '';
+        options.forEach((opt, idx) => {
+          const div = document.createElement('div');
+          div.id = `optionTile_${opt.id}`;
+          div.className = 'matrix-holo-tile rounded-xl aspect-square flex flex-col items-center justify-center p-2 relative cursor-pointer';
+          div.innerHTML = `
+            <span class="absolute top-1.5 left-2 text-[10px] font-mono text-slate-400">[${idx + 1}]</span>
+            ${opt.svg}
+          `;
+          div.onclick = () => app.selectOption(opt.id, opt.correct);
+          grid.appendChild(div);
+        });
+      },
+
+      selectOption(optionId, isCorrect) {
+        this.state.selectedOption = { id: optionId, isCorrect };
+        
+        document.querySelectorAll('.matrix-holo-tile').forEach(t => t.classList.remove('selected'));
+        const target = document.getElementById(`optionTile_${optionId}`);
+        if (target) target.classList.add('selected');
+
+        document.getElementById('selectedOptionIndicator').textContent = `Choice [${optionId}] selected`;
+        
+        const btnNext = document.getElementById('btnNextItem');
+        btnNext.disabled = false;
+        btnNext.className = 'px-6 py-2.5 rounded-xl bg-gradient-to-r from-cyan-400 to-indigo-500 hover:from-cyan-300 text-black font-extrabold text-xs font-mono transition holo-glow-cyan';
+      },
+
+      resetResponseButtons() {
+        const btnNext = document.getElementById('btnNextItem');
+        btnNext.disabled = true;
+        btnNext.className = 'px-6 py-2.5 rounded-xl bg-slate-800 text-slate-500 font-bold text-xs font-mono transition cursor-not-allowed';
+        document.getElementById('selectedOptionIndicator').textContent = 'None selected';
+        
+        const btnPrev = document.getElementById('btnPrevItem');
+        btnPrev.disabled = (this.state.currentItemIndex === 0);
+        btnPrev.style.opacity = (this.state.currentItemIndex === 0) ? '0.4' : '1.0';
+      },
+
+      confirmNextItem() {
+        if (!this.state.selectedOption) return;
+
+        const latency = (Date.now() - this.state.itemStartTime) / 1000;
+        
+        if (this.state.currentSubtestIndex === 0) {
+          if (this.state.selectedOption.isCorrect) this.state.subtestScores.Gf.raw++;
+          this.state.subtestScores.Gf.latencies.push(latency);
+
+          if (this.state.currentItemIndex + 1 < this.gfItems.length) {
+            this.loadMatrixItem(this.state.currentItemIndex + 1);
+          } else {
+            this.loadSubtest(1);
+          }
+        } else if (this.state.currentSubtestIndex === 2) {
+          if (this.state.selectedOption.isCorrect) this.state.subtestScores.Gq.raw++;
+          this.state.subtestScores.Gq.latencies.push(latency);
+
+          if (this.state.currentItemIndex + 1 < this.gqItems.length) {
+            this.loadQuantitativeItem(this.state.currentItemIndex + 1);
+          } else {
+            this.loadSubtest(3);
+          }
+        }
+      },
+
+      previousItem() {
+        if (this.state.currentItemIndex > 0) {
+          if (this.state.currentSubtestIndex === 0) {
+            this.loadMatrixItem(this.state.currentItemIndex - 1);
+          } else if (this.state.currentSubtestIndex === 2) {
+            this.loadQuantitativeItem(this.state.currentItemIndex - 1);
+          }
+        }
+      },
+
+      startCorsiSubtest() {
+        const board = document.getElementById('corsiBoard');
+        board.innerHTML = '';
+        
+        for (let i = 0; i < 16; i++) {
+          const block = document.createElement('div');
+          block.id = `corsiBlock_${i}`;
+          block.className = 'corsi-block rounded-xl flex items-center justify-center aspect-square disabled';
+          block.innerHTML = `<span class="text-xs font-mono text-slate-500 select-none">${i + 1}</span>`;
+          block.onclick = () => app.handleCorsiBlockClick(i);
+          board.appendChild(block);
+        }
+
+        this.state.corsi.currentSpan = 4;
+        this.state.corsi.trialNumber = 1;
+        this.runCorsiTrial();
+      },
+
+      runCorsiTrial() {
+        const c = this.state.corsi;
+        c.isFlashing = true;
+        c.userSequence = [];
+        document.getElementById('corsiSpanBadge').textContent = `Span Length: ${c.currentSpan} Blocks`;
+        document.getElementById('corsiStatusMsg').textContent = `Trial ${c.trialNumber}: Memorize the sequence of glowing blocks...`;
+        document.getElementById('corsiRecallIndicator').textContent = 'Pattern displaying... observe closely.';
+        document.getElementById('corsiSubmitBtn').disabled = true;
+
+        for (let i = 0; i < 16; i++) {
+          const el = document.getElementById(`corsiBlock_${i}`);
+          el.classList.add('disabled');
+          el.classList.remove('user-selected');
+        }
+
+        c.sequence = [];
+        let available = Array.from({ length: 16 }, (_, i) => i);
+        for (let s = 0; s < c.currentSpan; s++) {
+          const randIdx = Math.floor(Math.random() * available.length);
+          c.sequence.push(available[randIdx]);
+          available.splice(randIdx, 1);
+        }
+
+        c.sequence.forEach((blockId, step) => {
+          setTimeout(() => {
+            const el = document.getElementById(`corsiBlock_${blockId}`);
+            if (el) el.classList.add('flash');
+            setTimeout(() => {
+              if (el) el.classList.remove('flash');
+            }, 500);
+          }, (step + 1) * 850);
+        });
+
+        setTimeout(() => {
+          c.isFlashing = false;
+          document.getElementById('corsiStatusMsg').textContent = 'Your turn! Tap the blocks in the EXACT order they flashed.';
+          document.getElementById('corsiRecallIndicator').textContent = `Sequence: 0 / ${c.currentSpan} selected`;
+          for (let i = 0; i < 16; i++) {
+            const el = document.getElementById(`corsiBlock_${i}`);
+            el.classList.remove('disabled');
+          }
+        }, (c.currentSpan + 1) * 850);
+      },
+
+      handleCorsiBlockClick(blockId) {
+        const c = this.state.corsi;
+        if (c.isFlashing || c.userSequence.length >= c.currentSpan) return;
+
+        c.userSequence.push(blockId);
+        const el = document.getElementById(`corsiBlock_${blockId}`);
+        el.classList.add('user-selected');
+
+        document.getElementById('corsiRecallIndicator').textContent = `Sequence: ${c.userSequence.length} / ${c.currentSpan} selected`;
+
+        if (c.userSequence.length === c.currentSpan) {
+          const btn = document.getElementById('corsiSubmitBtn');
+          btn.disabled = false;
+          btn.className = 'px-5 py-2 rounded-xl bg-gradient-to-r from-indigo-500 to-cyan-400 text-black font-mono text-xs font-bold transition holo-glow-cyan';
+        }
+      },
+
+      submitCorsiTrial() {
+        const c = this.state.corsi;
+        const isCorrect = c.sequence.every((val, idx) => val === c.userSequence[idx]);
+
+        if (isCorrect) {
+          this.state.subtestScores.Gwm.trialsSuccess++;
+          this.state.subtestScores.Gwm.spanReached = c.currentSpan;
+          if (c.currentSpan < c.maxSpan) {
+            c.currentSpan++;
+          }
+        }
+
+        c.trialNumber++;
+        if (c.trialNumber <= 5) {
+          this.runCorsiTrial();
+        } else {
+          this.loadSubtest(2);
+        }
+      },
+
+      startSpeedSubtest() {
+        const sp = this.state.speed;
+        sp.active = true;
+        sp.timeLeft = 45;
+        sp.latencies = [];
+        this.nextSpeedTrial();
+
+        clearInterval(sp.timerId);
+        const countdownEl = document.getElementById('speedCountdown');
+        sp.timerId = setInterval(() => {
+          sp.timeLeft--;
+          countdownEl.textContent = `${sp.timeLeft}s`;
+          if (sp.timeLeft <= 0) {
+            clearInterval(sp.timerId);
+            sp.active = false;
+            app.generateFinalClinicalReport();
+          }
+        }, 1000);
+      },
+
+      nextSpeedTrial() {
+        const glyphPool = ['⬡', '⬢', '◈', '▲', '▼', '◆', '✦', '✶', '◎', '◬', '◐', '◑'];
+        const sp = this.state.speed;
+        
+        const target = glyphPool[Math.floor(Math.random() * glyphPool.length)];
+        sp.currentTarget = target;
+        document.getElementById('speedTargetSymbol').textContent = target;
+
+        sp.currentHasTarget = Math.random() > 0.5;
+        const arraySize = 6;
+        let array = [];
+        
+        let distractors = glyphPool.filter(g => g !== target);
+        for (let i = 0; i < arraySize; i++) {
+          const randDist = distractors[Math.floor(Math.random() * distractors.length)];
+          array.push(randDist);
+        }
+
+        if (sp.currentHasTarget) {
+          const insertIdx = Math.floor(Math.random() * arraySize);
+          array[insertIdx] = target;
+        }
+
+        sp.currentArray = array;
+        const searchBox = document.getElementById('speedSearchArray');
+        searchBox.innerHTML = '';
+        array.forEach(sym => {
+          const el = document.createElement('div');
+          el.className = 'w-12 h-12 rounded-lg bg-slate-950/80 border border-purple-500/30 flex items-center justify-center text-xl font-mono text-slate-200';
+          el.textContent = sym;
+          searchBox.appendChild(el);
+        });
+
+        sp.trialStart = Date.now();
+      },
+
+      recordSpeedResponse(userSaysYes) {
+        const sp = this.state.speed;
+        if (!sp.active) return;
+
+        const latency = Date.now() - sp.trialStart;
+        sp.latencies.push(latency);
+        this.state.subtestScores.Gs.totalTrials++;
+
+        const isCorrect = (userSaysYes === sp.currentHasTarget);
+        if (isCorrect) {
+          this.state.subtestScores.Gs.correct++;
+        } else {
+          this.state.subtestScores.Gs.incorrect++;
+        }
+
+        this.nextSpeedTrial();
+      },
+
+      // Psychometric Engine with Automated GAI Indexing
+      generateFinalClinicalReport() {
+        clearInterval(this.state.timerInterval);
+        clearInterval(this.state.itemElapsedInterval);
+
+        document.getElementById('screenWorkspace').classList.add('hidden');
+        document.getElementById('screenReport').classList.remove('hidden');
+        document.getElementById('sessionStatusText').textContent = 'Assessment Verified';
+
+        // 1. Z-Scores
+        const gfRaw = this.state.subtestScores.Gf.raw;
+        const zGf = (gfRaw - 4.2) / 1.8;
+        const scoreGf = Math.round(100 + 15 * zGf);
+
+        const gwmSpan = this.state.subtestScores.Gwm.spanReached;
+        const gwmBonus = this.state.subtestScores.Gwm.trialsSuccess * 0.2;
+        const zGwm = ((gwmSpan + gwmBonus) - 5.5) / 1.2;
+        const scoreGwm = Math.round(100 + 15 * zGwm);
+
+        const gqRaw = this.state.subtestScores.Gq.raw;
+        const zGq = (gqRaw - 3.1) / 1.5;
+        const scoreGq = Math.round(100 + 15 * zGq);
+
+        const gsCorrect = this.state.subtestScores.Gs.correct;
+        const gsIncorrect = this.state.subtestScores.Gs.incorrect;
+        const netSpeedScore = Math.max(0, gsCorrect - (gsIncorrect * 0.5));
+        const zGs = (netSpeedScore - 12) / 4.0;
+        const scoreGs = Math.round(100 + 15 * zGs);
+
+        // 2. Composite FSIQ
+        const compositeZ = (0.35 * zGf) + (0.25 * zGwm) + (0.25 * zGq) + (0.15 * zGs);
+        const compositeInflationCorrection = 1.18;
+        const fsiqZ = compositeZ * compositeInflationCorrection;
+        let finalFSIQ = Math.round(100 + 15 * fsiqZ);
+        finalFSIQ = Math.max(70, Math.min(155, finalFSIQ));
+
+        // 3. Percentiles
+        const percentile = this.calculatePercentile(finalFSIQ);
+
+        // 4. General Ability Index (GAI) Calculation (Excludes speed and memory drag)
+        const zGai = (0.6 * zGf + 0.4 * zGq) / 0.85;
+        const scoreGai = Math.round(100 + 15 * zGai);
+        const gaiPercentile = this.calculatePercentile(scoreGai);
+
+        // 5. Clinical Discrepancy Detection (|Gf - Gs| >= 20)
+        const discrepancy = Math.abs(scoreGf - scoreGs);
+        const gaiBanner = document.getElementById('gaiAlertBanner');
+        if (discrepancy >= 20 && gaiBanner) {
+          gaiBanner.classList.remove('hidden');
+          document.getElementById('gaiAlertText').innerHTML = 
+            `A statistically significant discrepancy of <strong>${discrepancy} points</strong> exists between your Core Fluid Reasoning (${scoreGf}) and Processing Speed (${scoreGs}). Under clinical WAIS-IV neuropsychological standards, this divergence indicates a non-unitary profile, meaning FSIQ (${finalFSIQ}) underestimates raw intellectual reasoning. Your <strong>General Ability Index (GAI)</strong> is <span class="text-cyan-300 font-bold text-sm">${scoreGai} (${gaiPercentile.toFixed(1)}th percentile)</span>, reflecting pure inductive and conceptual capacity without the motor/device latency penalty.`;
+        } else if (gaiBanner) {
+          gaiBanner.classList.add('hidden');
+        }
+
+        // 6. Populate Report DOM
+        document.getElementById('reportFSIQScore').textContent = finalFSIQ;
+        document.getElementById('reportPercentileScore').textContent = `${percentile.toFixed(1)}%`;
+        document.getElementById('reportRarityText').textContent = `Performs higher than approximately ${Math.round(percentile)} out of 100 individuals in the reference population.`;
+        document.getElementById('reportConfInterval').textContent = `${finalFSIQ - 4} — ${finalFSIQ + 4}`;
+        document.getElementById('reportTimestamp').textContent = new Date().toISOString().replace('T', ' ').substring(0, 19) + ' UTC';
+
+        // 7. Update Real Latency Telemetry
+        const allLatencies = [
+          ...this.state.subtestScores.Gf.latencies,
+          ...this.state.subtestScores.Gq.latencies,
+          ...this.state.speed.latencies.map(l => l / 1000)
+        ];
+        if (allLatencies.length > 0) {
+          const avgSec = (allLatencies.reduce((a, b) => a + b, 0) / allLatencies.length).toFixed(2);
+          const latEl = document.getElementById('telemetryMeanLatency');
+          if (latEl) latEl.textContent = `${avgSec}s`;
+        }
+
+        // Classification
+        const classEl = document.getElementById('reportClassificationBadge');
+        if (finalFSIQ >= 130) {
+          classEl.textContent = 'Very Superior / Gifted (Mensa Qualifying)';
+          classEl.className = 'inline-block px-3 py-1 rounded-full text-xs font-mono font-bold bg-purple-500/20 text-purple-300 border border-purple-500/40';
+          document.getElementById('reportMensaStatus').textContent = 'QUALIFIES (Top 2%)';
+          document.getElementById('reportMensaStatus').className = 'text-purple-400 font-bold';
+        } else if (finalFSIQ >= 120) {
+          classEl.textContent = 'Superior (High Cognitive Reserve)';
+          classEl.className = 'inline-block px-3 py-1 rounded-full text-xs font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40';
+          document.getElementById('reportMensaStatus').textContent = 'Borderline Mensa';
+        } else if (finalFSIQ >= 110) {
+          classEl.textContent = 'High Average';
+          classEl.className = 'inline-block px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
+          document.getElementById('reportMensaStatus').textContent = 'Standard Norm';
+        } else {
+          classEl.textContent = 'Average (Population Mean Band)';
+          classEl.className = 'inline-block px-3 py-1 rounded-full text-xs font-mono font-bold bg-slate-800 text-slate-300 border border-slate-700';
+          document.getElementById('reportMensaStatus').textContent = 'Average';
+        }
+
+        // Sub-index display
+        document.getElementById('scoreGf').textContent = scoreGf;
+        document.getElementById('barGf').style.width = `${Math.min(100, Math.max(10, ((scoreGf - 70) / 80) * 100))}%`;
+
+        document.getElementById('scoreGwm').textContent = scoreGwm;
+        document.getElementById('barGwm').style.width = `${Math.min(100, Math.max(10, ((scoreGwm - 70) / 80) * 100))}%`;
+
+        document.getElementById('scoreGq').textContent = scoreGq;
+        document.getElementById('barGq').style.width = `${Math.min(100, Math.max(10, ((scoreGq - 70) / 80) * 100))}%`;
+
+        document.getElementById('scoreGs').textContent = scoreGs;
+        document.getElementById('barGs').style.width = `${Math.min(100, Math.max(10, ((scoreGs - 70) / 80) * 100))}%`;
+
+        this.renderReportBellCurve(finalFSIQ);
+        this.renderNeuroFeedback(finalFSIQ, scoreGf, scoreGwm, scoreGq, scoreGs);
+      },
+
+      calculatePercentile(iq) {
+        const z = (iq - 100) / 15;
+        const t = 1.0 / (1.0 + 0.2316419 * Math.abs(z));
+        const d = 0.3989422804014327 * Math.exp(-0.5 * z * z);
+        const p = d * t * (0.319381530 + t * (-0.356563782 + t * (1.781477937 + t * (-1.821255978 + t * 1.330274429))));
+        const cdf = (z > 0) ? 1.0 - p : p;
+        return cdf * 100;
+      },
+
+      renderReportBellCurve(iq) {
+        const svg = document.getElementById('reportBellCurveSvg');
+        const minIq = 70;
+        const maxIq = 145;
+        const clampedIq = Math.max(minIq, Math.min(maxIq, iq));
+        const pinX = 10 + ((clampedIq - minIq) / (maxIq - minIq)) * 220;
+
+        svg.innerHTML = `
+          <defs>
+            <linearGradient id="finalBellGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.6"/>
+              <stop offset="100%" stop-color="#a855f7" stop-opacity="0.0"/>
+            </linearGradient>
+          </defs>
+          <line x1="10" y1="75" x2="230" y2="75" stroke="#38bdf8" stroke-width="1.5" opacity="0.4"/>
+          <path d="M 10,75 Q 70,73 100,38 T 120,8 T 140,38 Q 170,73 230,75 Z" fill="url(#finalBellGrad)"/>
+          <path d="M 10,75 Q 70,73 100,38 T 120,8 T 140,38 Q 170,73 230,75" fill="none" stroke="#38bdf8" stroke-width="2"/>
+          
+          <line x1="120" y1="8" x2="120" y2="75" stroke="#64748b" stroke-dasharray="2,2"/>
+          <text x="120" y="85" fill="#94a3b8" font-size="7" font-family="JetBrains Mono" text-anchor="middle">μ=100</text>
+          
+          <line x1="185" y1="35" x2="185" y2="75" stroke="#a855f7" stroke-width="1.5"/>
+          <text x="185" y="85" fill="#c084fc" font-size="7" font-family="JetBrains Mono" text-anchor="middle">130 (Mensa)</text>
+          
+          <circle cx="${pinX}" cy="30" r="4.5" fill="#38bdf8" stroke="#ffffff" stroke-width="2"/>
+          <line x1="${pinX}" y1="30" x2="${pinX}" y2="75" stroke="#38bdf8" stroke-width="2"/>
+          <text x="${pinX}" y="22" fill="#38bdf8" font-size="8" font-family="JetBrains Mono" text-anchor="middle" font-weight="bold">${iq}</text>
+        `;
+      },
+
+      renderNeuroFeedback(fsiq, gf, gwm, gq, gs) {
+        const box = document.getElementById('neuroscientistFeedback');
+        let profile = "";
+        
+        if (gf >= 125) {
+          profile += `<p>• <strong>Fluid Abstraction Matrix (Gf: ${gf}):</strong> Exceptional capacity to decouple from familiar heuristics and identify non-verbal geometric invariants, XOR parity transformations, and rotational logic without prior instruction.</p>`;
+        } else {
+          profile += `<p>• <strong>Fluid Abstraction Matrix (Gf: ${gf}):</strong> Solid inductive reasoning baseline; shows stable rule extraction on single-variable progressions with minor latency on nested arithmetic rules.</p>`;
+        }
+
+        if (gwm >= 120) {
+          profile += `<p>• <strong>Visuospatial Working Memory Buffer (Gwm: ${gwm}):</strong> Demonstrates high working-memory capacity in the dorsolateral prefrontal cortex (dlPFC), sustaining a Corsi block sequence span well above the population standard (5.5 items).</p>`;
+        } else {
+          profile += `<p>• <strong>Visuospatial Working Memory Buffer (Gwm: ${gwm}):</strong> Standard working memory span. Information decay observed when sequence lengths crossed 5 units under temporal pressure.</p>`;
+        }
+
+        if (gs >= 115) {
+          profile += `<p>• <strong>Cognitive Throughput & Discrimination (Gs: ${gs}):</strong> High axonal transmission efficiency and rapid visual search throughput, permitting quick target identification while avoiding false-positive distractors.</p>`;
+        } else if (gs >= 90) {
+          profile += `<p>• <strong>Cognitive Throughput & Discrimination (Gs: ${gs}):</strong> Normal processing speed and consistent visual discrimination under standard temporal pacing.</p>`;
+        } else {
+          profile += `<p>• <strong>Cognitive Throughput & Discrimination (Gs: ${gs}):</strong> Marked speed bottleneck observed relative to other subtests. This indicates significant input/motor reaction latency, high deliberation (refusal to guess under uncertainty), or device lag rather than an intellectual limitation. In clinical neuropsychology, when Fluid Reasoning is high (${gf}) and Processing Speed is low (${gs}), this divergence is recognized as a non-unitary speed-accuracy trade-off, making the General Ability Index (GAI) a more accurate measure of underlying intelligence.</p>`;
+        }
+
+        profile += `<p class="pt-2 text-cyan-300 font-mono"><strong>Diagnostic Summary:</strong> Cognitive profile indicates an overall Full-Scale Index of ${fsiq}, placing the candidate in the top ${((100 - this.calculatePercentile(fsiq))).toFixed(1)}% of normed adults.</p>`;
+        
+        box.innerHTML = profile;
+      },
+
+      abortSession() {
+        if (confirm("Reset current assessment session? All unsaved test progression will be cleared.")) {
+          clearInterval(this.state.timerInterval);
+          clearInterval(this.state.itemElapsedInterval);
+          clearInterval(this.state.speed.timerId);
+          location.reload();
+        }
+      }
+    };
+    window.app = app;
+
+    window.toggleBgVideo = function() {
+      const vid = document.getElementById('bgVideo');
+      const btn = document.getElementById('btnVideoToggle');
+      if (!vid) return;
+      if (vid.style.display === 'none') {
+        vid.style.display = 'block';
+        if (btn) btn.textContent = '3D Video: ON';
+      } else {
+        vid.style.display = 'none';
+        if (btn) btn.textContent = '3D Video: OFF';
+      }
+    };
+
+    window.addEventListener('keydown', (e) => {
+      if (app.state.speed.active) {
+        if (e.key.toLowerCase() === 'y') {
+          app.recordSpeedResponse(true);
+        } else if (e.key.toLowerCase() === 'n') {
+          app.recordSpeedResponse(false);
+        }
+        return;
+      }
+
+      const num = parseInt(e.key);
+      if (!isNaN(num) && num >= 1 && num <= 6) {
+        const optionTile = document.getElementById(`optionTile_${num}`);
+        if (optionTile) optionTile.click();
+      }
+
+      if (e.key === 'Enter') {
+        const btnNext = document.getElementById('btnNextItem');
+        if (btnNext && !btnNext.disabled) {
+          btnNext.click();
+        }
+      }
+    });
+  </script>
+</body>
+</html>
