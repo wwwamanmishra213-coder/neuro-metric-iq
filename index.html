@@ -17,12 +17,12 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
   <style>
-    /* Robust Layout & Fallback Rules */
+    /* Robust Layout & Fallback Rules - Hidden MUST always take precedence */
+    .flex { display: flex; }
+    .grid { display: grid; }
+    .block { display: block; }
+    .inline-block { display: inline-block; }
     .hidden { display: none !important; }
-    .flex { display: flex !important; }
-    .grid { display: grid !important; }
-    .block { display: block !important; }
-    .inline-block { display: inline-block !important; }
 
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
@@ -350,8 +350,8 @@
   </aside>
 
   <!-- ==================== HOLOGRAPHIC TOP HUD BAR ==================== -->
-  <header class="relative z-10 no-print border-b border-cyan-500/20 bg-slate-950/50 backdrop-blur-md px-3 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between gap-2">
-    <div class="flex items-center space-x-2 sm:space-x-3 min-w-0">
+  <header class="relative z-10 no-print border-b border-cyan-500/20 bg-slate-950/60 backdrop-blur-md px-2.5 sm:px-6 py-2 sm:py-3 flex items-center justify-between gap-1.5 sm:gap-2">
+    <div class="flex items-center space-x-1.5 sm:space-x-3 shrink-0">
       
       <!-- Slide-Out Sidebar Toggle Button (ChatGPT Style) -->
       <button onclick="toggleSidebar(true)" aria-label="Open Assessments Menu" class="w-8 h-8 rounded-lg bg-slate-900/90 border border-cyan-500/40 hover:border-cyan-400 text-cyan-300 flex items-center justify-center transition active:scale-95 touch-manipulation holo-glow-cyan shrink-0" title="Slide Open Assessment Battery Drawer">
@@ -360,13 +360,13 @@
         </svg>
       </button>
 
-      <div class="flex items-center space-x-2 shrink-0">
-        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-cyan-500/10 border border-cyan-400/40 flex items-center justify-center font-bold text-cyan-400 font-mono text-sm sm:text-base holo-glow-cyan shrink-0">
+      <div class="flex items-center space-x-1.5 shrink-0">
+        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-cyan-500/10 border border-cyan-400/40 flex items-center justify-center font-bold text-cyan-400 font-mono text-xs sm:text-base holo-glow-cyan shrink-0">
           Ψ
         </div>
-        <div>
-          <span class="font-extrabold tracking-widest text-sm sm:text-base text-white">NEURO<span class="text-cyan-400">METRIC</span></span>
-          <span class="text-[8px] sm:text-[9px] font-mono block text-purple-300 uppercase tracking-widest hidden sm:block">3D Holographic Cognitive Engine v3.0</span>
+        <div class="hidden xs:block sm:block">
+          <span class="font-extrabold tracking-wider text-xs sm:text-base text-white">NEURO<span class="text-cyan-400">METRIC</span></span>
+          <span class="text-[8px] sm:text-[9px] font-mono block text-purple-300 uppercase tracking-widest hidden md:block">3D Holographic Cognitive Engine v3.0</span>
         </div>
       </div>
       <div class="h-4 sm:h-5 w-px bg-cyan-500/20 hidden md:block"></div>
@@ -391,18 +391,18 @@
     </div>
 
     <!-- Timer & Controls -->
-    <div class="flex items-center space-x-2 sm:space-x-3 shrink-0">
-      <button onclick="toggleBgVideo()" id="btnVideoToggle" class="text-[11px] sm:text-xs font-mono bg-cyan-950/50 text-cyan-300 hover:text-white px-2.5 sm:px-3 py-1.5 rounded-lg border border-cyan-500/30 transition touch-manipulation">
-        3D Video: ON
+    <div class="flex items-center space-x-1.5 sm:space-x-3 shrink-0">
+      <button onclick="toggleBgVideo()" id="btnVideoToggle" class="text-[10px] sm:text-xs font-mono bg-cyan-950/50 text-cyan-300 hover:text-white px-2 sm:px-3 py-1.5 rounded-lg border border-cyan-500/30 transition touch-manipulation">
+        <span class="hidden sm:inline">3D Video: ON</span><span class="sm:hidden">3D: ON</span>
       </button>
-      <div class="flex items-center space-x-1.5 sm:space-x-2 bg-slate-950/70 border border-cyan-500/30 px-2.5 sm:px-3 py-1.5 rounded-lg font-mono holo-glow-cyan">
-        <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 animate-spin shrink-0" style="animation-duration: 6s;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <div class="flex items-center space-x-1 sm:space-x-2 bg-slate-950/70 border border-cyan-500/30 px-2 sm:px-3 py-1.5 rounded-lg font-mono holo-glow-cyan">
+        <svg class="w-3.5 h-3.5 text-cyan-400 animate-spin shrink-0" style="animation-duration: 6s;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" opacity="0.3"></circle>
           <path d="M12 3a9 9 0 0 1 9 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
         </svg>
         <span id="globalTimer" class="text-xs sm:text-sm font-bold text-white tracking-wider">00:00</span>
       </div>
-      <button onclick="app.abortSession()" class="text-[11px] sm:text-xs font-mono bg-slate-950 text-slate-400 hover:text-red-400 px-2.5 sm:px-3 py-1.5 rounded-lg border border-slate-800 hover:border-red-900/40 transition touch-manipulation">
+      <button onclick="app.abortSession()" class="text-[10px] sm:text-xs font-mono bg-slate-950 text-slate-400 hover:text-red-400 px-2 sm:px-3 py-1.5 rounded-lg border border-slate-800 hover:border-red-900/40 transition touch-manipulation">
         Reset
       </button>
     </div>
@@ -2083,10 +2083,10 @@
       if (!vid) return;
       if (vid.style.display === 'none') {
         vid.style.display = 'block';
-        if (btn) btn.textContent = '3D Video: ON';
+        if (btn) btn.innerHTML = '<span class="hidden sm:inline">3D Video: ON</span><span class="sm:hidden">3D: ON</span>';
       } else {
         vid.style.display = 'none';
-        if (btn) btn.textContent = '3D Video: OFF';
+        if (btn) btn.innerHTML = '<span class="hidden sm:inline">3D Video: OFF</span><span class="sm:hidden">3D: OFF</span>';
       }
     };
 
@@ -2115,7 +2115,7 @@
     });
   </script>
   <!-- ==================== RESEARCH & ASSESSMENT DETAILS MODAL ==================== -->
-  <div id="researchModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+  <div id="researchModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden items-center justify-center p-4">
     <div class="holo-card max-w-2xl w-full rounded-3xl p-6 sm:p-8 space-y-5 relative max-h-[90vh] overflow-y-auto">
       <div class="flex items-start justify-between border-b border-cyan-500/20 pb-4">
         <div class="flex items-center space-x-3">
@@ -2320,12 +2320,16 @@
       document.getElementById('modalTitle').textContent = data.title;
       document.getElementById('modalSubtitle').textContent = data.subtitle;
       document.getElementById('modalContent').innerHTML = data.content;
-      document.getElementById('researchModal').classList.remove('hidden');
+      const modal = document.getElementById('researchModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
       toggleSidebar(false);
     };
 
     window.closeResearchModal = function() {
-      document.getElementById('researchModal').classList.add('hidden');
+      const modal = document.getElementById('researchModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
     };
 
     // ==================== BINAURAL FOCUS AUDIO ENGINE (WEB AUDIO API) ====================
