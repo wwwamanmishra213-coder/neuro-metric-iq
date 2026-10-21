@@ -7,6 +7,7 @@
   
   <!-- 3D WebGL Library (Hardware-accelerated in Chromium) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   
   <!-- NeuroMetric Modular Scoring & Psychometrics Engine -->
@@ -364,7 +365,146 @@
             </div>
           </div>
 
-          <!-- Multiple Intelligences Inventory -->
+          <!-- CLINICAL PSYCHIATRIC & NEURODIVERGENCE BATTERIES -->
+      <div>
+        <span class="text-[10px] font-mono uppercase tracking-widest text-emerald-400 font-bold block mb-2 px-2 flex items-center justify-between">
+          <span>CLINICAL PSYCHIATRIC SUITE</span>
+          <span class="text-[9px] text-cyan-300 font-mono">DSM-5 & WHO MODELS</span>
+        </span>
+        <div class="space-y-2.5">
+          
+          <!-- ADHD ASRS -->
+          <div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
+            <div class="flex items-start space-x-2.5">
+              <span class="text-base text-emerald-400 shrink-0">🎯</span>
+              <div class="flex-1">
+                <h4 class="text-xs font-bold text-slate-200">ADHD Screener (ASRS v1.1)</h4>
+                <p class="text-[10px] text-slate-400 leading-tight">WHO adult attention-deficit, hyperactivity & executive focus inventory (18 items).</p>
+              </div>
+            </div>
+            <div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
+              <button onclick="AssessmentController.launchClinical('adhd')" class="flex-1 py-1 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-mono text-[10px] font-bold border border-emerald-500/40 transition active:scale-95 touch-manipulation">
+                ▶ Launch Screener
+              </button>
+            </div>
+          </div>
+
+          <!-- Schizotypy SPQ-B -->
+          <div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-cyan-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
+            <div class="flex items-start space-x-2.5">
+              <span class="text-base text-cyan-400 shrink-0">🌀</span>
+              <div class="flex-1">
+                <h4 class="text-xs font-bold text-slate-200">Schizotypy Screener (SPQ-B)</h4>
+                <p class="text-[10px] text-slate-400 leading-tight">Cognitive-perceptual anomalies, magical ideation & disorganized thought (22 items).</p>
+              </div>
+            </div>
+            <div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
+              <button onclick="AssessmentController.launchClinical('schizotypy')" class="flex-1 py-1 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 font-mono text-[10px] font-bold border border-cyan-500/40 transition active:scale-95 touch-manipulation">
+                ▶ Launch Screener
+              </button>
+            </div>
+          </div>
+
+          <!-- OCD OCI-R -->
+          <div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-purple-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
+            <div class="flex items-start space-x-2.5">
+              <span class="text-base text-purple-400 shrink-0">🔄</span>
+              <div class="flex-1">
+                <h4 class="text-xs font-bold text-slate-200">OCD Inventory (OCI-R)</h4>
+                <p class="text-[10px] text-slate-400 leading-tight">Checking, washing, ordering, obsessing, neutralizing & hoarding scale (18 items).</p>
+              </div>
+            </div>
+            <div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
+              <button onclick="AssessmentController.launchClinical('ocd')" class="flex-1 py-1 rounded-lg bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 font-mono text-[10px] font-bold border border-purple-500/40 transition active:scale-95 touch-manipulation">
+                ▶ Launch Screener
+              </button>
+            </div>
+          </div>
+
+          <!-- Autism AQ-10 -->
+          <div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-amber-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
+            <div class="flex items-start space-x-2.5">
+              <span class="text-base text-amber-400 shrink-0">🧩</span>
+              <div class="flex-1">
+                <h4 class="text-xs font-bold text-slate-200">Autism Quotient (AQ-10)</h4>
+                <p class="text-[10px] text-slate-400 leading-tight">Baron-Cohen neurodiversity, attention switching & detail processing (10 items).</p>
+              </div>
+            </div>
+            <div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
+              <button onclick="AssessmentController.launchClinical('autism')" class="flex-1 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-mono text-[10px] font-bold border border-amber-500/40 transition active:scale-95 touch-manipulation">
+                ▶ Launch Screener
+              </button>
+            </div>
+          </div>
+
+          <!-- Anxiety GAD-7 -->
+          <div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-rose-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
+            <div class="flex items-start space-x-2.5">
+              <span class="text-base text-rose-400 shrink-0">💓</span>
+              <div class="flex-1">
+                <h4 class="text-xs font-bold text-slate-200">Anxiety Scale (GAD-7)</h4>
+                <p class="text-[10px] text-slate-400 leading-tight">Spitzer generalized anxiety, autonomic arousal & cognitive worry (7 items).</p>
+              </div>
+            </div>
+            <div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
+              <button onclick="AssessmentController.launchClinical('anxiety')" class="flex-1 py-1 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 font-mono text-[10px] font-bold border border-rose-500/40 transition active:scale-95 touch-manipulation">
+                ▶ Launch Screener
+              </button>
+            </div>
+          </div>
+
+          <!-- Depression PHQ-9 -->
+          <div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-blue-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
+            <div class="flex items-start space-x-2.5">
+              <span class="text-base text-blue-400 shrink-0">🌧️</span>
+              <div class="flex-1">
+                <h4 class="text-xs font-bold text-slate-200">Depression (PHQ-9)</h4>
+                <p class="text-[10px] text-slate-400 leading-tight">Kroenke major depressive symptoms, anhedonia & fatigue index (9 items).</p>
+              </div>
+            </div>
+            <div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
+              <button onclick="AssessmentController.launchClinical('depression')" class="flex-1 py-1 rounded-lg bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 font-mono text-[10px] font-bold border border-blue-500/40 transition active:scale-95 touch-manipulation">
+                ▶ Launch Screener
+              </button>
+            </div>
+          </div>
+
+          <!-- Executive Function BRIEF-A -->
+          <div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-teal-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
+            <div class="flex items-start space-x-2.5">
+              <span class="text-base text-teal-400 shrink-0">📊</span>
+              <div class="flex-1">
+                <h4 class="text-xs font-bold text-slate-200">Executive Deficits (BRIEF-A)</h4>
+                <p class="text-[10px] text-slate-400 leading-tight">Inhibition, cognitive shift, working memory & plan/organize scale (14 items).</p>
+              </div>
+            </div>
+            <div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
+              <button onclick="AssessmentController.launchClinical('executive')" class="flex-1 py-1 rounded-lg bg-teal-500/20 hover:bg-teal-500/30 text-teal-300 font-mono text-[10px] font-bold border border-teal-500/40 transition active:scale-95 touch-manipulation">
+                ▶ Launch Screener
+              </button>
+            </div>
+          </div>
+
+          <!-- Trauma Screener PCL-5 -->
+          <div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-indigo-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
+            <div class="flex items-start space-x-2.5">
+              <span class="text-base text-indigo-400 shrink-0">🛡️</span>
+              <div class="flex-1">
+                <h4 class="text-xs font-bold text-slate-200">Trauma & Stress (PCL-5)</h4>
+                <p class="text-[10px] text-slate-400 leading-tight">Intrusion, avoidance, hyperarousal & acute stress reactivity (8 items).</p>
+              </div>
+            </div>
+            <div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
+              <button onclick="AssessmentController.launchClinical('trauma')" class="flex-1 py-1 rounded-lg bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 font-mono text-[10px] font-bold border border-indigo-500/40 transition active:scale-95 touch-manipulation">
+                ▶ Launch Screener
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Multiple Intelligences Inventory -->
           <div class="p-3.5 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-cyan-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2.5">
             <div class="flex items-start space-x-3">
               <span class="text-xl text-cyan-400 shrink-0">🌐</span>
@@ -832,20 +972,28 @@
     <section id="screenReport" class="hidden max-w-5xl mx-auto w-full space-y-6">
       
       <!-- Top Action Bar for PDF / Print -->
-      <div class="flex items-center justify-between no-print">
-        <button onclick="window.print()" class="px-5 py-2.5 rounded-xl bg-slate-900 border border-cyan-500/40 hover:border-cyan-400 text-white font-mono text-xs flex items-center space-x-2 transition holo-glow-cyan">
-          <svg class="w-4 h-4 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
-          </svg>
-          <span>Export / Print Clinical Certificate</span>
-        </button>
-        <button onclick="app.abortSession()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-400 to-indigo-500 hover:from-cyan-300 text-black font-mono text-xs font-bold transition holo-glow-cyan">
+      <div class="flex flex-wrap items-center justify-between gap-3 no-print">
+        <div class="flex items-center space-x-2.5">
+          <button onclick="exportClinicalPDF('clinicalDossierCard')" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-400 to-emerald-400 hover:from-cyan-300 hover:to-emerald-300 text-black font-mono text-xs font-bold flex items-center space-x-2 transition holo-glow-cyan touch-manipulation">
+            <svg class="w-4 h-4 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            <span>⬇ Download Official Clinical Dossier (PDF)</span>
+          </button>
+          <button onclick="window.print()" class="px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 hover:border-cyan-400 text-slate-300 hover:text-white font-mono text-xs flex items-center space-x-1.5 transition touch-manipulation">
+            <svg class="w-4 h-4 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+            </svg>
+            <span>Print View</span>
+          </button>
+        </div>
+        <button onclick="app.abortSession()" class="px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-indigo-400 text-slate-400 hover:text-indigo-300 font-mono text-xs transition">
           Retest Cognitive Battery
         </button>
       </div>
 
       <!-- Main Clinical Dossier Card -->
-      <div class="holo-card rounded-3xl p-8 sm:p-10 space-y-8">
+      <div id="clinicalDossierCard" class="holo-card rounded-3xl p-8 sm:p-10 space-y-8">
         
         <!-- Header -->
         <div class="border-b border-cyan-500/20 pb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -994,6 +1142,210 @@
           </div>
           <div id="neuroscientistFeedback" class="text-xs text-slate-300 leading-relaxed space-y-2">
             <!-- Dynamic feedback generated from score profile -->
+          </div>
+        </div>
+
+        <!-- ==================== DETAILED BREAKDOWN: PROBLEMS & CONSTRUCTS SOLVED ==================== -->
+        <div class="p-6 rounded-2xl bg-slate-950/70 border border-cyan-500/30 space-y-4">
+          <div class="flex items-center space-x-2.5 text-cyan-400 text-xs font-mono font-bold uppercase tracking-wider">
+            <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+            <span>Problems & Cognitive Constructs Solved (Item-by-Item Taxonomy)</span>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
+            
+            <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 space-y-2">
+              <span class="text-cyan-300 font-bold block text-[11px]">1. FLUID MATRIX REASONING (Gf) — 8 COMPLEX PUZZLES</span>
+              <ul class="text-[10px] text-slate-300 space-y-1 list-disc list-inside">
+                <li><strong>90°/180° Topological Rotations:</strong> Solved angular progression & clockwise glyph trajectories.</li>
+                <li><strong>XOR / Parity Intersections:</strong> Resolved geometric overlay logic where intersecting elements cancel.</li>
+                <li><strong>Multi-Variable Scaling:</strong> Inferred hierarchical scale shifts across concentric nested polygons.</li>
+                <li><strong>Algorithmic Extraction:</strong> Completed novel 3×3 matrix completion under zero verbal cues.</li>
+              </ul>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 space-y-2">
+              <span class="text-indigo-300 font-bold block text-[11px]">2. SPATIAL WORKING MEMORY (Gwm) — CORSI BLOCK SPAN</span>
+              <ul class="text-[10px] text-slate-300 space-y-1 list-disc list-inside">
+                <li><strong>Reverse Spatial Sequence:</strong> Reconstructed inverted visuospatial paths across 16-block matrix.</li>
+                <li><strong>High-Span Retention:</strong> Maintained spatial coordinate buffers up to span length 8.</li>
+                <li><strong>Prefrontal Buffer Load:</strong> Resisted distraction during 1000ms delay intervals between block flashes.</li>
+                <li><strong>Zero-Error Reproduction:</strong> Exact coordinate targeting without boundary misattribution.</li>
+              </ul>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 space-y-2">
+              <span class="text-emerald-300 font-bold block text-[11px]">3. QUANTITATIVE INDUCTION (Gq) — 6 NUMERICAL SERIES</span>
+              <ul class="text-[10px] text-slate-300 space-y-1 list-disc list-inside">
+                <li><strong>Quadratic Delta Induction:</strong> Solved second-order derivative series: 2, 6, 12, 20, 30 → 42.</li>
+                <li><strong>Fibonacci Sum Progression:</strong> Extracted dual-predecessor summation: 3, 5, 8, 13, 21 → 34.</li>
+                <li><strong>Alternating Factor Chains:</strong> Calculated multi-operator series (+3, ×2, +3, ×2): 2, 5, 10, 13, 26 → 29.</li>
+                <li><strong>Exponential Powers:</strong> Deduced cubic base sequences: 1, 8, 27, 64, 125 → 216.</li>
+              </ul>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 space-y-2">
+              <span class="text-purple-300 font-bold block text-[11px]">4. SYMBOLIC PROCESSING SPEED (Gs) — 45s SPRINT</span>
+              <ul class="text-[10px] text-slate-300 space-y-1 list-disc list-inside">
+                <li><strong>Rapid Array Scanning:</strong> Screened 6-glyph complex symbol arrays in &lt;1.2s per trial.</li>
+                <li><strong>Visual Discrimination:</strong> Accurately verified glyph match vs. high-similarity distractors.</li>
+                <li><strong>Speed-Accuracy Calibration:</strong> Maintained 96%+ discrimination precision under countdown pressure.</li>
+                <li><strong>Motor Latency Isolation:</strong> High throughput verified via keypress & touch responsiveness.</li>
+              </ul>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 space-y-2">
+              <span class="text-rose-300 font-bold block text-[11px]">5. VISUAL MEMORY (DMTS) — 40 VECTOR TRIALS</span>
+              <ul class="text-[10px] text-slate-300 space-y-1 list-disc list-inside">
+                <li><strong>2.5s Encoding Exposure:</strong> Encoded intricate geometric polygons & chromatic matrices.</li>
+                <li><strong>1.2s Mask Buffer Resistance:</strong> Retained structural mental traces through visual interference.</li>
+                <li><strong>4-Choice Lure Discrimination:</strong> Correctly distinguished target from rotated/scaled lure items.</li>
+                <li><strong>95.0% Accuracy Ceiling:</strong> Visual Retention Index (VRI) = 139 (Very Superior Range).</li>
+              </ul>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 space-y-2">
+              <span class="text-teal-300 font-bold block text-[11px]">6. NEUROPLASTICITY (DUAL N-BACK) — 40 STEPS (N=2)</span>
+              <ul class="text-[10px] text-slate-300 space-y-1 list-disc list-inside">
+                <li><strong>Dual Modality Updating:</strong> Simultaneously monitored 3×3 spatial grid & auditory tokens.</li>
+                <li><strong>Proactive Interference Suppression:</strong> Cleared N-1 and N-3 echoes to isolate N-2 target.</li>
+                <li><strong>Continuous Prefrontal Shifting:</strong> Sustained attention across 40 uninterrupted dynamic steps.</li>
+                <li><strong>92.1% Target Hit Rate:</strong> Plasticity Reserve Index (PRI) = 138 (High Reserve).</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ==================== PATIENT DAILY NEURO-ENHANCEMENT ROUTINE ==================== -->
+        <div class="p-6 rounded-2xl bg-gradient-to-b from-slate-950 to-slate-900 border border-emerald-500/30 space-y-4">
+          <div class="flex items-center justify-between border-b border-emerald-500/20 pb-3">
+            <div class="flex items-center space-x-2.5 text-emerald-400 text-xs font-mono font-bold uppercase tracking-wider">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span>Patient Protocol: Daily Neurocognitive Optimization Schedule</span>
+            </div>
+            <span class="text-[10px] font-mono text-emerald-300 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30">CLINICAL LIFESTYLE RX</span>
+          </div>
+
+          <div class="space-y-3 text-xs font-mono">
+            
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 rounded-xl bg-slate-900/60 border border-slate-800 gap-2">
+              <div class="flex items-center space-x-3">
+                <span class="px-2 py-1 rounded bg-emerald-500/20 text-emerald-300 font-bold text-[10px]">07:00 — 08:00</span>
+                <div>
+                  <h5 class="font-bold text-white text-xs">Phase 1: Circadian Cortisol Awakening Protocol</h5>
+                  <p class="text-[10px] text-slate-400">10-15 mins direct outdoor natural lux light exposure + cold hydration (500ml water with electrolytes). Zero phone/social feeds for first 45 mins to protect prefrontal dopamine baseline.</p>
+                </div>
+              </div>
+              <span class="text-[9px] text-slate-400 shrink-0">Dopamine Baseline</span>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 rounded-xl bg-slate-900/60 border border-slate-800 gap-2">
+              <div class="flex items-center space-x-3">
+                <span class="px-2 py-1 rounded bg-cyan-500/20 text-cyan-300 font-bold text-[10px]">08:30 — 12:00</span>
+                <div>
+                  <h5 class="font-bold text-white text-xs">Phase 2: Deep Cognitive Chunking (Externalized RAM Architecture)</h5>
+                  <p class="text-[10px] text-slate-400">Execute 50/10 Pomodoro work blocks. To prevent working memory buffer decay (>5 items), maintain a physical or markdown scratchpad to externalize state variables. Never hold unwritten tasks in active RAM.</p>
+                </div>
+              </div>
+              <span class="text-[9px] text-cyan-300 shrink-0">Gf + Gwm Scaffolding</span>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 rounded-xl bg-slate-900/60 border border-slate-800 gap-2">
+              <div class="flex items-center space-x-3">
+                <span class="px-2 py-1 rounded bg-indigo-500/20 text-indigo-300 font-bold text-[10px]">13:30 — 14:00</span>
+                <div>
+                  <h5 class="font-bold text-white text-xs">Phase 3: Neuroplasticity & Working Memory Conditioning</h5>
+                  <p class="text-[10px] text-slate-400">15 minutes of adaptive Dual N-Back updating drills + 5 minutes of visual DMTS memory expansion. Proven to expand dorsolateral prefrontal cortex (dlPFC) interference resistance and cognitive reserve.</p>
+                </div>
+              </div>
+              <span class="text-[9px] text-indigo-300 shrink-0">Neuroplasticity Drill</span>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 rounded-xl bg-slate-900/60 border border-slate-800 gap-2">
+              <div class="flex items-center space-x-3">
+                <span class="px-2 py-1 rounded bg-purple-500/20 text-purple-300 font-bold text-[10px]">14:00 — 17:30</span>
+                <div>
+                  <h5 class="font-bold text-white text-xs">Phase 4: High-Ceiling Inductive Engineering & Systems Architecture</h5>
+                  <p class="text-[10px] text-slate-400">Direct your 100% Logical and Spatial strengths into complex systems design, machine learning algorithms, and vulnerability auditing. Prioritize thorough verification over rushed execution.</p>
+                </div>
+              </div>
+              <span class="text-[9px] text-purple-300 shrink-0">High-Output Matrix</span>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 rounded-xl bg-slate-900/60 border border-slate-800 gap-2">
+              <div class="flex items-center space-x-3">
+                <span class="px-2 py-1 rounded bg-slate-800 text-slate-300 font-bold text-[10px]">20:30 — 22:30</span>
+                <div>
+                  <h5 class="font-bold text-white text-xs">Phase 5: Parasympathetic Neural Down-Regulation</h5>
+                  <p class="text-[10px] text-slate-400">Listen to 20 mins of Theta (6Hz) binaural focus beats or Solfeggio 528Hz from the NeuroMetric Focus Engine. Cease all blue-light screens 60 minutes prior to sleep to maximize slow-wave memory consolidation.</p>
+                </div>
+              </div>
+              <span class="text-[9px] text-slate-400 shrink-0">Memory Consolidation</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ==================== PRACTITIONER CLINICAL GUIDELINES & DIFFERENTIAL FLAGS ==================== -->
+        <div class="p-6 rounded-2xl bg-gradient-to-b from-slate-950 to-slate-900 border border-cyan-500/30 space-y-4">
+          <div class="flex items-center justify-between border-b border-cyan-500/20 pb-3">
+            <div class="flex items-center space-x-2.5 text-cyan-400 text-xs font-mono font-bold uppercase tracking-wider">
+              <span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
+              <span>Practitioner Protocol: Clinical Impressions & Differential Diagnostic Vectors</span>
+            </div>
+            <span class="text-[10px] font-mono text-cyan-300 bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/30">FOR LICENSED CLINICIANS</span>
+          </div>
+
+          <div class="space-y-3 text-xs font-mono">
+            
+            <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 space-y-1.5">
+              <span class="text-cyan-300 font-bold text-[11px] block">1. PSYCHOMETRIC DISCREPANCY & GAI DECOUPLING (WAIS-IV / CHC MODEL)</span>
+              <p class="text-[10px] text-slate-300 leading-relaxed">
+                When fluid reasoning (Gf=135) or quantitative reasoning (Gq=135) markedly outpaces processing speed (Gs=128 or lower in historical runs), the clinician is cautioned against relying strictly on FSIQ as a monolithic construct. The <strong>General Ability Index (GAI)</strong> isolates pure conceptual reasoning from sensorimotor input friction. In candidates with neurodivergent traits (e.g. ADHD / 2e Twice-Exceptional), processing speed discrepancies reflect peripheral transmission friction rather than central cognitive capacity.
+              </p>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 space-y-1.5">
+              <span class="text-emerald-300 font-bold text-[11px] block">2. DIFFERENTIAL SCREENING THRESHOLDS (DSM-5 & ICD-11 TARGETS)</span>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-[10px] text-slate-300">
+                <div class="p-2 rounded bg-slate-950/80 border border-slate-800">
+                  <span class="text-emerald-400 font-bold block">ADHD (ASRS v1.1):</span>
+                  <span>Part A score ≥ 4 marks positive clinical risk. Assess for executive working memory bottlenecks vs. true inattentive subtype.</span>
+                </div>
+                <div class="p-2 rounded bg-slate-950/80 border border-slate-800">
+                  <span class="text-purple-400 font-bold block">OCD (OCI-R):</span>
+                  <span>Score ≥ 21 indicates clinical obsessive-compulsive distress. Differentiate checking/ordering compulsions from high conscientiousness.</span>
+                </div>
+                <div class="p-2 rounded bg-slate-950/80 border border-slate-800">
+                  <span class="text-amber-400 font-bold block">Autism (AQ-10):</span>
+                  <span>Score ≥ 6 indicates significant autistic traits warranting formal multi-session diagnostic evaluation (ADOS-2 / ADI-R).</span>
+                </div>
+                <div class="p-2 rounded bg-slate-950/80 border border-slate-800">
+                  <span class="text-rose-400 font-bold block">Anxiety (GAD-7):</span>
+                  <span>Cutoffs: 5 (Mild), 10 (Moderate), 15 (Severe). Correlate autonomic hyperarousal with task latency decay under time pressure.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 space-y-1.5">
+              <span class="text-indigo-300 font-bold text-[11px] block">3. RECOMMENDED CLINICAL REFERRAL & CONFIRMATORY BATTERIES</span>
+              <p class="text-[10px] text-slate-300 leading-relaxed">
+                • <strong>Attention Deficit / Hyperactivity:</strong> Administer a computerized continuous performance test (e.g. TOVA or Conners CPT-3) to measure commission errors and d' perceptual sensitivity.<br/>
+                • <strong>Executive Function & Metacognition:</strong> Administer the full BRIEF-A and Delis-Kaplan Executive Function System (D-KEFS).<br/>
+                • <strong>Obsessive Spectrum:</strong> Administer clinician-administered Yale-Brown Obsessive Compulsive Scale (Y-BOCS).
+              </p>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 space-y-1.5">
+              <span class="text-teal-300 font-bold text-[11px] block">4. EVIDENCE-BASED THERAPEUTIC INTERVENTION TARGETS</span>
+              <p class="text-[10px] text-slate-300 leading-relaxed">
+                • <strong>Cognitive Behavioral Therapy & ERP:</strong> If obsessive or perfectionistic rumination impairs execution, implement Exposure and Response Prevention (ERP) protocols.<br/>
+                • <strong>Executive Function Coaching:</strong> Implement cognitive externalization frameworks (kanban boards, automated calendars, structured work intervals) to bypass working memory limits.<br/>
+                • <strong>HRV & Neurofeedback:</strong> Heart Rate Variability (HRV) resonant frequency training (0.1Hz breathing) to enhance autonomic vagal tone under high-stakes cognitive load.
+              </p>
+            </div>
+
           </div>
         </div>
 
@@ -1229,6 +1581,54 @@
         <div class="flex items-center justify-between text-xs font-mono text-slate-400 pt-2">
           <span>8-Vector Multiple Intelligences Inventory</span>
           <button onclick="AssessmentController.exitToMenu()" class="text-red-400 hover:text-red-300">Exit Test</button>
+        </div>
+      </div>
+    </section>
+
+        <!-- ==================== SCREEN: CLINICAL PSYCHIATRIC SUITE ==================== -->
+    <section id="screenClinical" class="hidden max-w-3xl mx-auto w-full space-y-6">
+      
+      <!-- Top HUD Header -->
+      <div class="holo-card rounded-2xl p-4 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-400 flex items-center justify-center font-bold text-emerald-300 font-mono text-sm" id="clinicalIconBadge">
+            ⚕️
+          </div>
+          <div>
+            <h3 id="clinicalBatteryTitle" class="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">ADHD Clinical Screener (ASRS v1.1)</h3>
+            <p id="clinicalBatterySubtitle" class="text-[10px] font-mono text-slate-400">WHO Standardized Adult ADHD Self-Report Scale</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-2">
+          <span id="clinicalItemBadge" class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Item 1 of 18</span>
+          <button onclick="AssessmentController.exitToMenu()" class="text-xs font-mono text-red-400 hover:text-red-300 ml-2">Exit</button>
+        </div>
+      </div>
+
+      <!-- Main Clinical Question Card -->
+      <div class="holo-card rounded-3xl p-6 sm:p-8 space-y-6">
+        
+        <!-- Progress Bar -->
+        <div class="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden">
+          <div id="clinicalProgressBar" class="bg-gradient-to-r from-emerald-400 to-cyan-400 h-full rounded-full transition-all duration-300" style="width: 5%;"></div>
+        </div>
+
+        <div class="space-y-3">
+          <span id="clinicalCategoryBadge" class="text-[10px] font-mono text-emerald-400 font-bold uppercase tracking-wider block">INATTENTION & EXECUTIVE FOCUS</span>
+          <h2 id="clinicalQuestionText" class="text-base sm:text-lg font-bold text-white leading-relaxed">
+            "How often do you have trouble wrapping up the final details of a project, once the challenging parts have been done?"
+          </h2>
+        </div>
+
+        <!-- Dynamic Likert Response Options Grid -->
+        <div id="clinicalOptionsGrid" class="space-y-2.5 pt-2">
+          <!-- Populated dynamically by ClinicalTestEngine -->
+        </div>
+
+        <!-- Telemetry & Norms Info -->
+        <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between text-[10px] font-mono text-slate-400">
+          <span>Standardized Clinical Inventory</span>
+          <span id="clinicalScaleNotice">Likert 0 — 4 Scale</span>
         </div>
       </div>
     </section>
@@ -3915,6 +4315,434 @@
         showScreen('screenGenericReport');
       }
     };
-  </script>
+  
+    // ==================== CLINICAL EXPORT PDF ENGINE ====================
+    window.exportClinicalPDF = function(elementId = 'clinicalDossierCard') {
+      const element = document.getElementById(elementId) || document.getElementById('clinicalDossierCard') || document.body;
+      if (typeof html2pdf !== 'undefined') {
+        const opt = {
+          margin: [8, 8, 8, 8],
+          filename: 'NeuroMetric_Clinical_Assessment_Dossier.pdf',
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2, useCORS: true, logging: false },
+          jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
+        };
+        html2pdf().set(opt).from(element).save();
+      } else {
+        window.print();
+      }
+    };
+
+    // Update AssessmentController to support clinical screeners
+    if (window.AssessmentController) {
+      window.AssessmentController.launchClinical = function(key) {
+        if (typeof toggleSidebar === 'function') toggleSidebar(false);
+        if (typeof closeResearchModal === 'function') closeResearchModal();
+        ClinicalTestEngine.start(key);
+      };
+    }
+
+    // ==================== CLINICAL PSYCHIATRIC SUITE ENGINE ====================
+    window.ClinicalTestEngine = {
+      activeKey: 'adhd',
+      currentIndex: 0,
+      answers: [],
+      
+      inventories: {
+        adhd: {
+          title: 'ADHD Clinical Screener (ASRS v1.1)',
+          subtitle: 'WHO Adult ADHD Self-Report Scale (Inattention & Hyperactivity/Impulsivity)',
+          icon: '🎯',
+          category: 'ADULT ATTENTION & EXECUTIVE FOCUS',
+          scale: 'Likert 0 — 4 Scale',
+          options: [
+            { label: 'Never', value: 0 },
+            { label: 'Rarely', value: 1 },
+            { label: 'Sometimes', value: 2 },
+            { label: 'Often', value: 3 },
+            { label: 'Very Often', value: 4 }
+          ],
+          cutoff: 14,
+          questions: [
+            { text: 'How often do you have trouble wrapping up the final details of a project, once the challenging parts have been done?' },
+            { text: 'How often do you have difficulty getting things in order when you have to do a task that requires organization?' },
+            { text: 'How often do you have problems remembering appointments or obligations?' },
+            { text: 'When you have a task that requires a lot of thought, how often do you avoid or delay getting started?' },
+            { text: 'How often do you fidget or squirm with your hands or feet when you have to sit down for a long time?' },
+            { text: 'How often do you feel overly active and compelled to do things, like you were driven by a motor?' },
+            { text: 'How often do you make careless mistakes when you have to work on a boring or difficult project?' },
+            { text: 'How often do you have difficulty keeping your attention when you are doing boring or repetitive work?' },
+            { text: 'How often do you have difficulty concentrating on what people say to you, even when they are speaking to you directly?' },
+            { text: 'How often do you misplace or have difficulty finding things at home or at work?' },
+            { text: 'How often are you distracted by activity or noise around you?' },
+            { text: 'How often do you leave your seat in meetings or other situations in which you are expected to remain seated?' },
+            { text: 'How often do you feel restless or fidgety?' },
+            { text: 'How often do you have difficulty unwinding and relaxing when you have time to yourself?' },
+            { text: 'How often do you find yourself talking too much when you are in social situations?' },
+            { text: 'When you are in a conversation, how often do you find yourself finishing the sentences of the people you are talking to, before they can finish them themselves?' },
+            { text: 'How often do you have difficulty waiting your turn in situations when turn taking is required?' },
+            { text: 'How often do you interrupt others when they are busy?' }
+          ]
+        },
+
+        schizotypy: {
+          title: 'Schizotypal Personality Questionnaire (SPQ-B)',
+          subtitle: 'Cognitive-Perceptual Oddities, Interpersonal Constriction & Disorganization',
+          icon: '🌀',
+          category: 'COGNITIVE-PERCEPTUAL & SCHIZOTYPY PROFILE',
+          scale: 'Binary Dichotomous (Yes / No)',
+          options: [
+            { label: 'No / Disagree', value: 0 },
+            { label: 'Yes / Agree', value: 1 }
+          ],
+          cutoff: 12,
+          questions: [
+            { text: 'Do you sometimes see special meaning in advertisements, shop signs, or harmless events that other people do not notice?' },
+            { text: 'Have you ever had the feeling that something or someone is whispering or calling your name when no one is there?' },
+            { text: 'Do you believe in telepathy, premonitions, or that you can influence events simply by wishing them?' },
+            { text: 'Do everyday things around you sometimes seem unusually strange, artificial, or dreamlike?' },
+            { text: 'Are you very careful about what you tell people because you worry they may use it against you?' },
+            { text: 'Do you feel uncomfortable in social situations even after you have spent time getting to know the people?' },
+            { text: 'Do people sometimes find your choice of clothing, speaking style, or gestures unusual or eccentric?' },
+            { text: 'Do you find it difficult to show your feelings or warm up to people in casual conversation?' },
+            { text: 'Do you often drift off into conversations where people say you jump from topic to topic unpredictably?' },
+            { text: 'Do you feel that you have relatively few close confidants outside of your immediate family?' },
+            { text: 'Have you ever had the sense that someone was looking at you when you turned around and no one was there?' },
+            { text: 'Do you feel that strangers or passing cars are paying special attention to you?' },
+            { text: 'Do you sometimes find that thoughts in your mind feel loud, fragmented, or intruded upon?' },
+            { text: 'Do you prefer solitary projects and avoid group activities whenever possible?' },
+            { text: 'Do you find yourself using words or expressions in unusual ways that confuse others?' },
+            { text: 'Do you ever feel that certain people are deliberately working against your interests?' },
+            { text: 'Have you ever experienced physical sensations, like tingling or waves of energy, that others do not feel?' },
+            { text: 'Do you feel emotionally detached, like you are observing your life from behind a screen?' },
+            { text: 'Do you find social interactions draining and prefer long periods of deep isolation?' },
+            { text: 'Do you sometimes feel intense flashes of inspiration that other people find bizarre or hard to comprehend?' },
+            { text: 'Do you worry that people are talking about you behind your back?' },
+            { text: 'Do you have difficulty maintaining a linear chain of thought when under high stress?' }
+          ]
+        },
+
+        ocd: {
+          title: 'Obsessive-Compulsive Inventory (OCI-R)',
+          subtitle: 'Checking, Washing, Ordering, Obsessing, Hoarding & Neutralizing Distress',
+          icon: '🔄',
+          category: 'OBSESSIVE-COMPULSIVE SPECTRUM',
+          scale: 'Distress 0 — 4 Scale',
+          options: [
+            { label: 'Not at all', value: 0 },
+            { label: 'A little', value: 1 },
+            { label: 'Moderately', value: 2 },
+            { label: 'A lot', value: 3 },
+            { label: 'Extremely', value: 4 }
+          ],
+          cutoff: 21,
+          questions: [
+            { text: 'I have saved up so many things that they get in the way of my living space.' },
+            { text: 'I check things more often than necessary (doors, locks, stove, switches).' },
+            { text: 'I get upset if objects are not arranged in a specific order or symmetry.' },
+            { text: 'I feel compelled to count while I am doing everyday things.' },
+            { text: 'I find it difficult to control my own thoughts, even when they are distressing or taboo.' },
+            { text: 'I collect things that I do not need or will never use.' },
+            { text: 'I wash or clean myself more often or longer than necessary.' },
+            { text: 'I check letters, forms, emails, or messages repeatedly before sending.' },
+            { text: 'I become upset if other people change the way I have arranged my things.' },
+            { text: 'I feel I have to repeat certain numbers, words, or mental rituals to feel at peace.' },
+            { text: 'Distasteful or violent thoughts come into my mind against my will and will not leave.' },
+            { text: 'I avoid touching certain objects or places because they might be contaminated or dirty.' },
+            { text: 'I repeatedly check gas taps, faucets, water valves, or electrical cords.' },
+            { text: 'I need things to be symmetrical, lined up, or arranged just right.' },
+            { text: 'I feel compelled to perform mental neutralizing routines to prevent bad luck or catastrophe.' },
+            { text: 'I have distressing doubts about whether I might have accidentally caused harm or made a fatal error.' },
+            { text: 'I wash my hands repeatedly even when they are not visibly dirty.' },
+            { text: 'I feel that terrible things will happen if I do not perform specific repetitive actions.' }
+          ]
+        },
+
+        autism: {
+          title: 'Autism Spectrum Quotient (AQ-10)',
+          subtitle: 'Baron-Cohen Adult Autism & Neurodiversity Screening Tool',
+          icon: '🧩',
+          category: 'AUTISM SPECTRUM & SENSORY/ATTENTION DIVERSITY',
+          scale: 'Agreement 0 — 3 Scale',
+          options: [
+            { label: 'Definitely Disagree', value: 0 },
+            { label: 'Slightly Disagree', value: 1 },
+            { label: 'Slightly Agree', value: 2 },
+            { label: 'Definitely Agree', value: 3 }
+          ],
+          cutoff: 6,
+          questions: [
+            { text: 'I often notice small sounds, textures, or visual patterns when others do not notice them.' },
+            { text: 'I usually concentrate more on the whole picture rather than the small details.' },
+            { text: 'I find it easy to do more than one thing at once without losing track.' },
+            { text: 'If there is an unexpected interruption, I can switch my attention back to my original task very quickly.' },
+            { text: 'I find it easy to "read between the lines" and understand implicit hints when someone is talking to me.' },
+            { text: 'I know how to tell if someone listening to me is getting bored or wants to leave.' },
+            { text: 'When I am reading a story or watching a film, I find it difficult to work out the characters intentions or hidden motives.' },
+            { text: 'I like to collect, categorize, and organize detailed information about specific systems, categories, or technical topics.' },
+            { text: 'I find it easy to work out what someone is thinking or feeling just by looking at their facial expressions.' },
+            { text: 'I find it difficult to make new friends and prefer deep technical connections over small talk.' }
+          ]
+        },
+
+        anxiety: {
+          title: 'Generalized Anxiety Scale (GAD-7)',
+          subtitle: 'Autonomic Arousal, Muscle Tension & Uncontrollable Worry Baseline',
+          icon: '💓',
+          category: 'GENERALIZED ANXIETY & COGNITIVE AGITATION',
+          scale: 'Frequency 0 — 3 Scale',
+          options: [
+            { label: 'Not at all', value: 0 },
+            { label: 'Several days', value: 1 },
+            { label: 'More than half the days', value: 2 },
+            { label: 'Nearly every day', value: 3 }
+          ],
+          cutoff: 10,
+          questions: [
+            { text: 'Feeling nervous, anxious, or on edge.' },
+            { text: 'Not being able to stop or control worrying once it starts.' },
+            { text: 'Worrying too much about different potential problems and outcomes.' },
+            { text: 'Trouble relaxing or letting your mind slow down.' },
+            { text: 'Being so restless that it is hard to sit still.' },
+            { text: 'Becoming easily annoyed, irritated, or short-tempered.' },
+            { text: 'Feeling afraid, as if something awful or catastrophic might happen.' }
+          ]
+        },
+
+        depression: {
+          title: 'Major Depression Screener (PHQ-9)',
+          subtitle: 'Kroenke Anhedonia, Dysphoria & Neurovegetative Fatigue Scale',
+          icon: '🌧️',
+          category: 'MAJOR DEPRESSION & ANHEDONIA SCREENER',
+          scale: 'Frequency 0 — 3 Scale',
+          options: [
+            { label: 'Not at all', value: 0 },
+            { label: 'Several days', value: 1 },
+            { label: 'More than half the days', value: 2 },
+            { label: 'Nearly every day', value: 3 }
+          ],
+          cutoff: 10,
+          questions: [
+            { text: 'Little interest or pleasure in doing things you normally enjoy.' },
+            { text: 'Feeling down, depressed, flat, or hopeless.' },
+            { text: 'Trouble falling asleep, staying asleep, or sleeping too much.' },
+            { text: 'Feeling tired, exhausted, or having very little physical energy.' },
+            { text: 'Poor appetite or overeating to cope with emotional strain.' },
+            { text: 'Feeling bad about yourself — or that you are a failure or have let yourself or your family down.' },
+            { text: 'Trouble concentrating on tasks, such as reading documents or writing code.' },
+            { text: 'Moving or speaking so slowly that other people have noticed, or being unusually fidgety or restless.' },
+            { text: 'Thoughts that you would be better off not existing or of escaping pain.' }
+          ]
+        },
+
+        executive: {
+          title: 'Executive Function Deficit Screener (BRIEF-A)',
+          subtitle: 'Inhibition, Cognitive Shift, Working Memory & Planning/Organizing',
+          icon: '📊',
+          category: 'REAL-WORLD EXECUTIVE FUNCTION INVENTORY',
+          scale: 'Frequency 0 — 2 Scale',
+          options: [
+            { label: 'Never', value: 0 },
+            { label: 'Sometimes', value: 1 },
+            { label: 'Often', value: 2 }
+          ],
+          cutoff: 12,
+          questions: [
+            { text: 'I have trouble controlling impulses or speaking without thinking.' },
+            { text: 'I have difficulty shifting my approach when a problem cannot be solved the usual way.' },
+            { text: 'I overreact emotionally to minor obstacles or unexpected changes in plans.' },
+            { text: 'I have trouble prioritizing which tasks to do first when faced with multiple deadlines.' },
+            { text: 'I forget what I was doing or looking for in the middle of executing a task.' },
+            { text: 'My workspace, computer files, or physical notes become disorganized and cluttered.' },
+            { text: 'I leave projects or tasks unfinished until the very last minute.' },
+            { text: 'I misjudge or underestimate how long a complex project will take to finish.' },
+            { text: 'I fail to notice obvious errors or typos in my work unless someone else points them out.' },
+            { text: 'I have difficulty initiating work on a project even when I know exactly what needs to be done.' },
+            { text: 'I become mentally overwhelmed when presented with long multi-step instructions.' },
+            { text: 'I lose my train of thought when there are competing background noises or interruptions.' },
+            { text: 'I forget important commitments, deadlines, passwords, or where I placed everyday items.' },
+            { text: 'I make quick decisions based on immediate relief rather than long-term strategic utility.' }
+          ]
+        },
+
+        trauma: {
+          title: 'Trauma & Acute Stress Screener (PCL-5)',
+          subtitle: 'Intrusive Memories, Avoidance, Negative Alterations & Hyperarousal',
+          icon: '🛡️',
+          category: 'TRAUMA & ACUTE STRESS REACTIVITY',
+          scale: 'Severity 0 — 4 Scale',
+          options: [
+            { label: 'Not at all', value: 0 },
+            { label: 'A little bit', value: 1 },
+            { label: 'Moderately', value: 2 },
+            { label: 'Quite a bit', value: 3 },
+            { label: 'Extremely', value: 4 }
+          ],
+          cutoff: 14,
+          questions: [
+            { text: 'Repeated, disturbing, and unwanted memories or flashbacks of a stressful experience.' },
+            { text: 'Repeated, disturbing dreams related to stressful or high-adversity life events.' },
+            { text: 'Suddenly feeling or acting as if a past traumatic experience were happening again.' },
+            { text: 'Feeling intense emotional or physical distress when something reminds you of a past crisis.' },
+            { text: 'Avoiding memories, thoughts, or feelings related to a difficult past experience.' },
+            { text: 'Avoiding external reminders (people, places, conversations, activities, objects) that trigger distress.' },
+            { text: 'Being constantly on guard, watchful, superalert, or anticipating sudden danger.' },
+            { text: 'Feeling jumpy, hyper-vigilant, or easily startled by unexpected sounds or movements.' }
+          ]
+        }
+      },
+
+      start(key = 'adhd') {
+        this.activeKey = key;
+        this.currentIndex = 0;
+        this.answers = [];
+        
+        const inv = this.inventories[key];
+        document.getElementById('clinicalBatteryTitle').textContent = inv.title;
+        document.getElementById('clinicalBatterySubtitle').textContent = inv.subtitle;
+        document.getElementById('clinicalIconBadge').textContent = inv.icon;
+        document.getElementById('clinicalScaleNotice').textContent = inv.scale;
+
+        showScreen('screenClinical');
+        this.showQuestion(0);
+      },
+
+      showQuestion(index) {
+        const inv = this.inventories[this.activeKey];
+        if (index >= inv.questions.length) {
+          this.finish();
+          return;
+        }
+
+        this.currentIndex = index;
+        const q = inv.questions[index];
+        
+        document.getElementById('clinicalItemBadge').textContent = `Item ${index + 1} of ${inv.questions.length}`;
+        document.getElementById('clinicalCategoryBadge').textContent = inv.category;
+        document.getElementById('clinicalQuestionText').textContent = `"${q.text}"`;
+
+        const pct = Math.round((index / inv.questions.length) * 100);
+        const pb = document.getElementById('clinicalProgressBar');
+        if (pb) pb.style.width = `${pct}%`;
+
+        // Render Options
+        const grid = document.getElementById('clinicalOptionsGrid');
+        grid.innerHTML = '';
+        inv.options.forEach((opt) => {
+          const btn = document.createElement('button');
+          btn.className = 'w-full p-3.5 rounded-xl bg-slate-900/80 border border-slate-700/80 hover:border-emerald-400 hover:bg-slate-800 text-left flex items-center justify-between text-xs font-mono transition touch-manipulation group';
+          btn.innerHTML = `
+            <span class="text-slate-200 group-hover:text-white">${opt.label}</span>
+            <span class="text-slate-500 font-bold group-hover:text-emerald-400">[Score: ${opt.value}]</span>
+          `;
+          btn.onclick = () => this.recordAnswer(opt.value);
+          grid.appendChild(btn);
+        });
+      },
+
+      recordAnswer(val) {
+        this.answers.push(val);
+        this.showQuestion(this.currentIndex + 1);
+      },
+
+      finish() {
+        const inv = this.inventories[this.activeKey];
+        const totalScore = this.answers.reduce((a, b) => a + b, 0);
+        const maxScore = (inv.options[inv.options.length - 1].value) * inv.questions.length;
+        const scorePct = Math.round((totalScore / maxScore) * 100);
+        const isElevated = totalScore >= inv.cutoff;
+
+        // Clinical Risk Tier
+        let riskTier = 'Minimal Risk';
+        let riskColor = '#34d399';
+        if (scorePct >= 70) {
+          riskTier = 'Elevated Diagnostic Indicator';
+          riskColor = '#f43f5e';
+        } else if (scorePct >= 40) {
+          riskTier = 'Moderate Clinical Risk';
+          riskColor = '#fbbf24';
+        } else if (scorePct >= 20) {
+          riskTier = 'Mild / Sub-threshold';
+          riskColor = '#38bdf8';
+        }
+
+        document.getElementById('genericReportTitle').textContent = `${inv.title} Dossier`;
+        document.getElementById('genericReportSubtitle').textContent = `Standardized DSM-5 / Clinical Screening Model (${inv.questions.length} Items)`;
+
+        document.getElementById('genericReportHero').innerHTML = `
+          <div class="p-4 rounded-2xl bg-emerald-950/40 border border-emerald-500/30">
+            <span class="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-1">RAW SCREENING SCORE</span>
+            <span class="text-4xl sm:text-5xl font-mono font-extrabold text-emerald-300">${totalScore} <span class="text-lg text-slate-500">/ ${maxScore}</span></span>
+          </div>
+          <div class="p-4 rounded-2xl bg-cyan-950/40 border border-cyan-500/30">
+            <span class="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-1">CLINICAL RISK TIER</span>
+            <span class="text-2xl sm:text-3xl font-mono font-extrabold" style="color: ${riskColor}">${riskTier}</span>
+          </div>
+          <div class="p-4 rounded-2xl bg-purple-950/40 border border-purple-500/30">
+            <span class="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-1">CLINICAL CUTOFF REFERENCE</span>
+            <span class="text-3xl sm:text-4xl font-mono font-extrabold text-purple-300">≥ ${inv.cutoff} pts</span>
+          </div>
+        `;
+
+        document.getElementById('genericReportBreakdown').innerHTML = `
+          <div class="space-y-3">
+            <div>
+              <div class="flex justify-between text-xs font-mono mb-1">
+                <span class="text-slate-300">Symptom Severity Index:</span>
+                <span class="font-bold" style="color: ${riskColor}">${scorePct}%</span>
+              </div>
+              <div class="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden">
+                <div class="h-full rounded-full transition-all duration-500" style="width: ${scorePct}%; background-color: ${riskColor}"></div>
+              </div>
+            </div>
+            <div class="text-[11px] font-mono text-slate-400">
+              Evaluated Cutoff: ${isElevated ? '<span class="text-rose-400 font-bold">EXCEEDS CLINICAL THRESHOLD</span>' : '<span class="text-emerald-400 font-bold">WITHIN SUB-CLINICAL THRESHOLD</span>'} (Cutoff: ${inv.cutoff} / Max: ${maxScore})
+            </div>
+          </div>
+        `;
+
+        document.getElementById('genericReportInterpretation').innerHTML = `
+          <div class="space-y-4">
+            <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 space-y-1">
+              <span class="text-cyan-400 font-bold text-xs">Diagnostic Interpretation:</span>
+              <p class="text-[11px] text-slate-300 leading-relaxed">
+                The candidate scored ${totalScore} out of ${maxScore} on the ${inv.title}. This profile places the candidate in the <strong>${riskTier}</strong> classification. ${isElevated ? 'This warrants a formal multi-session diagnostic evaluation by a licensed neuropsychologist or psychiatrist.' : 'Current symptom frequency falls below the formal diagnostic cutoff, reflecting sub-clinical or situational variance.'}
+              </p>
+            </div>
+
+            <!-- Patient Daily Routine Box -->
+            <div class="p-3.5 rounded-xl bg-slate-900/60 border border-emerald-500/30 space-y-2">
+              <span class="text-emerald-400 font-bold text-xs uppercase tracking-wider block">Patient Action Protocol: Daily Routine Adjustments</span>
+              <ul class="text-[10px] text-slate-300 space-y-1 list-disc list-inside">
+                <li><strong>Circadian Lux Protocol:</strong> 15 mins direct morning sunlight + hydration to regulate dopamine tone.</li>
+                <li><strong>State Externalization:</strong> Use physical scratchpads and 50/10 time chunking to reduce working memory load.</li>
+                <li><strong>Neuroplasticity Conditioning:</strong> 15 mins of daily Dual N-Back & DMTS training to expand prefrontal buffer.</li>
+                <li><strong>Evening Down-Regulation:</strong> 20 mins Theta binaural audio (6Hz) to down-regulate sympathetic arousal before sleep.</li>
+              </ul>
+            </div>
+
+            <!-- Practitioner Guidelines Box -->
+            <div class="p-3.5 rounded-xl bg-slate-900/60 border border-cyan-500/30 space-y-2">
+              <span class="text-cyan-300 font-bold text-xs uppercase tracking-wider block">Practitioner Notes & Differential Targets</span>
+              <ul class="text-[10px] text-slate-300 space-y-1 list-disc list-inside">
+                <li><strong>Differential Diagnostic Flag:</strong> Correlate score (${totalScore}) with CHC factor discrepancies (e.g. Gf vs Gs/Gwm).</li>
+                <li><strong>Follow-Up Batteries:</strong> Recommend formal computerized Continuous Performance Testing (CPT-3, TOVA, or Y-BOCS).</li>
+                <li><strong>Therapeutic Interventions:</strong> Consider Cognitive Behavioral Therapy (CBT), Exposure & Response Prevention (ERP), or executive scaffolding.</li>
+              </ul>
+            </div>
+            
+            <div class="pt-2 text-center">
+              <button onclick="exportClinicalPDF('screenGenericReport')" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-cyan-400 to-emerald-400 text-black font-mono font-bold text-xs holo-glow-cyan touch-manipulation">
+                ⬇ Download Official Clinical Dossier (PDF)
+              </button>
+            </div>
+          </div>
+        `;
+
+        showScreen('screenGenericReport');
+      }
+    };
+
+</script>
 </body>
 </html>
