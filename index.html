@@ -223,6 +223,40 @@
         fill: #334155 !important;
       }
     }
+  
+    /* DMTS Compact Viewport Layout Optimization - Zero Bottom Clipping */
+    #screenMemory {
+      max-height: calc(100vh - 75px);
+      overflow-y: hidden;
+    }
+    #memoryDisplayArea {
+      min-height: 100px !important;
+      max-height: 18vh !important;
+      padding: 0.5rem 1rem !important;
+      margin-bottom: 0.5rem !important;
+    }
+    #memoryDisplayArea svg {
+      max-height: 13vh !important;
+      max-width: 13vh !important;
+      width: auto !important;
+      height: auto !important;
+    }
+    #memoryProbeGrid {
+      max-height: 32vh !important;
+      gap: 0.6rem !important;
+    }
+    #memoryProbeGrid .matrix-holo-tile {
+      height: 115px !important;
+      min-height: 115px !important;
+      padding: 0.4rem !important;
+    }
+    #memoryProbeGrid svg {
+      max-height: 11vh !important;
+      max-width: 11vh !important;
+      width: auto !important;
+      height: auto !important;
+    }
+
   </style>
 </head>
 <body class="min-h-screen relative flex flex-col justify-between selection:bg-cyan-500 selection:text-black">
@@ -586,6 +620,12 @@
 
     <!-- Timer & Controls -->
     <div class="flex items-center space-x-1.5 sm:space-x-3 shrink-0">
+      <!-- Focus Audio FM Docked in Header (Zero Bottom-Right Overlap) -->
+      <button onclick="toggleAudioCard()" id="headerAudioBtn" class="px-2 sm:px-2.5 py-1.5 rounded-lg bg-slate-900 border border-purple-500/40 hover:border-purple-400 text-purple-300 font-mono text-[10px] sm:text-xs flex items-center space-x-1.5 backdrop-blur-md active:scale-95 transition touch-manipulation holo-glow-violet shrink-0" title="Toggle Brainwave Focus Audio Engine">
+        <span class="w-2 h-2 rounded-full bg-purple-400" id="audioPillDot"></span>
+        <span id="audioPillText" class="hidden md:inline">Focus Audio</span>
+        <span class="text-[9px] sm:text-[10px] bg-purple-900/60 px-1 py-0.5 rounded text-purple-200 font-bold" id="audioPillStatus">OFF</span>
+      </button>
       <button onclick="toggleBgVideo()" id="btnVideoToggle" class="text-[10px] sm:text-xs font-mono bg-cyan-950/50 text-cyan-300 hover:text-white px-2 sm:px-3 py-1.5 rounded-lg border border-cyan-500/30 transition touch-manipulation">
         <span class="hidden sm:inline">3D Video: ON</span><span class="sm:hidden">3D: ON</span>
       </button>
@@ -1364,41 +1404,44 @@
     </section>
 
     <!-- ==================== SCREEN 4: MEMORY RECOGNITION (DMTS) ==================== -->
-    <section id="screenMemory" class="hidden max-w-3xl mx-auto w-full space-y-6">
-      <div class="holo-card rounded-3xl p-6 sm:p-8 space-y-6">
-        <div class="flex items-center justify-between border-b border-indigo-500/20 pb-4">
-          <div class="flex items-center space-x-3">
-            <span class="text-2xl">🧠</span>
+    <section id="screenMemory" class="hidden max-w-3xl mx-auto w-full space-y-2.5">
+      <div class="holo-card rounded-2xl p-3.5 sm:p-4 space-y-2.5">
+        <div class="flex items-center justify-between border-b border-indigo-500/20 pb-2">
+          <div class="flex items-center space-x-2.5">
+            <span class="text-xl">🧠</span>
             <div>
-              <h2 class="text-lg sm:text-xl font-bold text-white">Visual Memory Recognition (DMTS)</h2>
-              <span class="text-xs font-mono text-indigo-400">Delayed Match-to-Sample • PEBL Library Paradigm</span>
+              <h2 class="text-sm sm:text-base font-bold text-white">Visual Memory Recognition (DMTS)</h2>
+              <span class="text-[10px] font-mono text-indigo-400">Delayed Match-to-Sample • PEBL Library Paradigm</span>
             </div>
           </div>
-          <span id="memoryTrialBadge" class="text-xs font-mono text-indigo-300 font-bold bg-indigo-950/60 px-3 py-1.5 rounded-lg border border-indigo-500/30">
-            Trial 1 of 4
-          </span>
+          <div class="flex items-center space-x-2">
+            <span id="memoryTrialBadge" class="text-[10px] font-mono text-indigo-300 font-bold bg-indigo-950/60 px-2.5 py-1 rounded-lg border border-indigo-500/30">
+              Trial 1 of 40
+            </span>
+            <button onclick="AssessmentController.exitToMenu()" class="text-xs font-mono text-red-400 hover:text-red-300 ml-1">Exit</button>
+          </div>
         </div>
 
         <!-- Instructions & Status -->
-        <div id="memoryPhaseBanner" class="p-3.5 rounded-xl bg-indigo-950/40 border border-indigo-500/30 text-indigo-200 text-xs font-mono flex items-center justify-between">
+        <div id="memoryPhaseBanner" class="p-2 rounded-xl bg-indigo-950/40 border border-indigo-500/30 text-indigo-200 text-xs font-mono flex items-center justify-between">
           <span id="memoryInstructionText">Phase 1: Memorize the abstract vector target glyph...</span>
-          <span id="memoryPhaseTimer" class="font-bold text-white text-sm">2.5s</span>
+          <span id="memoryPhaseTimer" class="font-bold text-white text-xs">2.5s</span>
         </div>
 
-        <!-- Target / Mask / Probe Area -->
-        <div id="memoryDisplayArea" class="p-6 bg-slate-950/70 rounded-2xl border border-indigo-500/20 flex flex-col items-center justify-center min-h-[260px] relative overflow-hidden">
-          <!-- Dynamically populated target glyph, fixation cross, or probe grid -->
+        <!-- Target / Mask / Probe Area (Constrained Viewport Height) -->
+        <div id="memoryDisplayArea" class="p-2 sm:p-3 bg-slate-950/70 rounded-xl border border-indigo-500/20 flex flex-col items-center justify-center min-h-[95px] max-h-[16vh] relative overflow-hidden">
+          <!-- Dynamically populated -->
         </div>
 
-        <!-- Action / Probe Buttons -->
-        <div id="memoryProbeGrid" class="hidden grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <!-- 4 probe choice options -->
+        <!-- 4-Choice Probe Grid (Scale-Constrained to Remain Above Fold) -->
+        <div id="memoryProbeGrid" class="hidden grid grid-cols-2 sm:grid-cols-4 gap-2 max-h-[30vh]">
+          <!-- Injected via presentProbe -->
         </div>
 
-        <div class="flex items-center justify-between pt-2 text-xs font-mono text-slate-400">
-          <span id="memoryAccuracyTelemetry">Accuracy: 100%</span>
-          <span id="memoryLatencyTelemetry">Avg Latency: --</span>
-          <button onclick="AssessmentController.exitToMenu()" class="text-red-400 hover:text-red-300">Exit Test</button>
+        <!-- Real-Time Latency & Accuracy Telemetry HUD -->
+        <div class="pt-2 border-t border-indigo-500/20 flex items-center justify-between text-[10px] font-mono text-slate-400">
+          <span id="memoryAccuracyTelemetry">Accuracy: --%</span>
+          <span id="memoryLatencyTelemetry">Avg Latency: --s</span>
         </div>
       </div>
     </section>
@@ -2895,11 +2938,11 @@
     </div>
   </div>
 
-  <!-- ==================== BOTTOM-RIGHT FLOATING BRAINWAVE FOCUS AUDIO HUD ==================== -->
-  <div id="focusAudioHud" class="fixed bottom-4 right-4 z-40 flex flex-col items-end no-print">
+  <!-- ==================== HEADER-ANCHORED BRAINWAVE FOCUS AUDIO DROPDOWN ==================== -->
+  <div id="focusAudioHud" class="no-print">
     
-    <!-- Expanded Controls Card -->
-    <div id="audioExpandedCard" class="hidden mb-2.5 p-4 rounded-2xl bg-slate-950/95 border border-purple-500/40 backdrop-blur-xl shadow-2xl shadow-purple-950/80 w-76 max-w-[92vw] text-xs font-mono space-y-3.5 holo-card">
+    <!-- Expanded Controls Card Anchored Under Top Header -->
+    <div id="audioExpandedCard" class="hidden fixed top-14 right-4 sm:right-6 z-50 p-4 rounded-2xl bg-slate-950/95 border border-purple-500/40 backdrop-blur-xl shadow-2xl shadow-purple-950/80 w-76 max-w-[92vw] text-xs font-mono space-y-3.5 holo-card">
       <div class="flex items-center justify-between border-b border-purple-500/20 pb-2">
         <div class="flex items-center space-x-2">
           <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
@@ -2947,12 +2990,6 @@
       </div>
     </div>
 
-    <!-- Collapsed Floating Pill -->
-    <button onclick="toggleAudioCard()" class="px-3.5 py-2 rounded-full bg-slate-950/85 border border-purple-500/40 hover:border-purple-400 text-purple-300 font-mono text-xs flex items-center space-x-2 backdrop-blur-md shadow-lg shadow-purple-950/60 active:scale-95 transition touch-manipulation holo-glow-violet">
-      <span class="w-2 h-2 rounded-full bg-purple-400" id="audioPillDot"></span>
-      <span id="audioPillText">Focus Audio FM</span>
-      <span class="text-[10px] bg-purple-900/60 px-1.5 py-0.5 rounded text-purple-200 font-bold" id="audioPillStatus">OFF</span>
-    </button>
   </div>
 
   <script>
@@ -3271,12 +3308,29 @@
       const screens = [
         'screenIntro', 'screenWorkspace', 'screenReport',
         'screenMemory', 'screenNeuroplasticity', 'screenPersonality',
-        'screenMulti', 'screenGenericReport'
+        'screenMulti', 'screenClinical', 'screenGenericReport'
       ];
       screens.forEach(id => {
         const el = document.getElementById(id);
-        if (el) el.classList.add('hidden');
+        if (el) {
+          if (id === screenId) {
+            el.classList.remove('hidden');
+            el.removeAttribute('aria-hidden');
+          } else {
+            el.classList.add('hidden');
+            el.setAttribute('aria-hidden', 'true');
+          }
+        }
       });
+
+      // Strict Purge of Concurrent Modal & Leaked Sidebar States
+      if (typeof closeResearchModal === 'function') closeResearchModal();
+      if (typeof toggleSidebar === 'function') toggleSidebar(false);
+      const rm = document.getElementById('researchModal');
+      if (rm) { rm.classList.add('hidden'); rm.setAttribute('aria-hidden', 'true'); }
+      const sb = document.getElementById('sidebarBackdrop');
+      if (sb) { sb.classList.add('hidden'); sb.setAttribute('aria-hidden', 'true'); }
+
       const target = document.getElementById(screenId);
       if (target) {
         target.classList.remove('hidden');
@@ -3290,6 +3344,12 @@
       launch(key) {
         toggleSidebar(false);
         closeResearchModal();
+
+        // Synchronize Global HUD Timer on Stimulus Onset
+        if (!app.state.startTime) {
+          app.state.startTime = Date.now();
+        }
+        app.startGlobalTimer();
 
         if (key === 'iq') {
           app.startFullBattery();
