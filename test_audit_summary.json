@@ -1,0 +1,536 @@
+[
+  {
+    "test_name": "Landing Dashboard Hub",
+    "filename": "01_landing_hub.png",
+    "action": "Initial page load",
+    "active_screen": [
+      "screenIntro",
+      ""
+    ],
+    "visible_headings": [
+      "Core CHC Intelligence Engine\nALL LIVE",
+      "Memory Recognition (DMTS)",
+      "Neuroplasticity Tracker",
+      "Dark Triad & Big Five (IPIP)",
+      "ADHD Screener (ASRS v1.1)",
+      "Schizotypy Screener (SPQ-B)",
+      "OCD Inventory (OCI-R)",
+      "Autism Quotient (AQ-10)",
+      "Anxiety Scale (GAD-7)",
+      "Depression (PHQ-9)",
+      "Executive Deficits (BRIEF-A)",
+      "Trauma & Stress (PCL-5)",
+      "Multiple Intelligences",
+      "Holographic Cognitive & IQ and Intelligence",
+      "Fluid Matrix Induction",
+      "Spatial Working Memory",
+      "Quantitative Induction",
+      "Processing Speed"
+    ],
+    "sample_buttons": [
+      "\u2715",
+      "\u25b6 Launch Full Battery",
+      "Gf",
+      "Gwm",
+      "Gq",
+      "Gs",
+      "\u25b6 Launch Test",
+      "Intel",
+      "\u25b6 Launch Test",
+      "Intel"
+    ]
+  },
+  {
+    "test_name": "CHC 01: Fluid Matrix Reasoning (Gf)",
+    "filename": "02_fluid_matrix_gf.png",
+    "action": "Launched IQ Battery (Subtest 0)",
+    "active_screen": [
+      "screenWorkspace",
+      ""
+    ],
+    "visible_headings": [
+      "Core CHC Intelligence Engine\nALL LIVE",
+      "Memory Recognition (DMTS)",
+      "Neuroplasticity Tracker",
+      "Dark Triad & Big Five (IPIP)",
+      "ADHD Screener (ASRS v1.1)",
+      "Schizotypy Screener (SPQ-B)",
+      "OCD Inventory (OCI-R)",
+      "Autism Quotient (AQ-10)",
+      "Anxiety Scale (GAD-7)",
+      "Depression (PHQ-9)",
+      "Executive Deficits (BRIEF-A)",
+      "Trauma & Stress (PCL-5)",
+      "Multiple Intelligences",
+      "SPATIAL SUBTEST SUITE\n0%",
+      "COGNITIVE TELEMETRY",
+      "GAUSSIAN BELL DISTRIBUTION\nHOLO-CURVE"
+    ],
+    "sample_buttons": [
+      "\u2715",
+      "\u25b6 Launch Full Battery",
+      "Gf",
+      "Gwm",
+      "Gq",
+      "Gs",
+      "\u25b6 Launch Test",
+      "Intel",
+      "\u25b6 Launch Test",
+      "Intel"
+    ]
+  },
+  {
+    "test_name": "CHC 02: Spatial Working Memory Corsi (Gwm)",
+    "filename": "03_spatial_memory_gwm.png",
+    "action": "Loaded Corsi Block Span (Subtest 1)",
+    "active_screen": [
+      "screenWorkspace",
+      ""
+    ],
+    "visible_headings": [
+      "Core CHC Intelligence Engine\nALL LIVE",
+      "Memory Recognition (DMTS)",
+      "Neuroplasticity Tracker",
+      "Dark Triad & Big Five (IPIP)",
+      "ADHD Screener (ASRS v1.1)",
+      "Schizotypy Screener (SPQ-B)",
+      "OCD Inventory (OCI-R)",
+      "Autism Quotient (AQ-10)",
+      "Anxiety Scale (GAD-7)",
+      "Depression (PHQ-9)",
+      "Executive Deficits (BRIEF-A)",
+      "Trauma & Stress (PCL-5)",
+      "Multiple Intelligences",
+      "SPATIAL SUBTEST SUITE\n25%",
+      "COGNITIVE TELEMETRY",
+      "GAUSSIAN BELL DISTRIBUTION\nHOLO-CURVE"
+    ],
+    "sample_buttons": [
+      "\u2715",
+      "\u25b6 Launch Full Battery",
+      "Gf",
+      "Gwm",
+      "Gq",
+      "Gs",
+      "\u25b6 Launch Test",
+      "Intel",
+      "\u25b6 Launch Test",
+      "Intel"
+    ]
+  },
+  {
+    "test_name": "CHC 03: Quantitative Induction (Gq)",
+    "filename": "04_quantitative_gq.png",
+    "action": "Loaded Quantitative Series (Subtest 2)",
+    "active_screen": [
+      "screenWorkspace",
+      ""
+    ],
+    "visible_headings": [
+      "Core CHC Intelligence Engine\nALL LIVE",
+      "Memory Recognition (DMTS)",
+      "Neuroplasticity Tracker",
+      "Dark Triad & Big Five (IPIP)",
+      "ADHD Screener (ASRS v1.1)",
+      "Schizotypy Screener (SPQ-B)",
+      "OCD Inventory (OCI-R)",
+      "Autism Quotient (AQ-10)",
+      "Anxiety Scale (GAD-7)",
+      "Depression (PHQ-9)",
+      "Executive Deficits (BRIEF-A)",
+      "Trauma & Stress (PCL-5)",
+      "Multiple Intelligences",
+      "SPATIAL SUBTEST SUITE\n50%",
+      "COGNITIVE TELEMETRY",
+      "GAUSSIAN BELL DISTRIBUTION\nHOLO-CURVE"
+    ],
+    "sample_buttons": [
+      "\u2715",
+      "\u25b6 Launch Full Battery",
+      "Gf",
+      "Gwm",
+      "Gq",
+      "Gs",
+      "\u25b6 Launch Test",
+      "Intel",
+      "\u25b6 Launch Test",
+      "Intel"
+    ]
+  },
+  {
+    "test_name": "CHC 04: Symbolic Processing Speed (Gs)",
+    "filename": "05_processing_speed_gs.png",
+    "action": "Loaded Symbolic Processing Speed (Subtest 3)",
+    "active_screen": [
+      "screenWorkspace",
+      ""
+    ],
+    "visible_headings": [
+      "Core CHC Intelligence Engine\nALL LIVE",
+      "Memory Recognition (DMTS)",
+      "Neuroplasticity Tracker",
+      "Dark Triad & Big Five (IPIP)",
+      "ADHD Screener (ASRS v1.1)",
+      "Schizotypy Screener (SPQ-B)",
+      "OCD Inventory (OCI-R)",
+      "Autism Quotient (AQ-10)",
+      "Anxiety Scale (GAD-7)",
+      "Depression (PHQ-9)",
+      "Executive Deficits (BRIEF-A)",
+      "Trauma & Stress (PCL-5)",
+      "Multiple Intelligences",
+      "SPATIAL SUBTEST SUITE\n75%",
+      "COGNITIVE TELEMETRY",
+      "GAUSSIAN BELL DISTRIBUTION\nHOLO-CURVE"
+    ],
+    "sample_buttons": [
+      "\u2715",
+      "\u25b6 Launch Full Battery",
+      "Gf",
+      "Gwm",
+      "Gq",
+      "Gs",
+      "\u25b6 Launch Test",
+      "Intel",
+      "\u25b6 Launch Test",
+      "Intel"
+    ]
+  },
+  {
+    "test_name": "Memory Recognition (DMTS) - Phase 1 Encoding",
+    "filename": "06a_memory_dmts_phase1.png",
+    "action": "Launched Memory DMTS (Target Encoding)",
+    "active_screen": [
+      "",
+      "screenMemory"
+    ],
+    "visible_headings": [
+      "Core CHC Intelligence Engine\nALL LIVE",
+      "Memory Recognition (DMTS)",
+      "Neuroplasticity Tracker",
+      "Dark Triad & Big Five (IPIP)",
+      "ADHD Screener (ASRS v1.1)",
+      "Schizotypy Screener (SPQ-B)",
+      "OCD Inventory (OCI-R)",
+      "Autism Quotient (AQ-10)",
+      "Anxiety Scale (GAD-7)",
+      "Depression (PHQ-9)",
+      "Executive Deficits (BRIEF-A)",
+      "Trauma & Stress (PCL-5)",
+      "Multiple Intelligences",
+      "Visual Memory Recognition (DMTS)"
+    ],
+    "sample_buttons": [
+      "\u2715",
+      "\u25b6 Launch Full Battery",
+      "Gf",
+      "Gwm",
+      "Gq",
+      "Gs",
+      "\u25b6 Launch Test",
+      "Intel",
+      "\u25b6 Launch Test",
+      "Intel"
+    ]
+  },
+  {
+    "test_name": "Memory Recognition (DMTS) - Phase 3 Discrimination",
+    "filename": "06b_memory_dmts_phase3.png",
+    "action": "DMTS Discrimination Phase (4 Choice Cards in viewport)",
+    "active_screen": [
+      "",
+      "screenMemory"
+    ],
+    "visible_headings": [
+      "Core CHC Intelligence Engine\nALL LIVE",
+      "Memory Recognition (DMTS)",
+      "Neuroplasticity Tracker",
+      "Dark Triad & Big Five (IPIP)",
+      "ADHD Screener (ASRS v1.1)",
+      "Schizotypy Screener (SPQ-B)",
+      "OCD Inventory (OCI-R)",
+      "Autism Quotient (AQ-10)",
+      "Anxiety Scale (GAD-7)",
+      "Depression (PHQ-9)",
+      "Executive Deficits (BRIEF-A)",
+      "Trauma & Stress (PCL-5)",
+      "Multiple Intelligences",
+      "Visual Memory Recognition (DMTS)"
+    ],
+    "sample_buttons": [
+      "\u2715",
+      "\u25b6 Launch Full Battery",
+      "Gf",
+      "Gwm",
+      "Gq",
+      "Gs",
+      "\u25b6 Launch Test",
+      "Intel",
+      "\u25b6 Launch Test",
+      "Intel"
+    ]
+  },
+  {
+    "test_name": "Neuroplasticity Tracker (Dual N-Back)",
+    "filename": "07_neuroplasticity_nback.png",
+    "action": "Launched Dual N-Back 3x3 Grid Tracker",
+    "active_screen": [
+      "",
+      "screenNeuroplasticity"
+    ],
+    "visible_headings": [
+      "Core CHC Intelligence Engine\nALL LIVE",
+      "Memory Recognition (DMTS)",
+      "Neuroplasticity Tracker",
+      "Dark Triad & Big Five (IPIP)",
+      "ADHD Screener (ASRS v1.1)",
+      "Schizotypy Screener (SPQ-B)",
+      "OCD Inventory (OCI-R)",
+      "Autism Quotient (AQ-10)",
+      "Anxiety Scale (GAD-7)",
+      "Depression (PHQ-9)",
+      "Executive Deficits (BRIEF-A)",
+      "Trauma & Stress (PCL-5)",
+      "Multiple Intelligences",
+      "Neuroplasticity Tracker (Dual N-Back)"
+    ],
+    "sample_buttons": [
+      "\u2715",
+      "\u25b6 Launch Full Battery",
+      "Gf",
+      "Gwm",
+      "Gq",
+      "Gs",
+      "\u25b6 Launch Test",
+      "Intel",
+      "\u25b6 Launch Test",
+      "Intel"
+    ]
+  },
+  {
+    "test_name": "Personality & Dark Triad Screener",
+    "filename": "08_personality_darktriad.png",
+    "action": "Launched Dark Triad & Big Five Screener",
+    "active_screen": [
+      "",
+      "screenPersonality"
+    ],
+    "visible_headings": [
+      "Core CHC Intelligence Engine\nALL LIVE",
+      "Memory Recognition (DMTS)",
+      "Neuroplasticity Tracker",
+      "Dark Triad & Big Five (IPIP)",
+      "ADHD Screener (ASRS v1.1)",
+      "Schizotypy Screener (SPQ-B)",
+      "OCD Inventory (OCI-R)",
+      "Autism Quotient (AQ-10)",
+      "Anxiety Scale (GAD-7)",
+      "Depression (PHQ-9)",
+      "Executive Deficits (BRIEF-A)",
+      "Trauma & Stress (PCL-5)",
+      "Multiple Intelligences",
+      "Dark Triad & Big Five Personality (IPIP)"
+    ],
+    "sample_buttons": [
+      "\u2715",
+      "\u25b6 Launch Full Battery",
+      "Gf",
+      "Gwm",
+      "Gq",
+      "Gs",
+      "\u25b6 Launch Test",
+      "Intel",
+      "\u25b6 Launch Test",
+      "Intel"
+    ]
+  },
+  {
+    "test_name": "Howard Gardner Multiple Intelligences",
+    "filename": "09_multiple_intelligences.png",
+    "action": "Launched Gardner 8-Factor Screener",
+    "active_screen": [
+      "",
+      "screenMulti"
+    ],
+    "visible_headings": [
+      "Core CHC Intelligence Engine\nALL LIVE",
+      "Memory Recognition (DMTS)",
+      "Neuroplasticity Tracker",
+      "Dark Triad & Big Five (IPIP)",
+      "ADHD Screener (ASRS v1.1)",
+      "Schizotypy Screener (SPQ-B)",
+      "OCD Inventory (OCI-R)",
+      "Autism Quotient (AQ-10)",
+      "Anxiety Scale (GAD-7)",
+      "Depression (PHQ-9)",
+      "Executive Deficits (BRIEF-A)",
+      "Trauma & Stress (PCL-5)",
+      "Multiple Intelligences",
+      "Multiple Intelligences (MI) Screener"
+    ],
+    "sample_buttons": [
+      "\u2715",
+      "\u25b6 Launch Full Battery",
+      "Gf",
+      "Gwm",
+      "Gq",
+      "Gs",
+      "\u25b6 Launch Test",
+      "Intel",
+      "\u25b6 Launch Test",
+      "Intel"
+    ]
+  },
+  {
+    "test_name": "Clinical: ADHD Screener (ASRS v1.1)",
+    "filename": "10_clinical_screener_adhd.png",
+    "action": "Launched WHO ASRS v1.1 Screener",
+    "active_screen": [
+      "",
+      "screenClinical"
+    ],
+    "visible_headings": [
+      "Core CHC Intelligence Engine\nALL LIVE",
+      "Memory Recognition (DMTS)",
+      "Neuroplasticity Tracker",
+      "Dark Triad & Big Five (IPIP)",
+      "ADHD Screener (ASRS v1.1)",
+      "Schizotypy Screener (SPQ-B)",
+      "OCD Inventory (OCI-R)",
+      "Autism Quotient (AQ-10)",
+      "Anxiety Scale (GAD-7)",
+      "Depression (PHQ-9)",
+      "Executive Deficits (BRIEF-A)",
+      "Trauma & Stress (PCL-5)",
+      "Multiple Intelligences",
+      "ADHD CLINICAL SCREENER (ASRS V1.1)",
+      "\"How often do you have trouble wrapping up the final details of a project, once the challenging parts have been done?\""
+    ],
+    "sample_buttons": [
+      "\u2715",
+      "\u25b6 Launch Full Battery",
+      "Gf",
+      "Gwm",
+      "Gq",
+      "Gs",
+      "\u25b6 Launch Test",
+      "Intel",
+      "\u25b6 Launch Test",
+      "Intel"
+    ]
+  },
+  {
+    "test_name": "Clinical: OCD Inventory (OCI-R)",
+    "filename": "11_clinical_screener_ocd.png",
+    "action": "Launched OCI-R Obsessive-Compulsive Screener",
+    "active_screen": [
+      "",
+      "screenClinical"
+    ],
+    "visible_headings": [
+      "Core CHC Intelligence Engine\nALL LIVE",
+      "Memory Recognition (DMTS)",
+      "Neuroplasticity Tracker",
+      "Dark Triad & Big Five (IPIP)",
+      "ADHD Screener (ASRS v1.1)",
+      "Schizotypy Screener (SPQ-B)",
+      "OCD Inventory (OCI-R)",
+      "Autism Quotient (AQ-10)",
+      "Anxiety Scale (GAD-7)",
+      "Depression (PHQ-9)",
+      "Executive Deficits (BRIEF-A)",
+      "Trauma & Stress (PCL-5)",
+      "Multiple Intelligences",
+      "OBSESSIVE-COMPULSIVE INVENTORY (OCI-R)",
+      "\"I have saved up so many things that they get in the way of my living space.\""
+    ],
+    "sample_buttons": [
+      "\u2715",
+      "\u25b6 Launch Full Battery",
+      "Gf",
+      "Gwm",
+      "Gq",
+      "Gs",
+      "\u25b6 Launch Test",
+      "Intel",
+      "\u25b6 Launch Test",
+      "Intel"
+    ]
+  },
+  {
+    "test_name": "Clinical: Schizotypal Screener (SPQ-B)",
+    "filename": "12_clinical_screener_schizotypy.png",
+    "action": "Launched SPQ-B Screener",
+    "active_screen": [
+      "",
+      "screenClinical"
+    ],
+    "visible_headings": [
+      "Core CHC Intelligence Engine\nALL LIVE",
+      "Memory Recognition (DMTS)",
+      "Neuroplasticity Tracker",
+      "Dark Triad & Big Five (IPIP)",
+      "ADHD Screener (ASRS v1.1)",
+      "Schizotypy Screener (SPQ-B)",
+      "OCD Inventory (OCI-R)",
+      "Autism Quotient (AQ-10)",
+      "Anxiety Scale (GAD-7)",
+      "Depression (PHQ-9)",
+      "Executive Deficits (BRIEF-A)",
+      "Trauma & Stress (PCL-5)",
+      "Multiple Intelligences",
+      "SCHIZOTYPAL PERSONALITY QUESTIONNAIRE (SPQ-B)",
+      "\"Do you sometimes see special meaning in advertisements, shop signs, or harmless events that other people do not notice?\""
+    ],
+    "sample_buttons": [
+      "\u2715",
+      "\u25b6 Launch Full Battery",
+      "Gf",
+      "Gwm",
+      "Gq",
+      "Gs",
+      "\u25b6 Launch Test",
+      "Intel",
+      "\u25b6 Launch Test",
+      "Intel"
+    ]
+  },
+  {
+    "test_name": "Final Clinical Dossier & Comprehensive Report",
+    "filename": "13_final_clinical_report.png",
+    "action": "Generated Final Dossier with Bell Curve, Solved Problems & Routines",
+    "active_screen": [
+      "",
+      "screenReport"
+    ],
+    "visible_headings": [
+      "Core CHC Intelligence Engine\nALL LIVE",
+      "Memory Recognition (DMTS)",
+      "Neuroplasticity Tracker",
+      "Dark Triad & Big Five (IPIP)",
+      "ADHD Screener (ASRS v1.1)",
+      "Schizotypy Screener (SPQ-B)",
+      "OCD Inventory (OCI-R)",
+      "Autism Quotient (AQ-10)",
+      "Anxiety Scale (GAD-7)",
+      "Depression (PHQ-9)",
+      "Executive Deficits (BRIEF-A)",
+      "Trauma & Stress (PCL-5)",
+      "Multiple Intelligences",
+      "NeuroMetric Cognitive Assessment Dossier",
+      "CHC COGNITIVE FACTOR BREAKDOWN"
+    ],
+    "sample_buttons": [
+      "\u2715",
+      "\u25b6 Launch Full Battery",
+      "Gf",
+      "Gwm",
+      "Gq",
+      "Gs",
+      "\u25b6 Launch Test",
+      "Intel",
+      "\u25b6 Launch Test",
+      "Intel"
+    ]
+  }
+]

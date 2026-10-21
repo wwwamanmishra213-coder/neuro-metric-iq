@@ -2663,8 +2663,7 @@
         clearInterval(this.state.timerInterval);
         clearInterval(this.state.itemElapsedInterval);
 
-        document.getElementById('screenWorkspace').classList.add('hidden');
-        document.getElementById('screenReport').classList.remove('hidden');
+        showScreen('screenReport');
         document.getElementById('sessionStatusText').textContent = 'Assessment Verified';
 
         // Prepare items / responses for the modular NeuroMetricScoring engine
