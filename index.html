@@ -2929,7 +2929,7 @@
     // ==================== 1. MEMORY RECOGNITION (DMTS) ENGINE ====================
     window.MemoryTestEngine = {
       currentTrial: 0,
-      totalTrials: 4,
+      totalTrials: 40,
       trialStartTime: 0,
       latencies: [],
       correctCount: 0,
@@ -2938,42 +2938,402 @@
       trials: [
         {
           id: 1,
-          targetSvg: `<svg class="w-24 h-24 text-cyan-400" viewBox="0 0 100 100"><rect x="20" y="20" width="30" height="30" fill="#38bdf8"/><rect x="50" y="50" width="30" height="30" fill="#a855f7"/><circle cx="35" cy="65" r="12" fill="#34d399"/></svg>`,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#f43f5e" stroke-width="4" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="#2dd4bf" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#a855f7"/><rect x="42" y="70" width="16" height="12" fill="#818cf8"/></svg>`,
           options: [
-            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16 text-cyan-400" viewBox="0 0 100 100"><rect x="20" y="20" width="30" height="30" fill="#a855f7"/><rect x="50" y="50" width="30" height="30" fill="#38bdf8"/><circle cx="35" cy="65" r="12" fill="#34d399"/></svg>` },
-            { id: 2, isCorrect: true,  svg: `<svg class="w-16 h-16 text-cyan-400" viewBox="0 0 100 100"><rect x="20" y="20" width="30" height="30" fill="#38bdf8"/><rect x="50" y="50" width="30" height="30" fill="#a855f7"/><circle cx="35" cy="65" r="12" fill="#34d399"/></svg>` },
-            { id: 3, isCorrect: false, svg: `<svg class="w-16 h-16 text-cyan-400" viewBox="0 0 100 100"><rect x="20" y="20" width="30" height="30" fill="#38bdf8"/><rect x="50" y="50" width="30" height="30" fill="#38bdf8"/><circle cx="35" cy="65" r="12" fill="#34d399"/></svg>` },
-            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16 text-cyan-400" viewBox="0 0 100 100"><rect x="50" y="20" width="30" height="30" fill="#38bdf8"/><rect x="20" y="50" width="30" height="30" fill="#a855f7"/><circle cx="65" cy="65" r="12" fill="#34d399"/></svg>` }
+            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#f43f5e" stroke-width="4" fill="none"/><line x1="15" y1="50" x2="85" y2="50" stroke="#2dd4bf" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#a855f7"/><rect x="42" y="70" width="16" height="12" fill="#818cf8"/></svg>` },
+            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#f43f5e" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="12" fill="#a855f7"/><rect x="42" y="70" width="16" height="12" fill="#818cf8"/></svg>` },
+            { id: 3, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#f43f5e" stroke-width="4" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="#2dd4bf" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#a855f7"/><rect x="42" y="70" width="16" height="12" fill="#818cf8"/></svg>` },
+            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#f43f5e" stroke-width="4" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="#2dd4bf" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#818cf8"/><rect x="42" y="70" width="16" height="12" fill="#a855f7"/></svg>` }
           ]
         },
         {
           id: 2,
-          targetSvg: `<svg class="w-24 h-24 text-indigo-400" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#818cf8" stroke-width="4" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="#38bdf8" stroke-width="4"/><circle cx="50" cy="50" r="10" fill="#a855f7"/></svg>`,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#2dd4bf" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#f43f5e" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#38bdf8" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#f472b6"/></svg>`,
           options: [
-            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16 text-indigo-400" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#818cf8" stroke-width="4" fill="none"/><line x1="15" y1="50" x2="85" y2="50" stroke="#38bdf8" stroke-width="4"/><circle cx="50" cy="50" r="10" fill="#a855f7"/></svg>` },
-            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16 text-indigo-400" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#818cf8" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="10" fill="#a855f7"/></svg>` },
-            { id: 3, isCorrect: true,  svg: `<svg class="w-16 h-16 text-indigo-400" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#818cf8" stroke-width="4" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="#38bdf8" stroke-width="4"/><circle cx="50" cy="50" r="10" fill="#a855f7"/></svg>` },
-            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16 text-indigo-400" viewBox="0 0 100 100"><polygon points="50,85 85,15 15,15" stroke="#818cf8" stroke-width="4" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="#38bdf8" stroke-width="4"/><circle cx="50" cy="50" r="10" fill="#a855f7"/></svg>` }
+            { id: 1, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#2dd4bf" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#f43f5e" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#38bdf8" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#f472b6"/></svg>` },
+            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#2dd4bf" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#f43f5e" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#38bdf8" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#f472b6"/></svg>` },
+            { id: 3, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" stroke="#2dd4bf" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" stroke="#f43f5e" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#38bdf8" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#f472b6"/></svg>` },
+            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#f43f5e" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#2dd4bf" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#38bdf8" stroke-width="3"/><circle cx="50" cy="50" r="5" fill="#f472b6"/></svg>` }
           ]
         },
         {
           id: 3,
-          targetSvg: `<svg class="w-24 h-24 text-emerald-400" viewBox="0 0 100 100"><circle cx="50" cy="50" r="35" stroke="#34d399" stroke-width="4" fill="none"/><rect x="40" y="40" width="20" height="20" fill="#38bdf8"/><line x1="20" y1="20" x2="80" y2="80" stroke="#a855f7" stroke-width="4"/></svg>`,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#a855f7" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#38bdf8"/><circle cx="50" cy="28" r="5" fill="#f472b6"/><circle cx="50" cy="72" r="5" fill="#a855f7"/></svg>`,
           options: [
-            { id: 1, isCorrect: true,  svg: `<svg class="w-16 h-16 text-emerald-400" viewBox="0 0 100 100"><circle cx="50" cy="50" r="35" stroke="#34d399" stroke-width="4" fill="none"/><rect x="40" y="40" width="20" height="20" fill="#38bdf8"/><line x1="20" y1="20" x2="80" y2="80" stroke="#a855f7" stroke-width="4"/></svg>` },
-            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16 text-emerald-400" viewBox="0 0 100 100"><circle cx="50" cy="50" r="35" stroke="#34d399" stroke-width="4" fill="none"/><rect x="40" y="40" width="20" height="20" fill="#38bdf8"/><line x1="20" y1="80" x2="80" y2="20" stroke="#a855f7" stroke-width="4"/></svg>` },
-            { id: 3, isCorrect: false, svg: `<svg class="w-16 h-16 text-emerald-400" viewBox="0 0 100 100"><circle cx="50" cy="50" r="35" stroke="#34d399" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="10" fill="#38bdf8"/><line x1="20" y1="20" x2="80" y2="80" stroke="#a855f7" stroke-width="4"/></svg>` },
-            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16 text-emerald-400" viewBox="0 0 100 100"><circle cx="50" cy="50" r="25" stroke="#34d399" stroke-width="4" fill="none"/><rect x="40" y="40" width="20" height="20" fill="#38bdf8"/><line x1="20" y1="20" x2="80" y2="80" stroke="#a855f7" stroke-width="4"/></svg>` }
+            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#a855f7" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#38bdf8"/><circle cx="32" cy="50" r="5" fill="#f472b6"/><circle cx="68" cy="50" r="5" fill="#a855f7"/></svg>` },
+            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#a855f7" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#38bdf8"/><circle cx="50" cy="28" r="5" fill="#f472b6"/><circle cx="50" cy="72" r="5" fill="#a855f7"/></svg>` },
+            { id: 3, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#a855f7" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#38bdf8"/><circle cx="50" cy="28" r="5" fill="#f472b6"/><circle cx="50" cy="72" r="5" fill="#a855f7"/></svg>` },
+            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#38bdf8" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#a855f7"/><circle cx="50" cy="28" r="5" fill="#a855f7"/><circle cx="50" cy="72" r="5" fill="#f472b6"/></svg>` }
           ]
         },
         {
           id: 4,
-          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#38bdf8" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#a855f7"/><circle cx="50" cy="25" r="5" fill="#34d399"/><circle cx="50" cy="75" r="5" fill="#34d399"/></svg>`,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#fbbf24" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#818cf8" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#2dd4bf"/><rect x="45" y="70" width="10" height="10" fill="#f43f5e"/></svg>`,
           options: [
-            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#38bdf8" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#a855f7"/><circle cx="30" cy="50" r="5" fill="#34d399"/><circle cx="70" cy="50" r="5" fill="#34d399"/></svg>` },
-            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#38bdf8" stroke-width="4" fill="none"/><rect x="40" y="40" width="20" height="20" fill="#a855f7"/><circle cx="50" cy="25" r="5" fill="#34d399"/><circle cx="50" cy="75" r="5" fill="#34d399"/></svg>` },
-            { id: 3, isCorrect: true,  svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#38bdf8" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#a855f7"/><circle cx="50" cy="25" r="5" fill="#34d399"/><circle cx="50" cy="75" r="5" fill="#34d399"/></svg>` },
-            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#38bdf8" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#a855f7"/><circle cx="50" cy="25" r="5" fill="#f43f5e"/><circle cx="50" cy="75" r="5" fill="#f43f5e"/></svg>` }
+            { id: 1, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#fbbf24" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#818cf8" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#2dd4bf"/><rect x="45" y="70" width="10" height="10" fill="#f43f5e"/></svg>` },
+            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><line x1="10" y1="50" x2="90" y2="50" stroke="#fbbf24" stroke-width="4"/><line x1="50" y1="10" x2="50" y2="90" stroke="#818cf8" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#2dd4bf"/><rect x="45" y="70" width="10" height="10" fill="#f43f5e"/></svg>` },
+            { id: 3, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#fbbf24" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#818cf8" stroke-width="4"/><rect x="45" y="15" width="10" height="10" fill="#2dd4bf"/><circle cx="50" cy="75" r="10" fill="#f43f5e"/></svg>` },
+            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#818cf8" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#fbbf24" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#2dd4bf"/><rect x="45" y="70" width="10" height="10" fill="#f43f5e"/></svg>` }
+          ]
+        },
+        {
+          id: 5,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#f472b6"/><rect x="55" y="15" width="30" height="30" fill="#34d399"/><rect x="15" y="55" width="30" height="30" fill="#818cf8"/><circle cx="70" cy="70" r="15" fill="#818cf8"/></svg>`,
+          options: [
+            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#34d399"/><rect x="55" y="15" width="30" height="30" fill="#f472b6"/><rect x="15" y="55" width="30" height="30" fill="#818cf8"/><circle cx="70" cy="70" r="15" fill="#818cf8"/></svg>` },
+            { id: 2, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#f472b6"/><rect x="55" y="15" width="30" height="30" fill="#34d399"/><rect x="15" y="55" width="30" height="30" fill="#818cf8"/><circle cx="70" cy="70" r="15" fill="#818cf8"/></svg>` },
+            { id: 3, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#f472b6"/><rect x="55" y="15" width="30" height="30" fill="#34d399"/><rect x="15" y="55" width="30" height="30" fill="#818cf8"/><circle cx="70" cy="70" r="15" fill="#818cf8"/></svg>` },
+            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#818cf8"/><rect x="55" y="15" width="30" height="30" fill="#34d399"/><rect x="15" y="55" width="30" height="30" fill="#f472b6"/><circle cx="70" cy="70" r="15" fill="#818cf8"/></svg>` }
+          ]
+        },
+        {
+          id: 6,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#34d399" stroke-width="4" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="#f472b6" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#fbbf24"/><rect x="42" y="70" width="16" height="12" fill="#f472b6"/></svg>`,
+          options: [
+            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#34d399" stroke-width="4" fill="none"/><line x1="15" y1="50" x2="85" y2="50" stroke="#f472b6" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#fbbf24"/><rect x="42" y="70" width="16" height="12" fill="#f472b6"/></svg>` },
+            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#34d399" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="12" fill="#fbbf24"/><rect x="42" y="70" width="16" height="12" fill="#f472b6"/></svg>` },
+            { id: 3, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,85 85,15 15,15" stroke="#34d399" stroke-width="4" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="#f472b6" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#fbbf24"/><rect x="42" y="70" width="16" height="12" fill="#f472b6"/></svg>` },
+            { id: 4, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#34d399" stroke-width="4" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="#f472b6" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#fbbf24"/><rect x="42" y="70" width="16" height="12" fill="#f472b6"/></svg>` }
+          ]
+        },
+        {
+          id: 7,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#818cf8" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#fbbf24" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#f43f5e" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#a855f7"/></svg>`,
+          options: [
+            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#818cf8" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#fbbf24" stroke-width="3" fill="none"/><line x1="10" y1="50" x2="90" y2="50" stroke="#f43f5e" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#a855f7"/></svg>` },
+            { id: 2, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#818cf8" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#fbbf24" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#f43f5e" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#a855f7"/></svg>` },
+            { id: 3, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" stroke="#818cf8" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" stroke="#fbbf24" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#f43f5e" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#a855f7"/></svg>` },
+            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#fbbf24" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#818cf8" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#f43f5e" stroke-width="3"/><circle cx="50" cy="50" r="5" fill="#a855f7"/></svg>` }
+          ]
+        },
+        {
+          id: 8,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#38bdf8" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#a855f7"/><circle cx="50" cy="28" r="5" fill="#34d399"/><circle cx="50" cy="72" r="5" fill="#f43f5e"/></svg>`,
+          options: [
+            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#38bdf8" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#a855f7"/><circle cx="32" cy="50" r="5" fill="#34d399"/><circle cx="68" cy="50" r="5" fill="#f43f5e"/></svg>` },
+            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#38bdf8" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#a855f7"/><circle cx="50" cy="28" r="5" fill="#34d399"/><circle cx="50" cy="72" r="5" fill="#f43f5e"/></svg>` },
+            { id: 3, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#38bdf8" stroke-width="4" fill="none"/><rect x="42" y="42" width="16" height="16" fill="#a855f7"/><circle cx="50" cy="28" r="5" fill="#34d399"/><circle cx="50" cy="72" r="5" fill="#f43f5e"/></svg>` },
+            { id: 4, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#38bdf8" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#a855f7"/><circle cx="50" cy="28" r="5" fill="#34d399"/><circle cx="50" cy="72" r="5" fill="#f43f5e"/></svg>` }
+          ]
+        },
+        {
+          id: 9,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#f43f5e" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#2dd4bf" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#a855f7"/><rect x="45" y="70" width="10" height="10" fill="#818cf8"/></svg>`,
+          options: [
+            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#f43f5e" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#2dd4bf" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#a855f7"/><rect x="45" y="70" width="10" height="10" fill="#818cf8"/></svg>` },
+            { id: 2, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#f43f5e" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#2dd4bf" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#a855f7"/><rect x="45" y="70" width="10" height="10" fill="#818cf8"/></svg>` },
+            { id: 3, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#f43f5e" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#2dd4bf" stroke-width="4"/><rect x="45" y="15" width="10" height="10" fill="#a855f7"/><circle cx="50" cy="75" r="10" fill="#818cf8"/></svg>` },
+            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#2dd4bf" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#f43f5e" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#a855f7"/><rect x="45" y="70" width="10" height="10" fill="#818cf8"/></svg>` }
+          ]
+        },
+        {
+          id: 10,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#2dd4bf"/><rect x="55" y="15" width="30" height="30" fill="#f43f5e"/><rect x="15" y="55" width="30" height="30" fill="#38bdf8"/><circle cx="70" cy="70" r="15" fill="#f472b6"/></svg>`,
+          options: [
+            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#f43f5e"/><rect x="55" y="15" width="30" height="30" fill="#2dd4bf"/><rect x="15" y="55" width="30" height="30" fill="#38bdf8"/><circle cx="70" cy="70" r="15" fill="#f472b6"/></svg>` },
+            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#2dd4bf"/><rect x="55" y="15" width="30" height="30" fill="#f43f5e"/><rect x="15" y="55" width="30" height="30" fill="#38bdf8"/><circle cx="70" cy="70" r="15" fill="#f472b6"/></svg>` },
+            { id: 3, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#2dd4bf"/><rect x="55" y="15" width="30" height="30" fill="#f43f5e"/><rect x="15" y="55" width="30" height="30" fill="#38bdf8"/><circle cx="70" cy="70" r="15" fill="#f472b6"/></svg>` },
+            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#38bdf8"/><rect x="55" y="15" width="30" height="30" fill="#f43f5e"/><rect x="15" y="55" width="30" height="30" fill="#2dd4bf"/><circle cx="70" cy="70" r="15" fill="#f472b6"/></svg>` }
+          ]
+        },
+        {
+          id: 11,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#a855f7" stroke-width="4" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="#38bdf8" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#f472b6"/><rect x="42" y="70" width="16" height="12" fill="#a855f7"/></svg>`,
+          options: [
+            { id: 1, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#a855f7" stroke-width="4" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="#38bdf8" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#f472b6"/><rect x="42" y="70" width="16" height="12" fill="#a855f7"/></svg>` },
+            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#a855f7" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="12" fill="#f472b6"/><rect x="42" y="70" width="16" height="12" fill="#a855f7"/></svg>` },
+            { id: 3, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,85 85,15 15,15" stroke="#a855f7" stroke-width="4" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="#38bdf8" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#f472b6"/><rect x="42" y="70" width="16" height="12" fill="#a855f7"/></svg>` },
+            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#a855f7" stroke-width="4" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="#38bdf8" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#a855f7"/><rect x="42" y="70" width="16" height="12" fill="#f472b6"/></svg>` }
+          ]
+        },
+        {
+          id: 12,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#fbbf24" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#818cf8" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#2dd4bf" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#f43f5e"/></svg>`,
+          options: [
+            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#fbbf24" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#818cf8" stroke-width="3" fill="none"/><line x1="10" y1="50" x2="90" y2="50" stroke="#2dd4bf" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#f43f5e"/></svg>` },
+            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#fbbf24" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#818cf8" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#2dd4bf" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#f43f5e"/></svg>` },
+            { id: 3, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#fbbf24" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#818cf8" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#2dd4bf" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#f43f5e"/></svg>` },
+            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#818cf8" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#fbbf24" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#2dd4bf" stroke-width="3"/><circle cx="50" cy="50" r="5" fill="#f43f5e"/></svg>` }
+          ]
+        },
+        {
+          id: 13,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#f472b6" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#34d399"/><circle cx="50" cy="28" r="5" fill="#818cf8"/><circle cx="50" cy="72" r="5" fill="#818cf8"/></svg>`,
+          options: [
+            { id: 1, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#f472b6" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#34d399"/><circle cx="50" cy="28" r="5" fill="#818cf8"/><circle cx="50" cy="72" r="5" fill="#818cf8"/></svg>` },
+            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#f472b6" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#34d399"/><circle cx="50" cy="28" r="5" fill="#818cf8"/><circle cx="50" cy="72" r="5" fill="#818cf8"/></svg>` },
+            { id: 3, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#f472b6" stroke-width="4" fill="none"/><rect x="42" y="42" width="16" height="16" fill="#34d399"/><circle cx="50" cy="28" r="5" fill="#818cf8"/><circle cx="50" cy="72" r="5" fill="#818cf8"/></svg>` },
+            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#34d399" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#f472b6"/><circle cx="50" cy="28" r="5" fill="#818cf8"/><circle cx="50" cy="72" r="5" fill="#818cf8"/></svg>` }
+          ]
+        },
+        {
+          id: 14,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#34d399" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#f472b6" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#fbbf24"/><rect x="45" y="70" width="10" height="10" fill="#f472b6"/></svg>`,
+          options: [
+            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#34d399" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#f472b6" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#fbbf24"/><rect x="45" y="70" width="10" height="10" fill="#f472b6"/></svg>` },
+            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><line x1="10" y1="50" x2="90" y2="50" stroke="#34d399" stroke-width="4"/><line x1="50" y1="10" x2="50" y2="90" stroke="#f472b6" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#fbbf24"/><rect x="45" y="70" width="10" height="10" fill="#f472b6"/></svg>` },
+            { id: 3, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#34d399" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#f472b6" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#fbbf24"/><rect x="45" y="70" width="10" height="10" fill="#f472b6"/></svg>` },
+            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#f472b6" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#34d399" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#fbbf24"/><rect x="45" y="70" width="10" height="10" fill="#f472b6"/></svg>` }
+          ]
+        },
+        {
+          id: 15,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#818cf8"/><rect x="55" y="15" width="30" height="30" fill="#fbbf24"/><rect x="15" y="55" width="30" height="30" fill="#f43f5e"/><circle cx="70" cy="70" r="15" fill="#a855f7"/></svg>`,
+          options: [
+            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#fbbf24"/><rect x="55" y="15" width="30" height="30" fill="#818cf8"/><rect x="15" y="55" width="30" height="30" fill="#f43f5e"/><circle cx="70" cy="70" r="15" fill="#a855f7"/></svg>` },
+            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#818cf8"/><rect x="55" y="15" width="30" height="30" fill="#fbbf24"/><rect x="15" y="55" width="30" height="30" fill="#f43f5e"/><circle cx="70" cy="70" r="15" fill="#a855f7"/></svg>` },
+            { id: 3, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#818cf8"/><rect x="55" y="15" width="30" height="30" fill="#fbbf24"/><rect x="15" y="55" width="30" height="30" fill="#a855f7"/><circle cx="70" cy="70" r="15" fill="#f43f5e"/></svg>` },
+            { id: 4, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#818cf8"/><rect x="55" y="15" width="30" height="30" fill="#fbbf24"/><rect x="15" y="55" width="30" height="30" fill="#f43f5e"/><circle cx="70" cy="70" r="15" fill="#a855f7"/></svg>` }
+          ]
+        },
+        {
+          id: 16,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#38bdf8" stroke-width="4" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="#a855f7" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#34d399"/><rect x="42" y="70" width="16" height="12" fill="#f43f5e"/></svg>`,
+          options: [
+            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#38bdf8" stroke-width="4" fill="none"/><line x1="15" y1="50" x2="85" y2="50" stroke="#a855f7" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#34d399"/><rect x="42" y="70" width="16" height="12" fill="#f43f5e"/></svg>` },
+            { id: 2, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#38bdf8" stroke-width="4" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="#a855f7" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#34d399"/><rect x="42" y="70" width="16" height="12" fill="#f43f5e"/></svg>` },
+            { id: 3, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,85 85,15 15,15" stroke="#38bdf8" stroke-width="4" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="#a855f7" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#34d399"/><rect x="42" y="70" width="16" height="12" fill="#f43f5e"/></svg>` },
+            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#38bdf8" stroke-width="4" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="#a855f7" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#f43f5e"/><rect x="42" y="70" width="16" height="12" fill="#34d399"/></svg>` }
+          ]
+        },
+        {
+          id: 17,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#f43f5e" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#2dd4bf" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#a855f7" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#818cf8"/></svg>`,
+          options: [
+            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#f43f5e" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#2dd4bf" stroke-width="3" fill="none"/><line x1="10" y1="50" x2="90" y2="50" stroke="#a855f7" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#818cf8"/></svg>` },
+            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#f43f5e" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#2dd4bf" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#a855f7" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#818cf8"/></svg>` },
+            { id: 3, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" stroke="#f43f5e" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" stroke="#2dd4bf" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#a855f7" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#818cf8"/></svg>` },
+            { id: 4, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#f43f5e" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#2dd4bf" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#a855f7" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#818cf8"/></svg>` }
+          ]
+        },
+        {
+          id: 18,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#2dd4bf" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#f43f5e"/><circle cx="50" cy="28" r="5" fill="#38bdf8"/><circle cx="50" cy="72" r="5" fill="#f472b6"/></svg>`,
+          options: [
+            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#2dd4bf" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#f43f5e"/><circle cx="32" cy="50" r="5" fill="#38bdf8"/><circle cx="68" cy="50" r="5" fill="#f472b6"/></svg>` },
+            { id: 2, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#2dd4bf" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#f43f5e"/><circle cx="50" cy="28" r="5" fill="#38bdf8"/><circle cx="50" cy="72" r="5" fill="#f472b6"/></svg>` },
+            { id: 3, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#2dd4bf" stroke-width="4" fill="none"/><rect x="42" y="42" width="16" height="16" fill="#f43f5e"/><circle cx="50" cy="28" r="5" fill="#38bdf8"/><circle cx="50" cy="72" r="5" fill="#f472b6"/></svg>` },
+            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#f43f5e" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#2dd4bf"/><circle cx="50" cy="28" r="5" fill="#f472b6"/><circle cx="50" cy="72" r="5" fill="#38bdf8"/></svg>` }
+          ]
+        },
+        {
+          id: 19,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#a855f7" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#38bdf8" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#f472b6"/><rect x="45" y="70" width="10" height="10" fill="#a855f7"/></svg>`,
+          options: [
+            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#a855f7" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#38bdf8" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#f472b6"/><rect x="45" y="70" width="10" height="10" fill="#a855f7"/></svg>` },
+            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><line x1="10" y1="50" x2="90" y2="50" stroke="#a855f7" stroke-width="4"/><line x1="50" y1="10" x2="50" y2="90" stroke="#38bdf8" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#f472b6"/><rect x="45" y="70" width="10" height="10" fill="#a855f7"/></svg>` },
+            { id: 3, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#a855f7" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#38bdf8" stroke-width="4"/><rect x="45" y="15" width="10" height="10" fill="#f472b6"/><circle cx="50" cy="75" r="10" fill="#a855f7"/></svg>` },
+            { id: 4, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#a855f7" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#38bdf8" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#f472b6"/><rect x="45" y="70" width="10" height="10" fill="#a855f7"/></svg>` }
+          ]
+        },
+        {
+          id: 20,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#fbbf24"/><rect x="55" y="15" width="30" height="30" fill="#818cf8"/><rect x="15" y="55" width="30" height="30" fill="#2dd4bf"/><circle cx="70" cy="70" r="15" fill="#f43f5e"/></svg>`,
+          options: [
+            { id: 1, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#fbbf24"/><rect x="55" y="15" width="30" height="30" fill="#818cf8"/><rect x="15" y="55" width="30" height="30" fill="#2dd4bf"/><circle cx="70" cy="70" r="15" fill="#f43f5e"/></svg>` },
+            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#fbbf24"/><rect x="55" y="15" width="30" height="30" fill="#818cf8"/><rect x="15" y="55" width="30" height="30" fill="#2dd4bf"/><circle cx="70" cy="70" r="15" fill="#f43f5e"/></svg>` },
+            { id: 3, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#fbbf24"/><rect x="55" y="15" width="30" height="30" fill="#818cf8"/><rect x="15" y="55" width="30" height="30" fill="#f43f5e"/><circle cx="70" cy="70" r="15" fill="#2dd4bf"/></svg>` },
+            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#2dd4bf"/><rect x="55" y="15" width="30" height="30" fill="#818cf8"/><rect x="15" y="55" width="30" height="30" fill="#fbbf24"/><circle cx="70" cy="70" r="15" fill="#f43f5e"/></svg>` }
+          ]
+        },
+        {
+          id: 21,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#f472b6" stroke-width="4" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="#34d399" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#818cf8"/><rect x="42" y="70" width="16" height="12" fill="#818cf8"/></svg>`,
+          options: [
+            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#f472b6" stroke-width="4" fill="none"/><line x1="15" y1="50" x2="85" y2="50" stroke="#34d399" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#818cf8"/><rect x="42" y="70" width="16" height="12" fill="#818cf8"/></svg>` },
+            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#f472b6" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="12" fill="#818cf8"/><rect x="42" y="70" width="16" height="12" fill="#818cf8"/></svg>` },
+            { id: 3, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#f472b6" stroke-width="4" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="#34d399" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#818cf8"/><rect x="42" y="70" width="16" height="12" fill="#818cf8"/></svg>` },
+            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#f472b6" stroke-width="4" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="#34d399" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#818cf8"/><rect x="42" y="70" width="16" height="12" fill="#818cf8"/></svg>` }
+          ]
+        },
+        {
+          id: 22,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#34d399" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#f472b6" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#fbbf24" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#f472b6"/></svg>`,
+          options: [
+            { id: 1, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#34d399" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#f472b6" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#fbbf24" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#f472b6"/></svg>` },
+            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#34d399" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#f472b6" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#fbbf24" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#f472b6"/></svg>` },
+            { id: 3, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" stroke="#34d399" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" stroke="#f472b6" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#fbbf24" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#f472b6"/></svg>` },
+            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#f472b6" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#34d399" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#fbbf24" stroke-width="3"/><circle cx="50" cy="50" r="5" fill="#f472b6"/></svg>` }
+          ]
+        },
+        {
+          id: 23,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#818cf8" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#fbbf24"/><circle cx="50" cy="28" r="5" fill="#f43f5e"/><circle cx="50" cy="72" r="5" fill="#a855f7"/></svg>`,
+          options: [
+            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#818cf8" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#fbbf24"/><circle cx="32" cy="50" r="5" fill="#f43f5e"/><circle cx="68" cy="50" r="5" fill="#a855f7"/></svg>` },
+            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#818cf8" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#fbbf24"/><circle cx="50" cy="28" r="5" fill="#f43f5e"/><circle cx="50" cy="72" r="5" fill="#a855f7"/></svg>` },
+            { id: 3, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#818cf8" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#fbbf24"/><circle cx="50" cy="28" r="5" fill="#f43f5e"/><circle cx="50" cy="72" r="5" fill="#a855f7"/></svg>` },
+            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#fbbf24" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#818cf8"/><circle cx="50" cy="28" r="5" fill="#a855f7"/><circle cx="50" cy="72" r="5" fill="#f43f5e"/></svg>` }
+          ]
+        },
+        {
+          id: 24,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#38bdf8" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#a855f7" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#34d399"/><rect x="45" y="70" width="10" height="10" fill="#f43f5e"/></svg>`,
+          options: [
+            { id: 1, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#38bdf8" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#a855f7" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#34d399"/><rect x="45" y="70" width="10" height="10" fill="#f43f5e"/></svg>` },
+            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><line x1="10" y1="50" x2="90" y2="50" stroke="#38bdf8" stroke-width="4"/><line x1="50" y1="10" x2="50" y2="90" stroke="#a855f7" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#34d399"/><rect x="45" y="70" width="10" height="10" fill="#f43f5e"/></svg>` },
+            { id: 3, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#38bdf8" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#a855f7" stroke-width="4"/><rect x="45" y="15" width="10" height="10" fill="#34d399"/><circle cx="50" cy="75" r="10" fill="#f43f5e"/></svg>` },
+            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#a855f7" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#38bdf8" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#34d399"/><rect x="45" y="70" width="10" height="10" fill="#f43f5e"/></svg>` }
+          ]
+        },
+        {
+          id: 25,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#f43f5e"/><rect x="55" y="15" width="30" height="30" fill="#2dd4bf"/><rect x="15" y="55" width="30" height="30" fill="#a855f7"/><circle cx="70" cy="70" r="15" fill="#818cf8"/></svg>`,
+          options: [
+            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#2dd4bf"/><rect x="55" y="15" width="30" height="30" fill="#f43f5e"/><rect x="15" y="55" width="30" height="30" fill="#a855f7"/><circle cx="70" cy="70" r="15" fill="#818cf8"/></svg>` },
+            { id: 2, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#f43f5e"/><rect x="55" y="15" width="30" height="30" fill="#2dd4bf"/><rect x="15" y="55" width="30" height="30" fill="#a855f7"/><circle cx="70" cy="70" r="15" fill="#818cf8"/></svg>` },
+            { id: 3, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#f43f5e"/><rect x="55" y="15" width="30" height="30" fill="#2dd4bf"/><rect x="15" y="55" width="30" height="30" fill="#818cf8"/><circle cx="70" cy="70" r="15" fill="#a855f7"/></svg>` },
+            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#a855f7"/><rect x="55" y="15" width="30" height="30" fill="#2dd4bf"/><rect x="15" y="55" width="30" height="30" fill="#f43f5e"/><circle cx="70" cy="70" r="15" fill="#818cf8"/></svg>` }
+          ]
+        },
+        {
+          id: 26,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#2dd4bf" stroke-width="4" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="#f43f5e" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#38bdf8"/><rect x="42" y="70" width="16" height="12" fill="#f472b6"/></svg>`,
+          options: [
+            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#2dd4bf" stroke-width="4" fill="none"/><line x1="15" y1="50" x2="85" y2="50" stroke="#f43f5e" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#38bdf8"/><rect x="42" y="70" width="16" height="12" fill="#f472b6"/></svg>` },
+            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#2dd4bf" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="12" fill="#38bdf8"/><rect x="42" y="70" width="16" height="12" fill="#f472b6"/></svg>` },
+            { id: 3, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,85 85,15 15,15" stroke="#2dd4bf" stroke-width="4" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="#f43f5e" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#38bdf8"/><rect x="42" y="70" width="16" height="12" fill="#f472b6"/></svg>` },
+            { id: 4, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#2dd4bf" stroke-width="4" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="#f43f5e" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#38bdf8"/><rect x="42" y="70" width="16" height="12" fill="#f472b6"/></svg>` }
+          ]
+        },
+        {
+          id: 27,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#a855f7" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#38bdf8" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#f472b6" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#a855f7"/></svg>`,
+          options: [
+            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#a855f7" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#38bdf8" stroke-width="3" fill="none"/><line x1="10" y1="50" x2="90" y2="50" stroke="#f472b6" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#a855f7"/></svg>` },
+            { id: 2, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#a855f7" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#38bdf8" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#f472b6" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#a855f7"/></svg>` },
+            { id: 3, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" stroke="#a855f7" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" stroke="#38bdf8" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#f472b6" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#a855f7"/></svg>` },
+            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#38bdf8" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#a855f7" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#f472b6" stroke-width="3"/><circle cx="50" cy="50" r="5" fill="#a855f7"/></svg>` }
+          ]
+        },
+        {
+          id: 28,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#fbbf24" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#818cf8"/><circle cx="50" cy="28" r="5" fill="#2dd4bf"/><circle cx="50" cy="72" r="5" fill="#f43f5e"/></svg>`,
+          options: [
+            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#fbbf24" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#818cf8"/><circle cx="32" cy="50" r="5" fill="#2dd4bf"/><circle cx="68" cy="50" r="5" fill="#f43f5e"/></svg>` },
+            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#fbbf24" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#818cf8"/><circle cx="50" cy="28" r="5" fill="#2dd4bf"/><circle cx="50" cy="72" r="5" fill="#f43f5e"/></svg>` },
+            { id: 3, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#fbbf24" stroke-width="4" fill="none"/><rect x="42" y="42" width="16" height="16" fill="#818cf8"/><circle cx="50" cy="28" r="5" fill="#2dd4bf"/><circle cx="50" cy="72" r="5" fill="#f43f5e"/></svg>` },
+            { id: 4, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#fbbf24" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#818cf8"/><circle cx="50" cy="28" r="5" fill="#2dd4bf"/><circle cx="50" cy="72" r="5" fill="#f43f5e"/></svg>` }
+          ]
+        },
+        {
+          id: 29,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#f472b6" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#34d399" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#818cf8"/><rect x="45" y="70" width="10" height="10" fill="#818cf8"/></svg>`,
+          options: [
+            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#f472b6" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#34d399" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#818cf8"/><rect x="45" y="70" width="10" height="10" fill="#818cf8"/></svg>` },
+            { id: 2, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#f472b6" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#34d399" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#818cf8"/><rect x="45" y="70" width="10" height="10" fill="#818cf8"/></svg>` },
+            { id: 3, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#f472b6" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#34d399" stroke-width="4"/><rect x="45" y="15" width="10" height="10" fill="#818cf8"/><circle cx="50" cy="75" r="10" fill="#818cf8"/></svg>` },
+            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#34d399" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#f472b6" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#818cf8"/><rect x="45" y="70" width="10" height="10" fill="#818cf8"/></svg>` }
+          ]
+        },
+        {
+          id: 30,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#34d399"/><rect x="55" y="15" width="30" height="30" fill="#f472b6"/><rect x="15" y="55" width="30" height="30" fill="#fbbf24"/><circle cx="70" cy="70" r="15" fill="#f472b6"/></svg>`,
+          options: [
+            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#f472b6"/><rect x="55" y="15" width="30" height="30" fill="#34d399"/><rect x="15" y="55" width="30" height="30" fill="#fbbf24"/><circle cx="70" cy="70" r="15" fill="#f472b6"/></svg>` },
+            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#34d399"/><rect x="55" y="15" width="30" height="30" fill="#f472b6"/><rect x="15" y="55" width="30" height="30" fill="#fbbf24"/><circle cx="70" cy="70" r="15" fill="#f472b6"/></svg>` },
+            { id: 3, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#34d399"/><rect x="55" y="15" width="30" height="30" fill="#f472b6"/><rect x="15" y="55" width="30" height="30" fill="#fbbf24"/><circle cx="70" cy="70" r="15" fill="#f472b6"/></svg>` },
+            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#fbbf24"/><rect x="55" y="15" width="30" height="30" fill="#f472b6"/><rect x="15" y="55" width="30" height="30" fill="#34d399"/><circle cx="70" cy="70" r="15" fill="#f472b6"/></svg>` }
+          ]
+        },
+        {
+          id: 31,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#818cf8" stroke-width="4" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="#fbbf24" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#f43f5e"/><rect x="42" y="70" width="16" height="12" fill="#a855f7"/></svg>`,
+          options: [
+            { id: 1, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#818cf8" stroke-width="4" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="#fbbf24" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#f43f5e"/><rect x="42" y="70" width="16" height="12" fill="#a855f7"/></svg>` },
+            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#818cf8" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="12" fill="#f43f5e"/><rect x="42" y="70" width="16" height="12" fill="#a855f7"/></svg>` },
+            { id: 3, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,85 85,15 15,15" stroke="#818cf8" stroke-width="4" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="#fbbf24" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#f43f5e"/><rect x="42" y="70" width="16" height="12" fill="#a855f7"/></svg>` },
+            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#818cf8" stroke-width="4" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="#fbbf24" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#a855f7"/><rect x="42" y="70" width="16" height="12" fill="#f43f5e"/></svg>` }
+          ]
+        },
+        {
+          id: 32,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#38bdf8" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#a855f7" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#34d399" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#f43f5e"/></svg>`,
+          options: [
+            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#38bdf8" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#a855f7" stroke-width="3" fill="none"/><line x1="10" y1="50" x2="90" y2="50" stroke="#34d399" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#f43f5e"/></svg>` },
+            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#38bdf8" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#a855f7" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#34d399" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#f43f5e"/></svg>` },
+            { id: 3, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#38bdf8" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#a855f7" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#34d399" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#f43f5e"/></svg>` },
+            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#a855f7" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#38bdf8" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#34d399" stroke-width="3"/><circle cx="50" cy="50" r="5" fill="#f43f5e"/></svg>` }
+          ]
+        },
+        {
+          id: 33,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#f43f5e" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#2dd4bf"/><circle cx="50" cy="28" r="5" fill="#a855f7"/><circle cx="50" cy="72" r="5" fill="#818cf8"/></svg>`,
+          options: [
+            { id: 1, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#f43f5e" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#2dd4bf"/><circle cx="50" cy="28" r="5" fill="#a855f7"/><circle cx="50" cy="72" r="5" fill="#818cf8"/></svg>` },
+            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#f43f5e" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#2dd4bf"/><circle cx="50" cy="28" r="5" fill="#a855f7"/><circle cx="50" cy="72" r="5" fill="#818cf8"/></svg>` },
+            { id: 3, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#f43f5e" stroke-width="4" fill="none"/><rect x="42" y="42" width="16" height="16" fill="#2dd4bf"/><circle cx="50" cy="28" r="5" fill="#a855f7"/><circle cx="50" cy="72" r="5" fill="#818cf8"/></svg>` },
+            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#2dd4bf" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#f43f5e"/><circle cx="50" cy="28" r="5" fill="#818cf8"/><circle cx="50" cy="72" r="5" fill="#a855f7"/></svg>` }
+          ]
+        },
+        {
+          id: 34,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#2dd4bf" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#f43f5e" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#38bdf8"/><rect x="45" y="70" width="10" height="10" fill="#f472b6"/></svg>`,
+          options: [
+            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#2dd4bf" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#f43f5e" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#38bdf8"/><rect x="45" y="70" width="10" height="10" fill="#f472b6"/></svg>` },
+            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><line x1="10" y1="50" x2="90" y2="50" stroke="#2dd4bf" stroke-width="4"/><line x1="50" y1="10" x2="50" y2="90" stroke="#f43f5e" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#38bdf8"/><rect x="45" y="70" width="10" height="10" fill="#f472b6"/></svg>` },
+            { id: 3, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#2dd4bf" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#f43f5e" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#38bdf8"/><rect x="45" y="70" width="10" height="10" fill="#f472b6"/></svg>` },
+            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#f43f5e" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#2dd4bf" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#38bdf8"/><rect x="45" y="70" width="10" height="10" fill="#f472b6"/></svg>` }
+          ]
+        },
+        {
+          id: 35,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#a855f7"/><rect x="55" y="15" width="30" height="30" fill="#38bdf8"/><rect x="15" y="55" width="30" height="30" fill="#f472b6"/><circle cx="70" cy="70" r="15" fill="#a855f7"/></svg>`,
+          options: [
+            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#38bdf8"/><rect x="55" y="15" width="30" height="30" fill="#a855f7"/><rect x="15" y="55" width="30" height="30" fill="#f472b6"/><circle cx="70" cy="70" r="15" fill="#a855f7"/></svg>` },
+            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#a855f7"/><rect x="55" y="15" width="30" height="30" fill="#38bdf8"/><rect x="15" y="55" width="30" height="30" fill="#f472b6"/><circle cx="70" cy="70" r="15" fill="#a855f7"/></svg>` },
+            { id: 3, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#a855f7"/><rect x="55" y="15" width="30" height="30" fill="#38bdf8"/><rect x="15" y="55" width="30" height="30" fill="#a855f7"/><circle cx="70" cy="70" r="15" fill="#f472b6"/></svg>` },
+            { id: 4, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#a855f7"/><rect x="55" y="15" width="30" height="30" fill="#38bdf8"/><rect x="15" y="55" width="30" height="30" fill="#f472b6"/><circle cx="70" cy="70" r="15" fill="#a855f7"/></svg>` }
+          ]
+        },
+        {
+          id: 36,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#fbbf24" stroke-width="4" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="#818cf8" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#2dd4bf"/><rect x="42" y="70" width="16" height="12" fill="#f43f5e"/></svg>`,
+          options: [
+            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#fbbf24" stroke-width="4" fill="none"/><line x1="15" y1="50" x2="85" y2="50" stroke="#818cf8" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#2dd4bf"/><rect x="42" y="70" width="16" height="12" fill="#f43f5e"/></svg>` },
+            { id: 2, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#fbbf24" stroke-width="4" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="#818cf8" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#2dd4bf"/><rect x="42" y="70" width="16" height="12" fill="#f43f5e"/></svg>` },
+            { id: 3, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,85 85,15 15,15" stroke="#fbbf24" stroke-width="4" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="#818cf8" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#2dd4bf"/><rect x="42" y="70" width="16" height="12" fill="#f43f5e"/></svg>` },
+            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,85 15,85" stroke="#fbbf24" stroke-width="4" fill="none"/><line x1="50" y1="15" x2="50" y2="85" stroke="#818cf8" stroke-width="4"/><circle cx="50" cy="50" r="12" fill="#f43f5e"/><rect x="42" y="70" width="16" height="12" fill="#2dd4bf"/></svg>` }
+          ]
+        },
+        {
+          id: 37,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#f472b6" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#34d399" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#818cf8" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#818cf8"/></svg>`,
+          options: [
+            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#f472b6" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#34d399" stroke-width="3" fill="none"/><line x1="10" y1="50" x2="90" y2="50" stroke="#818cf8" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#818cf8"/></svg>` },
+            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#f472b6" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#34d399" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#818cf8" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#818cf8"/></svg>` },
+            { id: 3, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" stroke="#f472b6" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" stroke="#34d399" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#818cf8" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#818cf8"/></svg>` },
+            { id: 4, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><circle cx="50" cy="50" r="36" stroke="#f472b6" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="20" stroke="#34d399" stroke-width="3" fill="none"/><line x1="50" y1="10" x2="50" y2="90" stroke="#818cf8" stroke-width="3"/><rect x="45" y="45" width="10" height="10" fill="#818cf8"/></svg>` }
+          ]
+        },
+        {
+          id: 38,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#34d399" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#f472b6"/><circle cx="50" cy="28" r="5" fill="#fbbf24"/><circle cx="50" cy="72" r="5" fill="#f472b6"/></svg>`,
+          options: [
+            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#34d399" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#f472b6"/><circle cx="32" cy="50" r="5" fill="#fbbf24"/><circle cx="68" cy="50" r="5" fill="#f472b6"/></svg>` },
+            { id: 2, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#34d399" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#f472b6"/><circle cx="50" cy="28" r="5" fill="#fbbf24"/><circle cx="50" cy="72" r="5" fill="#f472b6"/></svg>` },
+            { id: 3, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#34d399" stroke-width="4" fill="none"/><rect x="42" y="42" width="16" height="16" fill="#f472b6"/><circle cx="50" cy="28" r="5" fill="#fbbf24"/><circle cx="50" cy="72" r="5" fill="#f472b6"/></svg>` },
+            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="#f472b6" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="14" fill="#34d399"/><circle cx="50" cy="28" r="5" fill="#f472b6"/><circle cx="50" cy="72" r="5" fill="#fbbf24"/></svg>` }
+          ]
+        },
+        {
+          id: 39,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#818cf8" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#fbbf24" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#f43f5e"/><rect x="45" y="70" width="10" height="10" fill="#a855f7"/></svg>`,
+          options: [
+            { id: 1, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#818cf8" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#fbbf24" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#f43f5e"/><rect x="45" y="70" width="10" height="10" fill="#a855f7"/></svg>` },
+            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><line x1="10" y1="50" x2="90" y2="50" stroke="#818cf8" stroke-width="4"/><line x1="50" y1="10" x2="50" y2="90" stroke="#fbbf24" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#f43f5e"/><rect x="45" y="70" width="10" height="10" fill="#a855f7"/></svg>` },
+            { id: 3, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#818cf8" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#fbbf24" stroke-width="4"/><rect x="45" y="15" width="10" height="10" fill="#f43f5e"/><circle cx="50" cy="75" r="10" fill="#a855f7"/></svg>` },
+            { id: 4, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="#818cf8" stroke-width="4"/><line x1="20" y1="80" x2="80" y2="20" stroke="#fbbf24" stroke-width="4"/><circle cx="50" cy="20" r="10" fill="#f43f5e"/><rect x="45" y="70" width="10" height="10" fill="#a855f7"/></svg>` }
+          ]
+        },
+        {
+          id: 40,
+          targetSvg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#38bdf8"/><rect x="55" y="15" width="30" height="30" fill="#a855f7"/><rect x="15" y="55" width="30" height="30" fill="#34d399"/><circle cx="70" cy="70" r="15" fill="#f43f5e"/></svg>`,
+          options: [
+            { id: 1, isCorrect: true, svg: `<svg class="w-24 h-24" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#38bdf8"/><rect x="55" y="15" width="30" height="30" fill="#a855f7"/><rect x="15" y="55" width="30" height="30" fill="#34d399"/><circle cx="70" cy="70" r="15" fill="#f43f5e"/></svg>` },
+            { id: 2, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#38bdf8"/><rect x="55" y="15" width="30" height="30" fill="#a855f7"/><rect x="15" y="55" width="30" height="30" fill="#34d399"/><circle cx="70" cy="70" r="15" fill="#f43f5e"/></svg>` },
+            { id: 3, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#38bdf8"/><rect x="55" y="15" width="30" height="30" fill="#a855f7"/><rect x="15" y="55" width="30" height="30" fill="#f43f5e"/><circle cx="70" cy="70" r="15" fill="#34d399"/></svg>` },
+            { id: 4, isCorrect: false, svg: `<svg class="w-16 h-16" viewBox="0 0 100 100"><rect x="15" y="15" width="30" height="30" fill="#34d399"/><rect x="55" y="15" width="30" height="30" fill="#a855f7"/><rect x="15" y="55" width="30" height="30" fill="#38bdf8"/><circle cx="70" cy="70" r="15" fill="#f43f5e"/></svg>` }
           ]
         }
       ],
@@ -2996,68 +3356,54 @@
         const trial = this.trials[index];
         document.getElementById('memoryTrialBadge').textContent = `Trial ${index + 1} of ${this.totalTrials}`;
         document.getElementById('memoryInstructionText').textContent = 'Phase 1: Memorize target glyph (2.5s)...';
-        document.getElementById('memoryProbeGrid').classList.add('hidden');
+        
+        const pct = Math.round(((index) / this.totalTrials) * 100);
+        document.getElementById('memoryProgressBar').style.width = `${pct}%`;
 
-        // Display Target Glyph
-        const display = document.getElementById('memoryDisplayArea');
-        display.innerHTML = `
-          <div class="flex flex-col items-center justify-center space-y-3 animate-pulse">
-            <span class="text-[10px] font-mono uppercase tracking-widest text-cyan-300">Target Glyph</span>
-            <div class="p-4 rounded-2xl bg-slate-900 border-2 border-indigo-500/50 holo-glow-violet">
-              ${trial.targetSvg}
-            </div>
-          </div>
-        `;
-
-        let timeLeft = 2.5;
-        document.getElementById('memoryPhaseTimer').textContent = `${timeLeft.toFixed(1)}s`;
-        clearInterval(this.timerId);
-
-        this.timerId = setInterval(() => {
-          timeLeft -= 0.1;
-          if (timeLeft <= 0) {
-            clearInterval(this.timerId);
-            this.showRetentionMask();
-          } else {
-            document.getElementById('memoryPhaseTimer').textContent = `${timeLeft.toFixed(1)}s`;
-          }
-        }, 100);
-      },
-
-      showRetentionMask() {
-        document.getElementById('memoryInstructionText').textContent = 'Phase 2: Retention Delay Buffer (1.2s)...';
-        const display = document.getElementById('memoryDisplayArea');
-        display.innerHTML = `
-          <div class="flex flex-col items-center justify-center space-y-2">
-            <span class="text-3xl text-indigo-400 font-mono animate-ping">+</span>
-            <span class="text-[10px] font-mono text-slate-400">HOLDING IN MEMORY BUFFER</span>
-          </div>
-        `;
-
-        let timeLeft = 1.2;
-        this.timerId = setInterval(() => {
-          timeLeft -= 0.1;
-          if (timeLeft <= 0) {
-            clearInterval(this.timerId);
-            this.showProbePhase();
-          } else {
-            document.getElementById('memoryPhaseTimer').textContent = `${timeLeft.toFixed(1)}s`;
-          }
-        }, 100);
-      },
-
-      showProbePhase() {
-        document.getElementById('memoryInstructionText').textContent = 'Phase 3: Tap the EXACT target glyph!';
-        document.getElementById('memoryPhaseTimer').textContent = 'GO';
-        const display = document.getElementById('memoryDisplayArea');
-        display.innerHTML = `
-          <div class="text-center">
-            <span class="text-xs font-mono text-cyan-300">Which pattern matches the target you memorized?</span>
-          </div>
-        `;
-
-        const trial = this.trials[this.currentTrial];
+        const targetCard = document.getElementById('memoryTargetCard');
+        const probeCard = document.getElementById('memoryProbeCard');
         const grid = document.getElementById('memoryProbeGrid');
+        
+        targetCard.classList.remove('hidden');
+        probeCard.classList.add('hidden');
+        grid.classList.add('hidden');
+        grid.innerHTML = '';
+
+        document.getElementById('memoryTargetContainer').innerHTML = trial.targetSvg;
+
+        // Presentation delay: 2.5s
+        clearTimeout(this.timerId);
+        this.timerId = setTimeout(() => {
+          this.enterRetentionDelay(trial);
+        }, 2500);
+      },
+
+      enterRetentionDelay(trial) {
+        const targetCard = document.getElementById('memoryTargetCard');
+        const probeCard = document.getElementById('memoryProbeCard');
+        
+        document.getElementById('memoryInstructionText').textContent = 'Phase 2: Retention interval (1.2s mask)...';
+        
+        targetCard.innerHTML = `
+          <div class="w-24 h-24 rounded-2xl bg-slate-900 border-2 border-dashed border-cyan-500/40 flex items-center justify-center animate-pulse">
+            <span class="text-xs font-mono text-cyan-300">MASK BUFFER</span>
+          </div>
+        `;
+
+        this.timerId = setTimeout(() => {
+          this.presentProbe(trial);
+        }, 1200);
+      },
+
+      presentProbe(trial) {
+        const targetCard = document.getElementById('memoryTargetCard');
+        const probeCard = document.getElementById('memoryProbeCard');
+        const grid = document.getElementById('memoryProbeGrid');
+
+        targetCard.classList.add('hidden');
+        probeCard.classList.remove('hidden');
+        document.getElementById('memoryInstructionText').textContent = 'Phase 3: Select matching target matrix from memory:';
+
         grid.innerHTML = '';
         grid.classList.remove('hidden');
 
@@ -3096,7 +3442,7 @@
         const finalScore = Math.max(75, Math.min(145, score));
 
         document.getElementById('genericReportTitle').textContent = 'Visual Memory Recognition Dossier';
-        document.getElementById('genericReportSubtitle').textContent = 'PEBL-Standard Delayed Match-to-Sample (DMTS) Protocol';
+        document.getElementById('genericReportSubtitle').textContent = 'PEBL-Standard Delayed Match-to-Sample (DMTS) Protocol (40 Trials)';
 
         document.getElementById('genericReportHero').innerHTML = `
           <div class="p-4 rounded-2xl bg-indigo-950/40 border border-indigo-500/30">
@@ -3117,7 +3463,7 @@
           <div class="space-y-3">
             <div>
               <div class="flex justify-between text-xs font-mono mb-1">
-                <span class="text-slate-300">Visual Encoding Fidelity:</span>
+                <span class="text-slate-300">Visual Encoding Fidelity (40 Trials):</span>
                 <span class="text-cyan-400 font-bold">${acc}%</span>
               </div>
               <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
@@ -3137,8 +3483,8 @@
         `;
 
         document.getElementById('genericReportInterpretation').innerHTML = `
-          <p>• <strong>Visuospatial Sketchpad Retention:</strong> You successfully recognized ${this.correctCount} of ${this.totalTrials} abstract matrix configurations under temporal decay intervals, indicating ${acc >= 75 ? 'high structural fidelity' : 'standard retention capacity'} in prefrontal-hippocampal consolidation.</p>
-          <p>• <strong>Discrimination Latency:</strong> Average identification latency of ${avgLat}s demonstrates fast feature extraction and resistance to high-similarity distractor lures.</p>
+          <p>• <strong>Visuospatial Sketchpad Retention:</strong> You successfully recognized ${this.correctCount} of ${this.totalTrials} abstract matrix configurations under temporal decay intervals, indicating ${acc >= 75 ? 'high structural fidelity' : 'standard retention capacity'} in prefrontal-hippocampal consolidation across 40 full-load trials.</p>
+          <p>• <strong>Discrimination Latency:</strong> Average identification latency of ${avgLat}s demonstrates fast feature extraction and sustained vigilance across extended trial blocks.</p>
         `;
 
         showScreen('screenGenericReport');
@@ -3148,7 +3494,7 @@
     // ==================== 2. NEUROPLASTICITY (DUAL N-BACK) ENGINE ====================
     window.NBackEngine = {
       step: 0,
-      totalSteps: 6,
+      totalSteps: 40,
       history: [],
       hits: 0,
       misses: 0,
@@ -3171,6 +3517,9 @@
 
         this.step = index;
         document.getElementById('nbackStepBadge').textContent = `Step ${index + 1} of ${this.totalSteps}`;
+
+        const pct = Math.round(((index) / this.totalSteps) * 100);
+        document.getElementById('nbackProgressBar').style.width = `${pct}%`;
 
         // Determine current stimulus
         const pos = Math.floor(Math.random() * 9);
@@ -3227,7 +3576,7 @@
         const plasticityIndex = Math.round(95 + (accuracy * 0.3));
 
         document.getElementById('genericReportTitle').textContent = 'Neuroplasticity Tracking Dossier';
-        document.getElementById('genericReportSubtitle').textContent = 'Jaeggi Dual N-Back Working Memory Updating Metric';
+        document.getElementById('genericReportSubtitle').textContent = 'Jaeggi Dual N-Back Working Memory Updating Metric (40 Steps)';
 
         document.getElementById('genericReportHero').innerHTML = `
           <div class="p-4 rounded-2xl bg-emerald-950/40 border border-emerald-500/30">
@@ -3248,7 +3597,7 @@
           <div class="space-y-3">
             <div>
               <div class="flex justify-between text-xs font-mono mb-1">
-                <span class="text-slate-300">Dual Stream Interference Resistance:</span>
+                <span class="text-slate-300">Dual Stream Interference Resistance (40 Cycles):</span>
                 <span class="text-emerald-400 font-bold">${accuracy}%</span>
               </div>
               <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
@@ -3259,8 +3608,8 @@
         `;
 
         document.getElementById('genericReportInterpretation').innerHTML = `
-          <p>• <strong>Working Memory Updating:</strong> Successfully maintained dual modalities (spatial location + letter identity) in working memory with ${this.hits} target hits, showing strong executive control in dlPFC activation.</p>
-          <p>• <strong>Transfer Potential:</strong> Regular engagement with N=2 and N=3 updating tasks exhibits empirically documented transfer to novel problem solving and fluid reasoning efficiency.</p>
+          <p>• <strong>Working Memory Updating:</strong> Successfully maintained dual modalities (spatial location + letter identity) in working memory across 40 continuous trials with ${this.hits} target hits, showing strong executive control in dlPFC activation.</p>
+          <p>• <strong>Transfer Potential:</strong> Regular engagement with 40-step N=2 updating tasks exhibits empirically documented transfer to novel problem solving and fluid reasoning efficiency.</p>
         `;
 
         showScreen('screenGenericReport');
@@ -3274,13 +3623,44 @@
 
       questions: [
         { cat: 'MACHIAVELLIANISM (STRATEGY)', text: 'Strategic calculation and keeping critical plans guarded is essential to long-term success.' },
-        { cat: 'CRISIS COMPOSURE (LOW ANXIETY)', text: 'In crisis situations where others panic, I feel sharp, focused, and emotionally detached.' },
+        { cat: 'MACHIAVELLIANISM (STRATEGY)', text: 'In competitive negotiation, disclosing all cards immediately is a catastrophic structural error.' },
+        { cat: 'MACHIAVELLIANISM (STRATEGY)', text: 'Most people are easily guided when you frame objectives in terms of their private self-interest.' },
+        { cat: 'MACHIAVELLIANISM (STRATEGY)', text: 'It is better to maintain strategic leverage over outcomes than rely on others goodwill.' },
+        { cat: 'MACHIAVELLIANISM (STRATEGY)', text: 'Tactical patience and waiting for optimal timing often outperforms aggressive direct confrontation.' },
+        { cat: 'MACHIAVELLIANISM (STRATEGY)', text: 'When navigating complex hierarchies, understanding invisible power dynamics is vital.' },
+        { cat: 'MACHIAVELLIANISM (STRATEGY)', text: 'I carefully evaluate what individuals stand to gain before accepting their proposals at face value.' },
+        { cat: 'MACHIAVELLIANISM (STRATEGY)', text: 'Systemic leverage should be preserved methodically and deployed with surgical economy.' },
+        { cat: 'CRISIS COMPOSURE (LOW ANXIETY)', text: 'In acute crisis situations where others panic, I feel sharp, focused, and emotionally detached.' },
+        { cat: 'CRISIS COMPOSURE (LOW ANXIETY)', text: 'Sudden emergencies trigger accelerated problem-solving rather than paralysis or fear in me.' },
+        { cat: 'CRISIS COMPOSURE (LOW ANXIETY)', text: 'I am capable of sustaining clinical calm when delivering difficult or high-consequence decisions.' },
+        { cat: 'CRISIS COMPOSURE (LOW ANXIETY)', text: 'When systems fail catastrophically, my autonomic response remains regulated and steady.' },
+        { cat: 'CRISIS COMPOSURE (LOW ANXIETY)', text: 'Unexpected disruptions rarely disrupt my baseline focus or cognitive clarity.' },
+        { cat: 'CRISIS COMPOSURE (LOW ANXIETY)', text: 'I do not dwell on past errors once corrective measures have been implemented.' },
+        { cat: 'CRISIS COMPOSURE (LOW ANXIETY)', text: 'High-stress operational environments feel natural and mentally clarifying rather than draining.' },
+        { cat: 'CRISIS COMPOSURE (LOW ANXIETY)', text: 'I can process severe negative news without experiencing emotional turbulence or reactive impulse.' },
         { cat: 'EXECUTIVE VISION (DRIVE)', text: 'I have exceptionally high standards and naturally take command when projects lack decisive direction.' },
+        { cat: 'EXECUTIVE VISION (DRIVE)', text: 'I am driven by an intense desire to build scalable, high-impact systems that outlive standard trends.' },
+        { cat: 'EXECUTIVE VISION (DRIVE)', text: 'I possess high confidence in my long-term forecasting even when conventional consensus disagrees.' },
+        { cat: 'EXECUTIVE VISION (DRIVE)', text: 'Mediocrity or passive compliance in an organization creates genuine intellectual impatience in me.' },
+        { cat: 'EXECUTIVE VISION (DRIVE)', text: 'I routinely hold myself to demanding performance metrics that exceed institutional requirements.' },
+        { cat: 'EXECUTIVE VISION (DRIVE)', text: 'When I identify a structural opportunity, I pursue execution with relentless focus.' },
+        { cat: 'EXECUTIVE VISION (DRIVE)', text: 'I instinctively look for force multipliers and automated leverage rather than linear labor.' },
+        { cat: 'EXECUTIVE VISION (DRIVE)', text: 'Taking full ownership of systemic outcomes energizes me far more than following predefined scripts.' },
         { cat: 'OPENNESS TO INNOVATION', text: 'I am deeply energized by abstract theoretical puzzles, complex algorithms, and novel technologies.' },
+        { cat: 'OPENNESS TO INNOVATION', text: 'I actively search for radical architectural improvements rather than settling for incremental patches.' },
+        { cat: 'OPENNESS TO INNOVATION', text: 'Exploring multidisciplinary paradigms (e.g. neurobiology, computation, game theory) inspires my work.' },
+        { cat: 'OPENNESS TO INNOVATION', text: 'I find profound aesthetic beauty in elegant mathematical proofs and minimalist system architectures.' },
+        { cat: 'OPENNESS TO INNOVATION', text: 'Unconventional ideas that challenge orthodoxy capture my curiosity before eliciting skepticism.' },
+        { cat: 'OPENNESS TO INNOVATION', text: 'I routinely invest intellectual energy into studying edge-case frontiers and emergent protocols.' },
+        { cat: 'OPENNESS TO INNOVATION', text: 'Complex conceptual ambiguities stimulate my analytical reasoning rather than causing fatigue.' },
+        { cat: 'OPENNESS TO INNOVATION', text: 'I prefer designing transformative first-principles systems over maintaining conventional legacies.' },
         { cat: 'CONSCIENTIOUSNESS (PRECISION)', text: 'I demand rigorous precision, repeatable workflows, and verified empirical evidence in my work.' },
+        { cat: 'CONSCIENTIOUSNESS (PRECISION)', text: 'I systematically audit critical deliverables against adversarial failure modes before sign-off.' },
+        { cat: 'CONSCIENTIOUSNESS (PRECISION)', text: 'Unverified assumptions or sloppy telemetry metrics bother me until fully reconciled.' },
+        { cat: 'CONSCIENTIOUSNESS (PRECISION)', text: 'I maintain disciplined documentation protocols so processes remain transparent and reproducible.' },
         { cat: 'EMOTIONAL RESILIENCE', text: 'Negative feedback or unexpected roadblocks rarely cause me self-doubt or emotional turbulence.' },
+        { cat: 'EMOTIONAL RESILIENCE', text: 'I treat operational failures purely as telemetry data pointing toward requisite system adjustments.' },
         { cat: 'CALCULATED RISK DRIVE', text: 'I am comfortable making bold, high-stakes decisions under conditions of incomplete information.' },
-        { cat: 'TACTICAL PERSUASION', text: 'I quickly decode interpersonal motivations and adapt my communication style to achieve the objective.' },
         { cat: 'COLLABORATIVE SYNERGY', text: 'True power comes from assembling and empowering elite talent rather than isolated micro-management.' }
       ],
 
@@ -3313,16 +3693,23 @@
       },
 
       finish() {
-        // Calculate dimensional metrics (normalized to 100%)
-        const mach = Math.round(((this.answers[0] + this.answers[7]) / 10) * 100);
-        const composure = Math.round(((this.answers[1] + this.answers[5]) / 10) * 100);
-        const vision = Math.round(((this.answers[2] + this.answers[6]) / 10) * 100);
-        const openness = Math.round((this.answers[3] / 5) * 100);
-        const conscientiousness = Math.round((this.answers[4] / 5) * 100);
-        const empathy = Math.round((this.answers[8] / 5) * 100);
+        // Calculate dimensional metrics across 40 items (8 items per scale => max 40 points)
+        const machAnswers = this.answers.slice(0, 8);
+        const composureAnswers = this.answers.slice(8, 16);
+        const visionAnswers = this.answers.slice(16, 24);
+        const opennessAnswers = this.answers.slice(24, 32);
+        const consciAnswers = this.answers.slice(32, 40);
+
+        const sum = arr => arr.reduce((a, b) => a + b, 0);
+        const mach = Math.round((sum(machAnswers) / 40) * 100);
+        const composure = Math.round((sum(composureAnswers) / 40) * 100);
+        const vision = Math.round((sum(visionAnswers) / 40) * 100);
+        const openness = Math.round((sum(opennessAnswers) / 40) * 100);
+        const conscientiousness = Math.round((sum(consciAnswers) / 40) * 100);
+        const empathy = Math.round(((this.answers[39] + this.answers[38] + this.answers[37]) / 15) * 100);
 
         document.getElementById('genericReportTitle').textContent = 'Dark Triad & Big Five Personality Dossier';
-        document.getElementById('genericReportSubtitle').textContent = 'SD3 (Short Dark Triad) + IPIP-NEO Psychometric Profile';
+        document.getElementById('genericReportSubtitle').textContent = 'Sub-Clinical Personality & Executive Resilience Profile (40 Statements)';
 
         document.getElementById('genericReportHero').innerHTML = `
           <div class="p-4 rounded-2xl bg-purple-950/40 border border-purple-500/30">
@@ -3334,8 +3721,8 @@
             <span class="text-4xl sm:text-5xl font-mono font-extrabold text-cyan-400">${composure}%</span>
           </div>
           <div class="p-4 rounded-2xl bg-emerald-950/40 border border-emerald-500/30">
-            <span class="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-1">INTELLECTUAL RIGOR</span>
-            <span class="text-4xl sm:text-5xl font-mono font-extrabold text-emerald-400">${conscientiousness}%</span>
+            <span class="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-1">EXECUTIVE VISION</span>
+            <span class="text-4xl sm:text-5xl font-mono font-extrabold text-emerald-300">${vision}%</span>
           </div>
         `;
 
@@ -3343,49 +3730,37 @@
           <div class="space-y-3">
             <div>
               <div class="flex justify-between text-xs font-mono mb-1">
-                <span class="text-slate-300">Machiavellian Strategy & Prudence:</span>
-                <span class="text-purple-300 font-bold">${mach}%</span>
+                <span class="text-slate-300">Openness to Theoretical Innovation:</span>
+                <span class="text-cyan-400 font-bold">${openness}%</span>
               </div>
               <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                <div class="bg-purple-400 h-full rounded-full" style="width: ${mach}%;"></div>
+                <div class="bg-cyan-400 h-full rounded-full" style="width: ${openness}%;"></div>
               </div>
             </div>
-
             <div>
               <div class="flex justify-between text-xs font-mono mb-1">
-                <span class="text-slate-300">Stress Invariance & Low Anxiety:</span>
-                <span class="text-cyan-400 font-bold">${composure}%</span>
+                <span class="text-slate-300">Conscientiousness & Empirical Rigor:</span>
+                <span class="text-purple-400 font-bold">${conscientiousness}%</span>
               </div>
               <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                <div class="bg-cyan-400 h-full rounded-full" style="width: ${composure}%;"></div>
+                <div class="bg-purple-400 h-full rounded-full" style="width: ${conscientiousness}%;"></div>
               </div>
             </div>
-
             <div>
               <div class="flex justify-between text-xs font-mono mb-1">
-                <span class="text-slate-300">Executive Vision & Command:</span>
-                <span class="text-amber-400 font-bold">${vision}%</span>
+                <span class="text-slate-300">Synergy & Coalition Building:</span>
+                <span class="text-emerald-400 font-bold">${empathy}%</span>
               </div>
               <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                <div class="bg-amber-400 h-full rounded-full" style="width: ${vision}%;"></div>
-              </div>
-            </div>
-
-            <div>
-              <div class="flex justify-between text-xs font-mono mb-1">
-                <span class="text-slate-300">Openness to Abstraction & Novelty:</span>
-                <span class="text-indigo-400 font-bold">${openness}%</span>
-              </div>
-              <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                <div class="bg-indigo-400 h-full rounded-full" style="width: ${openness}%;"></div>
+                <div class="bg-emerald-400 h-full rounded-full" style="width: ${empathy}%;"></div>
               </div>
             </div>
           </div>
         `;
 
         document.getElementById('genericReportInterpretation').innerHTML = `
-          <p>• <strong>Architect / Strategist Profile:</strong> Your responses reflect an elevated level of strategic planning (${mach}%) coupled with high stress resilience (${composure}%). This combination is common in high-performing system architects, executive leaders, and security engineers who operate effectively in adversarial environments.</p>
-          <p>• <strong>Cognitive Style:</strong> High Conscientiousness (${conscientiousness}%) and Openness (${openness}%) indicate an empirical mindset that values verifiable evidence, structured methodology, and continuous learning.</p>
+          <p>• <strong>Strategic Calculation & Foresight (${mach}%):</strong> Demonstrates high systemic awareness and the capacity to plan multi-move maneuvers while safeguarding strategic initiatives across 40 calibrated items.</p>
+          <p>• <strong>Crisis Composure (${composure}%):</strong> Shows strong autonomic stability and rational decision-making in high-friction operational crises.</p>
         `;
 
         showScreen('screenGenericReport');
@@ -3398,14 +3773,46 @@
       scores: {},
 
       domains: [
-        { key: 'logical', label: 'LOGICAL-MATHEMATICAL', text: 'I excel at analyzing mathematical sequences, algorithmic induction, and debugging complex logical structures.' },
-        { key: 'spatial', label: 'SPATIAL-VISUAL', text: 'I easily visualize 3D geometry, complex rotational patterns, and architectural blueprints in my mind.' },
-        { key: 'linguistic', label: 'LINGUISTIC-VERBAL', text: 'I have a strong command of precise technical language, articulate prose, syntax, and persuasive rhetoric.' },
-        { key: 'kinesthetic', label: 'BODILY-KINESTHETIC', text: 'I possess high physical timing, fine motor dexterity, and quick tactile reaction reflexes.' },
-        { key: 'musical', label: 'MUSICAL-RHYTHMIC', text: 'I am highly attuned to auditory frequencies, harmonic intervals, cadence, and acoustic patterns.' },
-        { key: 'interpersonal', label: 'INTERPERSONAL (SOCIAL)', text: 'I naturally decipher social micro-cues, lead collaborative groups, and navigate organizational politics.' },
-        { key: 'intrapersonal', label: 'INTRAPERSONAL (METACOGNITIVE)', text: 'I possess deep self-discipline, metacognitive self-monitoring, and accurate emotional self-calibration.' },
-        { key: 'naturalistic', label: 'NATURALISTIC (SYSTEMS)', text: 'I quickly identify structural taxonomy and organic classification in complex evolving systems.' }
+        { key: 'logical', label: 'LOGICAL-MATHEMATICAL', text: 'I instinctively deconstruct complex problems into formal algorithms, logic trees, or quantitative models.' },
+        { key: 'logical', label: 'LOGICAL-MATHEMATICAL', text: 'I find calculating probabilities, cost-benefit matrices, and statistical distributions intuitive and enjoyable.' },
+        { key: 'logical', label: 'LOGICAL-MATHEMATICAL', text: 'I quickly spot logical fallacies, invalid syllogisms, and causal errors in analytical arguments.' },
+        { key: 'logical', label: 'LOGICAL-MATHEMATICAL', text: 'Structuring systems according to rigorous deductive rules gives me deep intellectual satisfaction.' },
+        { key: 'logical', label: 'LOGICAL-MATHEMATICAL', text: 'I prefer numerical precision and empirical telemetry over subjective interpretations.' },
+        { key: 'spatial', label: 'SPATIAL-VISUAL', text: 'I can mentally rotate complex 3D wireframe models and visualize spatial mechanisms with vivid clarity.' },
+        { key: 'spatial', label: 'SPATIAL-VISUAL', text: 'I navigate unfamiliar physical environments and complex maps with instant topological recall.' },
+        { key: 'spatial', label: 'SPATIAL-VISUAL', text: 'I frequently think in dimensional diagrams, spatial blueprints, and geometric architectures.' },
+        { key: 'spatial', label: 'SPATIAL-VISUAL', text: 'I have a keen sensitivity to color harmonies, lighting vectors, and visual composition.' },
+        { key: 'spatial', label: 'SPATIAL-VISUAL', text: 'I can accurately estimate volumetric proportions and distance vectors without measurement tools.' },
+        { key: 'linguistic', label: 'LINGUISTIC-VERBAL', text: 'I wield syntax, nuanced vocabulary, and rhetorical frameworks with effortless precision.' },
+        { key: 'linguistic', label: 'LINGUISTIC-VERBAL', text: 'I enjoy reading dense academic treatises, etymological roots, and layered philosophical essays.' },
+        { key: 'linguistic', label: 'LINGUISTIC-VERBAL', text: 'I can rapidly articulate complex technical ideas in clear, persuasive, and evocative language.' },
+        { key: 'linguistic', label: 'LINGUISTIC-VERBAL', text: 'Wordplay, metaphorical analogies, and linguistic subtleties catch my attention immediately.' },
+        { key: 'linguistic', label: 'LINGUISTIC-VERBAL', text: 'Writing structured prose, treatises, or compelling narratives comes naturally to me.' },
+        { key: 'kinesthetic', label: 'BODILY-KINESTHETIC', text: 'I possess exceptional neuromuscular coordination, muscle memory, and fine-motor dexterity.' },
+        { key: 'kinesthetic', label: 'BODILY-KINESTHETIC', text: 'I learn intricate physical sequences and motor skills far faster than average.' },
+        { key: 'kinesthetic', label: 'BODILY-KINESTHETIC', text: 'I communicate subtle intent through precise physical posture, timing, and body language.' },
+        { key: 'kinesthetic', label: 'BODILY-KINESTHETIC', text: 'Hands-on tactile manipulation and physical craft help me understand mechanical principles.' },
+        { key: 'kinesthetic', label: 'BODILY-KINESTHETIC', text: 'I maintain acute proprioceptive awareness of physical balance, spatial velocity, and rhythm.' },
+        { key: 'musical', label: 'MUSICAL-RHYTHMIC', text: 'I effortlessly isolate harmonic frequencies, polyrhythms, and subtle pitch deviations in soundscapes.' },
+        { key: 'musical', label: 'MUSICAL-RHYTHMIC', text: 'Rhythmic cadence and acoustic tonal shifts significantly influence my cognitive focus and mood.' },
+        { key: 'musical', label: 'MUSICAL-RHYTHMIC', text: 'I can replicate musical melodies, syncopated beats, and melodic intervals by ear with ease.' },
+        { key: 'musical', label: 'MUSICAL-RHYTHMIC', text: 'I notice harmonic structures and acoustic frequencies that others completely overlook.' },
+        { key: 'musical', label: 'MUSICAL-RHYTHMIC', text: 'I frequently organize complex thought workflows around auditory rhythms and musical metaphors.' },
+        { key: 'interpersonal', label: 'INTERPERSONAL (SOCIAL)', text: 'I instantly decode micro-expressions, underlying emotional motives, and unspoken social dynamics.' },
+        { key: 'interpersonal', label: 'INTERPERSONAL (SOCIAL)', text: 'I naturally mediate heated conflicts and steer divergent factions toward consensus.' },
+        { key: 'interpersonal', label: 'INTERPERSONAL (SOCIAL)', text: 'People instinctively confide their private dilemmas in me because I listen with acute empathy.' },
+        { key: 'interpersonal', label: 'INTERPERSONAL (SOCIAL)', text: 'I can effortlessly adapt my social presence to establish rapport across diverse cultures.' },
+        { key: 'interpersonal', label: 'INTERPERSONAL (SOCIAL)', text: 'I quickly sense when group morale or trust is deteriorating and know how to revitalize it.' },
+        { key: 'intrapersonal', label: 'INTRAPERSONAL (METACOGNITIVE)', text: 'I maintain deep metacognitive awareness of my internal biases, emotional triggers, and cognitive boundaries.' },
+        { key: 'intrapersonal', label: 'INTRAPERSONAL (METACOGNITIVE)', text: 'I regularly engage in rigorous self-reflection to align my daily actions with core existential principles.' },
+        { key: 'intrapersonal', label: 'INTRAPERSONAL (METACOGNITIVE)', text: 'I possess high intrinsic self-discipline and require no external supervision to sustain focus.' },
+        { key: 'intrapersonal', label: 'INTRAPERSONAL (METACOGNITIVE)', text: 'I accurately assess my personal strengths and limitations without illusion or self-deception.' },
+        { key: 'intrapersonal', label: 'INTRAPERSONAL (METACOGNITIVE)', text: 'Solitude and quiet introspective analysis are indispensable to my mental vitality.' },
+        { key: 'naturalistic', label: 'NATURALISTIC (SYSTEMS)', text: 'I quickly identify structural taxonomy, organic patterns, and biological systems in nature.' },
+        { key: 'naturalistic', label: 'NATURALISTIC (SYSTEMS)', text: 'I recognize subtle ecological shifts, weather patterns, and living species with high fidelity.' },
+        { key: 'naturalistic', label: 'NATURALISTIC (SYSTEMS)', text: 'I am fascinated by biomimicry and applying nature evolved mechanisms to engineering.' },
+        { key: 'naturalistic', label: 'NATURALISTIC (SYSTEMS)', text: 'I readily discern complex cyclical interactions between organisms and their environments.' },
+        { key: 'naturalistic', label: 'NATURALISTIC (SYSTEMS)', text: 'I feel a profound visceral affinity and intellectual connection with natural ecosystems.' }
       ],
 
       start() {
@@ -3423,7 +3830,7 @@
 
         this.currentIndex = index;
         const d = this.domains[index];
-        document.getElementById('multiItemBadge').textContent = `Domain ${index + 1} of ${this.domains.length}`;
+        document.getElementById('multiItemBadge').textContent = `Statement ${index + 1} of ${this.domains.length}`;
         document.getElementById('multiCategoryLabel').textContent = d.label;
         document.getElementById('multiStatementText').textContent = `"${d.text}"`;
 
@@ -3433,40 +3840,55 @@
 
       recordAnswer(val) {
         const d = this.domains[this.currentIndex];
-        this.scores[d.key] = val;
+        if (!this.scores[d.key]) this.scores[d.key] = [];
+        this.scores[d.key].push(val);
         this.showDomain(this.currentIndex + 1);
       },
 
       finish() {
-        const ranked = Object.entries(this.scores).map(([k, v]) => ({
-          key: k,
-          score: v,
-          pct: Math.round((v / 5) * 100),
-          label: this.domains.find(d => d.key === k).label
-        })).sort((a, b) => b.score - a.score);
+        const domainLabels = {
+          logical: 'LOGICAL-MATHEMATICAL',
+          spatial: 'SPATIAL-VISUAL',
+          linguistic: 'LINGUISTIC-VERBAL',
+          kinesthetic: 'BODILY-KINESTHETIC',
+          musical: 'MUSICAL-RHYTHMIC',
+          interpersonal: 'INTERPERSONAL (SOCIAL)',
+          intrapersonal: 'INTRAPERSONAL (METACOGNITIVE)',
+          naturalistic: 'NATURALISTIC (SYSTEMS)'
+        };
+
+        const ranked = Object.entries(this.scores).map(([k, arr]) => {
+          const avg = arr.reduce((a, b) => a + b, 0) / arr.length;
+          return {
+            key: k,
+            score: parseFloat(avg.toFixed(2)),
+            pct: Math.round((avg / 5) * 100),
+            label: domainLabels[k] || k.toUpperCase()
+          };
+        }).sort((a, b) => b.score - a.score);
 
         const top1 = ranked[0];
         const top2 = ranked[1];
         const top3 = ranked[2];
 
         document.getElementById('genericReportTitle').textContent = 'Multiple Intelligences Cognitive Dossier';
-        document.getElementById('genericReportSubtitle').textContent = 'Howard Gardner 8-Factor Intelligence Spectrum';
+        document.getElementById('genericReportSubtitle').textContent = 'Howard Gardner 8-Factor Intelligence Spectrum (40 Statements)';
 
         document.getElementById('genericReportHero').innerHTML = `
           <div class="p-4 rounded-2xl bg-cyan-950/40 border border-cyan-500/30">
             <span class="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-1">DOMINANT MODALITY #1</span>
             <span class="text-xl sm:text-2xl font-mono font-extrabold text-cyan-300 mt-2 block">${top1.label.split(' ')[0]}</span>
-            <span class="text-xs text-cyan-400 font-mono font-bold mt-1 block">${top1.pct}% Match</span>
+            <span class="text-xs text-cyan-400 font-mono font-bold mt-1 block">${top1.pct}% Affinity</span>
           </div>
           <div class="p-4 rounded-2xl bg-indigo-950/40 border border-indigo-500/30">
-            <span class="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-1">DOMINANT MODALITY #2</span>
+            <span class="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-1">SECONDARY MODALITY #2</span>
             <span class="text-xl sm:text-2xl font-mono font-extrabold text-indigo-300 mt-2 block">${top2.label.split(' ')[0]}</span>
-            <span class="text-xs text-indigo-400 font-mono font-bold mt-1 block">${top2.pct}% Match</span>
+            <span class="text-xs text-indigo-400 font-mono font-bold mt-1 block">${top2.pct}% Affinity</span>
           </div>
           <div class="p-4 rounded-2xl bg-purple-950/40 border border-purple-500/30">
-            <span class="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-1">DOMINANT MODALITY #3</span>
+            <span class="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-1">TERTIARY MODALITY #3</span>
             <span class="text-xl sm:text-2xl font-mono font-extrabold text-purple-300 mt-2 block">${top3.label.split(' ')[0]}</span>
-            <span class="text-xs text-purple-400 font-mono font-bold mt-1 block">${top3.pct}% Match</span>
+            <span class="text-xs text-purple-400 font-mono font-bold mt-1 block">${top3.pct}% Affinity</span>
           </div>
         `;
 
@@ -3474,11 +3896,11 @@
           <div class="space-y-2.5">
             ${ranked.map(r => `
               <div>
-                <div class="flex justify-between text-xs font-mono mb-1">
+                <div class="flex justify-between text-[11px] font-mono mb-1">
                   <span class="text-slate-300">${r.label}:</span>
                   <span class="text-cyan-400 font-bold">${r.pct}%</span>
                 </div>
-                <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
                   <div class="bg-gradient-to-r from-cyan-400 to-indigo-500 h-full rounded-full" style="width: ${r.pct}%;"></div>
                 </div>
               </div>
@@ -3487,8 +3909,8 @@
         `;
 
         document.getElementById('genericReportInterpretation').innerHTML = `
-          <p>• <strong>Primary Cognitive Vector:</strong> Your strongest cognitive modality is <strong>${top1.label}</strong> (${top1.pct}%), complemented by <strong>${top2.label}</strong> (${top2.pct}%). This configuration reflects a specialized aptitude for analytical problem solving, structural decomposition, and abstract architecture.</p>
-          <p>• <strong>Synergy Profile:</strong> Rather than relying solely on verbal communication, your cognitive style leverages multi-modal visualization and systematic logic to solve complex real-world challenges.</p>
+          <p>• <strong>Primary Cognitive Anchor:</strong> High expression in <strong>${top1.label}</strong> (${top1.pct}%) combined with <strong>${top2.label}</strong> (${top2.pct}%) indicates an analytical, architectural mindset oriented toward complex systems deconstruction across 40 dimensional metrics.</p>
+          <p>• <strong>Synergy Profile:</strong> The convergence of these top modalities provides competitive advantage in software architecture, strategic reasoning, and quantitative problem-solving.</p>
         `;
 
         showScreen('screenGenericReport');
