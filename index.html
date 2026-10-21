@@ -731,6 +731,45 @@
           </button>
         </div>
 
+        <!-- Specialized Neuroplasticity & Memory Modules Quick Launch -->
+        <div class="mt-8 pt-6 border-t border-slate-800/80">
+          <div class="flex items-center justify-between mb-4">
+            <h4 class="text-xs font-mono uppercase tracking-wider text-cyan-300 font-bold flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+              Specialized Executive & Neuroplasticity Modules
+            </h4>
+            <span class="text-[10px] font-mono text-slate-400">Direct Launch • No Menu Search Required</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
+            <!-- DMTS -->
+            <div class="p-4 rounded-2xl bg-cyan-950/20 border border-cyan-500/30 hover:border-cyan-400 transition flex items-center justify-between group holo-card">
+              <div>
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="w-6 h-6 rounded bg-cyan-500/20 text-cyan-300 font-mono text-xs flex items-center justify-center font-bold">DM</span>
+                  <h5 class="font-bold text-white text-xs group-hover:text-cyan-300 transition">Visual Memory Recognition (DMTS)</h5>
+                </div>
+                <p class="text-[11px] text-slate-400">Sample-encoding, dynamic visual noise mask & 4-choice discrimination.</p>
+              </div>
+              <button onclick="AssessmentController.launch('memory')" class="px-4 py-2 ml-3 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-400/50 font-mono text-xs font-bold whitespace-nowrap transition active:scale-95 touch-manipulation">
+                ▶ Launch DMTS
+              </button>
+            </div>
+            <!-- Dual N-Back -->
+            <div class="p-4 rounded-2xl bg-indigo-950/20 border border-indigo-500/30 hover:border-indigo-400 transition flex items-center justify-between group holo-card">
+              <div>
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="w-6 h-6 rounded bg-indigo-500/20 text-indigo-300 font-mono text-xs flex items-center justify-center font-bold">NB</span>
+                  <h5 class="font-bold text-white text-xs group-hover:text-indigo-300 transition">Neuroplasticity Tracker (Dual N-Back)</h5>
+                </div>
+                <p class="text-[11px] text-slate-400">Jaeggi PNAS paradigm with sequential encoding buffer & active pedals.</p>
+              </div>
+              <button onclick="AssessmentController.launch('neuroplasticity')" class="px-4 py-2 ml-3 rounded-xl bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-400/50 font-mono text-xs font-bold whitespace-nowrap transition active:scale-95 touch-manipulation">
+                ▶ Launch N-Back
+              </button>
+            </div>
+          </div>
+        </div>
+
         <div class="mt-6 text-[11px] font-mono text-slate-400 flex items-center justify-center space-x-4">
           <span>• Non-verbal Culture-Fair</span>
           <span>• Interactive 3D WebGL Neural Matrix</span>
