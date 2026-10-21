@@ -1,0 +1,47 @@
+{
+  "fsiq": {
+    "fsiq": "143",
+    "percentile": "99.7th Percentile",
+    "category": "Very Superior / Gifted",
+    "ci95": "135 - 147",
+    "sem": "3.1 IQ Pts",
+    "gf": "135",
+    "gwm": "138",
+    "gq": "135",
+    "gs": "128"
+  },
+  "memory": {
+    "title": "Visual Memory Recognition Dossier",
+    "subtitle": "PEBL-Standard Delayed Match-to-Sample (DMTS) Protocol (40 Trials)",
+    "accuracy": "95%",
+    "memoryIndex": 139,
+    "latency": "1.24s"
+  },
+  "neuroplasticity": {
+    "title": "Neuroplasticity Tracking Dossier",
+    "subtitle": "Jaeggi Dual N-Back Working Memory Updating Metric (40 Steps)",
+    "accuracy": "92%",
+    "plasticityIndex": 138,
+    "reserveLevel": "High Neuroplasticity Reserve"
+  },
+  "personality": {
+    "title": "Dark Triad & Big Five Personality Dossier",
+    "strategy": "90%",
+    "crisisComposure": "98%",
+    "executiveVision": "98%",
+    "openness": "98%",
+    "conscientiousness": "98%",
+    "synergy": "93%"
+  },
+  "multiple_intelligences": {
+    "title": "Multiple Intelligences Cognitive Dossier",
+    "dominant1": "LOGICAL-MATHEMATICAL (100% Affinity)",
+    "dominant2": "SPATIAL-VISUAL (100% Affinity)",
+    "dominant3": "LINGUISTIC-VERBAL (96% Affinity)",
+    "intrapersonal": "96%",
+    "naturalistic": "88%",
+    "interpersonal": "80%",
+    "musical": "68%",
+    "kinesthetic": "64%"
+  }
+}

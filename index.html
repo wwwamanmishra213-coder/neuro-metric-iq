@@ -2260,23 +2260,23 @@
             })
           : null;
 
-        const scoreGf = assessmentReport ? assessmentReport.subtests.Gf.heuristic_index : 123;
-        const scoreGwm = assessmentReport ? assessmentReport.subtests.Gwm.heuristic_index : 114;
-        const scoreGq = assessmentReport ? assessmentReport.subtests.Gq.heuristic_index : 109;
-        const scoreGs = assessmentReport ? assessmentReport.subtests.Gs.heuristic_index : 78;
-        const finalFSIQ = assessmentReport ? assessmentReport.composite.score : 112;
-        const percentile = assessmentReport ? assessmentReport.composite.percentile : this.calculatePercentile(finalFSIQ);
-        const ci = assessmentReport && assessmentReport.composite.confidenceInterval95
-          ? assessmentReport.composite.confidenceInterval95
+        const scoreGf = assessmentReport ? assessmentReport.domains.Gf.heuristic_index : 123;
+        const scoreGwm = assessmentReport ? assessmentReport.domains.Gwm.heuristic_index : 114;
+        const scoreGq = assessmentReport ? assessmentReport.domains.Gq.heuristic_index : 109;
+        const scoreGs = assessmentReport ? assessmentReport.domains.Gs.heuristic_index : 78;
+        const finalFSIQ = assessmentReport ? assessmentReport.composite.value : 112;
+        const percentile = assessmentReport ? assessmentReport.composite.theoretical_percentile : this.calculatePercentile(finalFSIQ);
+        const ci = assessmentReport && assessmentReport.uncertainty.ci95
+          ? assessmentReport.uncertainty.ci95
           : [finalFSIQ - 7, finalFSIQ + 7];
 
         // Clinical Discrepancy & General Ability Index (GAI) Banner
         const gaiBanner = document.getElementById('gaiAlertBanner');
-        if (assessmentReport && assessmentReport.clinical_discrepancy.detected && gaiBanner) {
+        if (assessmentReport && assessmentReport.discrepancy_analysis.detected && gaiBanner) {
           gaiBanner.classList.remove('hidden');
-          const discPoints = assessmentReport.clinical_discrepancy.speed_discrepancy_points;
-          const gaiScore = assessmentReport.clinical_discrepancy.gai_index;
-          const gaiPct = assessmentReport.clinical_discrepancy.gai_theoretical_percentile;
+          const discPoints = assessmentReport.discrepancy_analysis.speed_discrepancy_points;
+          const gaiScore = assessmentReport.discrepancy_analysis.gai_index;
+          const gaiPct = assessmentReport.discrepancy_analysis.gai_theoretical_percentile;
           document.getElementById('gaiAlertText').innerHTML = 
             `A statistically significant discrepancy of <strong>${discPoints} points</strong> exists between your Core Fluid Reasoning (${scoreGf}) and Processing Speed (${scoreGs}). Under clinical WAIS-IV neuropsychological standards, this divergence indicates a non-unitary profile, meaning composite index (${finalFSIQ}) underestimates raw intellectual reasoning. Your <strong>General Ability Index (GAI)</strong> is <span class="text-cyan-300 font-bold text-sm">${gaiScore} (${gaiPct.toFixed(1)}th percentile)</span>, reflecting pure inductive and conceptual capacity without the motor/device latency penalty.`;
         } else if (gaiBanner) {
@@ -3358,18 +3358,14 @@
         document.getElementById('memoryInstructionText').textContent = 'Phase 1: Memorize target glyph (2.5s)...';
         
         const pct = Math.round(((index) / this.totalTrials) * 100);
-        document.getElementById('memoryProgressBar').style.width = `${pct}%`;
+        const pb1 = document.getElementById('memoryProgressBar'); if (pb1) { pb1.style.width = `${pct}%`; }
 
-        const targetCard = document.getElementById('memoryTargetCard');
-        const probeCard = document.getElementById('memoryProbeCard');
+        const displayArea = document.getElementById('memoryDisplayArea');
         const grid = document.getElementById('memoryProbeGrid');
-        
-        targetCard.classList.remove('hidden');
-        probeCard.classList.add('hidden');
-        grid.classList.add('hidden');
-        grid.innerHTML = '';
-
-        document.getElementById('memoryTargetContainer').innerHTML = trial.targetSvg;
+        if (grid) { grid.classList.add('hidden'); grid.innerHTML = ''; }
+        if (displayArea) {
+          displayArea.innerHTML = `<div class="flex flex-col items-center justify-center p-4">${trial.targetSvg}</div>`;
+        }
 
         // Presentation delay: 2.5s
         clearTimeout(this.timerId);
@@ -3379,16 +3375,15 @@
       },
 
       enterRetentionDelay(trial) {
-        const targetCard = document.getElementById('memoryTargetCard');
-        const probeCard = document.getElementById('memoryProbeCard');
-        
         document.getElementById('memoryInstructionText').textContent = 'Phase 2: Retention interval (1.2s mask)...';
-        
-        targetCard.innerHTML = `
-          <div class="w-24 h-24 rounded-2xl bg-slate-900 border-2 border-dashed border-cyan-500/40 flex items-center justify-center animate-pulse">
-            <span class="text-xs font-mono text-cyan-300">MASK BUFFER</span>
-          </div>
-        `;
+        const displayArea = document.getElementById('memoryDisplayArea');
+        if (displayArea) {
+          displayArea.innerHTML = `
+            <div class="w-24 h-24 rounded-2xl bg-slate-900 border-2 border-dashed border-cyan-500/40 flex items-center justify-center animate-pulse">
+              <span class="text-xs font-mono text-cyan-300 font-bold">MASK BUFFER</span>
+            </div>
+          `;
+        }
 
         this.timerId = setTimeout(() => {
           this.presentProbe(trial);
@@ -3396,12 +3391,10 @@
       },
 
       presentProbe(trial) {
-        const targetCard = document.getElementById('memoryTargetCard');
-        const probeCard = document.getElementById('memoryProbeCard');
-        const grid = document.getElementById('memoryProbeGrid');
-
-        targetCard.classList.add('hidden');
-        probeCard.classList.remove('hidden');
+        const displayArea = document.getElementById('memoryDisplayArea');
+        if (displayArea) {
+          displayArea.innerHTML = '<span class="text-xs font-mono text-cyan-400 font-bold">DISCRIMINATION PHASE: Select matching pattern below</span>';
+        }
         document.getElementById('memoryInstructionText').textContent = 'Phase 3: Select matching target matrix from memory:';
 
         grid.innerHTML = '';
@@ -3519,7 +3512,7 @@
         document.getElementById('nbackStepBadge').textContent = `Step ${index + 1} of ${this.totalSteps}`;
 
         const pct = Math.round(((index) / this.totalSteps) * 100);
-        document.getElementById('nbackProgressBar').style.width = `${pct}%`;
+        const pb2 = document.getElementById('nbackProgressBar'); if (pb2) { pb2.style.width = `${pct}%`; }
 
         // Determine current stimulus
         const pos = Math.floor(Math.random() * 9);
@@ -3684,7 +3677,7 @@
         document.getElementById('personalityStatementText').textContent = `"${q.text}"`;
 
         const pct = Math.round(((index) / this.questions.length) * 100);
-        document.getElementById('personalityProgressBar').style.width = `${pct}%`;
+        const pb3 = document.getElementById('personalityProgressBar'); if (pb3) { pb3.style.width = `${pct}%`; }
       },
 
       recordAnswer(val) {
@@ -3835,7 +3828,7 @@
         document.getElementById('multiStatementText').textContent = `"${d.text}"`;
 
         const pct = Math.round(((index) / this.domains.length) * 100);
-        document.getElementById('multiProgressBar').style.width = `${pct}%`;
+        const pb4 = document.getElementById('multiProgressBar'); if (pb4) { pb4.style.width = `${pct}%`; }
       },
 
       recordAnswer(val) {
