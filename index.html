@@ -103,12 +103,28 @@
       box-shadow: 0 0 30px rgba(56, 189, 248, 0.6) !important;
     }
 
+    /* Mobile Touch & Tap Optimizations */
+    button, .matrix-holo-tile, .corsi-block, input, a {
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .touch-manipulation {
+      touch-action: manipulation;
+    }
+    .select-none {
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
     /* Corsi Interactive Blocks */
     .corsi-block {
       background: rgba(13, 21, 39, 0.7);
       border: 2px solid rgba(56, 189, 248, 0.3);
       cursor: pointer;
       transition: all 0.2s ease;
+      touch-action: manipulation;
+      -webkit-user-select: none;
+      user-select: none;
     }
     .corsi-block.flash {
       background: #38bdf8 !important;
@@ -182,7 +198,7 @@
 <body class="min-h-screen relative flex flex-col justify-between selection:bg-cyan-500 selection:text-black">
 
   <!-- ==================== BACKGROUND 3D VIDEO LAYER ==================== -->
-  <video autoplay loop muted playsinline id="bgVideo" class="fixed inset-0 w-full h-full object-cover z-0 opacity-55 pointer-events-none">
+  <video autoplay loop muted playsinline webkit-playsinline id="bgVideo" class="fixed inset-0 w-full h-full object-cover z-0 opacity-55 pointer-events-none">
     <source src="background.mp4" type="video/mp4">
   </video>
 
@@ -193,26 +209,26 @@
   <div class="scanline"></div>
 
   <!-- ==================== HOLOGRAPHIC TOP HUD BAR ==================== -->
-  <header class="relative z-10 no-print border-b border-cyan-500/20 bg-slate-950/50 backdrop-blur-md px-6 py-3 flex items-center justify-between">
-    <div class="flex items-center space-x-4">
-      <div class="flex items-center space-x-2.5">
-        <div class="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-400/40 flex items-center justify-center font-bold text-cyan-400 font-mono text-base holo-glow-cyan">
+  <header class="relative z-10 no-print border-b border-cyan-500/20 bg-slate-950/50 backdrop-blur-md px-3 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between gap-2">
+    <div class="flex items-center space-x-2 sm:space-x-4 min-w-0">
+      <div class="flex items-center space-x-2 sm:space-x-2.5 shrink-0">
+        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-cyan-500/10 border border-cyan-400/40 flex items-center justify-center font-bold text-cyan-400 font-mono text-sm sm:text-base holo-glow-cyan shrink-0">
           Ψ
         </div>
         <div>
-          <span class="font-extrabold tracking-widest text-base text-white">NEURO<span class="text-cyan-400">METRIC</span></span>
-          <span class="text-[9px] font-mono block text-purple-300 uppercase tracking-widest">3D Holographic Cognitive Engine v3.0</span>
+          <span class="font-extrabold tracking-widest text-sm sm:text-base text-white">NEURO<span class="text-cyan-400">METRIC</span></span>
+          <span class="text-[8px] sm:text-[9px] font-mono block text-purple-300 uppercase tracking-widest hidden sm:block">3D Holographic Cognitive Engine v3.0</span>
         </div>
       </div>
-      <div class="h-5 w-px bg-cyan-500/20"></div>
-      <span id="sessionBadge" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+      <div class="h-4 sm:h-5 w-px bg-cyan-500/20 hidden md:block"></div>
+      <span id="sessionBadge" class="hidden md:inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
         <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
         <span id="sessionStatusText">Neural Synapse Online</span>
       </span>
     </div>
 
     <!-- Center Battery Tracker -->
-    <div id="topProgressContainer" class="hidden md:flex items-center space-x-6 text-xs font-mono">
+    <div id="topProgressContainer" class="hidden lg:flex items-center space-x-6 text-xs font-mono">
       <div class="flex items-center space-x-2">
         <span class="text-slate-400">ACTIVE:</span>
         <span id="topActiveSubtestName" class="text-cyan-300 font-semibold px-2 py-0.5 rounded bg-cyan-950/40 border border-cyan-500/30">
@@ -226,18 +242,18 @@
     </div>
 
     <!-- Timer & Controls -->
-    <div class="flex items-center space-x-3">
-      <button onclick="toggleBgVideo()" id="btnVideoToggle" class="text-xs font-mono bg-cyan-950/50 text-cyan-300 hover:text-white px-3 py-1.5 rounded-lg border border-cyan-500/30 transition">
+    <div class="flex items-center space-x-2 sm:space-x-3 shrink-0">
+      <button onclick="toggleBgVideo()" id="btnVideoToggle" class="text-[11px] sm:text-xs font-mono bg-cyan-950/50 text-cyan-300 hover:text-white px-2.5 sm:px-3 py-1.5 rounded-lg border border-cyan-500/30 transition touch-manipulation">
         3D Video: ON
       </button>
-      <div class="flex items-center space-x-2 bg-slate-950/70 border border-cyan-500/30 px-3 py-1.5 rounded-lg font-mono holo-glow-cyan">
-        <svg class="w-4 h-4 text-cyan-400 animate-spin" style="animation-duration: 6s;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <div class="flex items-center space-x-1.5 sm:space-x-2 bg-slate-950/70 border border-cyan-500/30 px-2.5 sm:px-3 py-1.5 rounded-lg font-mono holo-glow-cyan">
+        <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 animate-spin shrink-0" style="animation-duration: 6s;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" opacity="0.3"></circle>
           <path d="M12 3a9 9 0 0 1 9 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
         </svg>
-        <span id="globalTimer" class="text-sm font-bold text-white tracking-wider">00:00</span>
+        <span id="globalTimer" class="text-xs sm:text-sm font-bold text-white tracking-wider">00:00</span>
       </div>
-      <button onclick="app.abortSession()" class="text-xs font-mono bg-slate-950 text-slate-400 hover:text-red-400 px-3 py-1.5 rounded-lg border border-slate-800 hover:border-red-900/40 transition">
+      <button onclick="app.abortSession()" class="text-[11px] sm:text-xs font-mono bg-slate-950 text-slate-400 hover:text-red-400 px-2.5 sm:px-3 py-1.5 rounded-lg border border-slate-800 hover:border-red-900/40 transition touch-manipulation">
         Reset
       </button>
     </div>
@@ -404,29 +420,29 @@
         </div>
 
         <!-- SUBTEST CONTAINER: SPATIAL WORKING MEMORY (CORSI BLOCK-TAPPING) -->
-        <div id="corsiContainer" class="hidden holo-card rounded-3xl p-6 relative">
-          <div class="flex items-center justify-between mb-4 border-b border-indigo-500/20 pb-3">
+        <div id="corsiContainer" class="hidden holo-card rounded-3xl p-4 sm:p-6 relative">
+          <div class="flex items-center justify-between mb-3 sm:mb-4 border-b border-indigo-500/20 pb-3 gap-2">
             <div>
               <span class="text-xs font-mono text-indigo-400 uppercase tracking-widest font-semibold flex items-center space-x-2">
                 <span class="inline-block w-2 h-2 rounded-full bg-indigo-400"></span>
-                <span>Visuospatial Memory Span (Gwm)</span>
+                <span>Memory Span (Gwm)</span>
               </span>
               <p id="corsiStatusMsg" class="text-xs text-slate-300 mt-0.5">Observe the sequence of illuminated blocks carefully.</p>
             </div>
-            <span id="corsiSpanBadge" class="text-xs font-mono text-indigo-300 font-bold bg-indigo-950/60 px-2.5 py-1 rounded-lg border border-indigo-500/30">
-              Span Length: 4 Blocks
+            <span id="corsiSpanBadge" class="text-xs font-mono text-indigo-300 font-bold bg-indigo-950/60 px-2.5 py-1 rounded-lg border border-indigo-500/30 shrink-0">
+              Span: 4
             </span>
           </div>
 
-          <div class="p-6 bg-slate-950/60 rounded-2xl border border-indigo-500/20">
-            <div id="corsiBoard" class="grid grid-cols-4 gap-4 aspect-square max-w-[360px] mx-auto p-4">
+          <div class="p-3 sm:p-6 bg-slate-950/60 rounded-2xl border border-indigo-500/20">
+            <div id="corsiBoard" class="grid grid-cols-4 gap-2.5 sm:gap-4 aspect-square w-full max-w-[340px] sm:max-w-[380px] mx-auto p-1 sm:p-4 touch-manipulation">
               <!-- 16 Corsi Blocks injected here -->
             </div>
           </div>
 
-          <div class="flex items-center justify-between mt-4">
-            <span id="corsiRecallIndicator" class="text-xs font-mono text-slate-400">Waiting for pattern playback...</span>
-            <button id="corsiSubmitBtn" onclick="app.submitCorsiTrial()" disabled class="px-5 py-2 rounded-xl bg-slate-800 text-slate-500 font-mono text-xs font-semibold cursor-not-allowed">
+          <div class="flex items-center justify-between mt-4 gap-2">
+            <span id="corsiRecallIndicator" class="text-xs font-mono text-slate-400 truncate">Waiting for playback...</span>
+            <button id="corsiSubmitBtn" onclick="app.submitCorsiTrial()" disabled class="px-4 sm:px-5 py-2.5 rounded-xl bg-slate-800 text-slate-500 font-mono text-xs font-semibold cursor-not-allowed touch-manipulation shrink-0">
               Submit Sequence
             </button>
           </div>
@@ -448,48 +464,50 @@
             </div>
           </div>
 
-          <div class="p-8 bg-slate-950/60 rounded-2xl border border-purple-500/20 flex flex-col items-center justify-center space-y-8">
+          <div class="p-4 sm:p-8 bg-slate-950/60 rounded-2xl border border-purple-500/20 flex flex-col items-center justify-center space-y-6 sm:space-y-8">
             <div class="text-center">
               <span class="text-[11px] font-mono text-purple-300 uppercase tracking-widest block mb-2">TARGET GLYPH</span>
-              <div id="speedTargetSymbol" class="w-20 h-20 rounded-2xl bg-slate-900 border-2 border-purple-400/50 flex items-center justify-center text-4xl font-mono text-white holo-glow-violet mx-auto">
+              <div id="speedTargetSymbol" class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-slate-900 border-2 border-purple-400/50 flex items-center justify-center text-3xl sm:text-4xl font-mono text-white holo-glow-violet mx-auto">
                 ⬡
               </div>
             </div>
 
             <div class="w-full">
               <span class="text-[11px] font-mono text-slate-400 uppercase tracking-widest block mb-2 text-center">SEARCH ARRAY</span>
-              <div id="speedSearchArray" class="flex flex-wrap items-center justify-center gap-4 p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+              <div id="speedSearchArray" class="flex flex-wrap items-center justify-center gap-2.5 sm:gap-4 p-3 sm:p-4 rounded-xl bg-slate-900/60 border border-slate-800">
                 <!-- Distractor symbols -->
               </div>
             </div>
 
-            <div class="flex items-center justify-center space-x-6 w-full pt-4">
-              <button onclick="app.recordSpeedResponse(true)" class="flex-1 max-w-xs py-3.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-300 font-mono text-sm font-bold transition flex items-center justify-center space-x-2">
-                <span>[YES] PRESENT (Key: Y)</span>
+            <div class="flex items-center justify-center gap-3 sm:gap-6 w-full pt-2 sm:pt-4">
+              <button onclick="app.recordSpeedResponse(true)" class="flex-1 max-w-xs py-4 px-3 rounded-2xl bg-emerald-500/20 active:bg-emerald-500/40 hover:bg-emerald-500/30 border-2 border-emerald-500/50 text-emerald-300 font-mono text-sm sm:text-base font-bold transition-all active:scale-95 flex flex-col items-center justify-center space-y-0.5 shadow-lg shadow-emerald-950/50 touch-manipulation select-none cursor-pointer">
+                <span class="tracking-wider">[YES] PRESENT</span>
+                <span class="text-[10px] text-emerald-400/80 font-normal">Tap or Key: Y</span>
               </button>
-              <button onclick="app.recordSpeedResponse(false)" class="flex-1 max-w-xs py-3.5 rounded-xl bg-red-500/20 hover:bg-red-500/30 border border-red-500/40 text-red-300 font-mono text-sm font-bold transition flex items-center justify-center space-x-2">
-                <span>[NO] ABSENT (Key: N)</span>
+              <button onclick="app.recordSpeedResponse(false)" class="flex-1 max-w-xs py-4 px-3 rounded-2xl bg-red-500/20 active:bg-red-500/40 hover:bg-red-500/30 border-2 border-red-500/50 text-red-300 font-mono text-sm sm:text-base font-bold transition-all active:scale-95 flex flex-col items-center justify-center space-y-0.5 shadow-lg shadow-red-950/50 touch-manipulation select-none cursor-pointer">
+                <span class="tracking-wider">[NO] ABSENT</span>
+                <span class="text-[10px] text-red-400/80 font-normal">Tap or Key: N</span>
               </button>
             </div>
           </div>
         </div>
 
         <!-- RESPONSE OPTION BANK (Used for Matrix & Quantitative) -->
-        <div id="responseBankCard" class="holo-card rounded-3xl p-6">
-          <div class="flex items-center justify-between mb-4">
-            <span class="text-xs font-mono uppercase tracking-wider text-slate-300">Holographic Response Bank (Click or Press [1-6])</span>
+        <div id="responseBankCard" class="holo-card rounded-3xl p-4 sm:p-6">
+          <div class="flex items-center justify-between mb-3 sm:mb-4">
+            <span class="text-[11px] sm:text-xs font-mono uppercase tracking-wider text-slate-300">Response Bank (Tap or [1-6])</span>
             <span id="selectedOptionIndicator" class="text-xs font-mono text-cyan-400">None selected</span>
           </div>
 
-          <div id="optionsGrid" class="grid grid-cols-3 sm:grid-cols-6 gap-3">
+          <div id="optionsGrid" class="grid grid-cols-3 sm:grid-cols-6 gap-2 sm:gap-3">
             <!-- Dynamic option tiles injected here -->
           </div>
 
-          <div class="flex items-center justify-between mt-6 pt-4 border-t border-cyan-500/20">
-            <button onclick="app.previousItem()" id="btnPrevItem" class="px-5 py-2.5 rounded-xl border border-slate-700/60 text-slate-400 hover:text-white text-xs font-mono transition">
+          <div class="flex items-center justify-between mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-cyan-500/20">
+            <button onclick="app.previousItem()" id="btnPrevItem" class="px-4 sm:px-5 py-2.5 rounded-xl border border-slate-700/60 text-slate-400 hover:text-white text-xs font-mono transition touch-manipulation">
               ← Previous
             </button>
-            <button onclick="app.confirmNextItem()" id="btnNextItem" disabled class="px-6 py-2.5 rounded-xl bg-slate-800 text-slate-500 font-bold text-xs font-mono transition cursor-not-allowed">
+            <button onclick="app.confirmNextItem()" id="btnNextItem" disabled class="px-5 sm:px-6 py-2.5 rounded-xl bg-slate-800 text-slate-500 font-bold text-xs font-mono transition cursor-not-allowed touch-manipulation">
               Confirm & Next →
             </button>
           </div>
@@ -785,12 +803,14 @@
     const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
     camera.position.z = 240;
 
-    const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    const isMobileDevice = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) || window.innerWidth < 768;
 
-    // Rotating Neural Synaptic Sphere
-    const particleCount = 750;
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: !isMobileDevice, alpha: true, powerPreference: "high-performance" });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isMobileDevice ? 1.5 : 2));
+
+    // Rotating Neural Synaptic Sphere (Scaled for mobile GPU performance)
+    const particleCount = isMobileDevice ? 380 : 750;
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
@@ -817,7 +837,7 @@
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     const pMaterial = new THREE.PointsMaterial({
-      size: 3.2,
+      size: isMobileDevice ? 3.8 : 3.2,
       vertexColors: true,
       transparent: true,
       opacity: 0.85,
@@ -838,9 +858,9 @@
     const wireMesh = new THREE.Mesh(wireGeo, wireMat);
     scene.add(wireMesh);
 
-    // Deep Ambient Starfield
+    // Deep Ambient Starfield (Optimized particle count on mobile)
     const starGeo = new THREE.BufferGeometry();
-    const starCount = 1200;
+    const starCount = isMobileDevice ? 600 : 1200;
     const starPos = new Float32Array(starCount * 3);
     for (let i = 0; i < starCount * 3; i += 3) {
       starPos[i] = (Math.random() - 0.5) * 800;
@@ -857,7 +877,7 @@
     const starField = new THREE.Points(starGeo, starMat);
     scene.add(starField);
 
-    // Mouse Tracking Parallax
+    // Mouse & Touch Tracking Parallax
     let mouseX = 0;
     let mouseY = 0;
     let targetX = 0;
@@ -867,6 +887,22 @@
       mouseX = (e.clientX - window.innerWidth / 2) * 0.0006;
       mouseY = (e.clientY - window.innerHeight / 2) * 0.0006;
     });
+
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches && e.touches.length > 0) {
+        mouseX = (e.touches[0].clientX - window.innerWidth / 2) * 0.0006;
+        mouseY = (e.touches[0].clientY - window.innerHeight / 2) * 0.0006;
+      }
+    }, { passive: true });
+
+    // Mobile Autoplay Video Unlocker (Triggers on first touch if OS power-saving paused it)
+    document.addEventListener('touchstart', function unlockBgVideo() {
+      const vid = document.getElementById('bgVideo');
+      if (vid && vid.paused) {
+        vid.play().catch(() => {});
+      }
+      document.removeEventListener('touchstart', unlockBgVideo);
+    }, { once: true, passive: true });
 
     function animate3D() {
       requestAnimationFrame(animate3D);
@@ -940,7 +976,7 @@
           rule: "Single element horizontal translation",
           difficulty: 1,
           questionRender: () => `
-            <div class="grid grid-cols-3 gap-3 w-72 h-72">
+            <div class="grid grid-cols-3 gap-2 sm:gap-3 w-full max-w-[280px] aspect-square mx-auto">
               <div class="matrix-holo-tile rounded-xl flex items-center justify-start p-3"><div class="w-8 h-8 rounded-full bg-cyan-400"></div></div>
               <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><div class="w-8 h-8 rounded-full bg-cyan-400"></div></div>
               <div class="matrix-holo-tile rounded-xl flex items-center justify-end p-3"><div class="w-8 h-8 rounded-full bg-cyan-400"></div></div>
@@ -968,7 +1004,7 @@
           rule: "Rotational Progression (90-degree clockwise tick)",
           difficulty: 2,
           questionRender: () => `
-            <div class="grid grid-cols-3 gap-3 w-72 h-72">
+            <div class="grid grid-cols-3 gap-2 sm:gap-3 w-full max-w-[280px] aspect-square mx-auto">
               <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-cyan-400" viewBox="0 0 100 100"><line x1="50" y1="50" x2="50" y2="15" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><circle cx="50" cy="50" r="10" fill="currentColor"/></svg></div>
               <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-cyan-400" viewBox="0 0 100 100"><line x1="50" y1="50" x2="85" y2="50" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><circle cx="50" cy="50" r="10" fill="currentColor"/></svg></div>
               <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-cyan-400" viewBox="0 0 100 100"><line x1="50" y1="50" x2="50" y2="85" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><circle cx="50" cy="50" r="10" fill="currentColor"/></svg></div>
@@ -996,7 +1032,7 @@
           rule: "Additive superposition of elements across row",
           difficulty: 3,
           questionRender: () => `
-            <div class="grid grid-cols-3 gap-3 w-72 h-72">
+            <div class="grid grid-cols-3 gap-2 sm:gap-3 w-full max-w-[280px] aspect-square mx-auto">
               <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-cyan-400" viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" stroke="currentColor" stroke-width="5" fill="none"/></svg></div>
               <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-cyan-400" viewBox="0 0 100 100"><line x1="20" y1="50" x2="80" y2="50" stroke="currentColor" stroke-width="6"/></svg></div>
               <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-cyan-400" viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" stroke="currentColor" stroke-width="5" fill="none"/><line x1="20" y1="50" x2="80" y2="50" stroke="currentColor" stroke-width="6"/></svg></div>
@@ -1024,7 +1060,7 @@
           rule: "Exclusive OR (XOR) logic cancellation",
           difficulty: 4,
           questionRender: () => `
-            <div class="grid grid-cols-3 gap-3 w-72 h-72">
+            <div class="grid grid-cols-3 gap-2 sm:gap-3 w-full max-w-[280px] aspect-square mx-auto">
               <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-cyan-400" viewBox="0 0 100 100"><line x1="50" y1="15" x2="50" y2="85" stroke="currentColor" stroke-width="6"/><line x1="15" y1="50" x2="85" y2="50" stroke="currentColor" stroke-width="6"/></svg></div>
               <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-cyan-400" viewBox="0 0 100 100"><line x1="15" y1="50" x2="85" y2="50" stroke="currentColor" stroke-width="6"/></svg></div>
               <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-cyan-400" viewBox="0 0 100 100"><line x1="50" y1="15" x2="50" y2="85" stroke="currentColor" stroke-width="6"/></svg></div>
@@ -1052,7 +1088,7 @@
           rule: "Feature distribution & dot progression",
           difficulty: 3,
           questionRender: () => `
-            <div class="grid grid-cols-3 gap-3 w-72 h-72">
+            <div class="grid grid-cols-3 gap-2 sm:gap-3 w-full max-w-[280px] aspect-square mx-auto">
               <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><div class="w-4 h-4 rounded-full bg-cyan-400"></div></div>
               <div class="matrix-holo-tile rounded-xl flex items-center justify-center space-x-2 p-3"><div class="w-4 h-4 rounded-full bg-cyan-400"></div><div class="w-4 h-4 rounded-full bg-cyan-400"></div></div>
               <div class="matrix-holo-tile rounded-xl flex items-center justify-center space-x-1.5 p-3"><div class="w-3.5 h-3.5 rounded-full bg-cyan-400"></div><div class="w-3.5 h-3.5 rounded-full bg-cyan-400"></div><div class="w-3.5 h-3.5 rounded-full bg-cyan-400"></div></div>
@@ -1080,7 +1116,7 @@
           rule: "Nested geometric concentric inversion",
           difficulty: 4,
           questionRender: () => `
-            <div class="grid grid-cols-3 gap-3 w-72 h-72">
+            <div class="grid grid-cols-3 gap-2 sm:gap-3 w-full max-w-[280px] aspect-square mx-auto">
               <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-cyan-400" viewBox="0 0 100 100"><circle cx="50" cy="50" r="35" stroke="currentColor" stroke-width="4" fill="none"/><circle cx="50" cy="50" r="15" fill="currentColor"/></svg></div>
               <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-cyan-400" viewBox="0 0 100 100"><circle cx="50" cy="50" r="35" fill="currentColor"/><circle cx="50" cy="50" r="15" fill="#090e1a"/></svg></div>
               <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-3"><svg class="w-12 h-12 text-cyan-400" viewBox="0 0 100 100"><circle cx="50" cy="50" r="35" stroke="currentColor" stroke-width="4" fill="none"/></svg></div>
@@ -1108,7 +1144,7 @@
           rule: "High Ceiling Mensa: Complex Matrix Arithmetic (Vertices Sum)",
           difficulty: 5,
           questionRender: () => `
-            <div class="grid grid-cols-3 gap-3 w-72 h-72">
+            <div class="grid grid-cols-3 gap-2 sm:gap-3 w-full max-w-[280px] aspect-square mx-auto">
               <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-2"><svg class="w-10 h-10 text-cyan-400" viewBox="0 0 100 100"><polygon points="50,20 80,75 20,75" stroke="currentColor" stroke-width="5" fill="none"/></svg></div>
               <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-2"><svg class="w-10 h-10 text-cyan-400" viewBox="0 0 100 100"><polygon points="50,20 80,75 20,75" stroke="currentColor" stroke-width="5" fill="none"/></svg></div>
               <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-2"><svg class="w-10 h-10 text-cyan-400" viewBox="0 0 100 100"><polygon points="50,15 85,35 85,65 50,85 15,65 15,35" stroke="currentColor" stroke-width="5" fill="none"/></svg></div>
@@ -1136,7 +1172,7 @@
           rule: "Top-Tier Ceiling: Dynamic Line Crossing & Directional Vector Sum",
           difficulty: 5,
           questionRender: () => `
-            <div class="grid grid-cols-3 gap-3 w-72 h-72">
+            <div class="grid grid-cols-3 gap-2 sm:gap-3 w-full max-w-[280px] aspect-square mx-auto">
               <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-2"><svg class="w-10 h-10 text-cyan-400" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="currentColor" stroke-width="6"/><circle cx="20" cy="20" r="8" fill="currentColor"/></svg></div>
               <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-2"><svg class="w-10 h-10 text-cyan-400" viewBox="0 0 100 100"><line x1="20" y1="80" x2="80" y2="20" stroke="currentColor" stroke-width="6"/><circle cx="80" cy="20" r="8" fill="currentColor"/></svg></div>
               <div class="matrix-holo-tile rounded-xl flex items-center justify-center p-2"><svg class="w-10 h-10 text-cyan-400" viewBox="0 0 100 100"><line x1="20" y1="20" x2="80" y2="80" stroke="currentColor" stroke-width="5"/><line x1="20" y1="80" x2="80" y2="20" stroke="currentColor" stroke-width="5"/><circle cx="20" cy="20" r="7" fill="currentColor"/><circle cx="80" cy="20" r="7" fill="currentColor"/></svg></div>
@@ -1423,7 +1459,7 @@
         options.forEach((opt, idx) => {
           const div = document.createElement('div');
           div.id = `optionTile_${opt.id}`;
-          div.className = 'matrix-holo-tile rounded-xl aspect-square flex flex-col items-center justify-center p-2 relative cursor-pointer';
+          div.className = 'matrix-holo-tile rounded-xl aspect-square flex flex-col items-center justify-center p-2 relative cursor-pointer active:scale-95 touch-manipulation select-none';
           div.innerHTML = `
             <span class="absolute top-1.5 left-2 text-[10px] font-mono text-slate-400">[${idx + 1}]</span>
             ${opt.svg}
@@ -1517,7 +1553,7 @@
         for (let i = 0; i < 16; i++) {
           const block = document.createElement('div');
           block.id = `corsiBlock_${i}`;
-          block.className = 'corsi-block rounded-xl flex items-center justify-center aspect-square disabled';
+          block.className = 'corsi-block rounded-xl flex items-center justify-center aspect-square disabled active:scale-95 touch-manipulation select-none';
           block.innerHTML = `<span class="text-xs font-mono text-slate-500 select-none">${i + 1}</span>`;
           block.onclick = () => app.handleCorsiBlockClick(i);
           board.appendChild(block);
