@@ -142,6 +142,35 @@
       opacity: 0.8;
     }
 
+    /* Scrollbar styling for sidebar & cards */
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(3, 6, 17, 0.5);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(56, 189, 248, 0.3);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(56, 189, 248, 0.6);
+    }
+
+    /* Responsive Breakpoints & Viewport Dimensions */
+    @media (max-width: 1023px) {
+      .holo-card {
+        padding: 1.25rem !important;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .laptop-container {
+        max-width: 1400px;
+      }
+    }
+
     /* Clean Isolated PDF & Print Styling */
     @media print {
       body {
@@ -208,10 +237,130 @@
   <!-- ==================== HOLOGRAPHIC CRT SCANLINE LAYER ==================== -->
   <div class="scanline"></div>
 
+  <!-- ==================== CHATGPT-STYLE COLLAPSIBLE SIDEBAR ==================== -->
+  <div id="sidebarBackdrop" onclick="toggleSidebar(false)" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 hidden transition-opacity duration-300"></div>
+
+  <aside id="chatgptSidebar" class="fixed top-0 left-0 h-full w-84 max-w-[85vw] bg-slate-950/95 border-r border-cyan-500/30 backdrop-blur-2xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col justify-between shadow-2xl shadow-cyan-950/60 no-print">
+    <!-- Sidebar Header -->
+    <div class="p-5 border-b border-cyan-500/20 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-400/50 flex items-center justify-center font-bold text-cyan-400 font-mono text-base holo-glow-cyan">
+          Ψ
+        </div>
+        <div>
+          <span class="font-extrabold tracking-wider text-sm text-white block">NEURO<span class="text-cyan-400">METRIC</span></span>
+          <span class="text-[9px] font-mono text-purple-300 uppercase tracking-widest">Cognitive Battery Hub</span>
+        </div>
+      </div>
+      <button onclick="toggleSidebar(false)" class="w-7 h-7 rounded-lg bg-slate-900 border border-slate-700 hover:border-cyan-400 text-slate-400 hover:text-white flex items-center justify-center text-xs font-mono transition touch-manipulation">
+        ✕
+      </button>
+    </div>
+
+    <!-- Assessments & Quizzes List -->
+    <div class="flex-1 overflow-y-auto p-4 space-y-4">
+      <div>
+        <span class="text-[10px] font-mono uppercase tracking-widest text-slate-400 font-bold block mb-2 px-2">ACTIVE BATTERY</span>
+        <div onclick="toggleSidebar(false)" class="p-3.5 rounded-2xl bg-cyan-950/40 border border-cyan-400/50 hover:bg-cyan-900/40 cursor-pointer transition flex items-start space-x-3 holo-glow-cyan">
+          <div class="w-2.5 h-2.5 rounded-full bg-cyan-400 mt-1 shrink-0 animate-ping"></div>
+          <div>
+            <h4 class="text-xs font-bold text-white flex items-center space-x-1.5">
+              <span>Fluid Matrix & FSIQ Engine</span>
+              <span class="text-[8px] bg-cyan-500/20 text-cyan-300 px-1.5 py-0.5 rounded font-mono">ACTIVE</span>
+            </h4>
+            <p class="text-[10px] text-slate-300 mt-1 leading-relaxed">
+              CHC 4-Domain battery (Gf, Gwm, Gq, Gs) with automated General Ability Index (GAI) discrepancy analysis.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <span class="text-[10px] font-mono uppercase tracking-widest text-slate-400 font-bold block mb-2 px-2">SCIENTIFIC SCREENERS & PARADIGMS</span>
+        <div class="space-y-2">
+          
+          <!-- Memory Recognition Engine -->
+          <div onclick="openResearchModal('memory')" class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-indigo-500/50 hover:bg-slate-900/90 cursor-pointer transition flex items-start space-x-3 active:scale-98">
+            <span class="text-base text-indigo-400 shrink-0">🧠</span>
+            <div>
+              <h4 class="text-xs font-bold text-slate-200 hover:text-indigo-300 flex items-center space-x-1">
+                <span>Memory Recognition (DMTS)</span>
+              </h4>
+              <p class="text-[10px] text-slate-400 mt-0.5 leading-relaxed">
+                Delayed Match-to-Sample visual memory retention & episodic recall latency (PEBL library model).
+              </p>
+            </div>
+          </div>
+
+          <!-- Neuroplasticity Tracker -->
+          <div onclick="openResearchModal('neuroplasticity')" class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-900/90 cursor-pointer transition flex items-start space-x-3 active:scale-98">
+            <span class="text-base text-emerald-400 shrink-0">⚡</span>
+            <div>
+              <h4 class="text-xs font-bold text-slate-200 hover:text-emerald-300 flex items-center space-x-1">
+                <span>Neuroplasticity Tracker</span>
+              </h4>
+              <p class="text-[10px] text-slate-400 mt-0.5 leading-relaxed">
+                Adaptive Dual N-Back longitudinal working memory updating rate (Jaeggi PNAS model).
+              </p>
+            </div>
+          </div>
+
+          <!-- Personality & Dark Triad Screener -->
+          <div onclick="openResearchModal('darktriad')" class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-purple-500/50 hover:bg-slate-900/90 cursor-pointer transition flex items-start space-x-3 active:scale-98">
+            <span class="text-base text-purple-400 shrink-0">🎭</span>
+            <div>
+              <h4 class="text-xs font-bold text-slate-200 hover:text-purple-300 flex items-center space-x-1">
+                <span>Dark Triad & Big Five (IPIP)</span>
+              </h4>
+              <p class="text-[10px] text-slate-400 mt-0.5 leading-relaxed">
+                Sub-clinical screening (SD3 & IPIP-NEO) for Machiavellianism, psychopathy, and OCEAN factors.
+              </p>
+            </div>
+          </div>
+
+          <!-- Multiple Intelligences Inventory -->
+          <div onclick="openResearchModal('multi_intelligence')" class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-cyan-500/50 hover:bg-slate-900/90 cursor-pointer transition flex items-start space-x-3 active:scale-98">
+            <span class="text-base text-cyan-400 shrink-0">🌐</span>
+            <div>
+              <h4 class="text-xs font-bold text-slate-200 hover:text-cyan-300 flex items-center space-x-1">
+                <span>Multiple Intelligences</span>
+              </h4>
+              <p class="text-[10px] text-slate-400 mt-0.5 leading-relaxed">
+                Howard Gardner 8-domain cognitive profile (Spatial, Logical, Linguistic, Kinesthetic, etc.).
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar Footer / Quick Tools -->
+    <div class="p-4 border-t border-cyan-500/20 bg-slate-950/80 space-y-2">
+      <div class="flex items-center justify-between text-[11px] font-mono text-slate-400">
+        <span>Binaural Focus FM:</span>
+        <button onclick="FocusAudioEngine.toggle()" id="sidebarAudioBtn" class="text-purple-300 hover:text-white font-bold">
+          [ OFF ]
+        </button>
+      </div>
+      <div class="text-[9px] font-mono text-slate-400 text-center pt-1 border-t border-slate-800/60">
+        Open Psychometrics & CHC Cognitive Model
+      </div>
+    </div>
+  </aside>
+
   <!-- ==================== HOLOGRAPHIC TOP HUD BAR ==================== -->
   <header class="relative z-10 no-print border-b border-cyan-500/20 bg-slate-950/50 backdrop-blur-md px-3 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between gap-2">
-    <div class="flex items-center space-x-2 sm:space-x-4 min-w-0">
-      <div class="flex items-center space-x-2 sm:space-x-2.5 shrink-0">
+    <div class="flex items-center space-x-2 sm:space-x-3 min-w-0">
+      
+      <!-- Slide-Out Sidebar Toggle Button (ChatGPT Style) -->
+      <button onclick="toggleSidebar(true)" aria-label="Open Assessments Menu" class="w-8 h-8 rounded-lg bg-slate-900/90 border border-cyan-500/40 hover:border-cyan-400 text-cyan-300 flex items-center justify-center transition active:scale-95 touch-manipulation holo-glow-cyan shrink-0" title="Slide Open Assessment Battery Drawer">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+
+      <div class="flex items-center space-x-2 shrink-0">
         <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-cyan-500/10 border border-cyan-400/40 flex items-center justify-center font-bold text-cyan-400 font-mono text-sm sm:text-base holo-glow-cyan shrink-0">
           Ψ
         </div>
@@ -272,7 +421,7 @@
         </div>
 
         <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-4">
-          Holographic Cognitive & <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-300 to-purple-400">IQ Intelligence Battery</span>
+          Holographic Cognitive & <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-300 to-purple-400">IQ and Intelligence</span>
         </h1>
         
         <p class="text-slate-300 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed mb-8">
@@ -1964,6 +2113,407 @@
         }
       }
     });
+  </script>
+  <!-- ==================== RESEARCH & ASSESSMENT DETAILS MODAL ==================== -->
+  <div id="researchModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    <div class="holo-card max-w-2xl w-full rounded-3xl p-6 sm:p-8 space-y-5 relative max-h-[90vh] overflow-y-auto">
+      <div class="flex items-start justify-between border-b border-cyan-500/20 pb-4">
+        <div class="flex items-center space-x-3">
+          <span id="modalIcon" class="text-2xl">🧠</span>
+          <div>
+            <h3 id="modalTitle" class="text-base sm:text-lg font-bold text-white">Assessment Module</h3>
+            <span id="modalSubtitle" class="text-[10px] font-mono text-cyan-300 uppercase tracking-widest">Scientific Framework</span>
+          </div>
+        </div>
+        <button onclick="closeResearchModal()" class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-700 hover:border-cyan-400 text-slate-400 hover:text-white flex items-center justify-center text-sm font-mono transition touch-manipulation">
+          ✕
+        </button>
+      </div>
+
+      <div id="modalContent" class="space-y-4 text-xs text-slate-300 leading-relaxed font-sans">
+        <!-- Injected via openResearchModal -->
+      </div>
+
+      <div class="pt-4 border-t border-cyan-500/20 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <span id="modalMetaBadge" class="text-[10px] font-mono text-slate-400">Validated Open-Access Psychometric Framework</span>
+        <div class="flex items-center space-x-3 w-full sm:w-auto">
+          <button onclick="closeResearchModal()" class="flex-1 sm:flex-none px-4 py-2 rounded-xl border border-slate-700 text-slate-300 text-xs font-mono hover:text-white transition touch-manipulation">
+            Close
+          </button>
+          <button onclick="closeResearchModal(); app.startFullBattery();" class="flex-1 sm:flex-none px-5 py-2 rounded-xl bg-gradient-to-r from-cyan-400 to-indigo-500 hover:from-cyan-300 text-black font-extrabold text-xs font-mono transition holo-glow-cyan touch-manipulation">
+            Launch Active IQ Battery →
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== BOTTOM-RIGHT FLOATING BRAINWAVE FOCUS AUDIO HUD ==================== -->
+  <div id="focusAudioHud" class="fixed bottom-4 right-4 z-40 flex flex-col items-end no-print">
+    
+    <!-- Expanded Controls Card -->
+    <div id="audioExpandedCard" class="hidden mb-2.5 p-4 rounded-2xl bg-slate-950/95 border border-purple-500/40 backdrop-blur-xl shadow-2xl shadow-purple-950/80 w-76 max-w-[92vw] text-xs font-mono space-y-3.5 holo-card">
+      <div class="flex items-center justify-between border-b border-purple-500/20 pb-2">
+        <div class="flex items-center space-x-2">
+          <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
+          <span class="font-bold text-white text-[11px] uppercase tracking-wider">Cognitive Brainwave Engine</span>
+        </div>
+        <button onclick="toggleAudioCard(false)" class="text-slate-400 hover:text-white text-xs font-mono p-1">✕</button>
+      </div>
+
+      <!-- Presets Selector -->
+      <div class="space-y-1.5">
+        <div class="flex justify-between items-center text-[10px] text-slate-400 uppercase tracking-widest">
+          <span>Frequency Band</span>
+          <span id="audioBeatIndicator" class="text-purple-300 font-bold">Alpha (10Hz)</span>
+        </div>
+        <div class="grid grid-cols-2 gap-1.5">
+          <button onclick="FocusAudioEngine.setPreset('alpha')" id="btnPreset_alpha" class="p-2 rounded-xl border border-cyan-400/50 bg-cyan-950/40 text-cyan-300 text-[10px] font-bold text-left transition active:scale-95 touch-manipulation">
+            Alpha (10 Hz)<br><span class="text-[8px] font-normal text-slate-300">Flow State & Study</span>
+          </button>
+          <button onclick="FocusAudioEngine.setPreset('theta')" id="btnPreset_theta" class="p-2 rounded-xl border border-slate-800 bg-slate-900/60 text-slate-400 text-[10px] font-bold text-left transition hover:border-purple-500/40 active:scale-95 touch-manipulation">
+            Theta (6 Hz)<br><span class="text-[8px] font-normal text-slate-400">Deep Meditation</span>
+          </button>
+          <button onclick="FocusAudioEngine.setPreset('gamma')" id="btnPreset_gamma" class="p-2 rounded-xl border border-slate-800 bg-slate-900/60 text-slate-400 text-[10px] font-bold text-left transition hover:border-purple-500/40 active:scale-95 touch-manipulation">
+            Gamma (40 Hz)<br><span class="text-[8px] font-normal text-slate-400">Peak Reasoning</span>
+          </button>
+          <button onclick="FocusAudioEngine.setPreset('solfeggio')" id="btnPreset_solfeggio" class="p-2 rounded-xl border border-slate-800 bg-slate-900/60 text-slate-400 text-[10px] font-bold text-left transition hover:border-purple-500/40 active:scale-95 touch-manipulation">
+            432 Hz Drone<br><span class="text-[8px] font-normal text-slate-400">Harmonic Calm</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Volume Slider -->
+      <div>
+        <div class="flex justify-between text-[10px] text-slate-400 mb-1">
+          <span>Output Gain:</span>
+          <span id="audioVolumeText" class="text-white font-bold">35%</span>
+        </div>
+        <input type="range" min="0" max="1" step="0.05" value="0.35" oninput="FocusAudioEngine.setVolume(this.value)" class="w-full accent-cyan-400 bg-slate-800 h-1.5 rounded-lg cursor-pointer">
+      </div>
+
+      <div class="flex items-center justify-between pt-1 border-t border-purple-500/20">
+        <span id="audioStatusDesc" class="text-[9px] text-slate-300 leading-tight pr-2">Pure binaural tone + warm sub-drone for headphones & speakers.</span>
+        <button onclick="FocusAudioEngine.toggle()" id="btnPlayPauseAudio" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-purple-500 to-cyan-400 hover:from-purple-400 text-black font-extrabold text-[11px] shrink-0 transition active:scale-95 touch-manipulation">
+          START
+        </button>
+      </div>
+    </div>
+
+    <!-- Collapsed Floating Pill -->
+    <button onclick="toggleAudioCard()" class="px-3.5 py-2 rounded-full bg-slate-950/85 border border-purple-500/40 hover:border-purple-400 text-purple-300 font-mono text-xs flex items-center space-x-2 backdrop-blur-md shadow-lg shadow-purple-950/60 active:scale-95 transition touch-manipulation holo-glow-violet">
+      <span class="w-2 h-2 rounded-full bg-purple-400" id="audioPillDot"></span>
+      <span id="audioPillText">Focus Audio FM</span>
+      <span class="text-[10px] bg-purple-900/60 px-1.5 py-0.5 rounded text-purple-200 font-bold" id="audioPillStatus">OFF</span>
+    </button>
+  </div>
+
+  <script>
+    // ==================== CHATGPT-STYLE SIDEBAR LOGIC ====================
+    window.toggleSidebar = function(forceOpen) {
+      const sb = document.getElementById('chatgptSidebar');
+      const bd = document.getElementById('sidebarBackdrop');
+      if (!sb || !bd) return;
+
+      const isOpen = !sb.classList.contains('-translate-x-full');
+      const shouldOpen = (typeof forceOpen === 'boolean') ? forceOpen : !isOpen;
+
+      if (shouldOpen) {
+        sb.classList.remove('-translate-x-full');
+        bd.classList.remove('hidden');
+      } else {
+        sb.classList.add('-translate-x-full');
+        bd.classList.add('hidden');
+      }
+    };
+
+    // ==================== ASSESSMENT RESEARCH MODAL DATA ====================
+    const RESEARCH_MODULES = {
+      memory: {
+        icon: '🧠',
+        title: 'Visual Memory Recognition Engine (DMTS)',
+        subtitle: 'PEBL Library & Sternberg Recognition Paradigm',
+        content: `
+          <div class="space-y-3">
+            <p><strong>Core Concept:</strong> The Delayed Match-to-Sample (DMTS) task measures visual working memory buffer capacity, encoding fidelity, and memory decay under temporal intervals.</p>
+            <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
+              <span class="text-cyan-400 font-mono font-bold block text-[11px]">CLINICAL & LAB PROTOCOL:</span>
+              <p class="text-[11px] text-slate-300">A target abstract matrix glyph is exposed for 2.5 seconds, followed by an unfilled retention delay (1s–5s). Candidates must identify the identical pattern among 5 high-similarity distractor matrices.</p>
+            </div>
+            <div class="grid grid-cols-2 gap-2 text-[10px] font-mono text-slate-300">
+              <div class="p-2 bg-slate-900/60 rounded-lg"><strong>Target Retention:</strong> >85% at 5s</div>
+              <div class="p-2 bg-slate-900/60 rounded-lg"><strong>Recognition Latency:</strong> &lt;1.8s</div>
+            </div>
+            <p class="text-[11px] text-slate-400">Open source implementation reference: <em>Psychology Experiment Building Language (PEBL) Library - Task DMTS</em>.</p>
+          </div>
+        `
+      },
+      neuroplasticity: {
+        icon: '⚡',
+        title: 'Neuroplasticity Tracking Engine (Dual N-Back)',
+        subtitle: 'Jaeggi, Buschkuehl, Jonides & Perrig PNAS Model',
+        content: `
+          <div class="space-y-3">
+            <p><strong>Core Concept:</strong> Neuroplasticity is tracked through longitudinal multi-modal working memory updating. The Dual N-Back task requires simultaneous monitoring of visual spatial locations and auditory letter streams.</p>
+            <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
+              <span class="text-emerald-400 font-mono font-bold block text-[11px]">NEUROPLASTICITY TRANSFER GRADIENT:</span>
+              <p class="text-[11px] text-slate-300">Tests cognitive reserve expansion. The algorithm automatically increases the span from 2-back to 5-back as accuracy exceeds 80%, tracking changes in fluid intelligence transfer over successive sessions.</p>
+            </div>
+            <div class="grid grid-cols-2 gap-2 text-[10px] font-mono text-slate-300">
+              <div class="p-2 bg-slate-900/60 rounded-lg"><strong>Baseline Span:</strong> N=2 (Standard)</div>
+              <div class="p-2 bg-slate-900/60 rounded-lg"><strong>High Reserve:</strong> N=4+ Adaptive</div>
+            </div>
+            <p class="text-[11px] text-slate-400">Peer-reviewed reference: <em>Proceedings of the National Academy of Sciences (PNAS) 105(19): 6829–6833</em>.</p>
+          </div>
+        `
+      },
+      darktriad: {
+        icon: '🎭',
+        title: 'Dark Triad & Big Five Personality Screening',
+        subtitle: 'SD3 (Jones & Paulhus) + IPIP-NEO (Goldberg) Framework',
+        content: `
+          <div class="space-y-3">
+            <p><strong>Core Concept:</strong> Sub-clinical personality screening assessing strategic calculation, stress resilience, impulse regulation, and the five fundamental domains of human personality.</p>
+            <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+              <span class="text-purple-400 font-mono font-bold block text-[11px]">SCIENTIFIC FRAMEWORK BREAKDOWN:</span>
+              <ul class="text-[11px] text-slate-300 space-y-1 list-disc list-inside">
+                <li><strong>Short Dark Triad (SD3):</strong> Evaluates sub-clinical Machiavellianism (strategic manipulation), Narcissism (grandiosity), and Sub-clinical Psychopathy (impulsive thrill-seeking, low anxiety).</li>
+                <li><strong>IPIP-NEO Big Five:</strong> Open-access measurement of Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism.</li>
+              </ul>
+            </div>
+            <p class="text-[11px] text-slate-400">Public domain repository: <em>International Personality Item Pool (ipip.ori.org) & Open-Source Psychometrics Project</em>.</p>
+          </div>
+        `
+      },
+      multi_intelligence: {
+        icon: '🌐',
+        title: 'Multiple Intelligences (MI) 8-Factor Screener',
+        subtitle: 'Howard Gardner Cognitive Profile Theory',
+        content: `
+          <div class="space-y-3">
+            <p><strong>Core Concept:</strong> Broadens classical IQ to map diverse cognitive intelligences and specialized neuro-functional domains.</p>
+            <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-300">
+              <div class="p-2 rounded-lg bg-slate-900 border border-slate-800">
+                <strong class="text-cyan-400">1. Logical-Mathematical:</strong> Inductive & deductive analysis.
+              </div>
+              <div class="p-2 rounded-lg bg-slate-900 border border-slate-800">
+                <strong class="text-indigo-400">2. Spatial-Visual:</strong> 3D mental rotation & geometry.
+              </div>
+              <div class="p-2 rounded-lg bg-slate-900 border border-slate-800">
+                <strong class="text-emerald-400">3. Linguistic-Verbal:</strong> Syntax, semantic recall.
+              </div>
+              <div class="p-2 rounded-lg bg-slate-900 border border-slate-800">
+                <strong class="text-purple-400">4. Inter/Intrapersonal:</strong> Self-regulation & empathy.
+              </div>
+            </div>
+            <p class="text-[11px] text-slate-400">Educational screening framework based on Gardner's Frames of Mind.</p>
+          </div>
+        `
+      }
+    };
+
+    window.openResearchModal = function(key) {
+      const data = RESEARCH_MODULES[key];
+      if (!data) return;
+
+      document.getElementById('modalIcon').textContent = data.icon;
+      document.getElementById('modalTitle').textContent = data.title;
+      document.getElementById('modalSubtitle').textContent = data.subtitle;
+      document.getElementById('modalContent').innerHTML = data.content;
+      document.getElementById('researchModal').classList.remove('hidden');
+      toggleSidebar(false);
+    };
+
+    window.closeResearchModal = function() {
+      document.getElementById('researchModal').classList.add('hidden');
+    };
+
+    // ==================== BINAURAL FOCUS AUDIO ENGINE (WEB AUDIO API) ====================
+    window.FocusAudioEngine = {
+      ctx: null,
+      oscLeft: null,
+      oscRight: null,
+      droneOsc: null,
+      gainNode: null,
+      droneGain: null,
+      isPlaying: false,
+      currentPreset: 'alpha',
+      volume: 0.35,
+
+      presets: {
+        alpha: { name: 'Alpha (10 Hz)', baseFreq: 216, beatFreq: 10, desc: 'Flow state, deep focus, and pattern inference.' },
+        theta: { name: 'Theta (6 Hz)', baseFreq: 154, beatFreq: 6, desc: 'Memory consolidation, meditation, and neuroplasticity.' },
+        gamma: { name: 'Gamma (40 Hz)', baseFreq: 240, beatFreq: 40, desc: 'Peak cognitive throughput, high-speed problem solving.' },
+        solfeggio: { name: '432 Hz Drone', baseFreq: 216, beatFreq: 0, desc: 'Harmonic 432 Hz ambient resonance for stress reduction.' }
+      },
+
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          this.ctx = new AudioContext();
+        }
+      },
+
+      start(presetKey) {
+        this.init();
+        if (this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+        this.stop();
+
+        if (presetKey) this.currentPreset = presetKey;
+        const p = this.presets[this.currentPreset];
+
+        // Master Gain
+        this.gainNode = this.ctx.createGain();
+        this.gainNode.gain.setValueAtTime(this.volume, this.ctx.currentTime);
+        this.gainNode.connect(this.ctx.destination);
+
+        // Binaural Beats: Left = baseFreq, Right = baseFreq + beatFreq
+        const merger = this.ctx.createChannelMerger(2);
+
+        this.oscLeft = this.ctx.createOscillator();
+        this.oscLeft.type = 'sine';
+        this.oscLeft.frequency.setValueAtTime(p.baseFreq, this.ctx.currentTime);
+
+        this.oscRight = this.ctx.createOscillator();
+        this.oscRight.type = 'sine';
+        this.oscRight.frequency.setValueAtTime(p.baseFreq + p.beatFreq, this.ctx.currentTime);
+
+        // Warm harmonic sub-drone
+        this.droneOsc = this.ctx.createOscillator();
+        this.droneOsc.type = 'triangle';
+        this.droneOsc.frequency.setValueAtTime(p.baseFreq / 2, this.ctx.currentTime);
+        this.droneGain = this.ctx.createGain();
+        this.droneGain.gain.setValueAtTime(0.08, this.ctx.currentTime);
+        this.droneOsc.connect(this.droneGain);
+        this.droneGain.connect(this.gainNode);
+
+        const leftGain = this.ctx.createGain();
+        const rightGain = this.ctx.createGain();
+        this.oscLeft.connect(leftGain);
+        this.oscRight.connect(rightGain);
+
+        leftGain.connect(merger, 0, 0);
+        rightGain.connect(merger, 0, 1);
+        merger.connect(this.gainNode);
+
+        this.oscLeft.start();
+        this.oscRight.start();
+        this.droneOsc.start();
+
+        this.isPlaying = true;
+        this.updateUI();
+      },
+
+      stop() {
+        try {
+          if (this.oscLeft) { this.oscLeft.stop(); this.oscLeft.disconnect(); }
+          if (this.oscRight) { this.oscRight.stop(); this.oscRight.disconnect(); }
+          if (this.droneOsc) { this.droneOsc.stop(); this.droneOsc.disconnect(); }
+        } catch(e) {}
+        this.isPlaying = false;
+        this.updateUI();
+      },
+
+      toggle() {
+        if (this.isPlaying) {
+          this.stop();
+        } else {
+          this.start(this.currentPreset);
+        }
+      },
+
+      setPreset(presetKey) {
+        this.currentPreset = presetKey;
+        if (this.isPlaying) {
+          this.start(presetKey);
+        } else {
+          this.updateUI();
+        }
+      },
+
+      setVolume(val) {
+        this.volume = parseFloat(val);
+        const pct = Math.round(this.volume * 100);
+        const textEl = document.getElementById('audioVolumeText');
+        if (textEl) textEl.textContent = `${pct}%`;
+        if (this.gainNode && this.ctx) {
+          this.gainNode.gain.setValueAtTime(this.volume, this.ctx.currentTime);
+        }
+      },
+
+      updateUI() {
+        const p = this.presets[this.currentPreset];
+        const btnPlay = document.getElementById('btnPlayPauseAudio');
+        const pillText = document.getElementById('audioPillStatus');
+        const pillDot = document.getElementById('audioPillDot');
+        const sideBtn = document.getElementById('sidebarAudioBtn');
+        const beatInd = document.getElementById('audioBeatIndicator');
+        const descEl = document.getElementById('audioStatusDesc');
+
+        if (beatInd) beatInd.textContent = p.name;
+        if (descEl) descEl.textContent = p.desc;
+
+        // Update Preset Buttons Styles
+        ['alpha', 'theta', 'gamma', 'solfeggio'].forEach(k => {
+          const btn = document.getElementById(`btnPreset_${k}`);
+          if (btn) {
+            if (k === this.currentPreset) {
+              btn.className = 'p-2 rounded-xl border border-cyan-400 bg-cyan-950/50 text-cyan-300 text-[10px] font-bold text-left transition active:scale-95 touch-manipulation holo-glow-cyan';
+            } else {
+              btn.className = 'p-2 rounded-xl border border-slate-800 bg-slate-900/60 text-slate-400 text-[10px] font-bold text-left transition hover:border-purple-500/40 active:scale-95 touch-manipulation';
+            }
+          }
+        });
+
+        if (this.isPlaying) {
+          if (btnPlay) {
+            btnPlay.textContent = 'PAUSE';
+            btnPlay.className = 'px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-red-500 to-amber-500 text-white font-extrabold text-[11px] shrink-0 transition active:scale-95 touch-manipulation';
+          }
+          if (pillText) {
+            pillText.textContent = 'ACTIVE';
+            pillText.className = 'text-[10px] bg-emerald-500/30 text-emerald-300 px-1.5 py-0.5 rounded font-bold';
+          }
+          if (pillDot) {
+            pillDot.className = 'w-2 h-2 rounded-full bg-emerald-400 animate-ping';
+          }
+          if (sideBtn) {
+            sideBtn.textContent = `[ ON: ${p.name} ]`;
+            sideBtn.className = 'text-emerald-400 hover:text-white font-bold';
+          }
+        } else {
+          if (btnPlay) {
+            btnPlay.textContent = 'START';
+            btnPlay.className = 'px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-purple-500 to-cyan-400 hover:from-purple-400 text-black font-extrabold text-[11px] shrink-0 transition active:scale-95 touch-manipulation';
+          }
+          if (pillText) {
+            pillText.textContent = 'OFF';
+            pillText.className = 'text-[10px] bg-purple-900/60 px-1.5 py-0.5 rounded text-purple-200 font-bold';
+          }
+          if (pillDot) {
+            pillDot.className = 'w-2 h-2 rounded-full bg-purple-400';
+          }
+          if (sideBtn) {
+            sideBtn.textContent = '[ OFF ]';
+            sideBtn.className = 'text-purple-300 hover:text-white font-bold';
+          }
+        }
+      }
+    };
+
+    window.toggleAudioCard = function(forceOpen) {
+      const card = document.getElementById('audioExpandedCard');
+      if (!card) return;
+      const isOpen = !card.classList.contains('hidden');
+      const shouldOpen = (typeof forceOpen === 'boolean') ? forceOpen : !isOpen;
+      if (shouldOpen) {
+        card.classList.remove('hidden');
+      } else {
+        card.classList.add('hidden');
+      }
+    };
   </script>
 </body>
 </html>
