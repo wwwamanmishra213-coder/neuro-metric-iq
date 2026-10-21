@@ -3395,23 +3395,29 @@
         if (displayArea) {
           displayArea.innerHTML = '<span class="text-xs font-mono text-cyan-400 font-bold">DISCRIMINATION PHASE: Select matching pattern below</span>';
         }
-        document.getElementById('memoryInstructionText').textContent = 'Phase 3: Select matching target matrix from memory:';
+        const inst = document.getElementById('memoryInstructionText');
+        if (inst) {
+          inst.textContent = 'Phase 3: Select matching target matrix from memory:';
+        }
 
-        grid.innerHTML = '';
-        grid.classList.remove('hidden');
+        const grid = document.getElementById('memoryProbeGrid');
+        if (grid) {
+          grid.innerHTML = '';
+          grid.classList.remove('hidden');
 
-        this.trialStartTime = Date.now();
+          this.trialStartTime = Date.now();
 
-        trial.options.forEach((opt, idx) => {
-          const div = document.createElement('div');
-          div.className = 'matrix-holo-tile rounded-xl p-3 flex flex-col items-center justify-center relative cursor-pointer active:scale-95 touch-manipulation';
-          div.innerHTML = `
-            <span class="absolute top-1 left-2 text-[9px] font-mono text-slate-400">[${String.fromCharCode(65 + idx)}]</span>
-            ${opt.svg}
-          `;
-          div.onclick = () => this.recordAnswer(opt.isCorrect);
-          grid.appendChild(div);
-        });
+          trial.options.forEach((opt, idx) => {
+            const div = document.createElement('div');
+            div.className = 'matrix-holo-tile rounded-xl p-3 flex flex-col items-center justify-center relative cursor-pointer active:scale-95 touch-manipulation';
+            div.innerHTML = `
+              <span class="absolute top-1 left-2 text-[9px] font-mono text-slate-400">[${String.fromCharCode(65 + idx)}]</span>
+              ${opt.svg}
+            `;
+            div.onclick = () => this.recordAnswer(opt.isCorrect);
+            grid.appendChild(div);
+          });
+        }
       },
 
       recordAnswer(isCorrect) {
