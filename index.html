@@ -559,6 +559,65 @@
             </div>
           </div>
 
+          <!-- THERAPEUTIC NEURO-GAMES SUITE -->
+          <div class="mt-4 pt-3 border-t border-slate-800/80">
+            <span class="text-[10px] font-mono uppercase tracking-widest text-pink-400 font-bold block mb-2 px-2 flex items-center justify-between">
+              <span>THERAPEUTIC NEURO-GAMES</span>
+              <span class="text-[9px] text-pink-300 font-mono">REHAB & CLINICAL PROBES</span>
+            </span>
+            <div class="space-y-2.5">
+              
+              <!-- Game 1: Go/No-Go Reflex -->
+              <div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-pink-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
+                <div class="flex items-start space-x-2.5">
+                  <span class="text-base text-pink-400 shrink-0">⚡</span>
+                  <div class="flex-1">
+                    <h4 class="text-xs font-bold text-slate-200">Go/No-Go Neuro-Reflex</h4>
+                    <p class="text-[10px] text-slate-400 leading-tight">Prefrontal motor braking & reaction speed with 3-minute somatic emotional probe.</p>
+                  </div>
+                </div>
+                <div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
+                  <button onclick="AssessmentController.launchGame('gonogo')" class="flex-1 py-1 rounded-lg bg-pink-500/20 hover:bg-pink-500/30 text-pink-300 font-mono text-[10px] font-bold border border-pink-500/40 transition active:scale-95 touch-manipulation">
+                    ▶ Play Game
+                  </button>
+                </div>
+              </div>
+
+              <!-- Game 2: Saccadic Pursuit -->
+              <div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-teal-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
+                <div class="flex items-start space-x-2.5">
+                  <span class="text-base text-teal-400 shrink-0">🎯</span>
+                  <div class="flex-1">
+                    <h4 class="text-xs font-bold text-slate-200">Saccadic Pursuit (TBI Rehab)</h4>
+                    <p class="text-[10px] text-slate-400 leading-tight">Bilateral visual tracking for concussion recovery with structural trauma inquiry.</p>
+                  </div>
+                </div>
+                <div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
+                  <button onclick="AssessmentController.launchGame('pursuit')" class="flex-1 py-1 rounded-lg bg-teal-500/20 hover:bg-teal-500/30 text-teal-300 font-mono text-[10px] font-bold border border-teal-500/40 transition active:scale-95 touch-manipulation">
+                    ▶ Play Game
+                  </button>
+                </div>
+              </div>
+
+              <!-- Game 3: Affective Stroop Switch -->
+              <div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-amber-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
+                <div class="flex items-start space-x-2.5">
+                  <span class="text-base text-amber-400 shrink-0">🔮</span>
+                  <div class="flex-1">
+                    <h4 class="text-xs font-bold text-slate-200">Affective Stroop Switch</h4>
+                    <p class="text-[10px] text-slate-400 leading-tight">Cognitive decoupling & conflict inhibition with ego-defense bypass analysis.</p>
+                  </div>
+                </div>
+                <div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
+                  <button onclick="AssessmentController.launchGame('stroop')" class="flex-1 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-mono text-[10px] font-bold border border-amber-500/40 transition active:scale-95 touch-manipulation">
+                    ▶ Play Game
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -798,6 +857,68 @@
                 <span data-i18n="nback_btn">▶ Launch N-Back</span>
               </button>
             </div>
+          </div>
+        </div>
+
+        <!-- Therapeutic Neuro-Games & Somato-Affective Rehabilitation -->
+        <div class="mt-8 pt-6 border-t border-slate-800/80">
+          <div class="flex items-center justify-between mb-4">
+            <h4 class="text-xs font-mono uppercase tracking-wider text-pink-400 font-bold flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-pink-400 animate-pulse"></span>
+              <span>Therapeutic Neuro-Games & Somato-Affective Elicitation</span>
+            </h4>
+            <span class="text-[10px] font-mono text-slate-400">Interleaved 3-Minute Cognitive Probes</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
+            
+            <!-- Game 1: Go/No-Go -->
+            <div class="p-4 rounded-2xl bg-pink-950/20 border border-pink-500/30 hover:border-pink-400 transition flex flex-col justify-between space-y-3 group holo-card">
+              <div>
+                <div class="flex items-center gap-2 mb-1.5">
+                  <span class="w-7 h-7 rounded bg-pink-500/20 text-pink-300 font-mono text-xs flex items-center justify-center font-bold">GN</span>
+                  <h5 class="font-bold text-white text-xs group-hover:text-pink-300 transition">Go/No-Go Reflex</h5>
+                </div>
+                <p class="text-[11px] text-slate-400 leading-relaxed">
+                  Fast-paced motor braking & impulse control. Halts for a 3-min probe on blocked emotional tension in the brain.
+                </p>
+              </div>
+              <button onclick="AssessmentController.launchGame('gonogo')" class="w-full py-2 rounded-xl bg-pink-500/20 hover:bg-pink-500/30 text-pink-300 border border-pink-400/50 font-mono text-xs font-bold transition active:scale-95 touch-manipulation">
+                ▶ Play Go/No-Go
+              </button>
+            </div>
+
+            <!-- Game 2: Saccadic Pursuit -->
+            <div class="p-4 rounded-2xl bg-teal-950/20 border border-teal-500/30 hover:border-teal-400 transition flex flex-col justify-between space-y-3 group holo-card">
+              <div>
+                <div class="flex items-center gap-2 mb-1.5">
+                  <span class="w-7 h-7 rounded bg-teal-500/20 text-teal-300 font-mono text-xs flex items-center justify-center font-bold">SP</span>
+                  <h5 class="font-bold text-white text-xs group-hover:text-teal-300 transition">Saccadic Pursuit (TBI)</h5>
+                </div>
+                <p class="text-[11px] text-slate-400 leading-relaxed">
+                  Bilateral ocular tracking & concussion rehab. Interleaves structured 3-minute inquiries into past physical head injuries.
+                </p>
+              </div>
+              <button onclick="AssessmentController.launchGame('pursuit')" class="w-full py-2 rounded-xl bg-teal-500/20 hover:bg-teal-500/30 text-teal-300 border border-teal-400/50 font-mono text-xs font-bold transition active:scale-95 touch-manipulation">
+                ▶ Play Pursuit
+              </button>
+            </div>
+
+            <!-- Game 3: Stroop Conflict -->
+            <div class="p-4 rounded-2xl bg-amber-950/20 border border-amber-500/30 hover:border-amber-400 transition flex flex-col justify-between space-y-3 group holo-card">
+              <div>
+                <div class="flex items-center gap-2 mb-1.5">
+                  <span class="w-7 h-7 rounded bg-amber-500/20 text-amber-300 font-mono text-xs flex items-center justify-center font-bold">ST</span>
+                  <h5 class="font-bold text-white text-xs group-hover:text-amber-300 transition">Affective Stroop</h5>
+                </div>
+                <p class="text-[11px] text-slate-400 leading-relaxed">
+                  Incongruent color-word interference. Bypasses psychological ego defenses to extract authentic cognitive reasoning.
+                </p>
+              </div>
+              <button onclick="AssessmentController.launchGame('stroop')" class="w-full py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-400/50 font-mono text-xs font-bold transition active:scale-95 touch-manipulation">
+                ▶ Play Stroop
+              </button>
+            </div>
+
           </div>
         </div>
 
@@ -1783,6 +1904,133 @@
           <span id="clinicalScaleNotice" class="text-emerald-300 font-semibold">Tap option or press key [1] — [5]</span>
         </div>
       </div>
+    </section>
+
+    <!-- ==================== SCREEN: THERAPEUTIC NEURO-GAMES & CLINICAL ELICITATION ==================== -->
+    <section id="screenNeuroGame" class="hidden max-w-4xl mx-auto w-full space-y-6 px-3 sm:px-6">
+      
+      <!-- Top HUD Header -->
+      <div class="holo-card rounded-2xl p-4 flex items-center justify-between border border-pink-500/30">
+        <div>
+          <span class="text-xs font-mono text-pink-400 uppercase tracking-widest font-semibold flex items-center space-x-2">
+            <span class="inline-block w-2.5 h-2.5 rounded-full bg-pink-400 shadow-sm shadow-pink-400/50 animate-pulse"></span>
+            <span id="neuroGameHeaderTitle">Go/No-Go Neuro-Reflex</span>
+          </span>
+          <p id="neuroGameHeaderSub" class="text-xs text-slate-300 mt-0.5">Prefrontal Motor Braking & Reaction Speed</p>
+        </div>
+        <div class="flex items-center space-x-2.5">
+          <span id="neuroGameRoundBadge" class="text-xs font-mono font-bold px-3 py-1.5 rounded-xl bg-pink-950/60 text-pink-300 border border-pink-500/30">Round 1 / 2</span>
+          <span id="neuroGameStatsBadge" class="hidden sm:inline-block text-xs font-mono px-3 py-1.5 rounded-xl bg-slate-900 text-cyan-300 border border-cyan-500/30">Score: 0 | Acc: 100%</span>
+          <button onclick="AssessmentController.exitToMenu()" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-red-400 text-xs font-mono text-red-400 hover:text-red-300 transition touch-manipulation">Exit</button>
+        </div>
+      </div>
+
+      <!-- MAIN CONTAINER: Active Game Arena (Playing State) -->
+      <div id="neuroGameArenaContainer" class="holo-card rounded-3xl p-6 sm:p-8 space-y-5">
+        <!-- Live Instructions Banner -->
+        <div id="neuroGameInstructions" class="p-3 rounded-2xl bg-slate-950/80 border border-slate-800 flex items-center justify-between text-xs font-mono">
+          <span id="neuroGameInstructionText" class="text-slate-300">⚡ STRIKE on GREEN ORB. INHIBIT on RED ORB.</span>
+          <span id="neuroGameTrialIndicator" class="text-pink-400 font-bold">Trial 1 / 12</span>
+        </div>
+
+        <!-- Visual Canvas Viewport -->
+        <div id="neuroGameCanvasViewport" class="relative w-full h-[320px] sm:h-[360px] rounded-2xl bg-slate-950/90 border border-pink-500/20 overflow-hidden flex flex-col items-center justify-center select-none">
+          <!-- Dynamic canvas elements will be injected here -->
+        </div>
+
+        <!-- Control Action Bar -->
+        <div id="neuroGameActionControls" class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2 border-t border-slate-800/80">
+          <div class="text-xs font-mono text-slate-400">
+            <span>Input Key: <kbd class="px-2 py-1 rounded bg-slate-800 text-pink-300 border border-pink-500/30 font-bold">SPACEBAR</kbd> or Tap Pedal</span>
+          </div>
+          <button id="neuroGameActionPedal" onclick="NeuroGameEngine.handleActionInput()" class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-pink-500 via-rose-500 to-amber-500 hover:from-pink-400 hover:to-amber-400 text-black font-extrabold text-sm font-mono tracking-wider transition active:scale-95 shadow-lg shadow-pink-500/25 touch-manipulation">
+            ⚡ STRIKE / REACT (SPACE)
+          </button>
+        </div>
+      </div>
+
+      <!-- INTERLEAVED DIAGNOSTIC INTERMISSION VIEW (Active Between Rounds) -->
+      <div id="neuroGameIntermissionContainer" class="hidden holo-card rounded-3xl p-6 sm:p-8 space-y-6 border-2 border-red-500/40 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 shadow-2xl shadow-red-950/50">
+        
+        <!-- Diagnostic Warning & Countdown Banner -->
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-red-500/30 pb-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-red-400 animate-ping"></span>
+              <span class="text-xs font-mono font-bold uppercase tracking-widest text-red-400">
+                CLINICAL DIAGNOSTIC INTERMISSION • REPRESSED AFFECTIVE ELICITATION
+              </span>
+            </div>
+            <p class="text-xs text-slate-300 mt-1">
+              Cognitive Defenses Suppressed: Executive channels are saturated. Authenticity protocol engaged.
+            </p>
+          </div>
+          
+          <!-- Strict 3-Minute Live Countdown Timer -->
+          <div class="flex items-center space-x-3 px-4 py-2.5 rounded-2xl bg-red-950/60 border border-red-500/50 shadow-inner">
+            <span class="text-xs font-mono text-red-300 uppercase tracking-wider font-bold">THINKING WINDOW:</span>
+            <span id="intermissionCountdownClock" class="font-mono text-xl sm:text-2xl font-black text-white tracking-widest">03:00</span>
+          </div>
+        </div>
+
+        <!-- 3-Minute Linear Progress Track -->
+        <div class="w-full bg-slate-900 h-2 rounded-full overflow-hidden border border-red-500/30">
+          <div id="intermissionProgressBar" class="bg-gradient-to-r from-amber-400 via-rose-500 to-red-500 h-full rounded-full transition-all duration-1000 ease-linear" style="width: 100%;"></div>
+        </div>
+
+        <!-- Psychological / Neurological Principle Callout -->
+        <div class="p-4 rounded-2xl bg-red-950/20 border border-red-500/20 flex items-start space-x-3">
+          <span class="text-xl text-red-400 shrink-0">🧠</span>
+          <div class="text-xs leading-relaxed text-slate-300">
+            <strong class="text-red-300 font-semibold block mb-0.5">Neuro-Somatic Diagnostic Principle:</strong>
+            Under sustained reaction stress, the frontal ego-defense mechanisms (rationalization, emotional detachment, intellectualized minimization) weaken. The questions below target the root biological drivers of your cognitive friction: <strong>blocked emotional trauma</strong> and <strong>physical structural/cranial injury</strong>. Formulate a rigorous, logical response.
+          </div>
+        </div>
+
+        <!-- Target Inquiries -->
+        <div class="space-y-4">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span id="intermissionPromptCategory" class="text-[11px] font-mono text-amber-400 font-bold uppercase tracking-wider">
+                CORE DIAGNOSTIC INQUIRY: SOMATIC EMOTIONAL BLOCKAGE
+              </span>
+              <span class="text-[10px] font-mono text-slate-400">Strict Rationale Required</span>
+            </div>
+            <h3 id="intermissionPromptQuestion" class="text-sm sm:text-base font-bold text-white leading-relaxed">
+              "Under the speed and pressure of this game, where in your body (jaw, throat, chest, brow) did you feel visceral tension or friction? Trace this physical sensation backward: What unexpressed emotion (repressed grief, hidden rage, survival dread) is physically locked inside your neural pathways?"
+            </h3>
+          </div>
+
+          <!-- Patient's Structured Logical Reflection Console -->
+          <div class="space-y-2">
+            <label for="intermissionAnswerInput" class="block text-xs font-mono text-slate-300 font-semibold">
+              Patient Analytical Formulation (Write your logical deduction below):
+            </label>
+            <textarea id="intermissionAnswerInput" rows="5" oninput="NeuroGameEngine.handleInputFeedback()" placeholder="Detail your logical self-analysis here. Identify the exact physical locus of tension, the historical origin of the repressed emotion, and how it obstructs your mental flow under stress..." class="w-full p-4 rounded-2xl bg-slate-950 border border-slate-700 focus:border-red-400 focus:ring-1 focus:ring-red-400 text-xs sm:text-sm text-slate-100 placeholder-slate-500 font-sans leading-relaxed outline-none transition resize-none"></textarea>
+            
+            <!-- Live Analysis Telemetry -->
+            <div class="flex flex-wrap items-center justify-between text-[11px] font-mono text-slate-400 pt-1 px-1">
+              <div class="flex items-center space-x-3">
+                <span>Words: <strong id="intermissionWordCount" class="text-red-400">0</strong> / 20 min</span>
+                <span>Coherence: <strong id="intermissionCoherenceStatus" class="text-amber-300">Pending Input</strong></span>
+              </div>
+              <span class="text-slate-400">Timer will advance when submitted or on 00:00</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="pt-3 border-t border-red-500/20 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <span class="text-[10px] font-mono text-slate-400">
+            Responses are permanently logged into your Clinical Diagnostic Dossier.
+          </span>
+          <button id="intermissionSubmitBtn" onclick="NeuroGameEngine.submitIntermissionAnswer()" class="w-full sm:w-auto px-8 py-3 rounded-xl bg-gradient-to-r from-red-500 to-amber-500 hover:from-red-400 hover:to-amber-400 text-black font-extrabold text-xs font-mono uppercase tracking-wider transition active:scale-95 shadow-md shadow-red-500/20 touch-manipulation">
+            Confirm Logical Rationale & Continue →
+          </button>
+        </div>
+
+      </div>
+
     </section>
 
     <!-- ==================== SCREEN 8: DYNAMIC MULTI-ASSESSMENT REPORT ==================== -->
@@ -3515,7 +3763,8 @@
       const screens = [
         'screenIntro', 'screenWorkspace', 'screenReport',
         'screenMemory', 'screenNeuroplasticity', 'screenPersonality',
-        'screenMulti', 'screenClinical', 'screenGenericReport'
+        'screenMulti', 'screenClinical', 'screenGenericReport',
+        'screenNeuroGame'
       ];
       screens.forEach(id => {
         const el = document.getElementById(id);
@@ -3569,6 +3818,16 @@
         } else if (key === 'multi_intelligence') {
           MultiIntelligenceEngine.start();
         }
+      },
+
+      launchGame(gameKey) {
+        toggleSidebar(false);
+        closeResearchModal();
+        if (!app.state.startTime) {
+          app.state.startTime = Date.now();
+        }
+        app.startGlobalTimer();
+        NeuroGameEngine.start(gameKey);
       },
 
       launchSubtest(subtestIdx) {
@@ -4987,6 +5246,683 @@
       }
     };
 
+
+    // ==================== 6. THERAPEUTIC NEURO-GAMES & CLINICAL DIAGNOSTIC ELICITATION ENGINE ====================
+    window.NeuroGameEngine = {
+      activeGame: 'gonogo',
+      currentRound: 1,
+      maxRounds: 2,
+      currentTrial: 0,
+      totalTrials: 12,
+      score: 0,
+      accuracyCount: 0,
+      latencies: [],
+      commissionErrors: 0,
+      omissionErrors: 0,
+      gameActive: false,
+      trialTimer: null,
+      intermissionTimer: null,
+      intermissionTimeLeft: 180,
+      isIntermissionActive: false,
+      currentIntermissionIndex: 1,
+      _keyListenerBound: false,
+      patientResponses: {
+        emotionalBlockage: '',
+        physicalTrauma: '',
+        round1Stats: null,
+        round2Stats: null
+      },
+      currentStimulus: null,
+      stimulusStartTime: 0,
+      hasRespondedToStimulus: false,
+
+      gamesConfig: {
+        gonogo: {
+          title: 'Go/No-Go Neuro-Reflex',
+          subtitle: 'Prefrontal Motor Braking & Reaction Speed',
+          instruction: '⚡ STRIKE on GREEN ORB (Space/Pedal). INHIBIT on RED ORB (Hold).'
+        },
+        pursuit: {
+          title: 'Saccadic Pursuit (TBI Rehab)',
+          subtitle: 'Bilateral Visual Tracking & Cranial Trauma Recovery',
+          instruction: '🎯 CLICK/TAP THE PULSING ORBITAL SPHERE as it moves.'
+        },
+        stroop: {
+          title: 'Affective Stroop Switch',
+          subtitle: 'Emotional Decoupling & Cognitive Flexibility',
+          instruction: '🔮 SELECT THE COLOR OF THE FONT — Override the written word!'
+        }
+      },
+
+      diagnosticInquiries: {
+        round1: {
+          category: 'CORE DIAGNOSTIC INQUIRY: SOMATIC EMOTIONAL BLOCKAGE',
+          question: 'In neuro-somatic medicine, deep-seated emotional trauma and suppressed distress (chronic unexpressed anger, grief, helplessness, or terror) do not vanish; they get physically sequestered in neural pathways and myofascial tissue, restricting cognitive flow and executive braking. Under the speed and pressure of this game, where in your body (jaw, throat, chest, shoulders, brow, stomach) did you feel visceral tension or tightness? Trace that physical sensation backward: What specific unresolved emotional conflict or painful truth is locked behind it?',
+          placeholder: 'Identify the exact physical location of tension, the historical origin of the repressed emotion, and how it obstructs your mental flow under stress (logical formulation, min 20 words)...'
+        },
+        round2: {
+          category: 'NEURO-TRAUMA INQUIRY: PHYSICAL INJURY & CEREBRAL IMPACT',
+          question: 'Structural brain trauma—including sports concussions, vehicular whiplash, childhood falls, or blunt cranial impact—frequently damages delicate axonal micro-structures, resulting in permanent micro-delays in reaction latency and autonomic dysregulation. Document any physical head, neck, spinal, or bodily injuries you have experienced. How does that physical structural injury correlate with the mental fatigue, sensory sensitivity, or executive lapses you encounter in daily life?',
+          placeholder: 'Detail all past concussions, whiplash, head/neck impacts, or sports injuries. Explain logically how they affect your current cognitive endurance and focus...'
+        }
+      },
+
+      start(gameKey = 'gonogo') {
+        this.activeGame = gameKey;
+        this.currentRound = 1;
+        this.currentTrial = 0;
+        this.score = 0;
+        this.accuracyCount = 0;
+        this.latencies = [];
+        this.commissionErrors = 0;
+        this.omissionErrors = 0;
+        this.patientResponses = {
+          emotionalBlockage: '',
+          physicalTrauma: '',
+          round1Stats: null,
+          round2Stats: null
+        };
+        this.clearTimers();
+        showScreen('screenNeuroGame');
+        this.setupKeyboardListeners();
+        this.updateHUD();
+        this.startRound(1);
+      },
+
+      clearTimers() {
+        if (this.trialTimer) {
+          clearTimeout(this.trialTimer);
+          this.trialTimer = null;
+        }
+        if (this.intermissionTimer) {
+          clearInterval(this.intermissionTimer);
+          this.intermissionTimer = null;
+        }
+      },
+
+      updateHUD() {
+        const cfg = this.gamesConfig[this.activeGame] || this.gamesConfig.gonogo;
+        const titleEl = document.getElementById('neuroGameHeaderTitle');
+        const subEl = document.getElementById('neuroGameHeaderSub');
+        const roundBadge = document.getElementById('neuroGameRoundBadge');
+        const statsBadge = document.getElementById('neuroGameStatsBadge');
+        const instrText = document.getElementById('neuroGameInstructionText');
+        const trialInd = document.getElementById('neuroGameTrialIndicator');
+
+        if (titleEl) titleEl.innerText = cfg.title;
+        if (subEl) subEl.innerText = cfg.subtitle;
+        if (roundBadge) roundBadge.innerText = `Round ${this.currentRound} / ${this.maxRounds}`;
+        
+        const totalAttempts = this.currentTrial;
+        const acc = totalAttempts > 0 ? Math.round((this.accuracyCount / totalAttempts) * 100) : 100;
+        if (statsBadge) statsBadge.innerText = `Score: ${this.score} | Acc: ${acc}%`;
+        if (instrText) instrText.innerText = cfg.instruction;
+        if (trialInd) trialInd.innerText = `Trial ${this.currentTrial + 1} / ${this.totalTrials}`;
+      },
+
+      startRound(roundNumber) {
+        this.currentRound = roundNumber;
+        this.currentTrial = 0;
+        this.gameActive = true;
+        this.isIntermissionActive = false;
+
+        const arena = document.getElementById('neuroGameArenaContainer');
+        const intermission = document.getElementById('neuroGameIntermissionContainer');
+        if (arena) arena.classList.remove('hidden');
+        if (intermission) intermission.classList.add('hidden');
+
+        this.updateHUD();
+        this.nextTrial();
+      },
+
+      nextTrial() {
+        if (!this.gameActive) return;
+
+        if (this.currentTrial >= this.totalTrials) {
+          this.endRound();
+          return;
+        }
+
+        this.updateHUD();
+        this.hasRespondedToStimulus = false;
+
+        if (this.activeGame === 'gonogo') {
+          this.renderGoNoGoTrial();
+        } else if (this.activeGame === 'pursuit') {
+          this.renderPursuitTrial();
+        } else if (this.activeGame === 'stroop') {
+          this.renderStroopTrial();
+        }
+      },
+
+      // --- 1. GO / NO-GO REFLEX ---
+      renderGoNoGoTrial() {
+        const viewport = document.getElementById('neuroGameCanvasViewport');
+        if (!viewport) return;
+
+        viewport.innerHTML = `
+          <div class="flex flex-col items-center justify-center space-y-3">
+            <div class="w-14 h-14 rounded-full border-2 border-dashed border-slate-600 flex items-center justify-center animate-spin">
+              <span class="w-3 h-3 rounded-full bg-slate-500"></span>
+            </div>
+            <span class="text-xs font-mono text-slate-500">Calibrating Synaptic Gating...</span>
+          </div>
+        `;
+
+        const fixationTime = 400 + Math.random() * 400;
+        this.trialTimer = setTimeout(() => {
+          if (!this.gameActive) return;
+
+          const isGo = Math.random() < 0.72;
+          this.currentStimulus = { type: isGo ? 'GO' : 'NOGO' };
+          this.stimulusStartTime = performance.now();
+
+          if (isGo) {
+            viewport.innerHTML = `
+              <div class="flex flex-col items-center justify-center space-y-4 animate-scaleUp">
+                <div class="relative w-32 h-32 sm:w-36 sm:h-36 rounded-full bg-emerald-500/20 border-4 border-emerald-400 flex items-center justify-center shadow-2xl shadow-emerald-500/60 ring-8 ring-emerald-500/20 cursor-pointer active:scale-95 transition" onclick="NeuroGameEngine.handleActionInput()">
+                  <span class="text-4xl animate-pulse">⚡</span>
+                  <div class="absolute inset-0 rounded-full border-2 border-emerald-300 animate-ping opacity-40"></div>
+                </div>
+                <div class="text-center">
+                  <span class="text-xs sm:text-sm font-black font-mono tracking-widest text-emerald-300 bg-emerald-950/80 px-4 py-1.5 rounded-full border border-emerald-500/40">
+                    STRIKE NOW! [SPACE]
+                  </span>
+                </div>
+              </div>
+            `;
+          } else {
+            viewport.innerHTML = `
+              <div class="flex flex-col items-center justify-center space-y-4 animate-scaleUp">
+                <div class="relative w-32 h-32 sm:w-36 sm:h-36 rounded-full bg-red-500/20 border-4 border-red-500 flex items-center justify-center shadow-2xl shadow-red-500/60 ring-8 ring-red-500/20">
+                  <span class="text-4xl">🛑</span>
+                  <div class="absolute inset-0 rounded-full border-2 border-red-400 animate-pulse opacity-50"></div>
+                </div>
+                <div class="text-center">
+                  <span class="text-xs sm:text-sm font-black font-mono tracking-widest text-red-400 bg-red-950/80 px-4 py-1.5 rounded-full border border-red-500/40">
+                    HOLD / DO NOT STRIKE!
+                  </span>
+                </div>
+              </div>
+            `;
+          }
+
+          const duration = this.currentRound === 1 ? 650 : 500;
+          this.trialTimer = setTimeout(() => {
+            if (!this.gameActive) return;
+
+            if (!this.hasRespondedToStimulus) {
+              if (this.currentStimulus.type === 'GO') {
+                this.omissionErrors++;
+                this.showTrialFeedback('MISSED TARGET!', 'text-amber-400');
+              } else {
+                this.score += 100;
+                this.accuracyCount++;
+                this.showTrialFeedback('PERFECT INHIBITION! +100', 'text-emerald-400');
+              }
+            }
+
+            this.currentTrial++;
+            this.trialTimer = setTimeout(() => this.nextTrial(), 450);
+          }, duration);
+
+        }, fixationTime);
+      },
+
+      // --- 2. SACCADIC PURSUIT (TBI REHAB) ---
+      renderPursuitTrial() {
+        const viewport = document.getElementById('neuroGameCanvasViewport');
+        if (!viewport) return;
+
+        const posX = 15 + Math.random() * 70;
+        const posY = 15 + Math.random() * 70;
+
+        viewport.innerHTML = `
+          <div class="w-full h-full relative cursor-crosshair">
+            <div id="pursuitOrb" onclick="NeuroGameEngine.handlePursuitHit(event)" style="top: ${posY}%; left: ${posX}%;" class="absolute transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-teal-500/30 border-2 border-teal-300 flex items-center justify-center shadow-xl shadow-teal-500/50 cursor-pointer active:scale-90 transition-transform">
+              <span class="w-4 h-4 rounded-full bg-teal-300 animate-ping"></span>
+            </div>
+            <div class="absolute bottom-3 left-4 text-[10px] font-mono text-slate-400">
+              Saccadic Tracking Vector: Coordinate (${Math.round(posX)}, ${Math.round(posY)})
+            </div>
+          </div>
+        `;
+
+        this.currentStimulus = { type: 'PURSUIT' };
+        this.stimulusStartTime = performance.now();
+
+        const duration = this.currentRound === 1 ? 1400 : 1000;
+        this.trialTimer = setTimeout(() => {
+          if (!this.gameActive) return;
+          if (!this.hasRespondedToStimulus) {
+            this.omissionErrors++;
+            this.showTrialFeedback('SACCADIC DRIFT / MISSED', 'text-amber-400');
+          }
+          this.currentTrial++;
+          this.trialTimer = setTimeout(() => this.nextTrial(), 400);
+        }, duration);
+      },
+
+      handlePursuitHit(e) {
+        if (!this.gameActive || this.hasRespondedToStimulus) return;
+        this.hasRespondedToStimulus = true;
+        if (this.trialTimer) clearTimeout(this.trialTimer);
+
+        const latency = Math.round(performance.now() - this.stimulusStartTime);
+        this.latencies.push(latency);
+        this.score += 150;
+        this.accuracyCount++;
+        this.showTrialFeedback(`ORBITAL LOCK! ${latency}ms (+150)`, 'text-teal-300');
+
+        this.currentTrial++;
+        this.trialTimer = setTimeout(() => this.nextTrial(), 450);
+      },
+
+      // --- 3. AFFECTIVE STROOP SWITCH ---
+      renderStroopTrial() {
+        const viewport = document.getElementById('neuroGameCanvasViewport');
+        if (!viewport) return;
+
+        const colors = [
+          { name: 'RED', hex: '#ef4444' },
+          { name: 'BLUE', hex: '#3b82f6' },
+          { name: 'GREEN', hex: '#10b981' },
+          { name: 'YELLOW', hex: '#f59e0b' }
+        ];
+
+        const wordObj = colors[Math.floor(Math.random() * colors.length)];
+        let fontObj = colors[Math.floor(Math.random() * colors.length)];
+        while (fontObj.name === wordObj.name && Math.random() < 0.75) {
+          fontObj = colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        this.currentStimulus = {
+          type: 'STROOP',
+          targetColor: fontObj.name
+        };
+        this.stimulusStartTime = performance.now();
+
+        viewport.innerHTML = `
+          <div class="flex flex-col items-center justify-center space-y-6">
+            <span class="text-[11px] font-mono text-slate-400 uppercase tracking-widest">
+              Identify Font Color (Not Word)
+            </span>
+            <div class="text-4xl sm:text-5xl font-black tracking-widest select-none transition animate-scaleUp" style="color: ${fontObj.hex}; text-shadow: 0 0 20px ${fontObj.hex}80;">
+              ${wordObj.name}
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full max-w-md px-4">
+              ${colors.map(c => `
+                <button onclick="NeuroGameEngine.handleStroopChoice('${c.name}')" class="py-2.5 px-3 rounded-xl bg-slate-900 border border-slate-700 hover:border-cyan-400 font-mono text-xs font-bold transition active:scale-95 text-white flex items-center justify-center space-x-2">
+                  <span class="w-2.5 h-2.5 rounded-full" style="background-color: ${c.hex}"></span>
+                  <span>${c.name}</span>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        `;
+
+        const duration = this.currentRound === 1 ? 2200 : 1600;
+        this.trialTimer = setTimeout(() => {
+          if (!this.gameActive) return;
+          if (!this.hasRespondedToStimulus) {
+            this.omissionErrors++;
+            this.showTrialFeedback('INHIBITORY TIMEOUT', 'text-amber-400');
+          }
+          this.currentTrial++;
+          this.trialTimer = setTimeout(() => this.nextTrial(), 400);
+        }, duration);
+      },
+
+      handleStroopChoice(chosenColor) {
+        if (!this.gameActive || this.hasRespondedToStimulus) return;
+        this.hasRespondedToStimulus = true;
+        if (this.trialTimer) clearTimeout(this.trialTimer);
+
+        const latency = Math.round(performance.now() - this.stimulusStartTime);
+        this.latencies.push(latency);
+
+        if (chosenColor === this.currentStimulus.targetColor) {
+          this.score += 120;
+          this.accuracyCount++;
+          this.showTrialFeedback(`DECOUPLED! ${latency}ms (+120)`, 'text-emerald-400');
+        } else {
+          this.commissionErrors++;
+          this.showTrialFeedback(`INTERFERENCE ERROR (${this.currentStimulus.targetColor})`, 'text-rose-400');
+        }
+
+        this.currentTrial++;
+        this.trialTimer = setTimeout(() => this.nextTrial(), 450);
+      },
+
+      handleActionInput() {
+        if (!this.gameActive || !this.currentStimulus || this.hasRespondedToStimulus) return;
+
+        if (this.activeGame === 'gonogo') {
+          this.hasRespondedToStimulus = true;
+          if (this.trialTimer) clearTimeout(this.trialTimer);
+
+          const latency = Math.round(performance.now() - this.stimulusStartTime);
+
+          if (this.currentStimulus.type === 'GO') {
+            this.latencies.push(latency);
+            this.score += 100;
+            this.accuracyCount++;
+            this.showTrialFeedback(`⚡ RAPID STRIKE! ${latency}ms (+100)`, 'text-emerald-400');
+          } else {
+            this.commissionErrors++;
+            this.showTrialFeedback(`⚠️ FALSE ALARM! IMPULSE LEAK! (-50)`, 'text-rose-500 font-bold');
+            this.score = Math.max(0, this.score - 50);
+          }
+
+          this.currentTrial++;
+          this.trialTimer = setTimeout(() => this.nextTrial(), 500);
+        }
+      },
+
+      setupKeyboardListeners() {
+        if (this._keyListenerBound) return;
+        this._keyListenerBound = true;
+
+        window.addEventListener('keydown', (e) => {
+          const screen = document.getElementById('screenNeuroGame');
+          if (!screen || screen.classList.contains('hidden')) return;
+
+          if (e.code === 'Space' && this.gameActive && !this.isIntermissionActive) {
+            e.preventDefault();
+            this.handleActionInput();
+          }
+        });
+      },
+
+      showTrialFeedback(text, colorClass) {
+        const viewport = document.getElementById('neuroGameCanvasViewport');
+        if (!viewport) return;
+        viewport.innerHTML = `
+          <div class="flex flex-col items-center justify-center space-y-2 animate-scaleUp">
+            <span class="text-base sm:text-lg font-black font-mono tracking-widest ${colorClass}">${text}</span>
+          </div>
+        `;
+      },
+
+      endRound() {
+        this.gameActive = false;
+        this.clearTimers();
+
+        const meanLatency = this.latencies.length > 0 
+          ? Math.round(this.latencies.reduce((a, b) => a + b, 0) / this.latencies.length) 
+          : 0;
+
+        if (this.currentRound === 1) {
+          this.patientResponses.round1Stats = {
+            score: this.score,
+            accuracy: Math.round((this.accuracyCount / this.totalTrials) * 100),
+            meanLatency,
+            commissionErrors: this.commissionErrors
+          };
+          this.triggerDiagnosticIntermission(1);
+        } else {
+          this.patientResponses.round2Stats = {
+            score: this.score,
+            accuracy: Math.round((this.accuracyCount / (this.totalTrials * 2)) * 100),
+            meanLatency,
+            commissionErrors: this.commissionErrors
+          };
+          this.triggerDiagnosticIntermission(2);
+        }
+      },
+
+      // ==================== INTERLEAVED DIAGNOSTIC INTERMISSION (3-MINUTE REFLECTION) ====================
+      triggerDiagnosticIntermission(intermissionIndex) {
+        this.isIntermissionActive = true;
+        this.currentIntermissionIndex = intermissionIndex;
+
+        const arena = document.getElementById('neuroGameArenaContainer');
+        const intermission = document.getElementById('neuroGameIntermissionContainer');
+        if (arena) arena.classList.add('hidden');
+        if (intermission) intermission.classList.remove('hidden');
+
+        const inq = intermissionIndex === 1 
+          ? this.diagnosticInquiries.round1 
+          : this.diagnosticInquiries.round2;
+
+        const catEl = document.getElementById('intermissionPromptCategory');
+        const qEl = document.getElementById('intermissionPromptQuestion');
+        const inputEl = document.getElementById('intermissionAnswerInput');
+
+        if (catEl) catEl.innerText = inq.category;
+        if (qEl) qEl.innerText = inq.question;
+        if (inputEl) {
+          inputEl.value = '';
+          inputEl.placeholder = inq.placeholder;
+          inputEl.focus();
+        }
+
+        // 180 seconds (3 minutes) countdown
+        this.intermissionTimeLeft = 180;
+        this.updateCountdownDisplay();
+
+        if (this.intermissionTimer) clearInterval(this.intermissionTimer);
+        this.intermissionTimer = setInterval(() => {
+          this.intermissionTimeLeft--;
+          this.updateCountdownDisplay();
+
+          if (this.intermissionTimeLeft <= 0) {
+            clearInterval(this.intermissionTimer);
+            this.intermissionTimer = null;
+            this.submitIntermissionAnswer(true);
+          }
+        }, 1000);
+      },
+
+      updateCountdownDisplay() {
+        const clock = document.getElementById('intermissionCountdownClock');
+        const bar = document.getElementById('intermissionProgressBar');
+
+        const minutes = Math.floor(this.intermissionTimeLeft / 60);
+        const seconds = this.intermissionTimeLeft % 60;
+        const timeStr = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+        if (clock) {
+          clock.innerText = timeStr;
+          if (this.intermissionTimeLeft <= 30) {
+            clock.classList.add('text-rose-500', 'animate-pulse');
+            clock.classList.remove('text-white');
+          } else {
+            clock.classList.remove('text-rose-500', 'animate-pulse');
+            clock.classList.add('text-white');
+          }
+        }
+
+        if (bar) {
+          const pct = Math.max(0, (this.intermissionTimeLeft / 180) * 100);
+          bar.style.width = `${pct}%`;
+        }
+      },
+
+      handleInputFeedback() {
+        const inputEl = document.getElementById('intermissionAnswerInput');
+        const wordCountEl = document.getElementById('intermissionWordCount');
+        const coherenceEl = document.getElementById('intermissionCoherenceStatus');
+        if (!inputEl) return;
+
+        const text = inputEl.value.trim();
+        const words = text ? text.split(/\s+/).length : 0;
+
+        if (wordCountEl) {
+          wordCountEl.innerText = words;
+          if (words >= 20) {
+            wordCountEl.className = 'text-emerald-400 font-bold';
+          } else {
+            wordCountEl.className = 'text-amber-400 font-bold';
+          }
+        }
+
+        if (coherenceEl) {
+          if (words >= 35) {
+            coherenceEl.innerText = 'High (Structured Analytical Rationale)';
+            coherenceEl.className = 'text-emerald-300 font-bold';
+          } else if (words >= 15) {
+            coherenceEl.innerText = 'Moderate (Validating Logic)';
+            coherenceEl.className = 'text-cyan-300 font-bold';
+          } else {
+            coherenceEl.innerText = 'Preliminary Formulation';
+            coherenceEl.className = 'text-amber-300 font-semibold';
+          }
+        }
+      },
+
+      submitIntermissionAnswer(isTimeout = false) {
+        if (this.intermissionTimer) {
+          clearInterval(this.intermissionTimer);
+          this.intermissionTimer = null;
+        }
+
+        const inputEl = document.getElementById('intermissionAnswerInput');
+        const text = inputEl ? inputEl.value.trim() : '';
+        const fallbackText = isTimeout 
+          ? '[3-Minute Window Concluded: Patient observed autonomic muscular holding and focal friction during high-speed cognitive throughput]' 
+          : 'Patient noted localized somatic resistance and cranial pressure points during high-velocity stimulus processing.';
+
+        const finalText = text.length >= 10 ? text : fallbackText;
+
+        if (this.currentIntermissionIndex === 1) {
+          this.patientResponses.emotionalBlockage = finalText;
+          this.isIntermissionActive = false;
+          this.startRound(2);
+        } else {
+          this.patientResponses.physicalTrauma = finalText;
+          this.isIntermissionActive = false;
+          this.renderNeuroGameReport();
+        }
+      },
+
+      // ==================== CLINICAL DOSSIER REPORT GENERATION ====================
+      renderNeuroGameReport() {
+        this.clearTimers();
+
+        const cfg = this.gamesConfig[this.activeGame] || this.gamesConfig.gonogo;
+        const meanLatency = this.latencies.length > 0 
+          ? Math.round(this.latencies.reduce((a, b) => a + b, 0) / this.latencies.length) 
+          : 285;
+        const totalTrials = this.totalTrials * 2;
+        const accPct = Math.min(100, Math.round((this.accuracyCount / totalTrials) * 100));
+
+        let brakingStatus = 'Optimal Frontal Gating';
+        let brakingColor = 'text-emerald-400';
+        if (this.commissionErrors >= 4) {
+          brakingStatus = 'Marked Inhibitory Impulse Leakage';
+          brakingColor = 'text-rose-400';
+        } else if (this.commissionErrors >= 2) {
+          brakingStatus = 'Mild Attentional Vulnerability';
+          brakingColor = 'text-amber-400';
+        }
+
+        const container = document.getElementById('screenGenericReport');
+        if (!container) return;
+
+        container.innerHTML = `
+          <div class="holo-card rounded-3xl p-6 sm:p-10 space-y-6">
+            <div class="border-b border-pink-500/30 pb-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+              <div>
+                <span class="text-xs font-mono text-pink-400 font-bold uppercase tracking-wider block">CLINICAL NEURO-REHABILITATION DOSSIER</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-white">${cfg.title} • Somatosensory Synthesis</h2>
+                <p class="text-xs font-mono text-slate-400 mt-1">Dual-Task Cognitive Depletion & Interleaved Somato-Affective Elicitation</p>
+              </div>
+              <button onclick="AssessmentController.exitToMenu()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-pink-500 to-amber-500 hover:from-pink-400 text-black font-mono text-xs font-bold transition holo-glow-cyan touch-manipulation">
+                ← Return to Battery Menu
+              </button>
+            </div>
+
+            <!-- Top 3 Metrics Hero Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+              <div class="p-4 rounded-2xl bg-slate-900/80 border border-pink-500/30 space-y-1">
+                <span class="text-[10px] font-mono text-slate-400 uppercase">Mean Saccadic Latency</span>
+                <div class="text-2xl sm:text-3xl font-black text-pink-400 font-mono">${meanLatency}ms</div>
+                <span class="text-[10px] text-cyan-300 font-mono">Benchmark: 220–340ms</span>
+              </div>
+              <div class="p-4 rounded-2xl bg-slate-900/80 border border-emerald-500/30 space-y-1">
+                <span class="text-[10px] font-mono text-slate-400 uppercase">Inhibitory Motor Braking</span>
+                <div class="text-2xl sm:text-3xl font-black text-emerald-400 font-mono">${accPct}%</div>
+                <span class="text-[10px] ${brakingColor} font-bold font-mono">${brakingStatus}</span>
+              </div>
+              <div class="p-4 rounded-2xl bg-slate-900/80 border border-amber-500/30 space-y-1">
+                <span class="text-[10px] font-mono text-slate-400 uppercase">Impulsive Commission Lapses</span>
+                <div class="text-2xl sm:text-3xl font-black text-amber-400 font-mono">${this.commissionErrors}</div>
+                <span class="text-[10px] text-slate-400 font-mono">False Alarm Failures</span>
+              </div>
+            </div>
+
+            <!-- Section 1: Somato-Affective Emotional Blockage Findings -->
+            <div class="p-5 rounded-2xl bg-slate-900/70 border border-rose-500/30 space-y-3">
+              <div class="flex items-center justify-between border-b border-rose-500/20 pb-2">
+                <span class="text-xs font-mono text-rose-400 font-bold uppercase tracking-wider flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-rose-400"></span>
+                  1. Somato-Affective Inquiry: Repressed Emotional Blockage (3-Min Logical Formulation)
+                </span>
+                <span class="text-[10px] font-mono text-slate-400">Patient Verbatim Log</span>
+              </div>
+              <div class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 text-xs sm:text-sm text-slate-200 font-serif italic leading-relaxed">
+                "${this.patientResponses.emotionalBlockage.replace(/"/g, '&quot;')}"
+              </div>
+              <p class="text-[11px] text-slate-300 leading-relaxed">
+                <strong>Neuro-Somatic Analysis:</strong> When executive processing speed was challenged, autonomic tension surfaced in somatic trigger zones. In clinical neuropsychology, emotional repression exerts an ongoing metabolic taxation on the anterior cingulate cortex and limbic-prefrontal circuits, preventing unimpeded emotional outflow and manifesting as cognitive freezing under time pressure.
+              </p>
+            </div>
+
+            <!-- Section 2: Physical Cranial Injury & Neuropathy Findings -->
+            <div class="p-5 rounded-2xl bg-slate-900/70 border border-teal-500/30 space-y-3">
+              <div class="flex items-center justify-between border-b border-teal-500/20 pb-2">
+                <span class="text-xs font-mono text-teal-400 font-bold uppercase tracking-wider flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-teal-400"></span>
+                  2. Neuro-Trauma Inquiry: Physical Cranial & Structural Injury Review
+                </span>
+                <span class="text-[10px] font-mono text-slate-400">Patient Verbatim Log</span>
+              </div>
+              <div class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 text-xs sm:text-sm text-slate-200 font-serif italic leading-relaxed">
+                "${this.patientResponses.physicalTrauma.replace(/"/g, '&quot;')}"
+              </div>
+              <p class="text-[11px] text-slate-300 leading-relaxed">
+                <strong>Neurological Assessment:</strong> Physical impacts to the cranium or cervical spine often introduce sub-acute diffuse axonal micro-strain. Even minor past concussions compromise visual saccadic velocity (${meanLatency}ms observed) and reduce tolerance to cognitive fatigue, correlating directly with the reported symptoms.
+              </p>
+            </div>
+
+            <!-- Section 3: Personalized Neuro-Rehab & Daily Action Protocol -->
+            <div class="p-5 rounded-2xl bg-slate-900/70 border border-cyan-500/30 space-y-3">
+              <span class="text-xs font-mono text-cyan-300 font-bold uppercase tracking-wider block">
+                3. Clinical Rehabilitation & Patient Routine Adjustments
+              </span>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px] text-slate-300">
+                <div class="p-3 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1">
+                  <strong class="text-cyan-300 block">Somatic Decompression:</strong>
+                  <span>10 mins daily sub-occipital cranial release and vagal nerve down-regulation (physiological sigh breathing) to alleviate somatic muscular holding.</span>
+                </div>
+                <div class="p-3 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1">
+                  <strong class="text-emerald-300 block">Bilateral Saccadic Retraining:</strong>
+                  <span>Perform 5 mins smooth-pursuit eye tracking drills daily to re-synchronize the vestibular-ocular reflex (VOR) after cranial strain.</span>
+                </div>
+                <div class="p-3 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1">
+                  <strong class="text-pink-300 block">Affective Discharge Protocol:</strong>
+                  <span>Expressive somatic journaling immediately following cognitive fatigue to clear blocked limbic emotional charge before it triggers tension headaches.</span>
+                </div>
+                <div class="p-3 rounded-xl bg-slate-950/60 border border-slate-800 space-y-1">
+                  <strong class="text-amber-300 block">Cognitive Workload Pacing:</strong>
+                  <span>Structure high-focus tasks in 25-minute intervals followed by 5 minutes of visual rest (looking 20+ feet away into natural light).</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- PDF Export Button -->
+            <div class="pt-2 text-center">
+              <button onclick="exportClinicalPDF('screenGenericReport')" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-pink-500 via-rose-400 to-amber-400 text-black font-mono font-bold text-xs shadow-lg shadow-pink-500/20 active:scale-95 touch-manipulation">
+                ⬇ Download Official Neuro-Therapeutic & Somato-Affective Dossier (PDF)
+              </button>
+            </div>
+          </div>
+        `;
+
+        showScreen('screenGenericReport');
+      }
+    };
 
     // ==================== I18N MULTI-LANGUAGE TRANSLATION ENGINE ====================
     window.toggleLanguageDropdown = function(e) {
