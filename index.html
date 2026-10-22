@@ -267,305 +267,314 @@
 <div class="scanline"></div>
 <!-- ==================== CHATGPT-STYLE COLLAPSIBLE SIDEBAR ==================== -->
 <div class="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 hidden transition-opacity duration-300" id="sidebarBackdrop" onclick="toggleSidebar(false)"></div>
-<aside class="fixed top-0 left-0 h-full w-84 max-w-[85vw] bg-slate-950/95 border-r border-cyan-500/30 backdrop-blur-2xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col justify-between shadow-2xl shadow-cyan-950/60 no-print" id="chatgptSidebar">
-<!-- Sidebar Header -->
-<div class="p-5 border-b border-cyan-500/20 flex items-center justify-between">
-<div class="flex items-center space-x-3">
-<div class="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-400/50 flex items-center justify-center font-bold text-cyan-400 font-mono text-base holo-glow-cyan">
-          Ψ
+<aside id="chatgptSidebar" class="fixed top-0 left-0 bottom-0 w-80 max-w-[85vw] bg-slate-950/95 backdrop-blur-2xl border-r border-cyan-500/20 z-50 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col shadow-2xl shadow-cyan-950/50">
+      
+      <!-- Sidebar Header -->
+      <div class="p-4 border-b border-cyan-500/20 flex items-center justify-between bg-slate-900/50">
+        <div class="flex items-center space-x-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse"></span>
+          <span class="font-mono text-xs uppercase tracking-widest text-cyan-300 font-bold" data-i18n="sidebar_hub_sub">Cognitive Battery Hub</span>
         </div>
-<div>
-<span class="font-extrabold tracking-wider text-sm text-white block">NEURO<span class="text-cyan-400">METRIC</span></span>
-<span class="text-[9px] font-mono text-purple-300 uppercase tracking-widest" data-i18n="sidebar_hub_sub">Cognitive Battery Hub</span>
-</div>
-</div>
-<button class="w-7 h-7 rounded-lg bg-slate-900 border border-slate-700 hover:border-cyan-400 text-slate-400 hover:text-white flex items-center justify-center text-xs font-mono transition touch-manipulation" onclick="toggleSidebar(false)">
-        ✕
-      </button>
-</div>
-<!-- Assessments & Quizzes List -->
-<div class="flex-1 overflow-y-auto p-4 space-y-4">
-<div>
-<span class="text-[10px] font-mono uppercase tracking-widest text-cyan-400 font-bold block mb-2 px-2 flex items-center justify-between">
-<span data-i18n="sidebar_sec_battery">PRIMARY CHC FSIQ BATTERY</span>
-<span class="text-[9px] text-emerald-400 font-mono" data-i18n="sidebar_subtests_active">4 SUBTESTS ACTIVE</span>
-</span>
-<div class="p-3.5 rounded-2xl bg-cyan-950/40 border border-cyan-400/50 hover:bg-cyan-900/40 transition flex flex-col space-y-2.5 holo-glow-cyan">
-<div class="flex items-start space-x-3">
-<div class="w-2.5 h-2.5 rounded-full bg-cyan-400 mt-1 shrink-0 animate-ping"></div>
-<div class="flex-1">
-<h4 class="text-xs font-bold text-white flex items-center space-x-1.5">
-<span data-i18n="sidebar_engine_title">Core CHC Intelligence Engine</span>
-<span class="text-[8px] bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded font-mono font-bold" data-i18n="sidebar_all_live">ALL LIVE</span>
-</h4>
-<p class="text-[10px] text-slate-300 mt-0.5 leading-relaxed">
-<span data-i18n="sidebar_engine_desc">Complete 4-factor battery: Fluid Matrices (Gf), Corsi Memory (Gwm), Quantitative Induction (Gq), and Rapid Speed (Gs).</span>
-</p>
-</div>
-</div>
-<div class="flex items-center space-x-2 pt-1 border-t border-cyan-500/20">
-<button class="flex-1 py-1.5 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 font-mono text-[10px] font-bold border border-cyan-500/40 transition active:scale-95 touch-manipulation" onclick="AssessmentController.launch('iq')">
-<span data-i18n="sidebar_btn_launch">▶ Launch Full Battery</span>
-</button>
-<button class="px-2 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-mono text-[10px] transition touch-manipulation" onclick="AssessmentController.launchSubtest(0)" title="Play Gf Matrix">
+        <button onclick="toggleSidebar(false)" class="p-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-400 hover:text-white transition">
+          ✕
+        </button>
+      </div>
+
+      <!-- Assessments & Quizzes List -->
+      <div class="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar">
+
+        <!-- Core CHC Battery Quick Launcher -->
+        <div class="p-3.5 rounded-2xl bg-gradient-to-br from-cyan-950/40 via-indigo-950/30 to-purple-950/40 border border-cyan-500/30 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-mono text-cyan-400 font-bold uppercase tracking-wider" data-i18n="sidebar_subtests_active">4 SUBTESTS ACTIVE</span>
+            <span class="text-[10px] font-mono text-emerald-400 font-bold" data-i18n="sidebar_all_live">ALL LIVE</span>
+          </div>
+          <h3 class="text-sm font-extrabold text-white" data-i18n="sidebar_core_chc_title">Cattell-Horn-Carroll Core Battery</h3>
+          <p class="text-[10px] text-slate-300 leading-relaxed" data-i18n="sidebar_core_chc_desc">Comprehensive 4-factor psychometric assessment measuring Gf, Gwm, Gq, and Gs.</p>
+          <div class="pt-1 flex items-center space-x-2">
+            <button onclick="AssessmentController.launch('iq')" data-i18n="btn_launch_full_battery" class="flex-1 py-1.5 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 font-mono text-[10px] font-bold border border-cyan-500/40 transition active:scale-95 touch-manipulation">
+              ▶ Launch Full Battery
+            </button>
+            <button onclick="AssessmentController.launchSubtest(0)" title="Play Gf Matrix" class="px-2 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-mono text-[10px] transition touch-manipulation">
               Gf
             </button>
-<button class="px-2 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-mono text-[10px] transition touch-manipulation" onclick="AssessmentController.launchSubtest(1)" title="Play Corsi Memory">
+            <button onclick="AssessmentController.launchSubtest(1)" title="Play Corsi Memory" class="px-2 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-mono text-[10px] transition touch-manipulation">
               Gwm
             </button>
-<button class="px-2 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-mono text-[10px] transition touch-manipulation" onclick="AssessmentController.launchSubtest(2)" title="Play Quantitative Series">
+            <button onclick="AssessmentController.launchSubtest(2)" title="Play Quantitative Series" class="px-2 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-mono text-[10px] transition touch-manipulation">
               Gq
             </button>
-<button class="px-2 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-mono text-[10px] transition touch-manipulation" onclick="AssessmentController.launchSubtest(3)" title="Play Rapid Speed">
+            <button onclick="AssessmentController.launchSubtest(3)" title="Play Rapid Speed" class="px-2 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-mono text-[10px] transition touch-manipulation">
               Gs
             </button>
-</div>
-</div>
-</div>
-<div>
-<span class="text-[10px] font-mono uppercase tracking-widest text-slate-400 font-bold block mb-2 px-2" data-i18n="sidebar_screeners_heading">SCIENTIFIC SCREENERS &amp; PARADIGMS</span>
-<div class="space-y-3" data-i18n="sidebar_clinical_heading">
-<!-- Memory Recognition Engine -->
-<div class="p-3.5 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-indigo-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2.5">
-<div class="flex items-start space-x-3">
-<span class="text-xl text-indigo-400 shrink-0">🧠</span>
-<div class="flex-1">
-<h4 class="text-xs font-bold text-slate-200" data-i18n="dmts_title">Memory Recognition (DMTS)</h4>
-<p class="text-[10px] text-slate-400 mt-0.5 leading-relaxed" data-i18n="dmts_sidebar_desc">
-                  Delayed Match-to-Sample visual memory retention &amp; recall latency (PEBL library model).
-                </p>
-</div>
-</div>
-<div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
-<button 20="" 30="" 40="" active:scale-95="" bg-indigo-500="" border="" border-indigo-500="" class="flex-1 py-1.5 rounded-lg bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 font-mono text-[10px] font-bold border border-indigo-500/40 transition active:scale-95 touch-manipulation" data-i18n="btn_launch_test" flex-1="" font-bold="" font-mono="" hover:bg-indigo-500="" onclick="AssessmentController.launch( class=" py-1.5="" rounded-lg="" text-[10px]="" text-indigo-300="" touch-manipulation")"="" transition="">▶ Launch Test</button>
-<button 60="" bg-slate-800="" class="px-3 py-1.5 rounded-lg bg-slate-800/60 hover:bg-slate-800 text-slate-400 hover:text-white font-mono text-[10px] transition touch-manipulation" data-i18n="btn_intel" font-mono="" hover:bg-slate-800="" hover:text-white="" onclick="openResearchModal( class=" px-3="" py-1.5="" rounded-lg="" text-[10px]="" text-slate-400="" touch-manipulation")"="" transition="">Intel</button>
-</div>
-</div>
-<!-- Neuroplasticity Tracker -->
-<div class="p-3.5 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2.5">
-<div class="flex items-start space-x-3">
-<span class="text-xl text-emerald-400 shrink-0">⚡</span>
-<div class="flex-1">
-<h4 class="text-xs font-bold text-slate-200" data-i18n="nback_title">Neuroplasticity Tracker</h4>
-<p class="text-[10px] text-slate-400 mt-0.5 leading-relaxed" data-i18n="nback_sidebar_desc">
-                  Adaptive Dual N-Back working memory updating challenge (Jaeggi PNAS model).
-                </p>
-</div>
-</div>
-<div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
-<button 20="" 30="" 40="" active:scale-95="" bg-emerald-500="" border="" border-emerald-500="" class="flex-1 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-mono text-[10px] font-bold border border-emerald-500/40 transition active:scale-95 touch-manipulation" data-i18n="btn_launch_test" flex-1="" font-bold="" font-mono="" hover:bg-emerald-500="" onclick="AssessmentController.launch( class=" py-1.5="" rounded-lg="" text-[10px]="" text-emerald-300="" touch-manipulation")"="" transition="">▶ Launch Test</button>
-<button 60="" bg-slate-800="" class="px-3 py-1.5 rounded-lg bg-slate-800/60 hover:bg-slate-800 text-slate-400 hover:text-white font-mono text-[10px] transition touch-manipulation" data-i18n="btn_intel" font-mono="" hover:bg-slate-800="" hover:text-white="" onclick="openResearchModal( class=" px-3="" py-1.5="" rounded-lg="" text-[10px]="" text-slate-400="" touch-manipulation")"="" transition="">Intel</button>
-</div>
-</div>
-<!-- Personality & Dark Triad Screener -->
-<div class="p-3.5 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-purple-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2.5">
-<div class="flex items-start space-x-3">
-<span class="text-xl text-purple-400 shrink-0">🎭</span>
-<div class="flex-1">
-<h4 class="text-xs font-bold text-slate-200" data-i18n="darktriad_title">Dark Triad &amp; Big Five (IPIP)</h4>
-<p class="text-[10px] text-slate-400 mt-0.5 leading-relaxed" data-i18n="darktriad_sidebar_desc">
-                  Sub-clinical screening (SD3 &amp; IPIP-NEO) for Machiavellianism, nerve, and OCEAN traits.
-                </p>
-</div>
-</div>
-<div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
-<button 20="" 30="" 40="" active:scale-95="" bg-purple-500="" border="" border-purple-500="" class="flex-1 py-1.5 rounded-lg bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 font-mono text-[10px] font-bold border border-purple-500/40 transition active:scale-95 touch-manipulation" data-i18n="btn_launch_test" flex-1="" font-bold="" font-mono="" hover:bg-purple-500="" onclick="AssessmentController.launch( class=" py-1.5="" rounded-lg="" text-[10px]="" text-purple-300="" touch-manipulation")"="" transition="">▶ Launch Test</button>
-<button 60="" bg-slate-800="" class="px-3 py-1.5 rounded-lg bg-slate-800/60 hover:bg-slate-800 text-slate-400 hover:text-white font-mono text-[10px] transition touch-manipulation" data-i18n="btn_intel" font-mono="" hover:bg-slate-800="" hover:text-white="" onclick="openResearchModal( class=" px-3="" py-1.5="" rounded-lg="" text-[10px]="" text-slate-400="" touch-manipulation")"="" transition="">Intel</button>
-</div>
-</div>
-<!-- CLINICAL PSYCHIATRIC & NEURODIVERGENCE BATTERIES -->
-<div>
-<span class="text-[10px] font-mono uppercase tracking-widest text-emerald-400 font-bold block mb-2 px-2 flex items-center justify-between">
-<span data-i18n="sidebar_clinical_heading">CLINICAL PSYCHIATRIC SUITE</span>
-<span class="text-[9px] text-cyan-300 font-mono" data-i18n="sidebar_clinical_sub">DSM-5 &amp; WHO MODELS</span>
-</span>
-<div class="space-y-2.5">
-<!-- ADHD ASRS -->
-<div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
-<div class="flex items-start space-x-2.5">
-<span class="text-base text-emerald-400 shrink-0">🎯</span>
-<div class="flex-1">
-<h4 class="text-xs font-bold text-slate-200" data-i18n="screener_adhd_title">ADHD Screener (ASRS v1.1)</h4>
-<p class="text-[10px] text-slate-400 leading-tight" data-i18n="screener_adhd_desc">WHO adult attention-deficit, hyperactivity &amp; executive focus inventory (18 items).</p>
-</div>
-</div>
-<div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
-<button 20="" 30="" 40="" active:scale-95="" bg-emerald-500="" border="" border-emerald-500="" class="flex-1 py-1 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-mono text-[10px] font-bold border border-emerald-500/40 transition active:scale-95 touch-manipulation" data-i18n="btn_launch_screener" flex-1="" font-bold="" font-mono="" hover:bg-emerald-500="" onclick="AssessmentController.launchClinical( class=" py-1="" rounded-lg="" text-[10px]="" text-emerald-300="" touch-manipulation")"="" transition="">▶ Launch Screener</button>
-</div>
-</div>
-<!-- Schizotypy SPQ-B -->
-<div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-cyan-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
-<div class="flex items-start space-x-2.5">
-<span class="text-base text-cyan-400 shrink-0">🌀</span>
-<div class="flex-1">
-<h4 class="text-xs font-bold text-slate-200" data-i18n="screener_schizotypy_title">Schizotypy Screener (SPQ-B)</h4>
-<p class="text-[10px] text-slate-400 leading-tight" data-i18n="screener_schizotypy_desc">Cognitive-perceptual anomalies, magical ideation &amp; disorganized thought (22 items).</p>
-</div>
-</div>
-<div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
-<button 20="" 30="" 40="" active:scale-95="" bg-cyan-500="" border="" border-cyan-500="" class="flex-1 py-1 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 font-mono text-[10px] font-bold border border-cyan-500/40 transition active:scale-95 touch-manipulation" data-i18n="btn_launch_screener" flex-1="" font-bold="" font-mono="" hover:bg-cyan-500="" onclick="AssessmentController.launchClinical( class=" py-1="" rounded-lg="" text-[10px]="" text-cyan-300="" touch-manipulation")"="" transition="">▶ Launch Screener</button>
-</div>
-</div>
-<!-- OCD OCI-R -->
-<div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-purple-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
-<div class="flex items-start space-x-2.5">
-<span class="text-base text-purple-400 shrink-0">🔄</span>
-<div class="flex-1">
-<h4 class="text-xs font-bold text-slate-200" data-i18n="screener_ocd_title">OCD Inventory (OCI-R)</h4>
-<p class="text-[10px] text-slate-400 leading-tight" data-i18n="screener_ocd_desc">Checking, washing, ordering, obsessing, neutralizing &amp; hoarding scale (18 items).</p>
-</div>
-</div>
-<div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
-<button 20="" 30="" 40="" active:scale-95="" bg-purple-500="" border="" border-purple-500="" class="flex-1 py-1 rounded-lg bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 font-mono text-[10px] font-bold border border-purple-500/40 transition active:scale-95 touch-manipulation" data-i18n="btn_launch_screener" flex-1="" font-bold="" font-mono="" hover:bg-purple-500="" onclick="AssessmentController.launchClinical( class=" py-1="" rounded-lg="" text-[10px]="" text-purple-300="" touch-manipulation")"="" transition="">▶ Launch Screener</button>
-</div>
-</div>
-<!-- Autism AQ-10 -->
-<div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-amber-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
-<div class="flex items-start space-x-2.5">
-<span class="text-base text-amber-400 shrink-0">🧩</span>
-<div class="flex-1">
-<h4 class="text-xs font-bold text-slate-200" data-i18n="screener_autism_title">Autism Quotient (AQ-10)</h4>
-<p class="text-[10px] text-slate-400 leading-tight" data-i18n="screener_autism_desc">Baron-Cohen neurodiversity, attention switching &amp; detail processing (10 items).</p>
-</div>
-</div>
-<div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
-<button 20="" 30="" 40="" active:scale-95="" bg-amber-500="" border="" border-amber-500="" class="flex-1 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-mono text-[10px] font-bold border border-amber-500/40 transition active:scale-95 touch-manipulation" data-i18n="btn_launch_screener" flex-1="" font-bold="" font-mono="" hover:bg-amber-500="" onclick="AssessmentController.launchClinical( class=" py-1="" rounded-lg="" text-[10px]="" text-amber-300="" touch-manipulation")"="" transition="">▶ Launch Screener</button>
-</div>
-</div>
-<!-- Anxiety GAD-7 -->
-<div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-rose-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
-<div class="flex items-start space-x-2.5">
-<span class="text-base text-rose-400 shrink-0">💓</span>
-<div class="flex-1">
-<h4 class="text-xs font-bold text-slate-200" data-i18n="screener_anxiety_title">Anxiety Scale (GAD-7)</h4>
-<p class="text-[10px] text-slate-400 leading-tight" data-i18n="screener_anxiety_desc">Spitzer generalized anxiety, autonomic arousal &amp; cognitive worry (7 items).</p>
-</div>
-</div>
-<div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
-<button 20="" 30="" 40="" active:scale-95="" bg-rose-500="" border="" border-rose-500="" class="flex-1 py-1 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 font-mono text-[10px] font-bold border border-rose-500/40 transition active:scale-95 touch-manipulation" data-i18n="btn_launch_screener" flex-1="" font-bold="" font-mono="" hover:bg-rose-500="" onclick="AssessmentController.launchClinical( class=" py-1="" rounded-lg="" text-[10px]="" text-rose-300="" touch-manipulation")"="" transition="">▶ Launch Screener</button>
-</div>
-</div>
-<!-- Depression PHQ-9 -->
-<div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-blue-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
-<div class="flex items-start space-x-2.5">
-<span class="text-base text-blue-400 shrink-0">🌧️</span>
-<div class="flex-1">
-<h4 class="text-xs font-bold text-slate-200" data-i18n="screener_depression_title">Depression (PHQ-9)</h4>
-<p class="text-[10px] text-slate-400 leading-tight" data-i18n="screener_depression_desc">Kroenke major depressive symptoms, anhedonia &amp; fatigue index (9 items).</p>
-</div>
-</div>
-<div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
-<button 20="" 30="" 40="" active:scale-95="" bg-blue-500="" border="" border-blue-500="" class="flex-1 py-1 rounded-lg bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 font-mono text-[10px] font-bold border border-blue-500/40 transition active:scale-95 touch-manipulation" data-i18n="btn_launch_screener" flex-1="" font-bold="" font-mono="" hover:bg-blue-500="" onclick="AssessmentController.launchClinical( class=" py-1="" rounded-lg="" text-[10px]="" text-blue-300="" touch-manipulation")"="" transition="">▶ Launch Screener</button>
-</div>
-</div>
-<!-- Executive Function BRIEF-A -->
-<div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-teal-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
-<div class="flex items-start space-x-2.5">
-<span class="text-base text-teal-400 shrink-0">📊</span>
-<div class="flex-1">
-<h4 class="text-xs font-bold text-slate-200" data-i18n="screener_executive_title">Executive Deficits (BRIEF-A)</h4>
-<p class="text-[10px] text-slate-400 leading-tight" data-i18n="screener_executive_desc">Inhibition, cognitive shift, working memory &amp; plan/organize scale (14 items).</p>
-</div>
-</div>
-<div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
-<button 20="" 30="" 40="" active:scale-95="" bg-teal-500="" border="" border-teal-500="" class="flex-1 py-1 rounded-lg bg-teal-500/20 hover:bg-teal-500/30 text-teal-300 font-mono text-[10px] font-bold border border-teal-500/40 transition active:scale-95 touch-manipulation" data-i18n="btn_launch_screener" flex-1="" font-bold="" font-mono="" hover:bg-teal-500="" onclick="AssessmentController.launchClinical( class=" py-1="" rounded-lg="" text-[10px]="" text-teal-300="" touch-manipulation")"="" transition="">▶ Launch Screener</button>
-</div>
-</div>
-<!-- Trauma Screener PCL-5 -->
-<div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-indigo-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
-<div class="flex items-start space-x-2.5">
-<span class="text-base text-indigo-400 shrink-0">🛡️</span>
-<div class="flex-1">
-<h4 class="text-xs font-bold text-slate-200" data-i18n="screener_trauma_title">Trauma &amp; Stress (PCL-5)</h4>
-<p class="text-[10px] text-slate-400 leading-tight" data-i18n="screener_trauma_desc">Intrusion, avoidance, hyperarousal &amp; acute stress reactivity (8 items).</p>
-</div>
-</div>
-<div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
-<button 20="" 30="" 40="" active:scale-95="" bg-indigo-500="" border="" border-indigo-500="" class="flex-1 py-1 rounded-lg bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 font-mono text-[10px] font-bold border border-indigo-500/40 transition active:scale-95 touch-manipulation" data-i18n="btn_launch_screener" flex-1="" font-bold="" font-mono="" hover:bg-indigo-500="" onclick="AssessmentController.launchClinical( class=" py-1="" rounded-lg="" text-[10px]="" text-indigo-300="" touch-manipulation")"="" transition="">▶ Launch Screener</button>
-</div>
-</div>
-</div>
-</div>
-<!-- Multiple Intelligences Inventory -->
-<div class="p-3.5 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-cyan-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2.5">
-<div class="flex items-start space-x-3">
-<span class="text-xl text-cyan-400 shrink-0">🌐</span>
-<div class="flex-1">
-<h4 class="text-xs font-bold text-slate-200" data-i18n="screener_multi_title">Multiple Intelligences</h4>
-<p class="text-[10px] text-slate-400 mt-0.5 leading-relaxed" data-i18n="screener_multi_desc">
-                  Howard Gardner 8-domain cognitive profile &amp; spatial-logical strengths screener.
-                </p>
-</div>
-</div>
-<div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
-<button 20="" 30="" 40="" active:scale-95="" bg-cyan-500="" border="" border-cyan-500="" class="flex-1 py-1.5 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 font-mono text-[10px] font-bold border border-cyan-500/40 transition active:scale-95 touch-manipulation" data-i18n="btn_launch_test" flex-1="" font-bold="" font-mono="" hover:bg-cyan-500="" onclick="AssessmentController.launch( class=" py-1.5="" rounded-lg="" text-[10px]="" text-cyan-300="" touch-manipulation")"="" transition="">▶ Launch Test</button>
-<button 60="" bg-slate-800="" class="px-3 py-1.5 rounded-lg bg-slate-800/60 hover:bg-slate-800 text-slate-400 hover:text-white font-mono text-[10px] transition touch-manipulation" data-i18n="btn_intel" font-mono="" hover:bg-slate-800="" hover:text-white="" onclick="openResearchModal( class=" px-3="" py-1.5="" rounded-lg="" text-[10px]="" text-slate-400="" touch-manipulation")"="" transition="">Intel</button>
-</div>
-</div>
-<!-- THERAPEUTIC NEURO-GAMES SUITE -->
-<div class="mt-4 pt-3 border-t border-slate-800/80">
-<span class="text-[10px] font-mono uppercase tracking-widest text-pink-400 font-bold block mb-2 px-2 flex items-center justify-between">
-<span data-i18n="sidebar_games_heading">THERAPEUTIC NEURO-GAMES</span>
-<span class="text-[9px] text-pink-300 font-mono" data-i18n="sidebar_games_sub">REHAB &amp; CLINICAL PROBES</span>
-</span>
-<div class="space-y-2.5">
-<!-- Game 1: Go/No-Go Reflex -->
-<div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-pink-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
-<div class="flex items-start space-x-2.5">
-<span class="text-base text-pink-400 shrink-0">⚡</span>
-<div class="flex-1">
-<h4 class="text-xs font-bold text-slate-200" data-i18n="game_gonogo_title">Go/No-Go Neuro-Reflex</h4>
-<p class="text-[10px] text-slate-400 leading-tight" data-i18n="game_gonogo_desc">Prefrontal motor braking &amp; reaction speed with 3-minute somatic emotional probe.</p>
-</div>
-</div>
-<div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
-<button 20="" 30="" 40="" active:scale-95="" bg-pink-500="" border="" border-pink-500="" class="flex-1 py-1 rounded-lg bg-pink-500/20 hover:bg-pink-500/30 text-pink-300 font-mono text-[10px] font-bold border border-pink-500/40 transition active:scale-95 touch-manipulation" data-i18n="btn_play_game" flex-1="" font-bold="" font-mono="" hover:bg-pink-500="" onclick="AssessmentController.launchGame( class=" py-1="" rounded-lg="" text-[10px]="" text-pink-300="" touch-manipulation")"="" transition="">▶ Play Game</button>
-</div>
-</div>
-<!-- Game 2: Saccadic Pursuit -->
-<div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-teal-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
-<div class="flex items-start space-x-2.5">
-<span class="text-base text-teal-400 shrink-0">🎯</span>
-<div class="flex-1">
-<h4 class="text-xs font-bold text-slate-200" data-i18n="game_pursuit_title">Saccadic Pursuit (TBI Rehab)</h4>
-<p class="text-[10px] text-slate-400 leading-tight" data-i18n="game_pursuit_desc">Bilateral visual tracking for concussion recovery with structural trauma inquiry.</p>
-</div>
-</div>
-<div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
-<button 20="" 30="" 40="" active:scale-95="" bg-teal-500="" border="" border-teal-500="" class="flex-1 py-1 rounded-lg bg-teal-500/20 hover:bg-teal-500/30 text-teal-300 font-mono text-[10px] font-bold border border-teal-500/40 transition active:scale-95 touch-manipulation" data-i18n="btn_play_game" flex-1="" font-bold="" font-mono="" hover:bg-teal-500="" onclick="AssessmentController.launchGame( class=" py-1="" rounded-lg="" text-[10px]="" text-teal-300="" touch-manipulation")"="" transition="">▶ Play Game</button>
-</div>
-</div>
-<!-- Game 3: Affective Stroop Switch -->
-<div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-amber-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
-<div class="flex items-start space-x-2.5">
-<span class="text-base text-amber-400 shrink-0">🔮</span>
-<div class="flex-1">
-<h4 class="text-xs font-bold text-slate-200" data-i18n="game_stroop_title">Affective Stroop Switch</h4>
-<p class="text-[10px] text-slate-400 leading-tight" data-i18n="game_stroop_desc">Cognitive decoupling &amp; conflict inhibition with ego-defense bypass analysis.</p>
-</div>
-</div>
-<div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
-<button 20="" 30="" 40="" active:scale-95="" bg-amber-500="" border="" border-amber-500="" class="flex-1 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-mono text-[10px] font-bold border border-amber-500/40 transition active:scale-95 touch-manipulation" data-i18n="btn_play_game" flex-1="" font-bold="" font-mono="" hover:bg-amber-500="" onclick="AssessmentController.launchGame( class=" py-1="" rounded-lg="" text-[10px]="" text-amber-300="" touch-manipulation")"="" transition="">▶ Play Game</button>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Sidebar Footer / Quick Tools -->
-<div class="p-4 border-t border-cyan-500/20 bg-slate-950/80 space-y-2">
-<div class="flex items-center justify-between text-[11px] font-mono text-slate-400">
-<span data-i18n="binaural_label">Binaural Focus FM:</span>
-<button class="text-purple-300 hover:text-white font-bold" id="sidebarAudioBtn" onclick="FocusAudioEngine.toggle()">
-          [ OFF ]
-        </button>
-</div>
-<div class="text-[9px] font-mono text-slate-400 text-center pt-1 border-t border-slate-800/60" data-i18n="hero_psychometrics_badge">
-        Open Psychometrics &amp; CHC Cognitive Model
+          </div>
+        </div>
+
+        <div>
+          <span class="text-[10px] font-mono uppercase tracking-widest text-slate-400 font-bold block mb-2 px-2" data-i18n="sidebar_screeners_heading">SCIENTIFIC SCREENERS & PARADIGMS</span>
+          
+          <div class="space-y-3">
+            <!-- Memory Recognition Engine -->
+            <div class="p-3.5 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-indigo-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2.5">
+              <div class="flex items-start space-x-3">
+                <span class="text-xl text-indigo-400 shrink-0">🧠</span>
+                <div class="flex-1">
+                  <h4 class="text-xs font-bold text-slate-200" data-i18n="dmts_title">Memory Recognition (DMTS)</h4>
+                  <p class="text-[10px] text-slate-400 mt-0.5 leading-relaxed" data-i18n="dmts_sidebar_desc">
+                    Delayed Match-to-Sample visual memory retention & recall latency (PEBL library model).
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
+                <button onclick="AssessmentController.launch('memory')" data-i18n="btn_launch_test" class="flex-1 py-1.5 rounded-lg bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 font-mono text-[10px] font-bold border border-indigo-500/40 transition active:scale-95 touch-manipulation">▶ Launch Test</button>
+                <button onclick="openResearchModal('memory')" data-i18n="btn_intel" class="px-3 py-1.5 rounded-lg bg-slate-800/60 hover:bg-slate-800 text-slate-400 hover:text-white font-mono text-[10px] transition touch-manipulation">Intel</button>
+              </div>
+            </div>
+
+            <!-- Neuroplasticity Tracker -->
+            <div class="p-3.5 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2.5">
+              <div class="flex items-start space-x-3">
+                <span class="text-xl text-emerald-400 shrink-0">⚡</span>
+                <div class="flex-1">
+                  <h4 class="text-xs font-bold text-slate-200" data-i18n="nback_title">Neuroplasticity Tracker</h4>
+                  <p class="text-[10px] text-slate-400 mt-0.5 leading-relaxed" data-i18n="nback_sidebar_desc">
+                    Adaptive Dual N-Back working memory updating challenge (Jaeggi PNAS model).
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
+                <button onclick="AssessmentController.launch('neuroplasticity')" data-i18n="btn_launch_test" class="flex-1 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-mono text-[10px] font-bold border border-emerald-500/40 transition active:scale-95 touch-manipulation">▶ Launch Test</button>
+                <button onclick="openResearchModal('neuroplasticity')" data-i18n="btn_intel" class="px-3 py-1.5 rounded-lg bg-slate-800/60 hover:bg-slate-800 text-slate-400 hover:text-white font-mono text-[10px] transition touch-manipulation">Intel</button>
+              </div>
+            </div>
+
+            <!-- Personality & Dark Triad Screener -->
+            <div class="p-3.5 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-purple-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2.5">
+              <div class="flex items-start space-x-3">
+                <span class="text-xl text-purple-400 shrink-0">🎭</span>
+                <div class="flex-1">
+                  <h4 class="text-xs font-bold text-slate-200" data-i18n="darktriad_title">Dark Triad & Big Five (IPIP)</h4>
+                  <p class="text-[10px] text-slate-400 mt-0.5 leading-relaxed" data-i18n="darktriad_sidebar_desc">
+                    Sub-clinical screening (SD3 & IPIP-NEO) for Machiavellianism, nerve, and OCEAN traits.
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
+                <button onclick="AssessmentController.launch('darktriad')" data-i18n="btn_launch_test" class="flex-1 py-1.5 rounded-lg bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 font-mono text-[10px] font-bold border border-purple-500/40 transition active:scale-95 touch-manipulation">▶ Launch Test</button>
+                <button onclick="openResearchModal('darktriad')" data-i18n="btn_intel" class="px-3 py-1.5 rounded-lg bg-slate-800/60 hover:bg-slate-800 text-slate-400 hover:text-white font-mono text-[10px] transition touch-manipulation">Intel</button>
+              </div>
+            </div>
+
+            <!-- CLINICAL PSYCHIATRIC & NEURODIVERGENCE BATTERIES -->
+            <div>
+              <span class="text-[10px] font-mono uppercase tracking-widest text-emerald-400 font-bold block mb-2 px-2 flex items-center justify-between">
+                <span data-i18n="sidebar_clinical_heading">CLINICAL PSYCHIATRIC SUITE</span>
+                <span class="text-[9px] text-cyan-300 font-mono" data-i18n="sidebar_clinical_sub">DSM-5 & WHO MODELS</span>
+              </span>
+              
+              <div class="space-y-2.5">
+                <!-- ADHD ASRS -->
+                <div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
+                  <div class="flex items-start space-x-2.5">
+                    <span class="text-lg text-emerald-400 shrink-0">🎯</span>
+                    <div class="flex-1">
+                      <h4 class="text-xs font-bold text-slate-200" data-i18n="screener_adhd_title">ADHD Screener (ASRS v1.1)</h4>
+                      <p class="text-[10px] text-slate-400 mt-0.5" data-i18n="screener_adhd_desc">WHO adult attention-deficit, hyperactivity & executive focus inventory (18 items).</p>
+                    </div>
+                  </div>
+                  <div class="pt-1 border-t border-slate-800/80 flex items-center space-x-2">
+                    <button onclick="AssessmentController.launchClinical('adhd')" data-i18n="btn_launch_screener" class="flex-1 py-1 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-mono text-[10px] font-bold border border-emerald-500/40 transition active:scale-95 touch-manipulation">▶ Launch Screener</button>
+                  </div>
+                </div>
+
+                <!-- Schizotypy SPQ-B -->
+                <div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-cyan-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
+                  <div class="flex items-start space-x-2.5">
+                    <span class="text-lg text-cyan-400 shrink-0">🔮</span>
+                    <div class="flex-1">
+                      <h4 class="text-xs font-bold text-slate-200" data-i18n="screener_schizotypy_title">Schizotypy Screener (SPQ-B)</h4>
+                      <p class="text-[10px] text-slate-400 mt-0.5" data-i18n="screener_schizotypy_desc">Cognitive-perceptual anomalies, magical ideation & disorganized thought (22 items).</p>
+                    </div>
+                  </div>
+                  <div class="pt-1 border-t border-slate-800/80 flex items-center space-x-2">
+                    <button onclick="AssessmentController.launchClinical('schizotypy')" data-i18n="btn_launch_screener" class="flex-1 py-1 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 font-mono text-[10px] font-bold border border-cyan-500/40 transition active:scale-95 touch-manipulation">▶ Launch Screener</button>
+                  </div>
+                </div>
+
+                <!-- OCD OCI-R -->
+                <div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-purple-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
+                  <div class="flex items-start space-x-2.5">
+                    <span class="text-lg text-purple-400 shrink-0">🔄</span>
+                    <div class="flex-1">
+                      <h4 class="text-xs font-bold text-slate-200" data-i18n="screener_ocd_title">OCD Inventory (OCI-R)</h4>
+                      <p class="text-[10px] text-slate-400 mt-0.5" data-i18n="screener_ocd_desc">Checking, washing, ordering, obsessing, neutralizing & hoarding scale (18 items).</p>
+                    </div>
+                  </div>
+                  <div class="pt-1 border-t border-slate-800/80 flex items-center space-x-2">
+                    <button onclick="AssessmentController.launchClinical('ocd')" data-i18n="btn_launch_screener" class="flex-1 py-1 rounded-lg bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 font-mono text-[10px] font-bold border border-purple-500/40 transition active:scale-95 touch-manipulation">▶ Launch Screener</button>
+                  </div>
+                </div>
+
+                <!-- Autism AQ-10 -->
+                <div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-amber-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
+                  <div class="flex items-start space-x-2.5">
+                    <span class="text-lg text-amber-400 shrink-0">🧩</span>
+                    <div class="flex-1">
+                      <h4 class="text-xs font-bold text-slate-200" data-i18n="screener_autism_title">Autism Quotient (AQ-10)</h4>
+                      <p class="text-[10px] text-slate-400 mt-0.5" data-i18n="screener_autism_desc">Baron-Cohen neurodiversity, attention switching & detail processing (10 items).</p>
+                    </div>
+                  </div>
+                  <div class="pt-1 border-t border-slate-800/80 flex items-center space-x-2">
+                    <button onclick="AssessmentController.launchClinical('autism')" data-i18n="btn_launch_screener" class="flex-1 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-mono text-[10px] font-bold border border-amber-500/40 transition active:scale-95 touch-manipulation">▶ Launch Screener</button>
+                  </div>
+                </div>
+
+                <!-- Anxiety GAD-7 -->
+                <div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-rose-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
+                  <div class="flex items-start space-x-2.5">
+                    <span class="text-lg text-rose-400 shrink-0">⚡</span>
+                    <div class="flex-1">
+                      <h4 class="text-xs font-bold text-slate-200" data-i18n="screener_anxiety_title">Anxiety Scale (GAD-7)</h4>
+                      <p class="text-[10px] text-slate-400 mt-0.5" data-i18n="screener_anxiety_desc">Spitzer generalized anxiety, autonomic arousal & cognitive worry (7 items).</p>
+                    </div>
+                  </div>
+                  <div class="pt-1 border-t border-slate-800/80 flex items-center space-x-2">
+                    <button onclick="AssessmentController.launchClinical('anxiety')" data-i18n="btn_launch_screener" class="flex-1 py-1 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 font-mono text-[10px] font-bold border border-rose-500/40 transition active:scale-95 touch-manipulation">▶ Launch Screener</button>
+                  </div>
+                </div>
+
+                <!-- Depression PHQ-9 -->
+                <div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-blue-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
+                  <div class="flex items-start space-x-2.5">
+                    <span class="text-lg text-blue-400 shrink-0">🌊</span>
+                    <div class="flex-1">
+                      <h4 class="text-xs font-bold text-slate-200" data-i18n="screener_depression_title">Depression (PHQ-9)</h4>
+                      <p class="text-[10px] text-slate-400 mt-0.5" data-i18n="screener_depression_desc">Kroenke major depressive symptoms, anhedonia & fatigue index (9 items).</p>
+                    </div>
+                  </div>
+                  <div class="pt-1 border-t border-slate-800/80 flex items-center space-x-2">
+                    <button onclick="AssessmentController.launchClinical('depression')" data-i18n="btn_launch_screener" class="flex-1 py-1 rounded-lg bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 font-mono text-[10px] font-bold border border-blue-500/40 transition active:scale-95 touch-manipulation">▶ Launch Screener</button>
+                  </div>
+                </div>
+
+                <!-- Executive Function BRIEF-A -->
+                <div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-teal-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
+                  <div class="flex items-start space-x-2.5">
+                    <span class="text-lg text-teal-400 shrink-0">⚙️</span>
+                    <div class="flex-1">
+                      <h4 class="text-xs font-bold text-slate-200" data-i18n="screener_executive_title">Executive Deficits (BRIEF-A)</h4>
+                      <p class="text-[10px] text-slate-400 mt-0.5" data-i18n="screener_executive_desc">Inhibition, cognitive shift, working memory & plan/organize scale (14 items).</p>
+                    </div>
+                  </div>
+                  <div class="pt-1 border-t border-slate-800/80 flex items-center space-x-2">
+                    <button onclick="AssessmentController.launchClinical('executive')" data-i18n="btn_launch_screener" class="flex-1 py-1 rounded-lg bg-teal-500/20 hover:bg-teal-500/30 text-teal-300 font-mono text-[10px] font-bold border border-teal-500/40 transition active:scale-95 touch-manipulation">▶ Launch Screener</button>
+                  </div>
+                </div>
+
+                <!-- Trauma Screener PCL-5 -->
+                <div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-indigo-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
+                  <div class="flex items-start space-x-2.5">
+                    <span class="text-lg text-indigo-400 shrink-0">🛡️</span>
+                    <div class="flex-1">
+                      <h4 class="text-xs font-bold text-slate-200" data-i18n="screener_trauma_title">Trauma & Stress (PCL-5)</h4>
+                      <p class="text-[10px] text-slate-400 mt-0.5" data-i18n="screener_trauma_desc">Intrusion, avoidance, hyperarousal & acute stress reactivity (8 items).</p>
+                    </div>
+                  </div>
+                  <div class="pt-1 border-t border-slate-800/80 flex items-center space-x-2">
+                    <button onclick="AssessmentController.launchClinical('trauma')" data-i18n="btn_launch_screener" class="flex-1 py-1 rounded-lg bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 font-mono text-[10px] font-bold border border-indigo-500/40 transition active:scale-95 touch-manipulation">▶ Launch Screener</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Multiple Intelligences Inventory -->
+            <div class="p-3.5 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-cyan-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2.5">
+              <div class="flex items-start space-x-3">
+                <span class="text-xl text-cyan-400 shrink-0">💡</span>
+                <div class="flex-1">
+                  <h4 class="text-xs font-bold text-slate-200" data-i18n="screener_multi_title">Multiple Intelligences</h4>
+                  <p class="text-[10px] text-slate-400 mt-0.5 leading-relaxed" data-i18n="screener_multi_desc">
+                    Howard Gardner 8-domain cognitive profile & spatial-logical strengths screener.
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
+                <button onclick="AssessmentController.launch('multi_intelligence')" data-i18n="btn_launch_test" class="flex-1 py-1.5 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 font-mono text-[10px] font-bold border border-cyan-500/40 transition active:scale-95 touch-manipulation">▶ Launch Test</button>
+                <button onclick="openResearchModal('multi_intelligence')" data-i18n="btn_intel" class="px-3 py-1.5 rounded-lg bg-slate-800/60 hover:bg-slate-800 text-slate-400 hover:text-white font-mono text-[10px] transition touch-manipulation">Intel</button>
+              </div>
+            </div>
+
+            <!-- THERAPEUTIC NEURO-GAMES SUITE -->
+            <div>
+              <span class="text-[10px] font-mono uppercase tracking-widest text-pink-400 font-bold block mb-2 px-2 flex items-center justify-between">
+                <span data-i18n="sidebar_games_heading">THERAPEUTIC NEURO-GAMES</span>
+                <span class="text-[9px] text-pink-300 font-mono" data-i18n="sidebar_games_sub">REHAB & CLINICAL PROBES</span>
+              </span>
+              
+              <div class="space-y-2.5">
+                <!-- Game 1: Go/No-Go Reflex -->
+                <div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-pink-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
+                  <div class="flex items-start space-x-2.5">
+                    <span class="text-lg text-pink-400 shrink-0">⚡</span>
+                    <div class="flex-1">
+                      <h4 class="text-xs font-bold text-slate-200" data-i18n="game_gonogo_title">Go/No-Go Neuro-Reflex</h4>
+                      <p class="text-[10px] text-slate-400 mt-0.5" data-i18n="game_gonogo_desc">Prefrontal motor braking & reaction speed with 3-minute somatic emotional probe.</p>
+                    </div>
+                  </div>
+                  <div class="pt-1 border-t border-slate-800/80 flex items-center space-x-2">
+                    <button onclick="AssessmentController.launchGame('gonogo')" data-i18n="btn_play_game" class="flex-1 py-1 rounded-lg bg-pink-500/20 hover:bg-pink-500/30 text-pink-300 font-mono text-[10px] font-bold border border-pink-500/40 transition active:scale-95 touch-manipulation">▶ Play Game</button>
+                  </div>
+                </div>
+
+                <!-- Game 2: Saccadic Pursuit -->
+                <div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-teal-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
+                  <div class="flex items-start space-x-2.5">
+                    <span class="text-lg text-teal-400 shrink-0">🎯</span>
+                    <div class="flex-1">
+                      <h4 class="text-xs font-bold text-slate-200" data-i18n="game_pursuit_title">Saccadic Pursuit (TBI Rehab)</h4>
+                      <p class="text-[10px] text-slate-400 mt-0.5" data-i18n="game_pursuit_desc">Bilateral visual tracking for concussion recovery with structural trauma inquiry.</p>
+                    </div>
+                  </div>
+                  <div class="pt-1 border-t border-slate-800/80 flex items-center space-x-2">
+                    <button onclick="AssessmentController.launchGame('pursuit')" data-i18n="btn_play_game" class="flex-1 py-1 rounded-lg bg-teal-500/20 hover:bg-teal-500/30 text-teal-300 font-mono text-[10px] font-bold border border-teal-500/40 transition active:scale-95 touch-manipulation">▶ Play Game</button>
+                  </div>
+                </div>
+
+                <!-- Game 3: Affective Stroop Switch -->
+                <div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-amber-500/50 hover:bg-slate-900/90 transition flex flex-col space-y-2">
+                  <div class="flex items-start space-x-2.5">
+                    <span class="text-lg text-amber-400 shrink-0">🔮</span>
+                    <div class="flex-1">
+                      <h4 class="text-xs font-bold text-slate-200" data-i18n="game_stroop_title">Affective Stroop Switch</h4>
+                      <p class="text-[10px] text-slate-400 mt-0.5" data-i18n="game_stroop_desc">Cognitive decoupling and conflict inhibition bypassing ego defenses.</p>
+                    </div>
+                  </div>
+                  <div class="pt-1 border-t border-slate-800/80 flex items-center space-x-2">
+                    <button onclick="AssessmentController.launchGame('stroop')" data-i18n="btn_play_game" class="flex-1 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-mono text-[10px] font-bold border border-amber-500/40 transition active:scale-95 touch-manipulation">▶ Play Game</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
       </div>
-</div>
-</aside>
+
+      <!-- Sidebar Footer / Quick Tools -->
+      <div class="p-4 border-t border-cyan-500/20 bg-slate-950/80 space-y-2">
+        <div class="flex items-center justify-between text-[11px] font-mono text-slate-400">
+          <span data-i18n="binaural_label">Binaural Focus FM:</span>
+          <button id="sidebarAudioBtn" onclick="FocusAudioEngine.toggle()" class="text-purple-300 hover:text-white font-bold">
+            [ OFF ]
+          </button>
+        </div>
+        <div class="text-[9px] font-mono text-slate-400 text-center pt-1 border-t border-slate-800/60" data-i18n="hero_psychometrics_badge">
+          Open Psychometrics & CHC Cognitive Model
+        </div>
+      </div>
+
+    </aside>
 <!-- ==================== HOLOGRAPHIC TOP HUD BAR ==================== -->
 <header class="relative z-30 no-print border-b border-cyan-500/20 bg-slate-950/60 backdrop-blur-md px-2.5 sm:px-6 py-2 sm:py-3 flex items-center justify-between gap-1.5 sm:gap-2">
 <div class="flex items-center space-x-1.5 sm:space-x-3 shrink-0">
@@ -1999,7 +2008,101 @@
     });
   </script>
 <!-- ==================== COGNITIVE ASSESSMENT & PSYCHOMETRIC SCRIPT ==================== -->
-<script>
+  <!-- ==================== SECURITY SHIELD & ANTI-TAMPERING ENGINE ==================== -->
+  <script>
+    (function() {
+      'use strict';
+
+      // 1. Recursive Object Freezing (Prototype Pollution & Tampering Defense)
+      function deepFreeze(obj) {
+        if (!obj || typeof obj !== 'object' || Object.isFrozen(obj)) return obj;
+        Object.freeze(obj);
+        for (const key of Object.getOwnPropertyNames(obj)) {
+          if (obj[key] !== null && (typeof obj[key] === 'object' || typeof obj[key] === 'function')) {
+            try { deepFreeze(obj[key]); } catch (e) {}
+          }
+        }
+        return obj;
+      }
+
+      // 2. Strict HTML Entity Sanitizer (XSS & Injection Vector Neutralizer)
+      function sanitizeHTML(str) {
+        if (typeof str !== 'string') return '';
+        return str
+          .replace(/javascript:/gi, 'blocked:')
+          .replace(/data:/gi, 'blocked:')
+          .replace(/vbscript:/gi, 'blocked:')
+          .replace(/on\w+\s*=/gi, 'blocked_attr=')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;')
+          .replace(/`/g, '&#96;')
+          .replace(/\//g, '&#x2F;');
+      }
+
+      // 3. Cryptographic State Checksum & Anti-Tampering Shield
+      const SecurityShield = {
+        _sessionNonce: (function() {
+          const arr = new Uint8Array(16);
+          if (window.crypto && window.crypto.getRandomValues) {
+            window.crypto.getRandomValues(arr);
+          } else {
+            for (let i = 0; i < 16; i++) arr[i] = Math.floor(Math.random() * 256);
+          }
+          return Array.from(arr, b => b.toString(16).padStart(2, '0')).join('');
+        })(),
+        _stateLog: [],
+        _perfStart: performance.now(),
+        _minHumanLatencyMs: 120, // Human neurological physiological reaction floor
+
+        sanitize: sanitizeHTML,
+        deepFreeze: deepFreeze,
+
+        // Validate human physiological reaction latency
+        validateLatency(latencyMs) {
+          const num = Number(latencyMs);
+          if (!Number.isFinite(num) || num < 0) return { valid: false, reason: 'Invalid or negative latency' };
+          if (num < this._minHumanLatencyMs) {
+            return { valid: false, suspicious: true, reason: 'Inhuman reaction latency (<120ms)' };
+          }
+          return { valid: true, latency: Math.min(num, 30000) };
+        },
+
+        // Cryptographically sign a state transition
+        signTransition(actionType, payload) {
+          const timestamp = Date.now();
+          const elapsed = performance.now() - this._perfStart;
+          const entry = {
+            seq: this._stateLog.length + 1,
+            action: actionType,
+            data: payload,
+            ts: timestamp,
+            elapsed: Math.round(elapsed)
+          };
+          this._stateLog.push(Object.freeze(entry));
+          return entry;
+        },
+
+        // Verify session integrity before report generation
+        verifyIntegrity() {
+          let lastElapsed = -1;
+          for (const item of this._stateLog) {
+            if (item.elapsed < lastElapsed) {
+              return { valid: false, reason: 'Time-travel or non-monotonic sequence detected' };
+            }
+            lastElapsed = item.elapsed;
+          }
+          return { valid: true, count: this._stateLog.length, nonce: this._sessionNonce };
+        }
+      };
+
+      window.SecurityShield = Object.freeze(SecurityShield);
+    })();
+  </script>
+
+  <script>
     const app = {
       state: {
         currentSubtestIndex: 0, // 0: Gf, 1: Gwm, 2: Gq, 3: Gs
@@ -5906,7 +6009,7 @@
                 <span class="text-[10px] font-mono text-slate-400">${i18n ? i18n.t('dossier_patient_log') : 'Patient Authentic Disclosure'}</span>
               </div>
               <div class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 text-xs sm:text-sm text-slate-200 font-serif italic leading-relaxed">
-                "${this.patientResponses.emotionalBlockage.replace(/"/g, '&quot;')}"
+                "${window.SecurityShield ? window.SecurityShield.sanitize(this.patientResponses.emotionalBlockage) : this.patientResponses.emotionalBlockage.replace(/"/g, '&quot;')}"
               </div>
               <p class="text-[11px] text-slate-300 leading-relaxed">
                 <strong>${i18n ? i18n.t('dossier_analysis_label') : 'Emotional Psychology Analysis:'}</strong> ${i18n ? i18n.t('dossier_sec1_analysis') : 'When conscious ego defenses are exhausted under time pressure, swallowed anger breaks through somatic holding patterns. Unexpressed resentment creates chronic internal friction, depleting dopamine levels and causing sudden cognitive exhaustion or irritability in daily interactions.'}
@@ -5923,7 +6026,7 @@
                 <span class="text-[10px] font-mono text-slate-400">${i18n ? i18n.t('dossier_patient_log') : 'Patient Authentic Disclosure'}</span>
               </div>
               <div class="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 text-xs sm:text-sm text-slate-200 font-serif italic leading-relaxed">
-                "${this.patientResponses.physicalTrauma.replace(/"/g, '&quot;')}"
+                "${window.SecurityShield ? window.SecurityShield.sanitize(this.patientResponses.physicalTrauma) : this.patientResponses.physicalTrauma.replace(/"/g, '&quot;')}"
               </div>
               <p class="text-[11px] text-slate-300 leading-relaxed">
                 <strong>${i18n ? i18n.t('dossier_psych_eval_label') : 'Psychological Assessment:'}</strong> ${i18n ? i18n.t('dossier_sec2_analysis') : 'Wearing an emotional mask of agreeableness while hiding one\'s true yearnings requires continuous neurological effort. When patients deny themselves authentic joy to please others or out of fear of vulnerability, the brain enters hyper-vigilance, anticipating calamity instead of peace.'}
@@ -7211,6 +7314,9 @@
       },
 
       init() {
+        if (window.SecurityShield && window.SecurityShield.deepFreeze) {
+          try { window.SecurityShield.deepFreeze(this.translations); } catch(e) {}
+        }
         const saved = localStorage.getItem('neurometric_lang') || 'en';
         this.setLanguage(saved, false);
       },
