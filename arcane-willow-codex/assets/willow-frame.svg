@@ -1,0 +1,288 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 794 1123" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <!-- Gradients for Willow Gold Metallurgy -->
+    <linearGradient id="goldLinear" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E8CB83"/>
+      <stop offset="35%" stop-color="#C6A15B"/>
+      <stop offset="70%" stop-color="#72512D"/>
+      <stop offset="100%" stop-color="#C6A15B"/>
+    </linearGradient>
+
+    <linearGradient id="brightGoldH" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#72512D"/>
+      <stop offset="25%" stop-color="#C6A15B"/>
+      <stop offset="50%" stop-color="#E8CB83"/>
+      <stop offset="75%" stop-color="#C6A15B"/>
+      <stop offset="100%" stop-color="#72512D"/>
+    </linearGradient>
+
+    <linearGradient id="brightGoldV" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#72512D"/>
+      <stop offset="25%" stop-color="#C6A15B"/>
+      <stop offset="50%" stop-color="#E8CB83"/>
+      <stop offset="75%" stop-color="#C6A15B"/>
+      <stop offset="100%" stop-color="#72512D"/>
+    </linearGradient>
+
+    <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFF5D6" stop-opacity="1"/>
+      <stop offset="40%" stop-color="#E8CB83" stop-opacity="0.8"/>
+      <stop offset="70%" stop-color="#C6A15B" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#0B0A0C" stop-opacity="0"/>
+    </radialGradient>
+
+    <filter id="subtleGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+
+    <!-- Leaf Definition with Central Vein -->
+    <g id="willowLeaf">
+      <path d="M 0,0 C 6,-18 10,-32 0,-48 C -10,-32 -6,-18 0,0 Z" fill="url(#goldLinear)" stroke="#72512D" stroke-width="0.5"/>
+      <path d="M 0,-2 C 0,-16 0,-34 0,-46" stroke="#FFF0C4" stroke-width="0.6" stroke-linecap="round" opacity="0.8"/>
+      <path d="M 0,-14 C 2,-17 5,-19 7,-21" stroke="#FFF0C4" stroke-width="0.4" opacity="0.5"/>
+      <path d="M 0,-24 C -2,-27 -5,-29 -7,-31" stroke="#FFF0C4" stroke-width="0.4" opacity="0.5"/>
+      <path d="M 0,-34 C 2,-36 4,-38 6,-40" stroke="#FFF0C4" stroke-width="0.4" opacity="0.5"/>
+    </g>
+
+    <g id="smallLeaf">
+      <use href="#willowLeaf" transform="scale(0.65)"/>
+    </g>
+  </defs>
+
+  <!-- ================= BACKGROUND BASE ================= -->
+  <rect x="0" y="0" width="794" height="1123" fill="#0B0A0C"/>
+
+  <!-- Subtle Arcane Background Watermark Geometry -->
+  <g opacity="0.06" stroke="#C6A15B" fill="none">
+    <circle cx="397" cy="561.5" r="320" stroke-width="1" stroke-dasharray="2,6"/>
+    <circle cx="397" cy="561.5" r="260" stroke-width="0.75"/>
+    <polygon points="397,241.5 674,721.5 120,721.5" stroke-width="0.5"/>
+    <polygon points="397,881.5 674,401.5 120,401.5" stroke-width="0.5"/>
+  </g>
+
+  <!-- ================= DOUBLE METALLIC PAGE FRAMES ================= -->
+  <!-- Outer Border -->
+  <rect x="28" y="28" width="738" height="1067" fill="none" stroke="url(#brightGoldH)" stroke-width="1.8"/>
+  <!-- Inner Border with margin 6px -->
+  <rect x="36" y="36" width="722" height="1051" fill="none" stroke="url(#goldLinear)" stroke-width="0.8" stroke-dasharray="16,3,4,3"/>
+
+  <!-- Corner Brackets and Celestial Knots -->
+  <!-- Top-Left Corner Bracket -->
+  <g transform="translate(36, 36)">
+    <path d="M 0,40 L 0,0 L 40,0" fill="none" stroke="#E8CB83" stroke-width="2"/>
+    <path d="M 8,30 L 8,8 L 30,8" fill="none" stroke="#C6A15B" stroke-width="0.8"/>
+    <circle cx="0" cy="0" r="4" fill="url(#nodeGlow)"/>
+    <circle cx="0" cy="0" r="1.5" fill="#FFF5D6"/>
+    <circle cx="40" cy="0" r="2.5" fill="#C6A15B"/>
+    <circle cx="0" cy="40" r="2.5" fill="#C6A15B"/>
+    <circle cx="20" cy="20" r="12" fill="none" stroke="#72512D" stroke-width="0.75" stroke-dasharray="2,2"/>
+  </g>
+
+  <!-- Top-Right Corner Bracket -->
+  <g transform="translate(758, 36)">
+    <path d="M 0,40 L 0,0 L -40,0" fill="none" stroke="#E8CB83" stroke-width="2"/>
+    <path d="M -8,30 L -8,8 L -30,8" fill="none" stroke="#C6A15B" stroke-width="0.8"/>
+    <circle cx="0" cy="0" r="4" fill="url(#nodeGlow)"/>
+    <circle cx="0" cy="0" r="1.5" fill="#FFF5D6"/>
+    <circle cx="-40" cy="0" r="2.5" fill="#C6A15B"/>
+    <circle cx="0" cy="40" r="2.5" fill="#C6A15B"/>
+    <circle cx="-20" cy="20" r="12" fill="none" stroke="#72512D" stroke-width="0.75" stroke-dasharray="2,2"/>
+  </g>
+
+  <!-- Bottom-Left Corner Bracket -->
+  <g transform="translate(36, 1087)">
+    <path d="M 0,-40 L 0,0 L 40,0" fill="none" stroke="#E8CB83" stroke-width="2"/>
+    <path d="M 8,-30 L 8,-8 L 30,-8" fill="none" stroke="#C6A15B" stroke-width="0.8"/>
+    <circle cx="0" cy="0" r="4" fill="url(#nodeGlow)"/>
+    <circle cx="0" cy="0" r="1.5" fill="#FFF5D6"/>
+    <circle cx="40" cy="0" r="2.5" fill="#C6A15B"/>
+    <circle cx="0" cy="-40" r="2.5" fill="#C6A15B"/>
+    <circle cx="20" cy="-20" r="12" fill="none" stroke="#72512D" stroke-width="0.75" stroke-dasharray="2,2"/>
+  </g>
+
+  <!-- Bottom-Right Corner Bracket -->
+  <g transform="translate(758, 1087)">
+    <path d="M 0,-40 L 0,0 L -40,0" fill="none" stroke="#E8CB83" stroke-width="2"/>
+    <path d="M -8,-30 L -8,-8 L -30,-8" fill="none" stroke="#C6A15B" stroke-width="0.8"/>
+    <circle cx="0" cy="0" r="4" fill="url(#nodeGlow)"/>
+    <circle cx="0" cy="0" r="1.5" fill="#FFF5D6"/>
+    <circle cx="-40" cy="0" r="2.5" fill="#C6A15B"/>
+    <circle cx="0" cy="-40" r="2.5" fill="#C6A15B"/>
+    <circle cx="-20" cy="-20" r="12" fill="none" stroke="#72512D" stroke-width="0.75" stroke-dasharray="2,2"/>
+  </g>
+
+  <!-- ================= LIVING GOLDEN WILLOW BRANCHES ================= -->
+
+  <!-- TOP-LEFT WILLOW SYSTEM -->
+  <g id="tlWillow" filter="url(#subtleGlow)">
+    <!-- Main Arching Trunk -->
+    <path d="M 30,30 C 55,50 95,65 140,55 C 175,47 205,32 235,34 C 265,36 280,48 295,45" 
+          fill="none" stroke="url(#goldLinear)" stroke-width="2.2" stroke-linecap="round"/>
+    <!-- Secondary Tendril 1 -->
+    <path d="M 95,62 C 105,95 125,120 145,145 C 155,160 162,185 160,210" 
+          fill="none" stroke="url(#goldLinear)" stroke-width="1.2" stroke-linecap="round"/>
+    <!-- Cascading Hair Tendril A -->
+    <path d="M 125,120 C 115,150 110,190 112,230 C 114,260 108,285 102,305" 
+          fill="none" stroke="#C6A15B" stroke-width="0.7" stroke-dasharray="800" opacity="0.85"/>
+    <!-- Cascading Hair Tendril B -->
+    <path d="M 55,75 C 50,110 46,160 48,210 C 50,260 44,300 42,340" 
+          fill="none" stroke="#C6A15B" stroke-width="0.8" opacity="0.9"/>
+    
+    <!-- Leaves along Top-Left Branch -->
+    <use href="#willowLeaf" transform="translate(68, 56) rotate(45)"/>
+    <use href="#smallLeaf" transform="translate(98, 64) rotate(70)"/>
+    <use href="#willowLeaf" transform="translate(130, 58) rotate(35)"/>
+    <use href="#smallLeaf" transform="translate(165, 48) rotate(15)"/>
+    <use href="#willowLeaf" transform="translate(200, 37) rotate(5)"/>
+    <use href="#smallLeaf" transform="translate(245, 36) rotate(-20)"/>
+    <use href="#smallLeaf" transform="translate(285, 43) rotate(-45)"/>
+
+    <!-- Hanging Vertical Leaves on Left Margin -->
+    <use href="#willowLeaf" transform="translate(48, 120) rotate(175)"/>
+    <use href="#smallLeaf" transform="translate(47, 160) rotate(170)"/>
+    <use href="#willowLeaf" transform="translate(48, 205) rotate(182)"/>
+    <use href="#smallLeaf" transform="translate(49, 250) rotate(178)"/>
+    <use href="#willowLeaf" transform="translate(46, 295) rotate(185)"/>
+    <use href="#smallLeaf" transform="translate(43, 335) rotate(176)"/>
+
+    <!-- Tendril A Leaves -->
+    <use href="#smallLeaf" transform="translate(118, 150) rotate(165)"/>
+    <use href="#willowLeaf" transform="translate(112, 195) rotate(180)"/>
+    <use href="#smallLeaf" transform="translate(113, 240) rotate(170)"/>
+    <use href="#smallLeaf" transform="translate(108, 280) rotate(175)"/>
+    <use href="#smallLeaf" transform="translate(152, 175) rotate(150)"/>
+    <use href="#smallLeaf" transform="translate(160, 205) rotate(170)"/>
+
+    <!-- Luminous Energy Nodes -->
+    <circle cx="140" cy="55" r="3" fill="url(#nodeGlow)"/>
+    <circle cx="140" cy="55" r="1.2" fill="#FFFFFF"/>
+    <circle cx="125" cy="120" r="2.5" fill="url(#nodeGlow)"/>
+    <circle cx="125" cy="120" r="1" fill="#FFFFFF"/>
+    <circle cx="235" cy="34" r="2.5" fill="url(#nodeGlow)"/>
+  </g>
+
+  <!-- TOP-RIGHT WILLOW SYSTEM -->
+  <g id="trWillow" filter="url(#subtleGlow)">
+    <!-- Main Arching Trunk -->
+    <path d="M 764,30 C 739,50 699,65 654,55 C 619,47 589,32 559,34 C 529,36 514,48 499,45" 
+          fill="none" stroke="url(#goldLinear)" stroke-width="2.2" stroke-linecap="round"/>
+    <!-- Secondary Tendril -->
+    <path d="M 699,62 C 689,95 669,120 649,145 C 639,160 632,185 634,210" 
+          fill="none" stroke="url(#goldLinear)" stroke-width="1.2" stroke-linecap="round"/>
+    <!-- Cascading Hair Tendril A -->
+    <path d="M 669,120 C 679,150 684,190 682,230 C 680,260 686,285 692,305" 
+          fill="none" stroke="#C6A15B" stroke-width="0.7" opacity="0.85"/>
+    <!-- Cascading Hair Tendril B -->
+    <path d="M 739,75 C 744,110 748,160 746,210 C 744,260 750,300 752,340" 
+          fill="none" stroke="#C6A15B" stroke-width="0.8" opacity="0.9"/>
+
+    <!-- Leaves along Top-Right Branch -->
+    <use href="#willowLeaf" transform="translate(726, 56) rotate(-45)"/>
+    <use href="#smallLeaf" transform="translate(696, 64) rotate(-70)"/>
+    <use href="#willowLeaf" transform="translate(664, 58) rotate(-35)"/>
+    <use href="#smallLeaf" transform="translate(629, 48) rotate(-15)"/>
+    <use href="#willowLeaf" transform="translate(594, 37) rotate(-5)"/>
+    <use href="#smallLeaf" transform="translate(549, 36) rotate(20)"/>
+    <use href="#smallLeaf" transform="translate(509, 43) rotate(45)"/>
+
+    <!-- Hanging Vertical Leaves on Right Margin -->
+    <use href="#willowLeaf" transform="translate(746, 120) rotate(-175)"/>
+    <use href="#smallLeaf" transform="translate(747, 160) rotate(-170)"/>
+    <use href="#willowLeaf" transform="translate(746, 205) rotate(-182)"/>
+    <use href="#smallLeaf" transform="translate(745, 250) rotate(-178)"/>
+    <use href="#willowLeaf" transform="translate(748, 295) rotate(-185)"/>
+    <use href="#smallLeaf" transform="translate(751, 335) rotate(-176)"/>
+
+    <!-- Tendril Leaves -->
+    <use href="#smallLeaf" transform="translate(676, 150) rotate(-165)"/>
+    <use href="#willowLeaf" transform="translate(682, 195) rotate(-180)"/>
+    <use href="#smallLeaf" transform="translate(681, 240) rotate(-170)"/>
+    <use href="#smallLeaf" transform="translate(686, 280) rotate(-175)"/>
+
+    <!-- Nodes -->
+    <circle cx="654" cy="55" r="3" fill="url(#nodeGlow)"/>
+    <circle cx="654" cy="55" r="1.2" fill="#FFFFFF"/>
+    <circle cx="669" cy="120" r="2.5" fill="url(#nodeGlow)"/>
+    <circle cx="669" cy="120" r="1" fill="#FFFFFF"/>
+    <circle cx="559" cy="34" r="2.5" fill="url(#nodeGlow)"/>
+  </g>
+
+  <!-- BOTTOM-LEFT WILLOW SYSTEM -->
+  <g id="blWillow" filter="url(#subtleGlow)">
+    <path d="M 30,1093 C 55,1073 95,1058 140,1068 C 175,1076 205,1091 235,1089 C 265,1087 280,1075 295,1078" 
+          fill="none" stroke="url(#goldLinear)" stroke-width="2" stroke-linecap="round"/>
+    <path d="M 45,1050 C 47,990 43,940 45,880 C 47,830 42,780 44,730" 
+          fill="none" stroke="#C6A15B" stroke-width="0.8" opacity="0.85"/>
+    <use href="#willowLeaf" transform="translate(45, 1010) rotate(5)"/>
+    <use href="#smallLeaf" transform="translate(44, 960) rotate(-2)"/>
+    <use href="#willowLeaf" transform="translate(46, 910) rotate(8)"/>
+    <use href="#smallLeaf" transform="translate(43, 850) rotate(-5)"/>
+    <use href="#willowLeaf" transform="translate(44, 800) rotate(2)"/>
+    
+    <use href="#willowLeaf" transform="translate(95, 1062) rotate(-45)"/>
+    <use href="#smallLeaf" transform="translate(145, 1070) rotate(-20)"/>
+    <use href="#willowLeaf" transform="translate(195, 1085) rotate(-5)"/>
+    <use href="#smallLeaf" transform="translate(255, 1085) rotate(25)"/>
+
+    <circle cx="140" cy="1068" r="3" fill="url(#nodeGlow)"/>
+    <circle cx="140" cy="1068" r="1.2" fill="#FFFFFF"/>
+  </g>
+
+  <!-- BOTTOM-RIGHT WILLOW SYSTEM -->
+  <g id="brWillow" filter="url(#subtleGlow)">
+    <path d="M 764,1093 C 739,1073 699,1058 654,1068 C 619,1076 589,1091 559,1089 C 529,1087 514,1075 499,1078" 
+          fill="none" stroke="url(#goldLinear)" stroke-width="2" stroke-linecap="round"/>
+    <path d="M 749,1050 C 747,990 751,940 749,880 C 747,830 752,780 750,730" 
+          fill="none" stroke="#C6A15B" stroke-width="0.8" opacity="0.85"/>
+    <use href="#willowLeaf" transform="translate(749, 1010) rotate(-5)"/>
+    <use href="#smallLeaf" transform="translate(750, 960) rotate(2)"/>
+    <use href="#willowLeaf" transform="translate(748, 910) rotate(-8)"/>
+    <use href="#smallLeaf" transform="translate(751, 850) rotate(5)"/>
+    <use href="#willowLeaf" transform="translate(750, 800) rotate(-2)"/>
+
+    <use href="#willowLeaf" transform="translate(699, 1062) rotate(45)"/>
+    <use href="#smallLeaf" transform="translate(649, 1070) rotate(20)"/>
+    <use href="#willowLeaf" transform="translate(599, 1085) rotate(5)"/>
+    <use href="#smallLeaf" transform="translate(539, 1085) rotate(-25)"/>
+
+    <circle cx="654" cy="1068" r="3" fill="url(#nodeGlow)"/>
+    <circle cx="654" cy="1068" r="1.2" fill="#FFFFFF"/>
+  </g>
+
+  <!-- ================= TOP HEADER ORNAMENT & CENTRAL CREST ================= -->
+  <g transform="translate(397, 44)" filter="url(#subtleGlow)">
+    <!-- Central Arcane Emblem: Willow Leaf + Orbital Atom + Mandala -->
+    <!-- Outer Sacred Circle -->
+    <circle cx="0" cy="0" r="15" fill="#0B0A0C" stroke="url(#goldLinear)" stroke-width="1.2"/>
+    <circle cx="0" cy="0" r="12" fill="none" stroke="#72512D" stroke-width="0.6" stroke-dasharray="2,2"/>
+    
+    <!-- Orbital Ellipses -->
+    <ellipse cx="0" cy="0" rx="14" ry="4.5" fill="none" stroke="#E8CB83" stroke-width="0.7" transform="rotate(30)"/>
+    <ellipse cx="0" cy="0" rx="14" ry="4.5" fill="none" stroke="#E8CB83" stroke-width="0.7" transform="rotate(-30)"/>
+    
+    <!-- Central Willow Leaf Inset -->
+    <path d="M 0,-7 C 2.5,-3 3,2 0,7 C -3,2 -2.5,-3 0,-7 Z" fill="url(#goldLinear)"/>
+    <circle cx="0" cy="0" r="1.5" fill="#FFF5D6"/>
+
+    <!-- Lateral Symmetrical Flourishes -->
+    <path d="M -18,0 C -35,-8 -60,-8 -90,0" fill="none" stroke="url(#brightGoldH)" stroke-width="1"/>
+    <path d="M 18,0 C 35,-8 60,-8 90,0" fill="none" stroke="url(#brightGoldH)" stroke-width="1"/>
+    <circle cx="-90" cy="0" r="2" fill="#C6A15B"/>
+    <circle cx="90" cy="0" r="2" fill="#C6A15B"/>
+    <path d="M -45,-4 C -45,-12 -55,-16 -65,-12" fill="none" stroke="#72512D" stroke-width="0.75"/>
+    <use href="#smallLeaf" transform="translate(-65, -12) rotate(-70)"/>
+    <path d="M 45,-4 C 45,-12 55,-16 65,-12" fill="none" stroke="#72512D" stroke-width="0.75"/>
+    <use href="#smallLeaf" transform="translate(65, -12) rotate(70)"/>
+  </g>
+
+  <!-- ================= BOTTOM FOOTER ORNAMENT ================= -->
+  <g transform="translate(397, 1080)" filter="url(#subtleGlow)">
+    <circle cx="0" cy="0" r="8" fill="#0B0A0C" stroke="#C6A15B" stroke-width="1"/>
+    <circle cx="0" cy="0" r="2" fill="#E8CB83"/>
+    <path d="M -12,0 L -80,0" stroke="url(#brightGoldH)" stroke-width="0.8"/>
+    <path d="M 12,0 L 80,0" stroke="url(#brightGoldH)" stroke-width="0.8"/>
+    <circle cx="-80" cy="0" r="1.5" fill="#C6A15B"/>
+    <circle cx="80" cy="0" r="1.5" fill="#C6A15B"/>
+  </g>
+</svg>

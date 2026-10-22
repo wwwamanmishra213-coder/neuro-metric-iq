@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 260" width="100%" height="100%">
+  <defs>
+    <radialGradient id="singularityGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFDF5"/>
+      <stop offset="20%" stop-color="#E8CB83"/>
+      <stop offset="50%" stop-color="#C6A15B"/>
+      <stop offset="80%" stop-color="#72512D" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#0E0D12" stop-opacity="0"/>
+    </radialGradient>
+
+    <linearGradient id="gridGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#72512D" stop-opacity="0.5"/>
+      <stop offset="50%" stop-color="#C6A15B" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#72512D" stop-opacity="0.5"/>
+    </linearGradient>
+
+    <linearGradient id="photonBeam" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.2"/>
+      <stop offset="50%" stop-color="#38BDF8" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#38BDF8" stop-opacity="0.2"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="540" height="260" fill="#0E0D12" rx="6" stroke="#25212E" stroke-width="1"/>
+
+  <!-- Technical Header Strip -->
+  <text x="20" y="24" fill="#E8CB83" font-family="'Cinzel', Georgia, serif" font-size="8.5" font-weight="bold" letter-spacing="1">FIGURE 2.2: GENERAL RELATIVISTIC METRIC TENSOR EMBEDDING (g_μν)</text>
+  <text x="440" y="24" fill="#9A9AA5" font-family="'Inter', sans-serif" font-size="7.5">Schwarzschild Geometry</text>
+  <line x1="20" y1="30" x2="520" y2="30" stroke="#72512D" stroke-width="0.6"/>
+
+  <!-- Warped Isometric Coordinate Grid (Gravitational Funnel) -->
+  <g fill="none" stroke="url(#gridGold)" stroke-width="0.65">
+    <!-- Horizontal Coordinate Rings (concentrically warped downwards) -->
+    <!-- Level 0: Asymptotic Flat Minkowski Boundary -->
+    <ellipse cx="270" cy="80" rx="220" ry="38" stroke="#9A9AA5" stroke-dasharray="2,2" opacity="0.4"/>
+    <!-- Level 1 -->
+    <ellipse cx="270" cy="100" rx="180" ry="32"/>
+    <!-- Level 2 -->
+    <ellipse cx="270" cy="125" rx="140" ry="26"/>
+    <!-- Level 3 -->
+    <ellipse cx="270" cy="155" rx="95" ry="19"/>
+    <!-- Level 4: Deep Potential Well -->
+    <ellipse cx="270" cy="185" rx="55" ry="12" stroke="#E8CB83" stroke-width="0.9"/>
+    <!-- Throat Ring (Horizon Vicinity) -->
+    <ellipse cx="270" cy="205" rx="28" ry="7" stroke="#FFF5D6" stroke-width="1.1"/>
+
+    <!-- Vertical Radial Geodesics Warping Inwards & Downwards -->
+    <!-- Left Flank -->
+    <path d="M 50,80 C 120,85 190,130 242,205"/>
+    <path d="M 90,80 C 150,88 210,135 250,205"/>
+    <path d="M 140,80 C 185,90 225,140 258,205"/>
+    <path d="M 190,80 C 220,95 245,145 264,205"/>
+
+    <!-- Right Flank -->
+    <path d="M 490,80 C 420,85 350,130 298,205"/>
+    <path d="M 450,80 C 390,88 330,135 290,205"/>
+    <path d="M 400,80 C 355,90 315,140 282,205"/>
+    <path d="M 350,80 C 320,95 295,145 276,205"/>
+
+    <!-- Center Spine -->
+    <path d="M 270,42 L 270,205" stroke="#72512D" stroke-width="0.5" stroke-dasharray="3,3"/>
+  </g>
+
+  <!-- Central Stellar Mass M Resting in the Gravitational Well -->
+  <g transform="translate(270, 185)">
+    <circle cx="0" cy="0" r="32" fill="url(#singularityGlow)"/>
+    <circle cx="0" cy="0" r="14" fill="#C6A15B" stroke="#FFF5D6" stroke-width="1"/>
+    <circle cx="0" cy="0" r="7" fill="#FFF"/>
+    <text x="-4" y="22" fill="#E8CB83" font-family="'Cinzel', serif" font-size="8.5" font-weight="bold">M</text>
+  </g>
+
+  <!-- Deflected Light Ray (Gravitational Lensing Null Geodesic) -->
+  <path d="M 30,55 C 180,55 240,110 270,118 C 300,110 360,55 510,55" 
+        fill="none" stroke="url(#photonBeam)" stroke-width="1.8"/>
+  <path d="M 30,55 L 510,55" fill="none" stroke="#9A9AA5" stroke-width="0.7" stroke-dasharray="3,4" opacity="0.4"/>
+  
+  <text x="35" y="48" fill="#38BDF8" font-family="'Inter', sans-serif" font-size="7.5" font-weight="bold">Photon Geodesic (Null Path)</text>
+  <text x="282" y="108" fill="#38BDF8" font-family="'Inter', sans-serif" font-size="7">Impact Parameter b</text>
+  <line x1="270" y1="55" x2="270" y2="118" stroke="#38BDF8" stroke-width="0.6" stroke-dasharray="2,2"/>
+
+  <!-- Curvature Annotations -->
+  <text x="36" y="235" fill="#E8CB83" font-family="'Source Serif 4', serif" font-style="italic" font-size="8.5">
+    Curvature Invariant: R_μν - ½ R g_μν = 8πG/c⁴ T_μν
+  </text>
+  <text x="375" y="235" fill="#9A9AA5" font-family="'Inter', sans-serif" font-size="7.5">
+    Deflection: Δθ = 4GM / (c² b)
+  </text>
+</svg>

@@ -1,0 +1,634 @@
+/* ==========================================================================
+   PROJECT: ARCANE WILLOW CODEX
+   Design Tokens & Editorial Academic Typesetting System
+   ========================================================================== */
+
+:root {
+  --obsidian: #0B0A0C;
+  --charcoal: #15131A;
+  --antique-gold: #C6A15B;
+  --bright-gold: #E8CB83;
+  --bronze: #72512D;
+  --parchment: #E9E0CC;
+  --muted-silver: #9A9AA5;
+  --body-text: #E8E0D2;
+
+  --font-display: 'Cinzel', 'Times New Roman', Georgia, serif;
+  --font-heading: 'Cormorant Garamond', 'Garamond', Georgia, serif;
+  --font-body: 'Source Serif 4', 'Georgia', 'Cambria', serif;
+  --font-math: 'STIX Two Math', 'Cambria Math', 'Times New Roman', serif;
+  --font-tech: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  --a4-width: 210mm;
+  --a4-height: 297mm;
+}
+
+/* Reset & Box Sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 14px;
+  background-color: #17151D;
+  color: var(--body-text);
+  font-family: var(--font-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Workspace Canvas Wrapper (Neutral dark-slate presentation background) */
+.codex-workbench {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px 48px;
+  background: radial-gradient(circle at 50% 20%, #201D28 0%, #111016 100%);
+}
+
+/* Top Toolbar & Workbench Controls */
+.workbench-header {
+  width: 100%;
+  max-width: var(--a4-width);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 10px 18px;
+  background: rgba(21, 19, 26, 0.85);
+  border: 1px solid rgba(198, 161, 91, 0.3);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+}
+
+.workbench-title {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--bright-gold);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.workbench-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-codex {
+  background: #15131A;
+  border: 1px solid var(--antique-gold);
+  color: var(--bright-gold);
+  font-family: var(--font-tech);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-codex:hover {
+  background: var(--antique-gold);
+  color: var(--obsidian);
+  box-shadow: 0 0 12px rgba(232, 203, 131, 0.35);
+}
+
+.btn-codex-primary {
+  background: linear-gradient(135deg, var(--antique-gold) 0%, var(--bright-gold) 100%);
+  color: var(--obsidian);
+  border: none;
+  font-weight: 700;
+}
+
+.btn-codex-primary:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 0 16px rgba(232, 203, 131, 0.5);
+}
+
+/* ==========================================================================
+   A4 CODEX SHEET SPECIFICATION (210mm x 297mm)
+   ========================================================================== */
+.codex-page-sheet {
+  position: relative;
+  width: var(--a4-width);
+  height: var(--a4-height);
+  background-color: var(--obsidian);
+  color: var(--body-text);
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75), 0 0 20px rgba(198, 161, 91, 0.15);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Background Willow Art Layer */
+.willow-frame-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Main Academic Content Layer (Guaranteed Safe Margin Zone) */
+.codex-content-container {
+  position: relative;
+  z-index: 5;
+  height: 100%;
+  /* Safe Margin: 24mm top/bottom, 22mm left/right strictly inside willow leaves */
+  padding: 22mm 20mm 20mm 20mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Running Header */
+.running-header {
+  border-bottom: 1px solid rgba(198, 161, 91, 0.35);
+  padding-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  letter-spacing: 2.5px;
+  color: var(--antique-gold);
+  text-transform: uppercase;
+}
+
+.header-series-tag {
+  color: var(--muted-silver);
+  font-family: var(--font-tech);
+  font-size: 0.62rem;
+  letter-spacing: 1px;
+}
+
+/* Chapter Master Headings */
+.chapter-heading-block {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.chapter-number-pill {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  color: var(--antique-gold);
+  font-weight: 700;
+  margin-bottom: 2px;
+  text-transform: uppercase;
+}
+
+.chapter-main-title {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--bright-gold);
+  letter-spacing: 2px;
+  line-height: 1.15;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(232, 203, 131, 0.2);
+}
+
+.chapter-subtitle-rule {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 6px 0;
+}
+
+.chapter-subtitle-rule::before,
+.chapter-subtitle-rule::after {
+  content: '';
+  height: 1px;
+  width: 60px;
+  background: linear-gradient(to right, transparent, var(--antique-gold), transparent);
+}
+
+.chapter-subtitle-rule span {
+  color: var(--antique-gold);
+  font-size: 0.7rem;
+}
+
+.chapter-subtitle {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--parchment);
+  letter-spacing: 0.5px;
+}
+
+/* Two-Column Editorial Grid */
+.codex-two-column-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 16px;
+  margin-top: 12px;
+  flex: 1;
+}
+
+.codex-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Section Headings */
+.section-title {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--bright-gold);
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid rgba(198, 161, 91, 0.25);
+  padding-bottom: 2px;
+  margin-top: 4px;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.section-number {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: var(--antique-gold);
+}
+
+/* Body Text */
+.academic-prose {
+  font-size: 0.74rem;
+  line-height: 1.5;
+  color: var(--body-text);
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.academic-prose strong {
+  color: var(--bright-gold);
+  font-weight: 600;
+}
+
+/* Epigraph Quotation Panel */
+.codex-epigraph-panel {
+  background: rgba(21, 19, 26, 0.75);
+  border: 1px solid var(--bronze);
+  border-left: 2.5px solid var(--antique-gold);
+  padding: 8px 12px;
+  border-radius: 3px;
+  position: relative;
+}
+
+.epigraph-text {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--parchment);
+}
+
+.epigraph-attribution {
+  display: block;
+  text-align: right;
+  font-family: var(--font-tech);
+  font-size: 0.62rem;
+  color: var(--antique-gold);
+  letter-spacing: 0.8px;
+  margin-top: 4px;
+}
+
+/* Scientific Diagram Container */
+.diagram-figure {
+  background: #111016;
+  border: 1px solid rgba(198, 161, 91, 0.3);
+  border-radius: 4px;
+  overflow: hidden;
+  padding: 4px;
+}
+
+.diagram-svg-wrap {
+  width: 100%;
+  display: block;
+}
+
+.figure-caption {
+  font-family: var(--font-tech);
+  font-size: 0.62rem;
+  line-height: 1.35;
+  color: var(--muted-silver);
+  padding: 4px 6px 2px;
+  border-top: 1px solid rgba(198, 161, 91, 0.15);
+}
+
+.figure-caption strong {
+  color: var(--bright-gold);
+}
+
+/* Mathematical Formulation Box */
+.math-block {
+  background: rgba(21, 19, 26, 0.9);
+  border: 1px solid rgba(198, 161, 91, 0.35);
+  border-radius: 4px;
+  padding: 8px 10px;
+}
+
+.formula-display {
+  font-family: var(--font-math);
+  font-size: 1.05rem;
+  color: var(--bright-gold);
+  text-align: center;
+  margin: 4px 0 6px;
+  letter-spacing: 1px;
+}
+
+.formula-subtext {
+  font-family: var(--font-tech);
+  font-size: 0.62rem;
+  color: var(--muted-silver);
+  line-height: 1.4;
+}
+
+.variable-definition-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 3px 8px;
+  font-family: var(--font-tech);
+  font-size: 0.62rem;
+  color: var(--body-text);
+  margin-top: 4px;
+}
+
+.var-symbol {
+  font-family: var(--font-math);
+  color: var(--bright-gold);
+  font-weight: bold;
+}
+
+/* Applications Bulleted Matrix */
+.applications-matrix {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.applications-matrix li {
+  font-family: var(--font-tech);
+  font-size: 0.65rem;
+  color: var(--body-text);
+  line-height: 1.35;
+  position: relative;
+  padding-left: 12px;
+}
+
+.applications-matrix li::before {
+  content: '✦';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--antique-gold);
+  font-size: 0.55rem;
+}
+
+.applications-matrix strong {
+  color: var(--bright-gold);
+}
+
+/* Page Footer */
+.codex-footer {
+  border-top: 1px solid rgba(198, 161, 91, 0.35);
+  padding-top: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-tech);
+  font-size: 0.62rem;
+  color: var(--muted-silver);
+}
+
+.footer-folio {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  color: var(--antique-gold);
+  letter-spacing: 1.5px;
+}
+
+/* ==========================================================================
+   PATIENT CONSENT: CAMERA & MICROPHONE BIO-TELEMETRY MODULE
+   ========================================================================== */
+.telemetry-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(11, 10, 12, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 10000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.telemetry-modal-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.telemetry-card {
+  width: 100%;
+  max-width: 520px;
+  background: #111016;
+  border: 1px solid var(--antique-gold);
+  box-shadow: 0 0 30px rgba(198, 161, 91, 0.25);
+  border-radius: 8px;
+  overflow: hidden;
+  font-family: var(--font-tech);
+}
+
+.telemetry-header {
+  background: #191620;
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(198, 161, 91, 0.3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.telemetry-title {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: var(--bright-gold);
+  letter-spacing: 1.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.telemetry-body {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.consent-statement-box {
+  background: rgba(21, 19, 26, 0.8);
+  border: 1px solid var(--bronze);
+  border-radius: 4px;
+  padding: 10px 12px;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  color: var(--parchment);
+}
+
+.telemetry-viewports-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.video-preview-wrapper {
+  position: relative;
+  width: 100%;
+  height: 130px;
+  background: #0B0A0C;
+  border: 1px solid rgba(198, 161, 91, 0.4);
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-preview-element {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1);
+}
+
+.video-cyber-reticle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: radial-gradient(circle at center, transparent 40%, rgba(11, 10, 12, 0.6) 90%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 6px;
+}
+
+.reticle-corner {
+  width: 10px;
+  height: 10px;
+  border-color: var(--bright-gold);
+  border-style: solid;
+}
+
+.reticle-tl { border-width: 1.5px 0 0 1.5px; }
+.reticle-tr { border-width: 1.5px 1.5px 0 0; }
+.reticle-bl { border-width: 0 0 1.5px 1.5px; }
+.reticle-br { border-width: 0 1.5px 1.5px 0; }
+
+.reticle-label {
+  position: absolute;
+  bottom: 4px;
+  left: 6px;
+  font-size: 0.58rem;
+  color: var(--bright-gold);
+  background: rgba(11, 10, 12, 0.7);
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+
+.audio-preview-wrapper {
+  width: 100%;
+  height: 130px;
+  background: #0B0A0C;
+  border: 1px solid rgba(198, 161, 91, 0.4);
+  border-radius: 4px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.audio-canvas-element {
+  width: 100%;
+  height: 80px;
+}
+
+.audio-status-metrics {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.6rem;
+  color: var(--muted-silver);
+}
+
+.telemetry-footer {
+  padding: 12px 18px;
+  background: #191620;
+  border-top: 1px solid rgba(198, 161, 91, 0.3);
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* ==========================================================================
+   PRINT STYLES FOR A4 OUTPUT
+   ========================================================================== */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  body {
+    background: transparent !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .codex-workbench {
+    background: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .workbench-header,
+  .telemetry-modal-backdrop,
+  .no-print {
+    display: none !important;
+  }
+
+  .codex-page-sheet {
+    box-shadow: none !important;
+    margin: 0 !important;
+    page-break-after: always;
+    break-after: page;
+    width: 210mm !important;
+    height: 297mm !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}

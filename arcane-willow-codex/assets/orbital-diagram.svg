@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 320" width="100%" height="100%">
+  <defs>
+    <radialGradient id="starGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFDF5"/>
+      <stop offset="25%" stop-color="#FCE5A4"/>
+      <stop offset="55%" stop-color="#C6A15B"/>
+      <stop offset="85%" stop-color="#72512D" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#0B0A0C" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="planetGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#E8CB83"/>
+      <stop offset="60%" stop-color="#9A9AA5"/>
+      <stop offset="100%" stop-color="#15131A"/>
+    </radialGradient>
+
+    <linearGradient id="orbitStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C6A15B"/>
+      <stop offset="50%" stop-color="#E8CB83"/>
+      <stop offset="100%" stop-color="#72512D"/>
+    </linearGradient>
+
+    <marker id="arrowGold" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#E8CB83"/>
+    </marker>
+    <marker id="arrowCyan" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#38BDF8"/>
+    </marker>
+    <marker id="arrowRuby" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#F43F5E"/>
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="540" height="320" fill="#0E0D12" rx="6" stroke="#25212E" stroke-width="1"/>
+
+  <!-- Subtle Celestial Astrolabe / Coordinate Grid -->
+  <g opacity="0.15" stroke="#C6A15B" fill="none">
+    <circle cx="210" cy="160" r="140" stroke-width="0.6"/>
+    <circle cx="210" cy="160" r="95" stroke-width="0.5" stroke-dasharray="3,3"/>
+    <circle cx="210" cy="160" r="50" stroke-width="0.5"/>
+    <line x1="40" y1="160" x2="480" y2="160" stroke-width="0.5" stroke-dasharray="2,4"/>
+    <line x1="210" y1="20" x2="210" y2="300" stroke-width="0.5" stroke-dasharray="2,4"/>
+    <!-- Cardinal Astrolabe Ticks -->
+    <circle cx="210" cy="160" r="144" stroke-width="0.4" stroke-dasharray="1,7.5"/>
+  </g>
+
+  <!-- Orbits -->
+  <!-- 1. Circular Reference Orbit (r = const) -->
+  <circle cx="210" cy="160" r="95" fill="none" stroke="#9A9AA5" stroke-width="0.9" stroke-dasharray="4,4" opacity="0.6"/>
+
+  <!-- 2. Keplerian Elliptical Orbit (Focus at F1 = (210, 160)) -->
+  <!-- Ellipse centered at cx=245, cy=160, rx=135, ry=95. Focus F1 = 245 - sqrt(135^2 - 95^2) = 245 - 95.9 ~ 149.
+       Let focus F1 be at (190, 160). Center at (230, 160), rx=130, ry=90. c = sqrt(130^2 - 90^2) = 93.8. Focus = 230 - 93.8 = 136.2.
+       Let's place Primary Focus directly at Central Mass (210, 160). Center = (250, 160), a=140, b=98, c=sqrt(140^2 - 98^2) = sqrt(19600 - 9604) = 99.98 ~ 100. Focus 1 = 250 - 100 = 150.
+       Let's use an explicit oriented ellipse centered at (240, 160), rx=130, ry=92. Focus F1 = (148, 160).
+       Or keep center at (250, 160) and central mass at Focus F1 = (175, 160), rx=135, ry=112. c = sqrt(135^2 - 112^2) = sqrt(18225 - 12544) = sqrt(5681) = 75.36. 250 - 75 = 175!
+  -->
+  <ellipse cx="250" cy="160" rx="135" ry="112" fill="none" stroke="url(#orbitStroke)" stroke-width="1.6"/>
+
+  <!-- Periapsis & Apoapsis Axis (Major Axis Line) -->
+  <line x1="115" y1="160" x2="385" y2="160" stroke="#72512D" stroke-width="0.8" stroke-dasharray="3,3"/>
+  
+  <!-- Central Gravitating Body M at Focus F1 (175, 160) -->
+  <g transform="translate(175, 160)">
+    <circle cx="0" cy="0" r="32" fill="url(#starGlow)"/>
+    <circle cx="0" cy="0" r="16" fill="#C6A15B" stroke="#FFF5D6" stroke-width="1"/>
+    <circle cx="0" cy="0" r="8" fill="#FFFDF5"/>
+    <text x="-4" y="28" fill="#E8CB83" font-family="'Cinzel', Georgia, serif" font-size="10" font-weight="bold">M</text>
+  </g>
+
+  <!-- Empty Focus F2 at (325, 160) -->
+  <circle cx="325" cy="160" r="2.5" fill="none" stroke="#72512D" stroke-width="1"/>
+  <text x="321" y="174" fill="#72512D" font-family="'Inter', sans-serif" font-size="7.5">F₂</text>
+
+  <!-- Radius Vector r to Orbiting Body m at theta ~ 65 deg -->
+  <!-- On ellipse cx=250, cy=160, a=135, b=112:
+       Point P = (250 + 135*cos(1.15), 160 - 112*sin(1.15)) = (250 + 135*0.408, 160 - 112*0.913) = (250 + 55, 160 - 102.2) = (305, 58)
+  -->
+  <line x1="175" y1="160" x2="305" y2="58" stroke="#E8CB83" stroke-width="1.4" stroke-dasharray="2,2"/>
+  
+  <!-- Radius Dimension Label r -->
+  <text x="228" y="104" fill="#E8CB83" font-family="'Source Serif 4', Georgia, serif" font-style="italic" font-size="11">r</text>
+
+  <!-- Gravitational Force Vector F_g (pointing towards M) -->
+  <line x1="305" y1="58" x2="242" y2="108" stroke="#F43F5E" stroke-width="1.8" marker-end="url(#arrowRuby)"/>
+  <text x="240" y="94" fill="#F43F5E" font-family="'Inter', sans-serif" font-size="8.5" font-weight="bold">F<tspan font-size="6.5" dy="2">g</tspan></text>
+
+  <!-- Tangential Velocity Vector v -->
+  <!-- Tangent at P(305, 58) points roughly (-0.85, -0.45) or (-45, -24) -->
+  <line x1="305" y1="58" x2="248" y2="28" stroke="#38BDF8" stroke-width="1.8" marker-end="url(#arrowCyan)"/>
+  <text x="246" y="24" fill="#38BDF8" font-family="'Inter', sans-serif" font-size="8.5" font-weight="bold">v<tspan font-size="6.5" dy="2">tangential</tspan></text>
+
+  <!-- Orbiting Body m -->
+  <circle cx="305" cy="58" r="7" fill="url(#planetGlow)" stroke="#FFF" stroke-width="0.8"/>
+  <circle cx="305" cy="58" r="1.5" fill="#FFF"/>
+  <text x="318" y="62" fill="#E8E0D2" font-family="'Cinzel', serif" font-size="9" font-weight="bold">m</text>
+
+  <!-- Periapsis Point rp -->
+  <circle cx="115" cy="160" r="3" fill="#C6A15B"/>
+  <text x="75" y="156" fill="#C6A15B" font-family="'Inter', sans-serif" font-size="7.5">Periapsis (r<tspan font-size="6" dy="1">p</tspan>)</text>
+
+  <!-- Apoapsis Point ra -->
+  <circle cx="385" cy="160" r="3" fill="#C6A15B"/>
+  <text x="392" y="163" fill="#C6A15B" font-family="'Inter', sans-serif" font-size="7.5">Apoapsis (r<tspan font-size="6" dy="1">a</tspan>)</text>
+
+  <!-- Semimajor axis marker a -->
+  <line x1="250" y1="210" x2="385" y2="210" stroke="#9A9AA5" stroke-width="0.8" marker-end="url(#arrowGold)" marker-start="url(#arrowGold)"/>
+  <line x1="250" y1="205" x2="250" y2="215" stroke="#9A9AA5" stroke-width="0.8"/>
+  <line x1="385" y1="205" x2="385" y2="215" stroke="#9A9AA5" stroke-width="0.8"/>
+  <text x="312" y="222" fill="#9A9AA5" font-family="'Source Serif 4', serif" font-style="italic" font-size="8.5">a (semimajor)</text>
+
+  <!-- Technical Legend Callout Box on Right -->
+  <g transform="translate(415, 20)">
+    <rect width="112" height="92" fill="#15131A" stroke="#72512D" stroke-width="0.75" rx="3"/>
+    <text x="8" y="15" fill="#E8CB83" font-family="'Cinzel', serif" font-size="7.5" font-weight="bold" letter-spacing="0.5">KEPLERIAN METRICS</text>
+    <line x1="8" y1="20" x2="104" y2="20" stroke="#72512D" stroke-width="0.5"/>
+    
+    <circle cx="14" cy="31" r="2.5" fill="#F43F5E"/>
+    <text x="22" y="34" fill="#E8E0D2" font-family="'Inter', sans-serif" font-size="7">Gravitational Pull</text>
+    
+    <circle cx="14" cy="46" r="2.5" fill="#38BDF8"/>
+    <text x="22" y="49" fill="#E8E0D2" font-family="'Inter', sans-serif" font-size="7">Orbital Velocity</text>
+    
+    <circle cx="14" cy="61" r="2.5" fill="#C6A15B"/>
+    <text x="22" y="64" fill="#E8E0D2" font-family="'Inter', sans-serif" font-size="7">Primary Focus (M)</text>
+
+    <text x="8" y="80" fill="#9A9AA5" font-family="'Inter', sans-serif" font-size="6.5">e = c/a ≈ 0.57</text>
+  </g>
+</svg>

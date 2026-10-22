@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arcane Willow Codex | Liber Mechanica Coelestis</title>
+
+  <!-- Google Web Fonts for Scholarly Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="codex-workbench">
+    
+    <!-- Workbench Desktop Topbar (Hidden in Print) -->
+    <header class="workbench-header no-print">
+      <div class="workbench-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E8CB83" stroke-width="1.8">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          <path d="M2 12h20"/>
+        </svg>
+        <span>ARCANE WILLOW CODEX · A4 VISUAL PROTOTYPE</span>
+      </div>
+
+      <div class="workbench-actions">
+        <!-- Patient Consent Bio-Telemetry Toggle Button -->
+        <button class="btn-codex" id="btnToggleTelemetry" onclick="CodexApp.openTelemetryModal()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+            <circle cx="12" cy="13" r="4"/>
+          </svg>
+          <span id="telemetryStatusLabel">Bio-Telemetry: Offline</span>
+        </button>
+
+        <button class="btn-codex" onclick="window.print()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 6 2 18 2 18 9"></polyline>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+            <rect x="6" y="14" width="12" height="8"></rect>
+          </svg>
+          <span>Print / Export PDF</span>
+        </button>
+
+        <button class="btn-codex btn-codex-primary" onclick="CodexApp.downloadProductionPDF()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          <span>Production PDF Engine</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ==========================================================================
+         A4 CODEX SHEET CONTAINER
+         ========================================================================== -->
+    <article class="codex-page-sheet" id="codexSheet">
+      
+      <!-- SVG Willow Frame Artwork (Embedded object/inline for crisp scaling) -->
+      <div class="willow-frame-layer">
+        <object type="image/svg+xml" data="assets/willow-frame.svg" style="width: 100%; height: 100%; display: block;"></object>
+      </div>
+
+      <!-- Safe Area Academic Editorial Content Container -->
+      <div class="codex-content-container">
+
+        <!-- Running Academic Header -->
+        <header class="running-header">
+          <span>THE ARCANE WILLOW CODEX</span>
+          <span class="header-series-tag">FASCICULUS ASTRONOMICA · FOLIO II</span>
+        </header>
+
+        <!-- Chapter Master Typography Block -->
+        <div class="chapter-heading-block">
+          <div class="chapter-number-pill">CHAPTER 02</div>
+          <h1 class="chapter-main-title">THE ORBITAL PRINCIPLE</h1>
+          <div class="chapter-subtitle-rule">
+            <span>✦</span>
+          </div>
+          <p class="chapter-subtitle">Gravity, Motion and the Harmony of Chaos</p>
+        </div>
+
+        <!-- Two-Column Editorial Grid -->
+        <main class="codex-two-column-layout">
+          
+          <!-- LEFT COLUMN -->
+          <section class="codex-column">
+            
+            <!-- 2.1 Introduction -->
+            <div class="editorial-block">
+              <h2 class="section-title">
+                <span class="section-number">2.1</span>
+                <span>INTRODUCTION</span>
+              </h2>
+              <p class="academic-prose">
+                The equilibrium of celestial architecture rests upon an exquisite tension: the perpetual curvature of motion under the dominion of mutual attraction. When a celestial body traverses a gravitational field, its trajectory ceases to be rectilinear; space itself instructs the mass how to travel, whilst mass commands the geometry of space to bend. Rather than a static confinement, an orbit represents a dynamic state of perpetual free-fall, wherein forward momentum precisely balances gravitational descent.
+              </p>
+            </div>
+
+            <!-- Epigraph Quotation Panel -->
+            <aside class="codex-epigraph-panel">
+              <blockquote class="epigraph-text">
+                “When the celestial branches sway in the quiet of the void, each leaf tracks a path decreed not by whim, but by the immutable curvature of the unseen.”
+              </blockquote>
+              <cite class="epigraph-attribution">— Archival Fragment IV, Order of the Golden Willow</cite>
+            </aside>
+
+            <!-- 2.2 Mathematical Formulation -->
+            <div class="editorial-block">
+              <h2 class="section-title">
+                <span class="section-number">2.2</span>
+                <span>MATHEMATICAL FORMULATION</span>
+              </h2>
+              <p class="academic-prose">
+                Under classical Newtonian dynamics, the mutual gravitational force <span class="var-symbol">F</span> exerted between two point masses <span class="var-symbol">m₁</span> and <span class="var-symbol">m₂</span> separated by center-to-center distance <span class="var-symbol">r</span> is expressed by the inverse-square law:
+              </p>
+
+              <!-- Equation 1 -->
+              <div class="math-block">
+                <div class="formula-display">
+                  F = \frac{G \cdot m_1 \cdot m_2}{r^2}
+                </div>
+                <div class="formula-subtext">
+                  Where <span class="var-symbol">G = 6.67430 \times 10^{-11} \, \text{m}^3 \cdot \text{kg}^{-1} \cdot \text{s}^{-2}</span> designates the universal gravitational constant.
+                </div>
+              </div>
+
+              <p class="academic-prose" style="margin-top: 6px;">
+                For an orbiting satellite of mass <span class="var-symbol">m</span> tracing a stable circular trajectory of radius <span class="var-symbol">r</span> about primary body <span class="var-symbol">M</span>, equating gravitational attraction to the requisite centripetal force (<span class="var-symbol">F_c = m v^2 / r</span>) yields the ideal orbital velocity:
+              </p>
+
+              <!-- Equation 2 -->
+              <div class="math-block" style="margin-top: 6px;">
+                <div class="formula-display">
+                  v = \sqrt{\frac{G \cdot M}{r}}
+                </div>
+                <div class="variable-definition-grid">
+                  <span class="var-symbol">v</span>
+                  <span>Orbital velocity relative to primary body (<span style="color:#C6A15B">m · s⁻¹</span>)</span>
+                  <span class="var-symbol">M</span>
+                  <span>Mass of central gravitating body (<span style="color:#C6A15B">kg</span>)</span>
+                  <span class="var-symbol">r</span>
+                  <span>Radial distance from center of mass (<span style="color:#C6A15B">m</span>)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Diagram 2: Spacetime Curvature -->
+            <figure class="diagram-figure">
+              <div class="diagram-svg-wrap">
+                <object type="image/svg+xml" data="assets/spacetime-diagram.svg" style="width: 100%; height: auto; display: block;"></object>
+              </div>
+              <figcaption class="figure-caption">
+                <strong>Figure 2.2:</strong> Relativistic embedding of the metric potential well illustrating photon geodesic deflection across non-Euclidean coordinates.
+              </figcaption>
+            </figure>
+
+          </section>
+
+          <!-- RIGHT COLUMN -->
+          <section class="codex-column">
+
+            <!-- Diagram 1: Orbital Mechanics -->
+            <figure class="diagram-figure">
+              <div class="diagram-svg-wrap">
+                <object type="image/svg+xml" data="assets/orbital-diagram.svg" style="width: 100%; height: auto; display: block;"></object>
+              </div>
+              <figcaption class="figure-caption">
+                <strong>Figure 2.1:</strong> Keplerian orbital kinematics displaying primary focus <span style="color:#E8CB83">M</span>, velocity vector <span style="color:#38BDF8">v</span>, and gravitational vector <span style="color:#F43F5E">F_g</span>.
+              </figcaption>
+            </figure>
+
+            <!-- 2.3 Orbits and Stability -->
+            <div class="editorial-block">
+              <h2 class="section-title">
+                <span class="section-number">2.3</span>
+                <span>ORBITS AND STABILITY</span>
+              </h2>
+              <p class="academic-prose">
+                The long-term morphology of an orbital trajectory is governed by conservation of specific orbital energy (<span class="var-symbol">ε = v²/2 - GM/r</span>) and specific angular momentum (<span class="var-symbol">\vec{h} = \vec{r} \times \vec{v}</span>). In a pristine two-body framework, closed orbits manifest as conic ellipses with eccentricities bounded by <span class="var-symbol">0 \le e &lt; 1</span>.
+              </p>
+              <p class="academic-prose" style="margin-top: 4px;">
+                However, in physical astronomical systems, secular perturbations emerge from oblateness coefficients (<span class="var-symbol">J_2</span>), relativistic periastron precession, and third-body tidal resonances. Dynamical stability requires the system to reside within bounded energy wells, resisting catastrophic divergence through orbital resonance-locking mechanisms.
+              </p>
+            </div>
+
+            <!-- 2.4 Real-World Applications -->
+            <div class="editorial-block">
+              <h2 class="section-title">
+                <span class="section-number">2.4</span>
+                <span>REAL-WORLD APPLICATIONS</span>
+              </h2>
+              <p class="academic-prose">
+                The mathematical formalisms of orbital mechanics underpin modern astronautical, astrophysical, and terrestrial navigation systems:
+              </p>
+              
+              <ul class="applications-matrix">
+                <li>
+                  <strong>Satellite Constellations:</strong> Deployment of GPS/Galileo fleets within Medium Earth Orbit (MEO) incorporating General Relativistic time dilation offsets (+38.6 μs/day).
+                </li>
+                <li>
+                  <strong>Interplanetary Trajectory Optimization:</strong> Hohmann transfer windows and patched-conic gravity assist trajectories utilized by deep space exploration probes.
+                </li>
+                <li>
+                  <strong>Planetary Motion & Exoplanet Radial Velocities:</strong> Detection of extrasolar bodies via transit photometry and Doppler reflex motion of host stars.
+                </li>
+                <li>
+                  <strong>Gravitational Lensing Astrometry:</strong> Measurement of dark matter mass distributions via relativistic light deflection around galactic clusters.
+                </li>
+                <li>
+                  <strong>N-Body Symplectic Integration:</strong> Long-baseline simulation of solar system orbital stability over multi-million-year chaotic horizons.
+                </li>
+              </ul>
+            </div>
+
+          </section>
+
+        </main>
+
+        <!-- Academic Folio Footer -->
+        <footer class="codex-footer">
+          <span>LIBER MECHANICA COELESTIS · VOL. I</span>
+          <span class="footer-folio">PAGE 14</span>
+          <span>ORDINE SALICIS ARCHIVUM</span>
+        </footer>
+
+      </div>
+    </article>
+
+  </div>
+
+  <!-- ==========================================================================
+       PATIENT CONSENT: CAMERA & MICROPHONE BIO-TELEMETRY MODAL
+       ========================================================================== -->
+  <div class="telemetry-modal-backdrop" id="telemetryModalBackdrop">
+    <div class="telemetry-card">
+      <div class="telemetry-header">
+        <div class="telemetry-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E8CB83" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          <span>PATIENT BIO-TELEMETRY SYNCHRONIZATION</span>
+        </div>
+        <button class="btn-codex" onclick="CodexApp.closeTelemetryModal()" style="padding: 2px 8px;">✕</button>
+      </div>
+
+      <div class="telemetry-body">
+        <div class="consent-statement-box">
+          <strong style="color: #E8CB83; display: block; margin-bottom: 3px;">✦ INFORMED PATIENT CONSENT PROTOCOL</strong>
+          You are invited to enable optional real-time optical gaze tracking and vocal stress analysis for this clinical/academic codex evaluation. 
+          All stream processing executes <strong>strictly on your local device</strong> via WebRTC hardware acceleration. No visual or audio media is recorded, transmitted, or stored on external servers.
+        </div>
+
+        <div class="telemetry-viewports-grid">
+          <!-- Live Camera Viewport -->
+          <div class="video-preview-wrapper">
+            <video id="telemetryVideo" class="video-preview-element" autoplay playsinline muted></video>
+            <div class="video-cyber-reticle">
+              <div style="display: flex; justify-content: space-between;">
+                <div class="reticle-corner reticle-tl"></div>
+                <div class="reticle-corner reticle-tr"></div>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <div class="reticle-corner reticle-bl"></div>
+                <div class="reticle-corner reticle-br"></div>
+              </div>
+              <div class="reticle-label" id="opticalTrackLabel">OPTICAL GAZE: STANDBY</div>
+            </div>
+          </div>
+
+          <!-- Live Microphone Spectrogram -->
+          <div class="audio-preview-wrapper">
+            <div style="font-size: 0.62rem; color: #E8CB83; font-weight: 600; letter-spacing: 0.5px;">ACOUSTIC STRESS FREQUENCY</div>
+            <canvas id="audioCanvas" class="audio-canvas-element"></canvas>
+            <div class="audio-status-metrics">
+              <span id="audioRmsLabel">RMS: 0.00 dB</span>
+              <span id="audioStateLabel">MIC: STANDBY</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="telemetry-footer">
+        <button class="btn-codex" onclick="CodexApp.denyTelemetry()">Decline / Revoke Consent</button>
+        <button class="btn-codex btn-codex-primary" id="btnConsentConfirm" onclick="CodexApp.requestMediaConsent()">
+          ✦ Grant Consent & Enable Sensors
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Client Application Engine -->
+  <script>
+    window.CodexApp = {
+      mediaStream: null,
+      audioCtx: null,
+      analyser: null,
+      audioAnimFrame: null,
+      isTelemetryActive: false,
+
+      openTelemetryModal() {
+        document.getElementById('telemetryModalBackdrop').classList.add('active');
+      },
+
+      closeTelemetryModal() {
+        document.getElementById('telemetryModalBackdrop').classList.remove('active');
+      },
+
+      async requestMediaConsent() {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({
+            video: { width: { ideal: 640 }, height: { ideal: 480 }, facingMode: 'user' },
+            audio: true
+          });
+
+          this.mediaStream = stream;
+          this.isTelemetryActive = true;
+
+          // Connect Video Stream
+          const videoEl = document.getElementById('telemetryVideo');
+          videoEl.srcObject = stream;
+          document.getElementById('opticalTrackLabel').textContent = 'OPTICAL GAZE: LOCKED (30 FPS)';
+          document.getElementById('opticalTrackLabel').style.color = '#34D399';
+
+          // Initialize Web Audio API Spectrum Analyser
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          this.audioCtx = new AudioContext();
+          const source = this.audioCtx.createMediaStreamSource(stream);
+          this.analyser = this.audioCtx.createAnalyser();
+          this.analyser.fftSize = 64;
+          source.connect(this.analyser);
+
+          this.startAudioVisualization();
+          document.getElementById('audioStateLabel').textContent = 'MIC: ACTIVE';
+          document.getElementById('audioStateLabel').style.color = '#34D399';
+
+          // Update Topbar Status
+          document.getElementById('telemetryStatusLabel').textContent = 'Bio-Telemetry: Active';
+          document.getElementById('btnToggleTelemetry').style.borderColor = '#34D399';
+          document.getElementById('btnToggleTelemetry').style.color = '#34D399';
+
+          const consentBtn = document.getElementById('btnConsentConfirm');
+          consentBtn.textContent = '✓ Consent Granted & Sensors Active';
+          consentBtn.style.background = '#10B981';
+          consentBtn.style.color = '#000';
+
+          setTimeout(() => {
+            this.closeTelemetryModal();
+          }, 1200);
+
+        } catch (err) {
+          console.warn('Media permission denied or unavailable:', err);
+          alert('Sensor Access: Permission was not granted or devices were not found. Telemetry remains offline.');
+          this.denyTelemetry();
+        }
+      },
+
+      startAudioVisualization() {
+        const canvas = document.getElementById('audioCanvas');
+        const ctx = canvas.getContext('2d');
+        const bufferLength = this.analyser.frequencyBinCount;
+        const dataArray = new Uint8Array(bufferLength);
+
+        const draw = () => {
+          this.audioAnimFrame = requestAnimationFrame(draw);
+          this.analyser.getByteFrequencyData(dataArray);
+
+          canvas.width = canvas.clientWidth;
+          canvas.height = canvas.clientHeight;
+
+          ctx.fillStyle = '#0B0A0C';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+          const barWidth = (canvas.width / bufferLength) * 1.8;
+          let barHeight;
+          let x = 0;
+          let sum = 0;
+
+          for (let i = 0; i < bufferLength; i++) {
+            barHeight = (dataArray[i] / 255) * canvas.height;
+            sum += dataArray[i];
+
+            // Antique gold frequency gradient
+            const gradient = ctx.createLinearGradient(0, canvas.height, 0, canvas.height - barHeight);
+            gradient.addColorStop(0, '#72512D');
+            gradient.addColorStop(0.5, '#C6A15B');
+            gradient.addColorStop(1, '#E8CB83');
+
+            ctx.fillStyle = gradient;
+            ctx.fillRect(x, canvas.height - barHeight, barWidth - 1, barHeight);
+
+            x += barWidth;
+          }
+
+          const avg = sum / bufferLength;
+          const rmsDb = (avg > 0) ? (20 * Math.log10(avg / 255)).toFixed(1) : '-∞';
+          document.getElementById('audioRmsLabel').textContent = `RMS: ${rmsDb} dB`;
+        };
+
+        draw();
+      },
+
+      denyTelemetry() {
+        if (this.mediaStream) {
+          this.mediaStream.getTracks().forEach(track => track.stop());
+          this.mediaStream = null;
+        }
+        if (this.audioCtx) {
+          this.audioCtx.close();
+          this.audioCtx = null;
+        }
+        if (this.audioAnimFrame) {
+          cancelAnimationFrame(this.audioAnimFrame);
+        }
+
+        this.isTelemetryActive = false;
+        document.getElementById('telemetryVideo').srcObject = null;
+        document.getElementById('opticalTrackLabel').textContent = 'OPTICAL GAZE: STANDBY';
+        document.getElementById('opticalTrackLabel').style.color = '#E8CB83';
+        document.getElementById('audioStateLabel').textContent = 'MIC: STANDBY';
+        document.getElementById('audioStateLabel').style.color = '#9A9AA5';
+        document.getElementById('audioRmsLabel').textContent = 'RMS: 0.00 dB';
+
+        document.getElementById('telemetryStatusLabel').textContent = 'Bio-Telemetry: Offline';
+        document.getElementById('btnToggleTelemetry').style.borderColor = 'var(--antique-gold)';
+        document.getElementById('btnToggleTelemetry').style.color = 'var(--bright-gold)';
+
+        const consentBtn = document.getElementById('btnConsentConfirm');
+        consentBtn.textContent = '✦ Grant Consent & Enable Sensors';
+        consentBtn.style.background = 'linear-gradient(135deg, var(--antique-gold) 0%, var(--bright-gold) 100%)';
+        consentBtn.style.color = 'var(--obsidian)';
+
+        this.closeTelemetryModal();
+      },
+
+      downloadProductionPDF() {
+        window.location.href = 'output/sample-codex.pdf';
+      }
+    };
+  </script>
+</body>
+</html>
