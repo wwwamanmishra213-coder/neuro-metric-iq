@@ -2190,6 +2190,28 @@
         itemElapsedInterval: null,
         
         subtestScores: {
+          "nav_status_live": "EN VIVO",
+          "nav_status_complete": "COMPLETADO",
+          "nav_status_standby": "EN ESPERA",
+          "item_latency_label": "Latencia de ítem",
+          "quant_identify_prompt": "Identifique el valor correcto que reemplaza [ ? ]",
+          "corsi_memorize_prompt": "Memorice la secuencia de bloques brillantes...",
+          "corsi_span_word": "Longitud de amplitud",
+          "corsi_blocks_word": "Bloques",
+          "corsi_displaying_prompt": "Patrón mostrándose... observe atentamente.",
+          "corsi_replicate_prompt": "Replique la secuencia en el orden exacto.",
+          "round_word": "Ronda",
+          "game_calibrating": "Calibrando compuertas sinápticas...",
+          "game_saccadic_vector": "Vector de seguimiento sacádico: Coordenada",
+          "game_stroop_instruction": "Identifique el color de la fuente (no la palabra)",
+          "color_red": "ROJO",
+          "color_blue": "AZUL",
+          "color_green": "VERDE",
+          "color_yellow": "AMARILLO",
+          "choice_label": "Opción",
+          "key_label": "Tecla",
+          "select_option_label": "Seleccionar opción",
+          "holo_curve": "HOLO-CURVA",
           "sidebar_hub_sub": "Centro de Batería Cognitiva",
           "sidebar_subtests_active": "4 SUBPRUEBAS ACTIVAS",
           "sidebar_all_live": "TODOS EN VIVO",
@@ -2647,47 +2669,59 @@
         document.getElementById('speedContainer').classList.add('hidden');
         document.getElementById('responseBankCard').classList.add('hidden');
 
+        const i18n = window.I18nEngine;
+        const liveText = i18n ? i18n.t('nav_status_live', 'LIVE') : 'LIVE';
+        const compText = i18n ? i18n.t('nav_status_complete', 'COMPLETE') : 'COMPLETE';
+        const standText = i18n ? i18n.t('nav_status_standby', 'STANDBY') : 'STANDBY';
+
         for (let i = 1; i <= 4; i++) {
           const navEl = document.getElementById(`navSubtest${i}`);
           const statusEl = document.getElementById(`navStatus${i}`);
           if (i - 1 === subtestIdx) {
             navEl.className = 'p-3 rounded-2xl border border-cyan-400/40 bg-cyan-950/40 flex items-center justify-between';
-            statusEl.textContent = 'LIVE';
+            statusEl.textContent = liveText;
             statusEl.className = 'text-[10px] font-mono text-cyan-300 font-bold px-2 py-0.5 rounded bg-cyan-500/20';
           } else if (i - 1 < subtestIdx) {
             navEl.className = 'p-3 rounded-2xl border border-emerald-500/20 bg-emerald-950/20 flex items-center justify-between';
-            statusEl.textContent = 'COMPLETE';
+            statusEl.textContent = compText;
             statusEl.className = 'text-[10px] font-mono text-emerald-400 font-bold';
           } else {
             navEl.className = 'p-3 rounded-2xl border border-slate-700/40 bg-slate-900/30 opacity-40 flex items-center justify-between';
-            statusEl.textContent = 'STANDBY';
+            statusEl.textContent = standText;
             statusEl.className = 'text-[10px] font-mono text-slate-500';
           }
         }
 
         document.getElementById('topSubtestCounter').textContent = `${subtestIdx + 1} / 4`;
 
+        const subNames = [
+          i18n ? i18n.t('subtest_gf_title', 'Fluid Matrices (Gf)') : 'Fluid Matrices (Gf)',
+          i18n ? i18n.t('subtest_gwm_title', 'Working Memory (Gwm)') : 'Working Memory (Gwm)',
+          i18n ? i18n.t('subtest_gq_title', 'Quantitative Induction (Gq)') : 'Quantitative Induction (Gq)',
+          i18n ? i18n.t('subtest_gs_title', 'Processing Speed (Gs)') : 'Processing Speed (Gs)'
+        ];
+
         if (subtestIdx === 0) {
-          document.getElementById('topActiveSubtestName').textContent = 'Fluid Matrices (Gf)';
+          document.getElementById('topActiveSubtestName').textContent = subNames[0];
           document.getElementById('matrixContainer').classList.remove('hidden');
           document.getElementById('responseBankCard').classList.remove('hidden');
           document.getElementById('itemTrackerBox').classList.remove('hidden');
           this.renderItemPills(this.gfItems.length);
           this.loadMatrixItem(0);
         } else if (subtestIdx === 1) {
-          document.getElementById('topActiveSubtestName').textContent = 'Working Memory (Gwm)';
+          document.getElementById('topActiveSubtestName').textContent = subNames[1];
           document.getElementById('corsiContainer').classList.remove('hidden');
           document.getElementById('itemTrackerBox').classList.add('hidden');
           this.startCorsiSubtest();
         } else if (subtestIdx === 2) {
-          document.getElementById('topActiveSubtestName').textContent = 'Quantitative Induction (Gq)';
+          document.getElementById('topActiveSubtestName').textContent = subNames[2];
           document.getElementById('matrixContainer').classList.remove('hidden');
           document.getElementById('responseBankCard').classList.remove('hidden');
           document.getElementById('itemTrackerBox').classList.remove('hidden');
           this.renderItemPills(this.gqItems.length);
           this.loadQuantitativeItem(0);
         } else if (subtestIdx === 3) {
-          document.getElementById('topActiveSubtestName').textContent = 'Processing Speed (Gs)';
+          document.getElementById('topActiveSubtestName').textContent = subNames[3];
           document.getElementById('speedContainer').classList.remove('hidden');
           document.getElementById('itemTrackerBox').classList.add('hidden');
           this.startSpeedSubtest();
@@ -2774,7 +2808,7 @@
             <div class="px-8 py-5 rounded-2xl bg-slate-950/80 border border-cyan-400/40 font-mono text-2xl sm:text-3xl font-extrabold text-white tracking-wider holo-glow-cyan">
               ${item.question}
             </div>
-            <span class="text-xs font-mono text-cyan-300">Identify the correct value replacing [ ? ]</span>
+            <span class="text-xs font-mono text-cyan-300">${window.I18nEngine ? window.I18nEngine.t('quant_identify_prompt', 'Identify the correct value replacing [ ? ]') : 'Identify the correct value replacing [ ? ]'}</span>
           </div>
         `;
 
@@ -2792,7 +2826,8 @@
         const latencyEl = document.getElementById('itemTimeElapsed');
         this.state.itemElapsedInterval = setInterval(() => {
           const s = ((Date.now() - app.state.itemStartTime) / 1000).toFixed(1);
-          latencyEl.textContent = `Item Latency: ${s}s`;
+          const latWord = window.I18nEngine ? window.I18nEngine.t('item_latency_label', 'Item Latency') : 'Item Latency';
+          latencyEl.textContent = `${latWord}: ${s}s`;
         }, 100);
       },
 
@@ -2911,9 +2946,16 @@
         const c = this.state.corsi;
         c.isFlashing = true;
         c.userSequence = [];
-        document.getElementById('corsiSpanBadge').textContent = `Span Length: ${c.currentSpan} Blocks`;
-        document.getElementById('corsiStatusMsg').textContent = `Trial ${c.trialNumber}: Memorize the sequence of glowing blocks...`;
-        document.getElementById('corsiRecallIndicator').textContent = 'Pattern displaying... observe closely.';
+        const i18n = window.I18nEngine;
+        const spanWord = i18n ? i18n.t('corsi_span_word', 'Span Length') : 'Span Length';
+        const blocksWord = i18n ? i18n.t('corsi_blocks_word', 'Blocks') : 'Blocks';
+        const trialWord = i18n ? i18n.t('trial_label', 'Trial') : 'Trial';
+        const corsiPrompt = i18n ? i18n.t('corsi_memorize_prompt', 'Memorize the sequence of glowing blocks...') : 'Memorize the sequence of glowing blocks...';
+        const dispPrompt = i18n ? i18n.t('corsi_displaying_prompt', 'Pattern displaying... observe closely.') : 'Pattern displaying... observe closely.';
+
+        document.getElementById('corsiSpanBadge').textContent = `${spanWord}: ${c.currentSpan} ${blocksWord}`;
+        document.getElementById('corsiStatusMsg').textContent = `${trialWord} ${c.trialNumber}: ${corsiPrompt}`;
+        document.getElementById('corsiRecallIndicator').textContent = dispPrompt;
         document.getElementById('corsiSubmitBtn').disabled = true;
 
         for (let i = 0; i < 16; i++) {
@@ -4205,15 +4247,20 @@
             const div = document.createElement('div');
             div.className = 'matrix-holo-tile rounded-2xl p-2.5 sm:p-3 flex flex-col items-center justify-between relative cursor-pointer active:scale-95 hover:border-indigo-400 transition-all touch-manipulation group bg-slate-900/90 border border-slate-700/80 hover:shadow-lg hover:shadow-indigo-950/60';
             div.setAttribute('data-choice-idx', idx);
+            const i18n = window.I18nEngine;
+            const choiceLbl = i18n ? i18n.t('choice_label', 'Choice') : 'Choice';
+            const keyLbl = i18n ? i18n.t('key_label', 'Key') : 'Key';
+            const selectOptLbl = i18n ? i18n.t('select_option_label', 'Select Option') : 'Select Option';
+
             div.innerHTML = `
               <div class="flex items-center justify-between w-full mb-1">
-                <span class="px-2.5 py-0.5 rounded-lg bg-indigo-500/20 border border-indigo-400/40 text-indigo-300 font-mono text-xs font-bold group-hover:bg-indigo-400 group-hover:text-black transition">Choice [${letter}]</span>
-                <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded">Key: ${num}</span>
+                <span class="px-2.5 py-0.5 rounded-lg bg-indigo-500/20 border border-indigo-400/40 text-indigo-300 font-mono text-xs font-bold group-hover:bg-indigo-400 group-hover:text-black transition">${choiceLbl} [${letter}]</span>
+                <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded">${keyLbl}: ${num}</span>
               </div>
               <div class="flex items-center justify-center my-1.5 w-full">
                 ${this.renderMatrixSVG(opt.matrixData, 80, 80)}
               </div>
-              <span class="text-[11px] font-mono text-indigo-300 font-semibold group-hover:text-white mt-0.5">Select Option ${letter}</span>
+              <span class="text-[11px] font-mono text-indigo-300 font-semibold group-hover:text-white mt-0.5">${selectOptLbl} ${letter}</span>
             `;
             div.onclick = () => this.recordAnswer(opt.isCorrect);
             grid.appendChild(div);
@@ -5151,6 +5198,10 @@
         const tInfo = window.I18nEngine ? window.I18nEngine.getClinicalItem(this.activeKey, index) : null;
         document.getElementById('clinicalItemBadge').textContent = `${itemLbl} ${index + 1} of ${inv.questions.length}`;
         document.getElementById('clinicalCategoryBadge').textContent = (tInfo && tInfo.category) ? tInfo.category : inv.category;
+        const scaleNotice = document.getElementById('clinicalScaleNotice');
+        if (scaleNotice && tInfo && tInfo.scale) {
+          scaleNotice.textContent = tInfo.scale;
+        }
         document.getElementById('clinicalQuestionText').textContent = `"${(tInfo && tInfo.text) ? tInfo.text : q.text}"`;
         const titleEl = document.getElementById('clinicalBatteryTitle');
         if (titleEl) titleEl.textContent = (tInfo && tInfo.title) ? tInfo.title : inv.title;
@@ -5414,7 +5465,7 @@
 
         if (titleEl) titleEl.innerText = title;
         if (subEl) subEl.innerText = sub;
-        if (roundBadge) roundBadge.innerText = `Round ${this.currentRound} / ${this.maxRounds}`;
+        const rndWord = i18n ? i18n.t('round_word', 'Round') : 'Round'; if (roundBadge) roundBadge.innerText = `${rndWord} ${this.currentRound} / ${this.maxRounds}`;
         
         const totalAttempts = this.currentTrial;
         const acc = totalAttempts > 0 ? Math.round((this.accuracyCount / totalAttempts) * 100) : 100;
@@ -5469,7 +5520,7 @@
             <div class="w-14 h-14 rounded-full border-2 border-dashed border-slate-600 flex items-center justify-center animate-spin">
               <span class="w-3 h-3 rounded-full bg-slate-500"></span>
             </div>
-            <span class="text-xs font-mono text-slate-500">Calibrating Synaptic Gating...</span>
+            <span class="text-xs font-mono text-slate-500">${window.I18nEngine ? window.I18nEngine.t('game_calibrating', 'Calibrating Synaptic Gating...') : 'Calibrating Synaptic Gating...'}</span>
           </div>
         `;
 
@@ -5547,7 +5598,7 @@
               <span class="w-4 h-4 rounded-full bg-teal-300 animate-ping"></span>
             </div>
             <div class="absolute bottom-3 left-4 text-[10px] font-mono text-slate-400">
-              Saccadic Tracking Vector: Coordinate (${Math.round(posX)}, ${Math.round(posY)})
+              ${window.I18nEngine ? window.I18nEngine.t('game_saccadic_vector', 'Saccadic Tracking Vector: Coordinate') : 'Saccadic Tracking Vector: Coordinate'} (${Math.round(posX)}, ${Math.round(posY)})
             </div>
           </div>
         `;
@@ -5609,18 +5660,21 @@
         viewport.innerHTML = `
           <div class="flex flex-col items-center justify-center space-y-6">
             <span class="text-[11px] font-mono text-slate-400 uppercase tracking-widest">
-              Identify Font Color (Not Word)
+              ${window.I18nEngine ? window.I18nEngine.t('game_stroop_instruction', 'Identify Font Color (Not Word)') : 'Identify Font Color (Not Word)'}
             </span>
             <div class="text-4xl sm:text-5xl font-black tracking-widest select-none transition animate-scaleUp" style="color: ${fontObj.hex}; text-shadow: 0 0 20px ${fontObj.hex}80;">
-              ${wordObj.name}
+              ${window.I18nEngine ? window.I18nEngine.t('color_' + wordObj.name.toLowerCase(), wordObj.name) : wordObj.name}
             </div>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full max-w-md px-4">
-              ${colors.map(c => `
+              ${colors.map(c => {
+                const i18n = window.I18nEngine;
+                const localizedName = i18n ? i18n.t('color_' + c.name.toLowerCase(), c.name) : c.name;
+                return `
                 <button onclick="NeuroGameEngine.handleStroopChoice('${c.name}')" class="py-2.5 px-3 rounded-xl bg-slate-900 border border-slate-700 hover:border-cyan-400 font-mono text-xs font-bold transition active:scale-95 text-white flex items-center justify-center space-x-2">
                   <span class="w-2.5 h-2.5 rounded-full" style="background-color: ${c.hex}"></span>
-                  <span>${c.name}</span>
+                  <span>${localizedName}</span>
                 </button>
-              `).join('')}
+              `;}).join('')}
             </div>
           </div>
         `;
@@ -6020,6 +6074,28 @@
       
       translations: {
         en: {
+          "nav_status_live": "LIVE",
+          "nav_status_complete": "COMPLETE",
+          "nav_status_standby": "STANDBY",
+          "item_latency_label": "Item Latency",
+          "quant_identify_prompt": "Identify the correct value replacing [ ? ]",
+          "corsi_memorize_prompt": "Memorize the sequence of glowing blocks...",
+          "corsi_span_word": "Span Length",
+          "corsi_blocks_word": "Blocks",
+          "corsi_displaying_prompt": "Pattern displaying... observe closely.",
+          "corsi_replicate_prompt": "Replicate sequence in exact order.",
+          "round_word": "Round",
+          "game_calibrating": "Calibrating Synaptic Gating...",
+          "game_saccadic_vector": "Saccadic Tracking Vector: Coordinate",
+          "game_stroop_instruction": "Identify Font Color (Not Word)",
+          "color_red": "RED",
+          "color_blue": "BLUE",
+          "color_green": "GREEN",
+          "color_yellow": "YELLOW",
+          "choice_label": "Choice",
+          "key_label": "Key",
+          "select_option_label": "Select Option",
+          "holo_curve": "HOLO-CURVE",
           "sidebar_hub_sub": "Cognitive Battery Hub",
           "sidebar_subtests_active": "4 SUBTESTS ACTIVE",
           "sidebar_all_live": "ALL LIVE",
@@ -6252,6 +6328,28 @@
         },
 
         hi: {
+          "nav_status_live": "लाइव",
+          "nav_status_complete": "पूर्ण",
+          "nav_status_standby": "स्टैंडबाय",
+          "item_latency_label": "आइटम विलंबता",
+          "quant_identify_prompt": "[ ? ] के स्थान पर सही मान पहचानें",
+          "corsi_memorize_prompt": "चमकते ब्लॉकों के अनुक्रम को याद रखें...",
+          "corsi_span_word": "स्पैन लंबाई",
+          "corsi_blocks_word": "ब्लॉक",
+          "corsi_displaying_prompt": "पैटर्न प्रदर्शित हो रहा है... ध्यान से देखें।",
+          "corsi_replicate_prompt": "सटीक क्रम में अनुक्रम को दोहराएं।",
+          "round_word": "दौर",
+          "game_calibrating": "सिनैप्टिक गेटिंग कैलिब्रेट हो रही है...",
+          "game_saccadic_vector": "सैकैडिक ट्रैकिंग वेक्टर: निर्देशांक",
+          "game_stroop_instruction": "फ़ॉन्ट का रंग पहचानें (शब्द नहीं)",
+          "color_red": "लाल",
+          "color_blue": "नीला",
+          "color_green": "हरा",
+          "color_yellow": "पीला",
+          "choice_label": "विकल्प",
+          "key_label": "कुंजी",
+          "select_option_label": "विकल्प चुनें",
+          "holo_curve": "होलो-वक्र",
           "sidebar_hub_sub": "संज्ञानात्मक परीक्षण केंद्र",
           "sidebar_subtests_active": "4 उपपरीक्षण सक्रिय",
           "sidebar_all_live": "सभी लाइव",
@@ -6636,6 +6734,28 @@
         },
 
         ru: {
+          "nav_status_live": "АКТИВНО",
+          "nav_status_complete": "ЗАВЕРШЕНО",
+          "nav_status_standby": "ОЖИДАНИЕ",
+          "item_latency_label": "Латентность элемента",
+          "quant_identify_prompt": "Определите правильное значение вместо [ ? ]",
+          "corsi_memorize_prompt": "Запомните последовательность светящихся блоков...",
+          "corsi_span_word": "Длина диапазона",
+          "corsi_blocks_word": "Блоков",
+          "corsi_displaying_prompt": "Отображение паттерна... наблюдайте внимательно.",
+          "corsi_replicate_prompt": "Воспроизведите последовательность в точном порядке.",
+          "round_word": "Раунд",
+          "game_calibrating": "Калибровка синаптического контроля...",
+          "game_saccadic_vector": "Вектор саккадического слежения: Координата",
+          "game_stroop_instruction": "Определите цвет шрифта (не само слово)",
+          "color_red": "КРАСНЫЙ",
+          "color_blue": "СИНИЙ",
+          "color_green": "ЗЕЛЕНЫЙ",
+          "color_yellow": "ЖЕЛТЫЙ",
+          "choice_label": "Вариант",
+          "key_label": "Клавиша",
+          "select_option_label": "Выбрать вариант",
+          "holo_curve": "ГОЛО-КРИВАЯ",
           "sidebar_hub_sub": "Центр когнитивных батарей",
           "sidebar_subtests_active": "4 СУБТЕСТА АКТИВНЫ",
           "sidebar_all_live": "ВСЕ ДОСТУПНЫ",
@@ -7007,48 +7127,483 @@
         if (lang === 'en') return null;
 
         const titles = {
-          hi: {
-            adhd: { title: "एडीएचडी नैदानिक स्क्रीनर (ASRS v1.1)", subtitle: "विश्व स्वास्थ्य संगठन वयस्क एडीएचडी स्व-रिपोर्ट पैमाना", category: "वयस्क ध्यान और कार्यकारी फोकस" },
-            ocd: { title: "जुनूनी-बाध्यकारी सूची (OCI-R)", subtitle: "जांच, धुलाई, क्रमबद्धता, जुनून एवं संकट", category: "जुनूनी-बाध्यकारी स्पेक्ट्रम" },
-            schizotypy: { title: "स्किज़ोटाइपल व्यक्तित्व प्रश्नावली (SPQ-B)", subtitle: "विचार, असामान्य धारणाएं एवं सामाजिक चिंता", category: "स्किज़ोटाइपल व्यक्तित्व स्पेक्ट्रम" },
-            trauma: { title: "आघात और तनाव स्क्रीनर (PCL-5)", subtitle: "डीएसएम-5 पीटीएसडी लक्षण चेकलिस्ट", category: "आघात और तनाव विकार" },
-            depression: { title: "अवसाद गंभीरता स्क्रीनर (PHQ-9)", subtitle: "रोगी स्वास्थ्य प्रश्नावली-9 नैदानिक अवसाद पैमाना", category: "मूड और भावात्मक विकार" },
-            anxiety: { title: "सामान्यीकृत चिंता स्क्रीनर (GAD-7)", subtitle: "सामान्यीकृत चिंता विकार 7-आइटम नैदानिक पैमाना", category: "स्वायत्त चिंता विकार" }
-          },
-          es: {
-            adhd: { title: "Evaluación Clínica de TDAH (ASRS v1.1)", subtitle: "Escala de Autoinforme de TDAH para Adultos de la OMS", category: "ATENCIÓN Y ENFOQUE EJECUTIVO" },
-            ocd: { title: "Inventario Obsesivo-Compulsivo (OCI-R)", subtitle: "Comprobación, Lavado, Orden, Obsesiones y Malestar", category: "ESPECTRO OBSESIVO-COMPULSIVO" },
-            schizotypy: { title: "Cuestionario de Personalidad Esquizotípica (SPQ-B)", subtitle: "Pensamiento Mágico, Percepción Inusual y Ansiedad", category: "ESPECTRO ESQUIZOTÍPICO" },
-            trauma: { title: "Evaluación de Trauma y Estrés Agudo (PCL-5)", subtitle: "Lista de Verificación de TEPT según DSM-5", category: "TRAUMA Y ESTRÉS POSTRAUMÁTICO" },
-            depression: { title: "Evaluación de Severidad de Depresión (PHQ-9)", subtitle: "Cuestionario de Salud del Paciente DSM-5", category: "TRASTORNOS DEL ESTADO DE ÁNIMO" },
-            anxiety: { title: "Evaluación de Ansiedad Generalizada (GAD-7)", subtitle: "Escala Clínica de Trastorno de Ansiedad Generalizada", category: "TRASTORNOS DE ANSIEDAD" }
-          },
-          ru: {
-            adhd: { title: "Клинический скрининг СДВГ (ASRS v1.1)", subtitle: "Шкала самооценки СДВГ у взрослых Всемирной организации здравоохранения", category: "ВНИМАНИЕ И ИСПОЛНИТЕЛЬНЫЙ КОНТРОЛЬ" },
-            ocd: { title: "Опросник обсессивно-компульсивных расстройств (OCI-R)", subtitle: "Проверка, чистота, симметрия, навязчивые мысли и дистресс", category: "ОБСЕССИВНО-КОМПУЛЬСИВНЫЙ СПЕКТР" },
-            schizotypy: { title: "Опросник шизотипического расстройства (SPQ-B)", subtitle: "Магическое мышление, необычное восприятие и социальная тревожность", category: "ШИЗОТИПИЧЕСКИЙ СПЕКТР" },
-            trauma: { title: "Скрининг травмы и острого стресса (PCL-5)", subtitle: "Оценочный чек-лист ПТСР по DSM-5", category: "ТРАВМА И ПОСТТРАВМАТИЧЕСКИЙ СТРЕСС" },
-            depression: { title: "Скрининг депрессии (PHQ-9)", subtitle: "Опросник здоровья пациента: оценка тяжести депрессии", category: "АФФЕКТИВНЫЕ РАССТРОЙСТВА" },
-            anxiety: { title: "Скрининг генерализованной тревожности (GAD-7)", subtitle: "Клиническая шкала генерализованного тревожного расстройства", category: "ТРЕВОЖНЫЕ РАССТРОЙСТВА" }
-          }
-        };
+        "hi": {
+                "adhd": {
+                        "title": "एडीएचडी नैदानिक स्क्रीनर (ASRS v1.1)",
+                        "subtitle": "विश्व स्वास्थ्य संगठन वयस्क एडीएचडी स्व-रिपोर्ट पैमाना",
+                        "category": "वयस्क ध्यान और कार्यकारी फोकस",
+                        "scale": "आवृत्ति 0 — 4 पैमाना"
+                },
+                "ocd": {
+                        "title": "जुनूनी-बाध्यकारी सूची (OCI-R)",
+                        "subtitle": "जांच, धुलाई, क्रमबद्धता, जुनून एवं संकट",
+                        "category": "जुनूनी-बाध्यकारी स्पेक्ट्रम",
+                        "scale": "व्यथा 0 — 4 पैमाना"
+                },
+                "schizotypy": {
+                        "title": "स्किज़ोटाइपल व्यक्तित्व प्रश्नावली (SPQ-B)",
+                        "subtitle": "विचार, असामान्य धारणाएं एवं सामाजिक चिंता",
+                        "category": "स्किज़ोटाइपल व्यक्तित्व स्पेक्ट्रम",
+                        "scale": "सहमति 0 — 1 पैमाना"
+                },
+                "autism": {
+                        "title": "ऑटिज़्म स्पेक्ट्रम भागफल (AQ-10)",
+                        "subtitle": "बैरन-कोहेन वयस्क न्यूरोडाइवर्सिटी स्क्रीनिंग स्केल",
+                        "category": "न्यूरोडाइवर्सिटी एवं विस्तार प्रसंस्करण",
+                        "scale": "सहमति 1 — 4 पैमाना"
+                },
+                "anxiety": {
+                        "title": "सामान्यीकृत चिंता स्क्रीनर (GAD-7)",
+                        "subtitle": "सामान्यीकृत चिंता विकार 7-आइटम नैदानिक पैमाना",
+                        "category": "स्वायत्त चिंता विकार",
+                        "scale": "आवृत्ति 0 — 3 पैमाना"
+                },
+                "depression": {
+                        "title": "अवसाद गंभीरता स्क्रीनर (PHQ-9)",
+                        "subtitle": "रोगी स्वास्थ्य प्रश्नावली-9 नैदानिक अवसाद पैमाना",
+                        "category": "मूड और भावात्मक विकार",
+                        "scale": "आवृत्ति 0 — 3 पैमाना"
+                },
+                "executive": {
+                        "title": "कार्यकारी कार्यप्रणाली अभाव स्क्रीनर (BRIEF-A)",
+                        "subtitle": "अवरोध, संज्ञानात्मक बदलाव, कार्यशील स्मृति एवं योजना",
+                        "category": "वास्तविक दुनिया कार्यकारी कार्यप्रणाली सूची",
+                        "scale": "आवृत्ति 0 — 2 पैमाना"
+                },
+                "trauma": {
+                        "title": "आघात और तनाव स्क्रीनर (PCL-5)",
+                        "subtitle": "डीएसएम-5 पीटीएसडी लक्षण चेकलिस्ट",
+                        "category": "आघात और तनाव विकार",
+                        "scale": "गंभीरता 0 — 4 पैमाना"
+                }
+        },
+        "es": {
+                "adhd": {
+                        "title": "Evaluación Clínica de TDAH (ASRS v1.1)",
+                        "subtitle": "Escala de Autoinforme de TDAH para Adultos de la OMS",
+                        "category": "ATENCIÓN Y ENFOQUE EJECUTIVO",
+                        "scale": "Escala de Frecuencia 0 — 4"
+                },
+                "ocd": {
+                        "title": "Inventario Obsesivo-Compulsivo (OCI-R)",
+                        "subtitle": "Comprobación, Lavado, Orden, Obsesiones y Malestar",
+                        "category": "ESPECTRO OBSESIVO-COMPULSIVO",
+                        "scale": "Escala de Malestar 0 — 4"
+                },
+                "schizotypy": {
+                        "title": "Cuestionario de Personalidad Esquizotípica (SPQ-B)",
+                        "subtitle": "Pensamiento Mágico, Percepción Inusual y Ansiedad",
+                        "category": "ESPECTRO ESQUIZOTÍPICO",
+                        "scale": "Escala Dicotómica 0 — 1"
+                },
+                "autism": {
+                        "title": "Cociente de Espectro Autista (AQ-10)",
+                        "subtitle": "Escala Breve de Evaluación del Neurodesarrollo de Baron-Cohen",
+                        "category": "NEURODIVERSIDAD Y DETALLE",
+                        "scale": "Escala de Acuerdo 1 — 4"
+                },
+                "anxiety": {
+                        "title": "Evaluación de Ansiedad Generalizada (GAD-7)",
+                        "subtitle": "Escala Clínica de Trastorno de Ansiedad Generalizada",
+                        "category": "TRASTORNOS DE ANSIEDAD",
+                        "scale": "Escala de Frecuencia 0 — 3"
+                },
+                "depression": {
+                        "title": "Evaluación de Severidad de Depresión (PHQ-9)",
+                        "subtitle": "Cuestionario de Salud del Paciente DSM-5",
+                        "category": "TRASTORNOS DEL ESTADO DE ÁNIMO",
+                        "scale": "Escala de Frecuencia 0 — 3"
+                },
+                "executive": {
+                        "title": "Déficits de Función Ejecutiva (BRIEF-A)",
+                        "subtitle": "Inhibición, Cambio Cognitivo, Memoria de Trabajo y Organización",
+                        "category": "FUNCIONAMIENTO EJECUTIVO REAL",
+                        "scale": "Escala de Frecuencia 0 — 2"
+                },
+                "trauma": {
+                        "title": "Evaluación de Trauma y Estrés Agudo (PCL-5)",
+                        "subtitle": "Lista de Verificación de TEPT según DSM-5",
+                        "category": "TRAUMA Y ESTRÉS POSTRAUMÁTICO",
+                        "scale": "Escala de Severidad 0 — 4"
+                }
+        },
+        "ru": {
+                "adhd": {
+                        "title": "Клинический скрининг СДВГ (ASRS v1.1)",
+                        "subtitle": "Шкала самооценки СДВГ у взрослых Всемирной организации здравоохранения",
+                        "category": "ВНИМАНИЕ И ИСПОЛНИТЕЛЬНЫЙ КОНТРОЛЬ",
+                        "scale": "Шкала частоты 0 — 4"
+                },
+                "ocd": {
+                        "title": "Опросник обсессивно-компульсивных расстройств (OCI-R)",
+                        "subtitle": "Проверка, чистота, симметрия, навязчивые мысли и дистресс",
+                        "category": "ОБСЕССИВНО-КОМПУЛЬСИВНЫЙ СПЕКТР",
+                        "scale": "Шкала дистресса 0 — 4"
+                },
+                "schizotypy": {
+                        "title": "Опросник шизотипического расстройства (SPQ-B)",
+                        "subtitle": "Магическое мышление, необычное восприятие и социальная тревожность",
+                        "category": "ШИЗОТИПИЧЕСКИЙ СПЕКТР",
+                        "scale": "Дихотомическая шкала 0 — 1"
+                },
+                "autism": {
+                        "title": "Коэффициент аутистического спектра (AQ-10)",
+                        "subtitle": "Краткая шкала оценки нейроразнообразия Барона-Коэна",
+                        "category": "НЕЙРОРАЗНООБРАЗИЕ И ДЕТАЛИЗАЦИЯ",
+                        "scale": "Шкала согласия 1 — 4"
+                },
+                "anxiety": {
+                        "title": "Скрининг генерализованной тревожности (GAD-7)",
+                        "subtitle": "Клиническая шкала генерализованного тревожного расстройства",
+                        "category": "ТРЕВОЖНЫЕ РАССТРОЙСТВА",
+                        "scale": "Шкала частоты 0 — 3"
+                },
+                "depression": {
+                        "title": "Скрининг депрессии (PHQ-9)",
+                        "subtitle": "Опросник здоровья пациента: оценка тяжести депрессии",
+                        "category": "АФФЕКТИВНЫЕ РАССТРОЙСТВА",
+                        "scale": "Шкала частоты 0 — 3"
+                },
+                "executive": {
+                        "title": "Нарушения исполнительных функций (BRIEF-A)",
+                        "subtitle": "Торможение, когнитивная гибкость, рабочая память и организация",
+                        "category": "РЕАЛЬНЫЙ ИСПОЛНИТЕЛЬНЫЙ КОНТРОЛЬ",
+                        "scale": "Шкала частоты 0 — 2"
+                },
+                "trauma": {
+                        "title": "Скрининг травмы и острого стресса (PCL-5)",
+                        "subtitle": "Оценочный чек-лист ПТСР по DSM-5",
+                        "category": "ТРАВМА И ПОСТТРАВМАТИЧЕСКИЙ СТРЕСС",
+                        "scale": "Шкала тяжести 0 — 4"
+                }
+        }
+};
 
         const qBanks = {
-          adhd: {
-            hi: ["जब किसी परियोजना के चुनौतीपूर्ण हिस्से पूरे हो जाते हैं, तो आपको अंतिम विवरणों को समाप्त करने में कितनी बार परेशानी होती है?", "जब आपको ऐसा कार्य करना होता है जिसमें संगठन की आवश्यकता होती है, तो आपको चीजों को व्यवस्थित करने में कितनी बार कठिनाई होती है?", "अपॉइंटमेंट या दायित्वों को याद रखने में आपको कितनी बार परेशानी होती है?", "जब आपके पास कोई ऐसा कार्य होता है जिसमें बहुत अधिक विचार की आवश्यकता होती है, तो आप कितनी बार शुरुआत करने से बचते हैं या देरी करते हैं?", "जब आपको लंबे समय तक बैठना पड़ता है, तो आप अपने हाथों या पैरों से कितनी बार बेचैन या छटपटाते हैं?", "आप कितनी बार अत्यधिक सक्रिय महसूस करते हैं और ऐसा लगता है जैसे आप किसी मोटर द्वारा संचालित हों?", "जब आपको किसी उबाऊ या कठिन प्रोजेक्ट पर काम करना होता है, तो आप कितनी बार लापरवाही से गलतियाँ करते हैं?", "उबाऊ या दोहराव वाला काम करते समय आपको अपना ध्यान बनाए रखने में कितनी बार कठिनाई होती है?", "लोग जब आपसे सीधे बात कर रहे हों, तब भी उनकी बातों पर ध्यान केंद्रित करने में आपको कितनी बार कठिनाई होती है?", "घर या काम पर चीजें गलत जगह रखने या उन्हें ढूंढने में आपको कितनी बार परेशानी होती है?", "आप अपने आस-पास की गतिविधि या शोर से कितनी बार विचलित होते हैं?", "मीटिंग या अन्य स्थितियों में, जहाँ आपसे बैठे रहने की उम्मीद की जाती है, आप कितनी बार अपनी सीट छोड़ देते हैं?", "आप कितनी बार बेचैनी महसूस करते हैं?", "जब आपके पास अपने लिए खाली समय होता है, तो आपको तनावमुक्त और शांत होने में कितनी बार कठिनाई होती है?", "सामाजिक स्थितियों में आप कितनी बार खुद को बहुत अधिक बात करते हुए पाते हैं?", "बातचीत के दौरान, आप कितनी बार सामने वाले के वाक्य को उसके पूरा करने से पहले ही खुद पूरा कर देते हैं?", "बारी-बारी से काम करने की स्थितियों में आपको अपनी बारी का इंतज़ार करने में कितनी बार कठिनाई होती है?", "जब दूसरे लोग व्यस्त होते हैं, तो आप कितनी बार उनके काम में बाधा डालते हैं?"],
-            es: ["¿Con qué frecuencia tiene dificultades para ultimar los detalles de un proyecto una vez superadas las partes difíciles?", "¿Con qué frecuencia le resulta difícil poner las cosas en orden cuando debe realizar una tarea que requiere organización?", "¿Con qué frecuencia tiene problemas para recordar citas u obligaciones?", "Cuando tiene una tarea que requiere mucho esfuerzo mental, ¿con qué frecuencia la evita o retrasa su inicio?", "¿Con qué frecuencia mueve inquietamente las manos o los pies cuando tiene que permanecer sentado mucho tiempo?", "¿Con qué frecuencia se siente excesivamente activo e impulsado a hacer cosas, como accionado por un motor?", "¿Con qué frecuencia comete errores por descuido al trabajar en un proyecto aburrido o difícil?", "¿Con qué frecuencia tiene dificultades para mantener la atención cuando realiza un trabajo aburrido o repetitivo?", "¿Con qué frecuencia le cuesta concentrarse en lo que le dicen, incluso cuando le hablan directamente?", "¿Con qué frecuencia extravía objetos o le cuesta encontrarlos en casa o en el trabajo?", "¿Con qué frecuencia se distrae con ruidos o actividades a su alrededor?", "¿Con qué frecuencia abandona su asiento en reuniones u otras situaciones en las que se espera que permanezca sentado?", "¿Con qué frecuencia se siente inquieto o intranquilo?", "¿Con qué frecuencia le resulta difícil relajarse y desconectar cuando dispone de tiempo libre?", "¿Con qué frecuencia se descubre hablando en exceso en situaciones sociales?", "En una conversación, ¿con qué frecuencia termina las frases de las personas antes de que ellas mismas puedan acabarlas?", "¿Con qué frecuencia tiene dificultades para esperar su turno en situaciones en las que es necesario?", "¿Con qué frecuencia interrumpe a los demás cuando están ocupados?"],
-            ru: ["Как часто вы испытываете трудности с завершением финальных деталей проекта, когда сложная часть уже сделана?", "Как часто у вас возникают сложности с наведением порядка, когда предстоит задача, требующая организованности?", "Как часто вы забываете о назначенных встречах или обязательствах?", "Когда перед вами задача, требующая глубоких размышлений, как часто вы откладываете ее начало?", "Как часто вы ерзаете, двигаете руками или ногами, когда приходится долго сидеть на месте?", "Как часто вы чувствуете чрезмерную активность и непреодолимое желание действовать, будто внутри работает мотор?", "Как часто вы совершаете ошибки по невнимательности, работая над скучным или сложным проектом?", "Как часто вам трудно удерживать внимание при выполнении монотонной или рутинной работы?", "Как часто вам трудно сосредоточиться на словах собеседника, даже когда обращаются непосредственно к вам?", "Как часто вы теряете вещи дома или на работе либо тратите много времени на их поиск?", "Как часто вас отвлекают посторонние шумы или происходящее вокруг?", "Как часто вы встаете со своего места на собраниях или в ситуациях, когда положено сидеть?", "Как часто вы испытываете физическое беспокойство и неусидчивость?", "Как часто вам тяжело расслабиться и отдохнуть в свободное время?", "Как часто вы замечаете, что говорите слишком много в компании или на встречах?", "Как часто в диалоге вы заканчиваете фразы за собеседника, не дожидаясь, пока он договорит?", "Как часто вам тяжело дожидаться своей очереди в ситуациях, где это требуется?", "Как часто вы перебиваете других людей, когда они заняты?"]
-          }
-        };
+        "hi": {
+                "depression": [
+                        "उन चीजों को करने में बहुत कम रुचि या खुशी महसूस होना जिनका आप सामान्य रूप से आनंद लेते हैं।",
+                        "उदासी, निराशा, उदासी या खालीपन महसूस होना।",
+                        "सोने में परेशानी, नींद बीच में टूटना, या बहुत अधिक सोना।",
+                        "थकान, सुस्ती, या शारीरिक ऊर्जा की अत्यधिक कमी महसूस होना।",
+                        "भूख कम लगना या भावनात्मक तनाव से निपटने के लिए जरूरत से ज्यादा खाना।",
+                        "अपने बारे में बुरा महसूस करना — कि आप एक असफल व्यक्ति हैं या आपने खुद को या अपने परिवार को निराश किया है।",
+                        "चीजों पर ध्यान केंद्रित करने में परेशानी, जैसे दस्तावेज़ पढ़ना या काम करना।",
+                        "इतनी धीमी गति से चलना या बोलना कि अन्य लोगों ने ध्यान दिया हो, या असामान्य रूप से बेचैन होना।",
+                        "विचार आना कि आपके न होने से बेहतर होता या किसी तरह दर्द से छुटकारा मिल जाए।"
+                ],
+                "anxiety": [
+                        "घबराहट, अत्यधिक चिंता, या बेचैनी की स्थिति महसूस होना।",
+                        "चिंता को रोकने या नियंत्रित करने में असमर्थ महसूस करना।",
+                        "अलग-अलग चीजों के बारे में अत्यधिक और लगातार चिंता करना।",
+                        "आराम करने और शांत होने में अत्यधिक परेशानी होना।",
+                        "इतनी बेचैनी होना कि एक जगह शांत बैठना मुश्किल हो जाए।",
+                        "आसानी से चिड़चिड़े या परेशान हो जाना।",
+                        "अचानक अत्यधिक डर महसूस होना, जैसे कुछ भयानक घटने वाला हो।"
+                ],
+                "ocd": [
+                        "मैंने अपने हाथ आवश्यकता से अधिक बार और बहुत लंबे समय तक धोए हैं।",
+                        "मैं दरवाजों, खिड़कियों या बिजली के उपकरणों को बार-बार तब तक चेक करता हूँ जब तक तसल्ली न हो जाए।",
+                        "मैं चीजों को एक निश्चित व्यवस्था, समरूपता या क्रम में व्यवस्थित करने के लिए मजबूर महसूस करता हूँ।",
+                        "मेरे मन में अनचाहे और परेशान करने वाले विचार बार-बार आते हैं जिन्हें मैं रोक नहीं पाता।",
+                        "अगर चीजें सही जगह पर न हों, तो मुझे गहरी बेचैनी और तनाव महसूस होता है।",
+                        "अप्रिय विचारों से बचने के लिए मुझे संख्याओं को गिनने या किसी विशेष क्रिया को दोहराने की जरूरत महसूस होती है।",
+                        "मुझे उन चीजों को फेंकने में बहुत कठिनाई होती है जिनकी अब कोई उपयोगिता नहीं है।",
+                        "मुझे बार-बार चिंता होती है कि मैंने अनजाने में किसी को चोट पहुँचाई होगी।",
+                        "गंदगी, कीटाणुओं या बीमारियों के संपर्क में आने को लेकर अत्यधिक चिंता महसूस होती है।",
+                        "मैं अपनी बातचीत या कार्यों की अपने मन में बार-बार समीक्षा करता हूँ।",
+                        "मुझे सुरक्षा के लिए कई बार ताले या स्विच जांचने पड़ते हैं।",
+                        "मुझे लगता है कि अगर कोई काम एक खास तरीके से नहीं किया गया तो कुछ बुरा हो जाएगा।",
+                        "मैं चीजों को छूने से बचता हूँ क्योंकि मुझे लगता है कि वे दूषित हैं।",
+                        "मैं शब्दों या संख्याओं को एक निश्चित क्रम में मन ही मन दोहराता हूँ।",
+                        "जब कोई मेरी व्यवस्थित चीजों को हिला देता है तो मुझे गुस्सा या घबराहट होती है।",
+                        "मुझे हर निर्णय के बारे में दूसरों से लगातार आश्वासन मांगने की आवश्यकता होती है।",
+                        "मैं बेकार कागजों या पुरानी वस्तुओं को जमा करके रखता हूँ क्योंकि मुझे डर है कि कभी उनकी जरूरत पड़ सकती है।",
+                        "मेरे मन में अचानक हिंसक या अनुचित छवियां कौंधती हैं जो मुझे परेशान करती हैं।"
+                ],
+                "autism": [
+                        "मैं अक्सर ऐसी छोटी ध्वनियों को नोटिस कर लेता हूँ जिन्हें दूसरे लोग बिल्कुल नहीं सुन पाते।",
+                        "मैं आमतौर पर पूरी तस्वीर के बजाय छोटी-छोटी बारीकियों पर अधिक ध्यान केंद्रित करता हूँ।",
+                        "सामाजिक बातचीत में लोगों के चेहरे के भाव या शारीरिक भाषा को पढ़ना मेरे लिए स्वाभाविक नहीं होता।",
+                        "यदि मेरी दैनिक दिनचर्या में कोई अप्रत्याशित बदलाव हो जाए, तो मुझे बहुत परेशानी होती है।",
+                        "मैं आसानी से समझ जाता हूँ कि कोई व्यक्ति क्या सोच रहा है या महसूस कर रहा है।",
+                        "लोगों के साथ बातचीत शुरू करना और उसे जारी रखना मेरे लिए सहज नहीं होता।",
+                        "मैं अक्सर किसी एक विशेष विषय या रुचि में इतना डूब जाता हूँ कि बाकी सब भूल जाता हूँ।",
+                        "लोग अक्सर मुझे बताते हैं कि मैं अनजाने में बहुत सीधे या असभ्य तरीके से बात करता हूँ।",
+                        "काल्पनिक कहानियों की तुलना में तथ्यात्मक और तकनीकी जानकारी मुझे अधिक आकर्षित करती है।",
+                        "मैं संख्याओं, तारीखों या सूचनाओं के पैटर्न को स्वाभाविक रूप से याद रख लेता हूँ।"
+                ],
+                "schizotypy": [
+                        "क्या आपने कभी महसूस किया है कि कोई व्यक्ति आपकी अनुपस्थिति में आपके बारे में बात कर रहा है?",
+                        "क्या आपके पास ऐसे अनुभव रहे हैं जो असामान्य या अलौकिक प्रतीत होते हैं?",
+                        "क्या आपको कभी ऐसा लगता है कि लोग आपकी गुप्त रूप से निगरानी कर रहे हैं?",
+                        "क्या आप अक्सर दूसरों के इरादों पर संदेह करते हैं?",
+                        "क्या आपको अजनबियों के बीच रहने पर अत्यधिक सामाजिक बेचैनी महसूस होती है?",
+                        "क्या आपको कभी ऐसा लगा है कि आपकी विचार प्रक्रिया दूसरों द्वारा नियंत्रित की जा रही है?",
+                        "क्या आपको कभी कोई छाया या आवाज़ सुनाई दी है जब वहाँ कोई नहीं था?",
+                        "क्या आपके ऐसे विश्वास या रुचियां हैं जिन्हें अन्य लोग अजीब मानते हैं?",
+                        "क्या आपको कभी-कभी लगता है कि आपका शरीर या पर्यावरण वास्तविक नहीं है?",
+                        "क्या आपको दूसरों के साथ घनिष्ठ संबंध बनाने में कठिनाई होती है?",
+                        "क्या आप घटनाओं में ऐसे छिपे हुए अर्थ देखते हैं जिन्हें दूसरे संयोग मानते हैं?",
+                        "क्या आप अक्सर अपनी ही आंतरिक दुनिया में खोए रहते हैं?",
+                        "क्या आपको लगता है कि आप केवल देखकर ही जान सकते हैं कि कोई क्या सोच रहा है?",
+                        "क्या बातचीत करते समय आपके विचार अचानक भटक जाते हैं?",
+                        "क्या आपको कभी ऐसा महसूस हुआ है कि आपके विचार आपके दिमाग से बाहर प्रसारित हो रहे हैं?",
+                        "क्या आप सामाजिक मेलजोल से बचते हैं और अकेले रहना पसंद करते हैं?",
+                        "क्या आपको कभी लगा कि अजनबी आपको घूर रहे हैं?",
+                        "क्या आपको लगता है कि कुछ चीजें आपके लिए व्यक्तिगत संकेत हैं?",
+                        "क्या आपको अपनी भावनाओं को खुलकर व्यक्त करने में कठिनाई होती है?",
+                        "क्या आपको लगता है कि दूसरे लोग आपके विचारों को पढ़ सकते हैं?",
+                        "क्या आप आसानी से लोगों पर भरोसा नहीं कर पाते?",
+                        "क्या आपकी बातचीत का तरीका कभी-कभी दूसरों को बहुत जटिल या असामान्य लगता है?"
+                ],
+                "executive": [
+                        "मुझे आवेगों को नियंत्रित करने या बिना सोचे-समझे बोलने में परेशानी होती है।",
+                        "जब कोई समस्या सामान्य तरीके से हल नहीं होती, तो मुझे अपना दृष्टिकोण बदलने में कठिनाई होती है।",
+                        "छोटी बाधाओं या योजनाओं में अप्रत्याशित बदलावों पर मैं भावनात्मक रूप से अत्यधिक प्रतिक्रिया देता हूँ।",
+                        "कई समय सीमाओं का सामना करते समय मुझे यह प्राथमिकता तय करने में परेशानी होती है कि पहले कौन सा काम किया जाए।",
+                        "मैं किसी कार्य को करने के बीच में ही भूल जाता हूँ कि मैं क्या कर रहा था या क्या ढूंढ रहा था।",
+                        "मेरा कार्यक्षेत्र, कंप्यूटर फ़ाइलें या भौतिक नोट्स अव्यवस्थित और बिखरे हुए हो जाते हैं।",
+                        "मैं परियोजनाओं या कार्यों को बिल्कुल आखिरी समय तक अधूरा छोड़ देता हूँ।",
+                        "मैं इस बात का गलत अनुमान लगाता हूँ कि किसी जटिल प्रोजेक्ट को पूरा करने में कितना समय लगेगा।",
+                        "मैं अपने काम में स्पष्ट त्रुटियों या गलतियों को तब तक नहीं देख पाता जब तक कोई अन्य इसे इंगित न करे।",
+                        "मुझे किसी प्रोजेक्ट पर काम शुरू करने में कठिनाई होती है, भले ही मुझे पता हो कि क्या किया जाना है।",
+                        "जब मुझे लंबे बहु-चरणीय निर्देश दिए जाते हैं तो मैं मानसिक रूप से अभिभूत हो जाता हूँ।",
+                        "जब आस-पास शोर या रुकावटें होती हैं तो मैं अपनी विचार श्रृंखला खो देता हूँ।",
+                        "मैं महत्वपूर्ण प्रतिबद्धताओं, समय सीमाओं, पासवर्डों या रोजमर्रा की चीजों को भूल जाता हूँ।",
+                        "मैं दीर्घकालिक रणनीतिक लाभ के बजाय तत्काल राहत के आधार पर त्वरित निर्णय लेता हूँ।"
+                ],
+                "trauma": [
+                        "किसी तनावपूर्ण या कष्टदायक अनुभव की बार-बार, परेशान करने वाली और अनचाही यादें या फ्लैशबैक आना।",
+                        "तनावपूर्ण या अत्यंत प्रतिकूल जीवन की घटनाओं से संबंधित बार-बार परेशान करने वाले सपने आना।",
+                        "अचानक ऐसा महसूस होना या कार्य करना जैसे कि कोई पिछला दर्दनाक अनुभव फिर से घट रहा हो।",
+                        "जब कोई चीज़ आपको किसी पिछले संकट की याद दिलाती है तो तीव्र भावनात्मक या शारीरिक परेशानी महसूस होना।",
+                        "किसी कठिन पिछले अनुभव से संबंधित यादों, विचारों या भावनाओं से बचने की कोशिश करना।",
+                        "उन बाहरी अनुस्मारकों (लोगों, स्थानों, बातचीत, गतिविधियों, वस्तुओं) से बचना जो संकट पैदा करते हैं।",
+                        "लगातार पहरे पर रहना, अत्यधिक सतर्क रहना या अचानक खतरे की आशंका में रहना।",
+                        "अप्रत्याशित आवाज़ों या हरकतों से अत्यधिक चौंक जाना, घबरा जाना या अत्यधिक सतर्क रहना।"
+                ]
+        },
+        "es": {
+                "depression": [
+                        "Poco interés o alegría en hacer cosas que normalmente disfruta.",
+                        "Sentirse decaído, deprimido, desesperanzado o apagado.",
+                        "Problemas para conciliar el sueño, despertares frecuentes o dormir demasiado.",
+                        "Sentirse cansado, agotado o con muy poca energía física.",
+                        "Falta de apetito o comer en exceso para lidiar con el malestar.",
+                        "Sentirse mal consigo mismo — o que ha fracasado o decepcionado a su familia.",
+                        "Dificultad para concentrarse en tareas, como leer documentos o trabajar.",
+                        "Moverse o hablar tan lentamente que otros lo han notado, o estar inusualmente inquieto.",
+                        "Pensamientos de que estaría mejor muerto o deseos de escapar del dolor."
+                ],
+                "anxiety": [
+                        "Sentirse nervioso, ansioso o al límite.",
+                        "Incapacidad para detener o controlar las preocupaciones.",
+                        "Preocuparse en exceso por diversas cuestiones de forma constante.",
+                        "Dificultad marcada para relajarse y desconectar.",
+                        "Estar tan inquieto que resulta difícil permanecer quieto.",
+                        "Irritarse o enfadarse con facilidad ante pequeños contratiempos.",
+                        "Sensación de miedo súbito, como si algo terrible fuera a ocurrir."
+                ],
+                "ocd": [
+                        "Me lavo las manos con más frecuencia o durante más tiempo del necesario.",
+                        "Reviso puertas, ventanas o aparatos eléctricos repetidamente.",
+                        "Siento la necesidad de ordenar las cosas con una simetría o arreglo estricto.",
+                        "Tengo pensamientos perturbadores no deseados que no puedo expulsar de mi mente.",
+                        "Me angustio profundamente si los objetos no están colocados de la manera correcta.",
+                        "Siento el impulso de contar objetos o repetir actos para calmar pensamientos desagradables.",
+                        "Me resulta muy difícil desprenderme de cosas que ya no tienen utilidad práctica.",
+                        "Me preocupa constantemente haber causado daño a alguien de manera involuntaria.",
+                        "Siento un temor excesivo a contaminarme con suciedad o enfermedades.",
+                        "Repaso mentalmente conversaciones o situaciones para cerciorarme de no haber fallado.",
+                        "Compruebo cerraduras o interruptores múltiples veces antes de poder marcharme.",
+                        "Siento que algo malo ocurrirá si no realizo una acción de una manera exacta.",
+                        "Evito tocar ciertas superficies cotidianas por considerarlas contaminadas.",
+                        "Repito palabras, frases o números mentalmente en secuencias concretas.",
+                        "Me altero profundamente si alguien altera el orden de mis pertenencias.",
+                        "Necesito pedir confirmación o aprobación constante a los demás sobre mis decisiones.",
+                        "Guardo papeles viejos u objetos rotos por miedo a necesitarlos en el futuro.",
+                        "Experimento imágenes mentales violentas o inaceptables que me causan gran rechazo."
+                ],
+                "autism": [
+                        "A menudo percibo sonidos sutiles que otras personas no alcanzan a escuchar.",
+                        "Suelo concentrarme más en los pequeños detalles que en el panorama general.",
+                        "En situaciones sociales, me cuesta interpretar las expresiones faciales ajenas.",
+                        "Si mi rutina diaria se altera de forma imprevista, me siento muy angustiado.",
+                        "Puedo deducir con facilidad lo que otra persona está pensando o sintiendo.",
+                        "Mantener una charla informal o entablar conversación me resulta forzado.",
+                        "Suelo obsesionarme intensamente con un tema de interés durante largos períodos.",
+                        "A menudo me dicen que digo cosas que resultan demasiado directas o groseras.",
+                        "Prefiero los datos técnicos y los hechos verificables antes que la ficción.",
+                        "Retengo patrones, fechas o números de manera espontánea sin esfuerzo."
+                ],
+                "schizotypy": [
+                        "¿Ha sentido alguna vez que las personas hablan de usted a sus espaldas?",
+                        "¿Ha tenido vivencias que le han parecido sobrenaturales o inexplicables?",
+                        "¿Siente a veces que ciertas personas le observan o le siguen?",
+                        "¿Tiende a desconfiar con frecuencia de las intenciones ajenas?",
+                        "¿Siente una intensa incomodidad o ansiedad en presencia de desconocidos?",
+                        "¿Ha tenido la sensación de que sus pensamientos están influidos por fuerzas externas?",
+                        "¿Ha creído ver sombras o escuchar voces cuando no había nadie?",
+                        "¿Posee creencias o intereses que la mayoría considera excéntricos?",
+                        "¿Siente a veces que su propio cuerpo o el entorno no son del todo reales?",
+                        "¿Le resulta sumamente difícil establecer vínculos cercanos de confianza?",
+                        "¿Descubre significados ocultos o mensajes personales en hechos cotidianos?",
+                        "¿Tiende a aislarse en su propio mundo interior durante horas?",
+                        "¿Siente que puede saber con certeza lo que otros piensan con solo mirarlos?",
+                        "¿Se dispersa con frecuencia el hilo de sus pensamientos durante una charla?",
+                        "¿Ha sentido la sensación de que sus pensamientos son audibles para otros?",
+                        "¿Prefiere la soledad y evita sistemáticamente los encuentros sociales?",
+                        "¿Tiene la impresión de que extraños en la calle se fijan demasiado en usted?",
+                        "¿Interpreta ciertas casualidades como señales dirigidas exclusivamente a usted?",
+                        "¿Le cuesta manifestar externamente sus emociones a los demás?",
+                        "¿Cree que algunas personas tienen la facultad de leer sus pensamientos?",
+                        "¿Le cuesta depositar su confianza incluso en conocidos cercanos?",
+                        "¿Le han comentado que su modo de hablar o expresarse resulta atípico?"
+                ],
+                "executive": [
+                        "Tengo problemas para frenar mis impulsos o hablo sin pensar las consecuencias.",
+                        "Me cuesta cambiar de estrategia cuando un problema no se resuelve de la forma habitual.",
+                        "Reacciono con excesiva frustración emocional ante cambios inesperados de planes.",
+                        "Tengo dificultad para priorizar qué tarea abordar primero ante múltiples entregas.",
+                        "Olvido lo que estaba haciendo o buscando en mitad de una actividad.",
+                        "Mi espacio de trabajo, archivos digitales o apuntes tienden a desordenarse rápidamente.",
+                        "Dejo tareas o proyectos inconclusos hasta el último instante posible.",
+                        "Subestimo de forma sistemática el tiempo que me llevará concluir un proyecto.",
+                        "No percibo errores obvios en mi trabajo a menos que otra persona me los señale.",
+                        "Me cuesta mucho arrancar una tarea incluso cuando sé con claridad qué debo hacer.",
+                        "Me siento mentalmente sobrecargado cuando me dan instrucciones con múltiples pasos.",
+                        "Pierdo el hilo de mi pensamiento cuando hay ruidos de fondo o distracciones.",
+                        "Olvido compromisos importantes, citas, contraseñas o dónde dejé objetos cotidianos.",
+                        "Tomo decisiones buscando alivio inmediato en lugar de una ventaja estratégica duradera."
+                ],
+                "trauma": [
+                        "Recuerdos o imágenes intrusivas, repetidas e involuntarias de un suceso angustioso.",
+                        "Sueños o pesadillas recurrentes relacionados con experiencias traumáticas pasadas.",
+                        "Sensación súbita de revivir o actuar como si el trauma estuviera ocurriendo de nuevo.",
+                        "Intenso malestar emocional o físico ante estímulos que recuerdan el acontecimiento.",
+                        "Esfuerzos constantes por evitar pensamientos, recuerdos o sentimientos ligados al trauma.",
+                        "Evitación de lugares, personas, conversaciones o actividades que despiertan el recuerdo.",
+                        "Estado de hipervigilancia constante, en guardia o anticipando peligros inminentes.",
+                        "Sobresaltos exagerados o extrema reactividad ante ruidos o movimientos inesperados."
+                ]
+        },
+        "ru": {
+                "depression": [
+                        "Мало интереса или удовольствия от дел, которые обычно приносили радость.",
+                        "Чувство подавленности, тоски, безнадежности или внутренней пустоты.",
+                        "Трудности с засыпанием, прерывистый сон или, наоборот, чрезмерная сонливость.",
+                        "Ощущение постоянной усталости, упадка сил и нехватки энергии.",
+                        "Снижение аппетита или переедание в попытке заглушить стресс.",
+                        "Плохое мнение о себе — ощущение собственной несостоятельности или вины перед близкими.",
+                        "Трудности с концентрацией внимания, например, при чтении или работе за компьютером.",
+                        "Замедленность движений или речи, заметная окружающим, либо сильная неусидчивость.",
+                        "Мысли о том, что лучше было бы не проснуться, или желание прекратить душевную боль."
+                ],
+                "anxiety": [
+                        "Чувство нервозности, тревоги или нахождения на грани срыва.",
+                        "Неспособность остановить поток тревожных мыслей или контролировать их.",
+                        "Чрезмерное и непрерывное беспокойство по самым разным поводам.",
+                        "Выраженные трудности с расслаблением и внутренним успокоением.",
+                        "Настолько сильное внутреннее беспокойство, что трудно усидеть на одном месте.",
+                        "Легкая раздражительность, вспыльчивость или обидчивость по мелочам.",
+                        "Внезапное чувство панического страха, будто вот-вот случится нечто ужасное."
+                ],
+                "ocd": [
+                        "Я мою руки намного чаще или дольше, чем это объективно необходимо.",
+                        "Я многократно перепроверяю двери, окна, краны или бытовые приборы.",
+                        "Я чувствую навязчивую потребность расставлять вещи в строгом порядке или симметрии.",
+                        "В мою голову приходят неприятные навязчивые мысли, от которых трудно избавиться.",
+                        "Я испытываю острый дистресс, если предметы лежат не на своем привычном месте.",
+                        "Мне приходится считать или повторять ритуальные действия, чтобы заглушить тревогу.",
+                        "Мне чрезвычайно тяжело выбрасывать старые, ненужные или сломанные вещи.",
+                        "Меня постоянно преследует страх случайно причинить кому-то вред.",
+                        "Я испытываю сильный страх заражения микробами или загрязнения.",
+                        "Я мысленно перепроверяю свои разговоры и поступки из-за страха совершить ошибку.",
+                        "Мне приходится несколько раз возвращаться, чтобы проверить замки или выключатели.",
+                        "У меня возникает чувство, что произойдет беда, если действие не выполнено точно.",
+                        "Я избегаю прикасаться к дверным ручкам или поверхностям, считая их грязными.",
+                        "Я повторяю определенные слова или числовые комбинации про себя.",
+                        "Я выхожу из себя или пугаюсь, если кто-то переставляет мои вещи.",
+                        "Мне требуется постоянное подтверждение и одобрение со стороны других людей.",
+                        "Я складирую старые бумаги или коробки из иррационального страха, что они понадобятся.",
+                        "В сознании внезапно всплывают пугающие или неприемлемые образы, вызывающие стыд."
+                ],
+                "autism": [
+                        "Я часто улавливаю тихие звуки, которые совершенно не слышат окружающие.",
+                        "Я склонен фиксироваться на мелких деталях, упуская общую картину происходящего.",
+                        "В общении мне трудно интуитивно считывать выражения лиц и язык тела.",
+                        "Внезапные изменения в привычном распорядке дня вызывают у меня сильный стресс.",
+                        "Мне легко удается понять, что на самом деле думает или чувствует собеседник.",
+                        "Поддерживать легкий непринужденный разговор с людьми для меня затруднительно.",
+                        "Я могу часами глубоко погружаться в одну узкую тему, забывая обо всем остальном.",
+                        "Окружающие нередко говорят, что я высказываюсь слишком прямолинейно или резко.",
+                        "Фактические и технические данные привлекают меня гораздо больше, чем вымысел.",
+                        "Я автоматически и без усилий запоминаю числовые закономерности, коды или даты."
+                ],
+                "schizotypy": [
+                        "Возникало ли у вас ощущение, что посторонние люди говорят о вас за вашей спиной?",
+                        "Случались ли с вами события, которые казались сверхъестественными или необъяснимыми?",
+                        "Бывает ли у вас чувство, что за вами тайно следят или наблюдают?",
+                        "Склонны ли вы часто подозревать окружающих в скрытых корыстных мотивах?",
+                        "Испытываете ли вы сильную социальную тревогу и скованность среди незнакомцев?",
+                        "Казалось ли вам когда-либо, что ваши мысли находятся под внешним влиянием?",
+                        "Виделись ли вам тени или слышались звуки, когда в помещении никого не было?",
+                        "Есть ли у вас убеждения или увлечения, которые большинство людей считают странными?",
+                        "Кажется ли вам иногда, что ваше собственное тело или мир вокруг не совсем реальны?",
+                        "Трудно ли вам формировать близкие, доверительные отношения с людьми?",
+                        "Видите ли вы скрытые знаки или особый смысл в случайных совпадениях?",
+                        "Склонны ли вы надолго уходить в свой собственный внутренний мир?",
+                        "Чувствуете ли вы, что способны угадывать мысли людей по одному лишь взгляду?",
+                        "Бывает ли так, что нить ваших мыслей внезапно прерывается во время разговора?",
+                        "Возникало ли ощущение, что окружающие способны слышать ваши внутренние мысли?",
+                        "Предпочитаете ли вы полное одиночество и сознательно избегаете компаний?",
+                        "Кажется ли вам иногда, что прохожие на улице слишком пристально на вас смотрят?",
+                        "Трактуете ли вы случайные события как знаки, адресованные лично вам?",
+                        "Трудно ли вам открыто и естественно выражать свои эмоции перед другими?",
+                        "Верите ли вы, что некоторые люди способны читать чужие мысли на расстоянии?",
+                        "Трудно ли вам довериться даже близким знакомым?",
+                        "Говорили ли вам, что ваша манера речи или выражения мыслей кажется необычной?"
+                ],
+                "executive": [
+                        "Мне трудно сдерживать импульсивные порывы, я часто говорю не подумав.",
+                        "Мне сложно изменить стратегию, если задача не решается привычным методом.",
+                        "Я чересчур эмоционально реагирую на срыв планов или неожиданные препятствия.",
+                        "При наличии нескольких срочных задач мне тяжело определить приоритетность.",
+                        "Я часто забываю, что именно собирался сделать или найти, прямо в процессе действия.",
+                        "Мой рабочий стол, файлы на компьютере или записи быстро приходят в хаос.",
+                        "Я склонен затягивать завершение проектов до самого последнего момента.",
+                        "Я систематически недооцениваю время, необходимое для выполнения сложной работы.",
+                        "Я не замечаю очевидных ошибок в своей работе, пока на них прямо не укажут.",
+                        "Мне крайне трудно приступить к работе, даже когда план действий абсолютно ясен.",
+                        "Я чувствую перегрузку, когда мне дают длинные многоступенчатые инструкции.",
+                        "Я теряю мысль, если во время работы возникают посторонние шумы или вопросы.",
+                        "Я забываю важные обязательства, дедлайны, пароли или куда положил нужные вещи.",
+                        "Я принимаю решения ради сиюминутного облегчения, жертвуя долгосрочной выгодой."
+                ],
+                "trauma": [
+                        "Повторяющиеся, навязчивые и мучительные воспоминания или флешбэки о тяжелом событии.",
+                        "Тревожные или кошмарные сны, связанные с пережитым стрессом или опасностью.",
+                        "Внезапное ощущение или поведение, будто травмирующее событие происходит прямо сейчас.",
+                        "Острый эмоциональный или телесный дистресс при столкновении с триггерами прошлого.",
+                        "Упорные попытки избегать мыслей, чувств или разговоров о травмирующем опыте.",
+                        "Избегание мест, людей, занятий или предметов, напоминающих о пережитом.",
+                        "Состояние непрерывной бдительности, ожидания скрытой угрозы или нападения.",
+                        "Чрезмерная вздрагиваемость, испуг или резкая реакция на неожиданные звуки."
+                ]
+        }
+};
 
+        // Also check if key is in adhd for existing qBanks
         const tInfo = (titles[lang] && titles[lang][key]) || {};
-        const qList = (qBanks[key] && qBanks[key][lang]) || [];
+        const qList = (qBanks[lang] && qBanks[lang][key]) || [];
         const qText = qList[index] || null;
 
         return {
           title: tInfo.title,
           subtitle: tInfo.subtitle,
           category: tInfo.category,
+          scale: tInfo.scale,
           text: qText
         };
       },
