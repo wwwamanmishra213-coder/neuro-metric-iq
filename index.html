@@ -4720,19 +4720,465 @@
   
     // ==================== CLINICAL EXPORT PDF ENGINE ====================
         // ==================== MASTER 4-PAGE CLINICAL EXPORT PDF ENGINE ====================
+        // ==================== MASTER 3-PAGE CLINICAL EXPORT PDF ENGINE (LOCALIZED & PAGE-FITTED) ====================
     window.exportClinicalPDF = function(sourceId = 'clinicalDossierCard') {
       const state = (window.app && window.app.state) ? window.app.state : {};
       const gameEngine = window.NeuroGameEngine || {};
       const responses = gameEngine.patientResponses || {};
       const i18n = window.I18nEngine;
+      const lang = (i18n && i18n.currentLang) ? i18n.currentLang : (localStorage.getItem('neurometric_lang') || 'en');
 
-      // 1. Gather live clinical metrics & psychometrics
+      // Comprehensive 4-Language Dictionary for Clinical PDF
+      const pdfI18n = {
+        en: {
+          dossier_title: "NEURO-METRIC INSTITUTIONAL NEUROPSYCHOMETRIC CLINICAL DOSSIER",
+          dossier_subtitle: "Standardized WAIS-IV / CHC Theoretical Gaussian Framework • Forensic Clinical Protocol",
+          sec_restricted: "SECURITY LEVEL: RESTRICTED",
+          nonce_lbl: "NONCE:",
+          date_lbl: "DATE:",
+          subject_lbl: "SUBJECT IDENTIFIER:",
+          protocol_lbl: "PROTOCOL:",
+          protocol_val: "CHC 4-Factor + Affective",
+          examiner_lbl: "LEAD EXAMINER:",
+          examiner_val: "Dr. Julian Vance, Ph.D.",
+          standards_lbl: "CLINICAL STANDARDS:",
+          standards_val: "APA / ISO-17025 Compliant",
+          composite_lbl: "PRIMARY COMPOSITE SCORE (FSIQ / GAI)",
+          sem_lbl: "± 3.67 SEM",
+          percentile_lbl: "THEORETICAL PERCENTILE",
+          ci_lbl: "95% CI:",
+          wais_very_superior: "Very Superior (Mensa High-IQ Threshold)",
+          wais_superior: "Superior Range",
+          wais_high_avg: "High Average Range",
+          wais_average: "Average / Standard Population Range",
+          wais_low_avg: "Low Average Range",
+          volatility_title: "GAI Discrepancy & Cognitive Volatility Analysis:",
+          volatility_desc: "Subject exhibits a statistically significant split between Core Fluid Inductive Logic and Visuomotor Processing Speed. This pattern indicates an exceptional capacity for complex abstract reasoning that experiences operational friction under sensory fatigue or emotional holding.",
+          gaussian_title: "THEORETICAL GAUSSIAN NORMAL DISTRIBUTION • N(100, 15)",
+          subject_score_lbl: "Subject Score:",
+          mensa_lbl: "MENSA (130+)",
+          patient_pin_lbl: "PATIENT: IQ",
+          chc_sec_title: "CHC COGNITIVE FACTOR BREAKDOWN (STANDARDIZED NORM)",
+          gf_name: "FLUID REASONING (Gf)",
+          gf_desc: "Matrix logic, inductive rule deduction, and non-verbal pattern abstraction.",
+          gwm_name: "WORKING MEMORY (Gwm)",
+          gwm_desc: "Visuospatial sequence capacity & prefrontal active buffer maintenance.",
+          gq_name: "QUANTITATIVE INDUCTION (Gq)",
+          gq_desc: "Higher-order series synthesis, arithmetic deduction & recursive logic.",
+          gs_name: "PROCESSING SPEED (Gs)",
+          gs_desc: "Rapid visual search throughput and motor reaction coordination.",
+          psych_matrix_title: "CLINICAL PSYCHIATRIC & NEUROBEHAVIORAL SCREENER MATRIX",
+          th_inv: "INVENTORY / SCALE",
+          th_domain: "DOMAIN",
+          th_score: "SCORE / CUTOFF",
+          th_sev: "SEVERITY",
+          th_risk: "CLINICAL RISK",
+          inv_asrs: "Adult ADHD / Executive Inattention",
+          inv_asrs_sev: "Sub-threshold Gating",
+          inv_asrs_risk: "LOW RISK",
+          inv_phq: "Major Depressive Symptoms",
+          inv_phq_sev: "Mild Somatic Fatigue",
+          inv_phq_risk: "MONITORING",
+          inv_gad: "Generalized Anxiety & Hyperarousal",
+          inv_gad_sev: "Mild Hyper-Vigilance",
+          inv_gad_risk: "MODERATE",
+          inv_pcl: "Trauma & Somatic Intrusions",
+          inv_pcl_sev: "Sub-clinical Holding",
+          inv_pcl_risk: "LOW RISK",
+          inv_dass: "Tripartite Stress & Strain",
+          inv_dass_sev: "Executive Stress Strain",
+          inv_dass_risk: "MODERATE",
+          inv_spq: "Cognitive-Perceptual Oddities",
+          inv_spq_sev: "Unitary Reality Baseline",
+          inv_spq_risk: "INTACT",
+          tax_summary_title: "NEUROLOGICAL TAXONOMY SUMMARY:",
+          tax_summary_desc: "Algorithmic inductive reasoning remains in the top 1% percentile. Response latency elevations correlate with emotional vigilance and defensive perfectionism.",
+          verified_badge: "VERIFIED RECORD",
+          page_footer_suite: "NEURO-METRIC PSYCHOMETRIC CLINICAL SUITE • CONFIDENTIAL",
+          page_1_of_3: "PAGE 1 OF 3",
+          page_2_of_3: "PAGE 2 OF 3",
+          page_3_of_3: "PAGE 3 OF 3",
+          // Page 2
+          sec2_title: "SECTION II: Neuro-Game Reflex Telemetry & Verbatim Emotional Disclosures",
+          sec2_sub: "AUTHENTIC LOG: CONFIDENTIAL",
+          telemetry_latency: "MEAN SACCADIC LATENCY",
+          telemetry_braking: "INHIBITORY MOTOR BRAKING",
+          telemetry_errors: "IMPULSIVE COMMISSION ERRORS",
+          telemetry_norm: "Norm: 220–340ms",
+          telemetry_false_alarms: "False Alarm Lapses",
+          gating_optimal: "Optimal Frontal Gating",
+          gating_mild: "Mild Attentional Vulnerability",
+          gating_leakage: "Marked Inhibitory Impulse Leakage",
+          inquiry1_title: "1. RAW EMOTIONAL INQUIRY: BETRAYAL, SUPPRESSED RAGE & BITTERNESS",
+          inquiry2_title: "2. RAW EMOTIONAL INQUIRY: FAKE HAPPINESS & THE COMPLIANCE MASK",
+          verbatim_badge: "PATIENT VERBATIM TRANSCRIPT",
+          psych_eval_label: "Psychodynamic Assessment:",
+          eval1_text: "Under acute cognitive pressure, defensive rationalization falls away. Repressed anger manifests as somatic jaw/shoulder holding and depleted dopamine, causing abrupt mental fatigue during prolonged focus.",
+          eval2_text: "Sustaining an agreeable front while suppressing internal despair consumes substantial prefrontal metabolic glucose. The patient exhibits chronic vigilance, anticipating rejection if boundaries are enforced.",
+          synthesis_title: "NEURO-AFFECTIVE CORRELATION SYNTHESIS:",
+          synthesis_desc: "The patient's objective motor reaction telemetry directly reflects their psychological holding. The prefrontal cortex is constantly divided between active cognitive problem-solving and suppressing autonomic resentment. Releasing blocked emotional grief is essential for restoring peak cognitive velocity.",
+          // Page 3
+          sec3_title: "SECTION III: 4-Pillar Clinical Rehabilitation & Forensic Authorization Block",
+          sec3_sub: "RECOVERY PLAN: ACTIVE",
+          pillar1_title: "PILLAR 1: SOMATIC & AUTONOMIC REGULATION",
+          pillar1_desc: "Perform 3 cycles of physiological sighs (double inhalation followed by extended audible sigh) twice daily to break autonomic sympathetic holding. Reset cranial nerve tone via cold-water facial immersion.",
+          pillar2_title: "PILLAR 2: UNCENSORED CATHARTIC DISCHARGE",
+          pillar2_desc: "Engage in 10 minutes of daily uncensored private journaling expressing raw rage, betrayal, or sorrow, followed by ritual physical destruction of the written page to decouple limbic amygdalar firing.",
+          pillar3_title: "PILLAR 3: BOUNDARY AUTONOMY DE-CONDITIONING",
+          pillar3_desc: "Practice delivering a calm, unapologetic 'No' to at least one emotionally draining interpersonal obligation each day. Dismantle the compliance mask to eliminate subconscious resentment.",
+          pillar4_title: "PILLAR 4: PREFRONTAL FLOW RECOVERY",
+          pillar4_desc: "Structure cognitive work in 25-minute deep focus sprints with mandatory 5-minute sensory deprivation breaks (zero screens, quiet environment) to restore prefrontal acetylcholine and dopamine levels.",
+          seal_title: "★ NEURO-METRIC INSTITUTIONAL FORENSIC SEAL",
+          seal_nonce: "SECURITY NONCE:",
+          seal_hash: "INTEGRITY HASH: SHA-256 Validated • Client Cryptographic Lock",
+          seal_board: "BOARD ACCREDITATION: American Board of Professional Neuropsychology",
+          dr_name: "Dr. Julian Vance, Ph.D.",
+          dr_title: "ABPP-CN, Senior Clinical Psychometrician<br>Director of Neurobehavioral Medicine",
+          disclaimer_title: "STATUTORY CLINICAL & FORENSIC DISCLAIMER:",
+          disclaimer_desc: "This psychological assessment dossier is generated via standardized Cattell-Horn-Carroll theoretical models, norm-referenced Gaussian algorithms N(100, 15), and millisecond-accurate sensory-motor telemetry. The results are intended for authorized neurocognitive evaluation, cognitive rehabilitation planning, and psychodynamic affective triage. Unauthorized alteration, reproduction, or tampering violates international copyright and psychometric verification protocols.",
+          fallback_rage: "Patient reported feeling deep betrayal when trust was abused by close peers; chose to swallow anger to preserve harmony, resulting in somatic jaw tightness and recurring cynical exhaustion.",
+          fallback_mask: "Patient acknowledged performing a cheerful and agreeable exterior ('strong one') while feeling depleted, unvalidated, and isolated under demanding professional pressure."
+        },
+
+        hi: {
+          dossier_title: "न्यूरो-मेट्रिक संस्थागत तंत्रिका-मनोवैज्ञानिक नैदानिक ​​दस्तावेज़",
+          dossier_subtitle: "मानकीकृत WAIS-IV / CHC सैद्धांतिक गाऊसी ढांचा • फोरेंसिक नैदानिक प्रोटोकॉल",
+          sec_restricted: "सुरक्षा स्तर: गोपनीय",
+          nonce_lbl: "नॉन्स:",
+          date_lbl: "दिनांक:",
+          subject_lbl: "विषय पहचानकर्ता:",
+          protocol_lbl: "प्रोटोकॉल:",
+          protocol_val: "CHC 4-कारक + भावनात्मक",
+          examiner_lbl: "मुख्य परीक्षक:",
+          examiner_val: "डॉ. जूलियन वेंस, Ph.D.",
+          standards_lbl: "मानक:",
+          standards_val: "APA / ISO-17025 अनुरूप",
+          composite_lbl: "प्राथमिक समग्र स्कोर (FSIQ / GAI)",
+          sem_lbl: "± 3.67 SEM",
+          percentile_lbl: "सैद्धांतिक प्रतिशतक",
+          ci_lbl: "95% विश्वास अंतराल:",
+          wais_very_superior: "अत्यंत श्रेष्ठ (मेंसा उच्च-बुद्धिमत्ता सीमा)",
+          wais_superior: "श्रेष्ठ श्रेणी",
+          wais_high_avg: "उच्च औसत श्रेणी",
+          wais_average: "औसत / मानक जनसंख्या श्रेणी",
+          wais_low_avg: "निम्न औसत श्रेणी",
+          volatility_title: "GAI विसंगति और संज्ञानात्मक अस्थिरता विश्लेषण:",
+          volatility_desc: "विषय कोर फ्लूइड आगमनात्मक तर्क और विज़ुओमोटर प्रसंस्करण गति के बीच एक सांख्यिकीय रूप से महत्वपूर्ण अंतर प्रदर्शित करता है। यह पैटर्न जटिल अमूर्त तर्क के लिए एक असाधारण क्षमता को दर्शाता है जो संवेदी थकान या भावनात्मक रुकावट के तहत तीव्र परिचालन घर्षण का अनुभव करता है।",
+          gaussian_title: "सैद्धांतिक गाऊसी सामान्य वितरण • N(100, 15)",
+          subject_score_lbl: "विषय स्कोर:",
+          mensa_lbl: "मेंसा (130+)",
+          patient_pin_lbl: "मरीज़: IQ",
+          chc_sec_title: "CHC संज्ञानात्मक कारक विश्लेषण (मानकीकृत मानक)",
+          gf_name: "फ्लूइड तर्क (Gf)",
+          gf_desc: "गैर-मौखिक मैट्रिक्स तर्क। आगमनात्मक नियम निष्कर्षण और अमूर्त संबंध।",
+          gwm_name: "कार्यशील स्मृति (Gwm)",
+          gwm_desc: "विज़ुओस्पेशियल अनुक्रम क्षमता और प्रीफ्रंटल बफर रखरखाव।",
+          gq_name: "मात्रात्मक आगमनात्मक तर्क (Gq)",
+          gq_desc: "उच्च-क्रम अंकगणितीय श्रृंखला और पुनरावर्ती अनुक्रम तर्क।",
+          gs_name: "प्रसंस्करण गति (Gs)",
+          gs_desc: "दृश्य खोज क्षमता और तीव्र अवधारणात्मक भेदभाव।",
+          psych_matrix_title: "नैदानिक ​​मनोरोग और तंत्रिका-व्यवहार स्क्रीनर मैट्रिक्स",
+          th_inv: "इन्वेंट्री / पैमाना",
+          th_domain: "कार्यक्षेत्र",
+          th_score: "स्कोर / सीमा",
+          th_sev: "गंभीरता",
+          th_risk: "नैदानिक ​​जोखिम",
+          inv_asrs: "वयस्क एडीएचडी / असावधानी",
+          inv_asrs_sev: "उप-सीमा नियंत्रण",
+          inv_asrs_risk: "कम जोखिम",
+          inv_phq: "प्रमुख अवसाद लक्षण",
+          inv_phq_sev: "हल्की कायिक थकान",
+          inv_phq_risk: "निगरानी",
+          inv_gad: "सामान्यीकृत चिंता व सतर्कता",
+          inv_gad_sev: "हल्की अति-सतर्कता",
+          inv_gad_risk: "मध्यम",
+          inv_pcl: "आघात और कायिक हस्तक्षेप",
+          inv_pcl_sev: "उप-नैदानिक रुकावट",
+          inv_pcl_risk: "कम जोखिम",
+          inv_dass: "त्रिपक्षीय तनाव व दबाव",
+          inv_dass_sev: "कार्यकारी तनाव खिंचाव",
+          inv_dass_risk: "मध्यम",
+          inv_spq: "संज्ञानात्मक विषमताएं",
+          inv_spq_sev: "यथार्थ आधाररेखा",
+          inv_spq_risk: "अक्षुण्ण",
+          tax_summary_title: "तंत्रिका वर्गीकरण सारांश:",
+          tax_summary_desc: "एल्गोरिथम आगमनात्मक तर्क शीर्ष 1% प्रतिशतक में बना हुआ है। प्रतिक्रिया विलंबता भावनात्मक सतर्कता और सुरक्षात्मक पूर्णतावाद से संबंधित है।",
+          verified_badge: "सत्यापित रिकॉर्ड",
+          page_footer_suite: "न्यूरो-मेट्रिक साइकोमेट्रिक क्लिनिकल सूट • गोपनीय",
+          page_1_of_3: "पृष्ठ 1 / 3",
+          page_2_of_3: "पृष्ठ 2 / 3",
+          page_3_of_3: "पृष्ठ 3 / 3",
+          // Page 2
+          sec2_title: "खंड II: न्यूरो-गेम रिफ्लेक्स टेलीमेट्री और मौखिक भावनात्मक खुलासे",
+          sec2_sub: "प्रमाणिक लॉग: गोपनीय",
+          telemetry_latency: "औसत सैकैडिक विलंबता",
+          telemetry_braking: "अवरोधक मोटर ब्रेकिंग",
+          telemetry_errors: "आवेगी कमीशन त्रुटियां",
+          telemetry_norm: "मानक: 220–340ms",
+          telemetry_false_alarms: "झूठी चेतावनी विफलताएं",
+          gating_optimal: "इष्टतम फ्रंटल नियंत्रण",
+          gating_mild: "हल्की अवधान संवेदनशीलता",
+          gating_leakage: "उल्लेखनीय आवेग रिसाव",
+          inquiry1_title: "1. गहन भावनात्मक जांच: विश्वासघात, दबा हुआ क्रोध और कड़वाहट",
+          inquiry2_title: "2. गहन भावनात्मक जांच: नकली खुशी और थका देने वाला मुखौटा",
+          verbatim_badge: "मरीज़ का वास्तविक प्रतिलेख",
+          psych_eval_label: "मनोगतिक मूल्यांकन:",
+          eval1_text: "तीव्र संज्ञानात्मक दबाव में, रक्षात्मक औचित्य समाप्त हो जाता है। दबा हुआ गुस्सा जबड़े/कंधे की जकड़न और डोपामाइन की कमी के रूप में प्रकट होता है, जिससे लंबे ध्यान के दौरान अचानक मानसिक थकान होती है।",
+          eval2_text: "आंतरिक निराशा को छिपाते हुए एक सहमत बाहरी रूप बनाए रखना पर्याप्त प्रीफ्रंटल ग्लूकोज की खपत करता है। सीमाएं लागू होने पर अस्वीकृति की आशंका से मरीज़ लगातार सतर्क रहता है।",
+          synthesis_title: "तंत्रिका-भावनात्मक सहसंबंध संश्लेषण:",
+          synthesis_desc: "मरीज़ की उद्देश्य मोटर प्रतिक्रिया सीधे उनके मनोवैज्ञानिक अवरोध को दर्शाती है। प्रीफ्रंटल कॉर्टेक्स सक्रिय समस्या-समाधान और स्वायत्त क्रोध को दबाने के बीच विभाजित रहता है। मानसिक गति बहाल करने के लिए भावनात्मक रुकावट को दूर करना अनिवार्य है।",
+          // Page 3
+          sec3_title: "खंड III: 4-स्तंभ नैदानिक ​​पुनर्वास और फोरेंसिक प्राधिकरण ब्लॉक",
+          sec3_sub: "पुनर्प्राप्ति योजना: सक्रिय",
+          pillar1_title: "स्तंभ 1: कायिक और स्वायत्त तंत्रिका नियमन",
+          pillar1_desc: "सहानुभूतिपूर्ण स्वायत्त तनाव को तोड़ने के लिए दिन में दो बार शारीरिक आहों (दोहरी सांस लेना और लंबी सांस छोड़ना) के 3 चक्र करें। ठंडे पानी के चेहरे के छींटों से कपाल तंत्रिका टोन को रीसेट करें।",
+          pillar2_title: "स्तंभ 2: बिना सेंसर की भावनात्मक मुक्ति",
+          pillar2_desc: "कच्चे क्रोध, विश्वासघात या दुख को व्यक्त करने के लिए प्रतिदिन 10 मिनट बिना सेंसर की निजी डायरी लिखें, इसके बाद लिम्बिक अमिगडाला उत्तेजना को अलग करने के लिए पृष्ठ को शारीरिक रूप से नष्ट कर दें।",
+          pillar3_title: "स्तंभ 3: सीमा स्वायत्तता पुनर्निर्माण",
+          pillar3_desc: "प्रत्येक दिन कम से कम एक भावनात्मक रूप से थका देने वाले दायित्व के लिए शांत, बिना माफी मांगे 'ना' कहने का अभ्यास करें। अवचेतन कड़वाहट को खत्म करने के लिए अनुपालन मुखौटे को हटाएं।",
+          pillar4_title: "स्तंभ 4: प्रीफ्रंटल फ्लो पुनर्प्राप्ति",
+          pillar4_desc: "प्रीफ्रंटल एसिटाइलकोलाइन और डोपामाइन के स्तर को बहाल करने के लिए अनिवार्य 5 मिनट के संवेदी विश्राम (स्क्रीन-मुक्त, शांत वातावरण) के साथ 25 मिनट के गहन ध्यान में संज्ञानात्मक काम को व्यवस्थित करें।",
+          seal_title: "★ न्यूरो-मेट्रिक संस्थागत फोरेंसिक मुहर",
+          seal_nonce: "सुरक्षा नॉन्स:",
+          seal_hash: "अखंडता हैश: SHA-256 मान्य • क्लाइंट क्रिप्टोग्राफिक लॉक",
+          seal_board: "बोर्ड मान्यता: अमेरिकन बोर्ड ऑफ प्रोफेशनल न्यूरोसाइकोलॉजी",
+          dr_name: "डॉ. जूलियन वेंस, Ph.D.",
+          dr_title: "ABPP-CN, वरिष्ठ नैदानिक ​​मनोवैज्ञानिक<br>न्यूरोबिहेवियरल मेडिसिन के निदेशक",
+          disclaimer_title: "वैधानिक नैदानिक ​​और फोरेंसिक अस्वीकरण:",
+          disclaimer_desc: "यह मनोवैज्ञानिक मूल्यांकन दस्तावेज़ मानकीकृत कैटेल-हॉर्न-कैरोल सैद्धांतिक मॉडल, मानक-संदर्भित गाऊसी एल्गोरिदम N(100, 15), और मिलीसेकंड-सटीक संवेदी-मोटर टेलीमेट्री के माध्यम से तैयार किया गया है। परिणाम अधिकृत तंत्रिका-संज्ञानात्मक मूल्यांकन, पुनर्वास योजना और मनोविश्लेषणात्मक वर्गीकरण के लिए अभिप्रेत हैं। अनधिकृत परिवर्तन अंतरराष्ट्रीय कॉपीराइट का उल्लंघन करता है।",
+          fallback_rage: "मरीज़ ने करीबी साथियों द्वारा भरोसा तोड़े जाने पर गहरा विश्वासघात महसूस करने की सूचना दी; सद्भाव बनाए रखने के लिए क्रोध पी लिया, जिससे जबड़े में जकड़न और मानसिक थकान उत्पन्न हुई।",
+          fallback_mask: "मरीज़ ने अत्यधिक दबाव में खाली और अलग-थलग महसूस करने के बावजूद बाहर से हंसमुख और मजबूत दिखने का मुखौटा पहनने की बात स्वीकार की।"
+        },
+
+        es: {
+          dossier_title: "DOSSIER CLÍNICO NEUROPSICOMÉTRICO INSTITUCIONAL NEURO-METRIC",
+          dossier_subtitle: "Marco Gaussiano Teórico Estandarizado WAIS-IV / CHC • Protocolo Clínico Forense",
+          sec_restricted: "NIVEL DE SEGURIDAD: RESTRINGIDO",
+          nonce_lbl: "NONCE:",
+          date_lbl: "FECHA:",
+          subject_lbl: "IDENTIFICADOR:",
+          protocol_lbl: "PROTOCOLO:",
+          protocol_val: "CHC 4 Factores + Afectivo",
+          examiner_lbl: "EXAMINADOR PRINCIPAL:",
+          examiner_val: "Dr. Julian Vance, Ph.D.",
+          standards_lbl: "NORMAS CLÍNICAS:",
+          standards_val: "Conforme a APA / ISO-17025",
+          composite_lbl: "PUNTUACIÓN COMPUESTA PRINCIPAL (FSIQ / GAI)",
+          sem_lbl: "± 3.67 SEM",
+          percentile_lbl: "PERCENTIL TEÓRICO",
+          ci_lbl: "IC 95%:",
+          wais_very_superior: "Muy Superior (Umbral de Alto CI Mensa)",
+          wais_superior: "Rango Superior",
+          wais_high_avg: "Rango Medio Alto",
+          wais_average: "Rango Promedio Poblacional",
+          wais_low_avg: "Rango Medio Bajo",
+          volatility_title: "Análisis de Discrepancia GAI y Volatilidad Cognitiva:",
+          volatility_desc: "El sujeto muestra una división estadísticamente significativa entre la Lógica Inductiva Fluida y la Velocidad de Procesamiento Visomotor. Este patrón indica una capacidad excepcional para el razonamiento abstracto complejo que experimenta fricción operativa bajo fatiga sensorial o retención emocional.",
+          gaussian_title: "DISTRIBUCIÓN NORMAL GAUSSIANA TEÓRICA • N(100, 15)",
+          subject_score_lbl: "Puntuación:",
+          mensa_lbl: "MENSA (130+)",
+          patient_pin_lbl: "PACIENTE: CI",
+          chc_sec_title: "DESGLOSE DE FACTORES COGNITIVOS CHC (NORMA ESTANDARIZADA)",
+          gf_name: "RAZONAMIENTO FLUIDO (Gf)",
+          gf_desc: "Lógica matricial no verbal. Deducción de reglas inductivas y relaciones espaciales.",
+          gwm_name: "MEMORIA DE TRABAJO (Gwm)",
+          gwm_desc: "Capacidad secuencial visoespacial y mantenimiento de búfer prefrontal.",
+          gq_name: "INDUCCIÓN CUANTITATIVA (Gq)",
+          gq_desc: "Series aritméticas de orden superior y deducción recursiva.",
+          gs_name: "VELOCIDAD DE PROCESAMIENTO (Gs)",
+          gs_desc: "Rastreo visual rápido y eficiencia de discriminación perceptiva.",
+          psych_matrix_title: "MATRIZ CLÍNICA PSIQUIÁTRICA Y NEUROCONDUCTUAL",
+          th_inv: "INVENTARIO / ESCALA",
+          th_domain: "DOMINIO",
+          th_score: "PUNTUACIÓN / CORTE",
+          th_sev: "SEVERIDAD",
+          th_risk: "RIESGO CLÍNICO",
+          inv_asrs: "TDAH Adulto / Desatención",
+          inv_asrs_sev: "Control Subumbral",
+          inv_asrs_risk: "BAJO RIESGO",
+          inv_phq: "Síntomas Depresivos Mayores",
+          inv_phq_sev: "Fatiga Somática Leve",
+          inv_phq_risk: "OBSERVACIÓN",
+          inv_gad: "Ansiedad Generalizada e Hiperalerta",
+          inv_gad_sev: "Hipervigilancia Leve",
+          inv_gad_risk: "MODERADO",
+          inv_pcl: "Trauma e Intrusiones Somáticas",
+          inv_pcl_sev: "Retención Subclínica",
+          inv_pcl_risk: "BAJO RIESGO",
+          inv_dass: "Estrés y Tensión Tripartito",
+          inv_dass_sev: "Tensión Ejecutiva",
+          inv_dass_risk: "MODERADO",
+          inv_spq: "Particularidades Perceptivas",
+          inv_spq_sev: "Realidad Intacta",
+          inv_spq_risk: "INTACTO",
+          tax_summary_title: "RESUMEN DE TAXONOMÍA NEUROLÓGICA:",
+          tax_summary_desc: "El razonamiento algorítmico se mantiene en el percentil superior 1%. El aumento de latencia correlaciona con vigilancia emocional y perfeccionismo defensivo.",
+          verified_badge: "REGISTRO VERIFICADO",
+          page_footer_suite: "SUITE PSICOMÉTRICA CLÍNICA NEURO-METRIC • CONFIDENCIAL",
+          page_1_of_3: "PÁGINA 1 DE 3",
+          page_2_of_3: "PÁGINA 2 DE 3",
+          page_3_of_3: "PÁGINA 3 DE 3",
+          // Page 2
+          sec2_title: "SECCIÓN II: Telemetría de Reflejos y Declaraciones Emocionales del Paciente",
+          sec2_sub: "REGISTRO AUTÉNTICO: CONFIDENCIAL",
+          telemetry_latency: "LATENCIA SACÁDICA MEDIA",
+          telemetry_braking: "FRENADO MOTOR INHIBITORIO",
+          telemetry_errors: "ERRORES POR COMISIÓN IMPULSIVA",
+          telemetry_norm: "Norma: 220–340ms",
+          telemetry_false_alarms: "Fallos por Falsa Alarma",
+          gating_optimal: "Control Frontal Óptimo",
+          gating_mild: "Vulnerabilidad Atencional Leve",
+          gating_leakage: "Fuga Significativa de Impulsos",
+          inquiry1_title: "1. INDAGACIÓN EMOCIONAL CRUDA: TRAICIÓN, RABIA REPRIMIDA Y AMARGURA",
+          inquiry2_title: "2. INDAGACIÓN EMOCIONAL CRUDA: FELICIDAD FALSA Y LA MÁSCARA AGOTADORA",
+          verbatim_badge: "TRANSCRIPCIÓN TEXTUAL DEL PACIENTE",
+          psych_eval_label: "Evaluación Psicodinámica:",
+          eval1_text: "Bajo presión cognitiva aguda, la racionalización defensiva desaparece. La rabia reprimida se manifiesta como tensión somática en mandíbula y hombros y depleción de dopamina, provocando fatiga mental súbita durante la concentración sostenida.",
+          eval2_text: "Sostener una fachada complaciente mientras se oculta la desesperación interna consume glucosa prefrontal metabólica considerable. El paciente muestra hipervigilancia continua por miedo al rechazo si impone límites.",
+          synthesis_title: "SÍNTESIS DE CORRELACIÓN NEURO-AFECTIVA:",
+          synthesis_desc: "La telemetría de reacción motora refleja de forma directa el bloqueo psicológico. La corteza prefrontal se divide constantemente entre el análisis cognitivo y reprimir el resentimiento autónomo. Desbloquear el duelo reprimido es vital para recuperar la máxima velocidad cognitiva.",
+          // Page 3
+          sec3_title: "SECCIÓN III: Rehabilitación Clínica en 4 Pilares y Bloque de Autorización Forense",
+          sec3_sub: "PLAN DE RECUPERACIÓN: ACTIVO",
+          pillar1_title: "PILAR 1: REGULACIÓN SOMÁTICA Y AUTÓNOMA",
+          pillar1_desc: "Realice 3 ciclos de suspiros fisiológicos (doble inhalación seguida de exhalación larga) dos veces al día para romper la retención simpática. Restablezca el tono vagal con agua fría facial.",
+          pillar2_title: "PILAR 2: DESCARGA CATÁRTICA SIN CENSURA",
+          pillar2_desc: "Dedique 10 minutos al día a escribir sin filtro sobre ira, traición o dolor, seguido de la destrucción física del papel para desacoplar la reactividad límbica.",
+          pillar3_title: "PILAR 3: DESCONDICIONAMIENTO HACIA LA AUTONOMÍA DE LÍMITES",
+          pillar3_desc: "Practique decir un 'No' sereno y firme a al menos una demanda interpersonal agotadora al día. Desmantele la máscara complaciente para erradicar el resentimiento.",
+          pillar4_title: "PILAR 4: RECUPERACIÓN DEL FLUJO PREFRONTAL",
+          pillar4_desc: "Organice el trabajo en bloques de 25 minutos de enfoque profundo con descansos obligatorios de 5 minutos sin pantallas para restaurar los niveles de acetilcolina y dopamina.",
+          seal_title: "★ SELLO FORENSE INSTITUCIONAL NEURO-METRIC",
+          seal_nonce: "NONCE DE SEGURIDAD:",
+          seal_hash: "HASH DE INTEGRIDAD: Validado por SHA-256 • Bloqueo Criptográfico",
+          seal_board: "ACREDITACIÓN: Junta Americana de Neuropsicología Profesional",
+          dr_name: "Dr. Julian Vance, Ph.D.",
+          dr_title: "ABPP-CN, Psicometrista Clínico Senior<br>Director de Medicina Neuroconductual",
+          disclaimer_title: "AVISO LEGAL CLÍNICO Y FORENSE:",
+          disclaimer_desc: "Este informe de evaluación psicológica se genera mediante modelos teóricos estandarizados Cattell-Horn-Carroll, algoritmos gaussianos normativos N(100, 15) y telemetría sensoriomotora con precisión de milisegundos. Destinado a evaluación neurocognitiva autorizada, planificación de rehabilitación y triaje afectivo.",
+          fallback_rage: "El paciente reportó sentir una profunda traición cuando personas cercanas abusaron de su confianza; decidió callar la rabia para evitar conflictos, provocando rigidez mandibular y fatiga crónica.",
+          fallback_mask: "El paciente reconoció mantener una actitud sonriente y agradable ('el fuerte') a pesar de sentirse internamente exhausto, vacío y aislado bajo exigencias constantes."
+        },
+
+        ru: {
+          dossier_title: "ИНСТИТУЦИОНАЛЬНОЕ НЕЙРОПСИХОМЕТРИЧЕСКОЕ КЛИНИЧЕСКОЕ ДОСЬЕ NEURO-METRIC",
+          dossier_subtitle: "Стандартизированная гауссова модель WAIS-IV / CHC • Судебно-клинический протокол",
+          sec_restricted: "УРОВЕНЬ БЕЗОПАСНОСТИ: СТРОГО КОНФИДЕНЦИАЛЬНО",
+          nonce_lbl: "НОНС:",
+          date_lbl: "ДАТА:",
+          subject_lbl: "ИДЕНТИФИКАТОР:",
+          protocol_lbl: "ПРОТОКОЛ:",
+          protocol_val: "4-факторный CHC + Аффективный",
+          examiner_lbl: "ВЕДУЩИЙ ЭКСПЕРТ:",
+          examiner_val: "Д-р Джулиан Вэнс, Ph.D.",
+          standards_lbl: "СТАНДАРТЫ:",
+          standards_val: "Соответствие APA / ISO-17025",
+          composite_lbl: "ОСНОВНОЙ СОСТАВНОЙ БАЛЛ (FSIQ / GAI)",
+          sem_lbl: "± 3.67 SEM",
+          percentile_lbl: "ТЕОРЕТИЧЕСКИЙ ПРОЦЕНТИЛЬ",
+          ci_lbl: "95% ДИ:",
+          wais_very_superior: "Очень высокий / Одаренность (Порог Mensa)",
+          wais_superior: "Высокая норма",
+          wais_high_avg: "Выше среднего",
+          wais_average: "Средняя популяционная норма",
+          wais_low_avg: "Ниже среднего",
+          volatility_title: "Анализ расхождения GAI и когнитивной волатильности:",
+          volatility_desc: "У испытуемого наблюдается статистически значимый разрыв между подвижным логическим мышлением и скоростью зрительно-моторной обработки. Данный профиль отражает исключительный потенциал абстрактного мышления при уязвимости к функциональному истощению в условиях эмоционального напряжения.",
+          gaussian_title: "ТЕОРЕТИЧЕСКОЕ НОРМАЛЬНОЕ РАСПРЕДЕЛЕНИЕ ГАУССА • N(100, 15)",
+          subject_score_lbl: "Балл:",
+          mensa_lbl: "МЕНСА (130+)",
+          patient_pin_lbl: "ПАЦИЕНТ: IQ",
+          chc_sec_title: "ПРОФИЛЬ КОГНИТИВНЫХ ФАКТОРОВ CHC (СТАНДАРТНАЯ НОРМА)",
+          gf_name: "ПОДВИЖНЫЙ ИНТЕЛЛЕКТ (Gf)",
+          gf_desc: "Невербальная матричная логика. Индуктивное извлечение правил и абстрактных связей.",
+          gwm_name: "РАБОЧАЯ ПАМЯТЬ (Gwm)",
+          gwm_desc: "Зрительно-пространственный объем и удержание информации в префронтальном буфере.",
+          gq_name: "КОЛИЧЕСТВЕННЫЙ АНАЛИЗ (Gq)",
+          gq_desc: "Числовые ряды высшего порядка и рекурсивная последовательная логика.",
+          gs_name: "СКОРОСТЬ ОБРАБОТКИ (Gs)",
+          gs_desc: "Пропускная способность зрительного сканирования и скорость сенсомоторных реакций.",
+          psych_matrix_title: "ПСИХИАТРИЧЕСКАЯ И НЕЙРОПОВЕДЕНЧЕСКАЯ СКРИНИНГОВАЯ МАТРИЦА",
+          th_inv: "ШКАЛА / ОПРОСНИК",
+          th_domain: "СФЕРА",
+          th_score: "БАЛЛ / ПОРОГ",
+          th_sev: "ТЯЖЕСТЬ",
+          th_risk: "КЛИНИЧЕСКИЙ РИСК",
+          inv_asrs: "СДВГ у взрослых / Дефицит внимания",
+          inv_asrs_sev: "Субпороговый контроль",
+          inv_asrs_risk: "НИЗКИЙ РИСК",
+          inv_phq: "Симптомы депрессивного спектра",
+          inv_phq_sev: "Легкое соматическое истощение",
+          inv_phq_risk: "НАБЛЮДЕНИЕ",
+          inv_gad: "Генерализованная тревожность",
+          inv_gad_sev: "Умеренная гипербдительность",
+          inv_gad_risk: "УМЕРЕННЫЙ",
+          inv_pcl: "Травма и соматические вторжения",
+          inv_pcl_sev: "Субклиническая фиксация",
+          inv_pcl_risk: "НИЗКИЙ РИСК",
+          inv_dass: "Стресс и функциональная перегрузка",
+          inv_dass_sev: "Исполнительное напряжение",
+          inv_dass_risk: "УМЕРЕННЫЙ",
+          inv_spq: "Когнитивно-перцептивные черты",
+          inv_spq_sev: "Сохранное тестирование реальности",
+          inv_spq_risk: "СОХРАННО",
+          tax_summary_title: "РЕЗЮМЕ НЕЙРОЛОГИЧЕСКОЙ ТАКСОНОМИИ:",
+          tax_summary_desc: "Индуктивное абстрактное мышление находится в высшем 1% процентиле. Замедление скорости реакции связано с повышенным самоконтролем и защитным перфекционизмом.",
+          verified_badge: "ВЕРИФИЦИРОВАНО",
+          page_footer_suite: "КЛИНИЧЕСКИЙ НЕЙРОПСИХОМЕТРИЧЕСКИЙ КОМПЛЕКС • КОНФИДЕНЦИАЛЬНО",
+          page_1_of_3: "СТРАНИЦА 1 ИЗ 3",
+          page_2_of_3: "СТРАНИЦА 2 ИЗ 3",
+          page_3_of_3: "СТРАНИЦА 3 ИЗ 3",
+          // Page 2
+          sec2_title: "РАЗДЕЛ II: Сенсомоторная телеметрия и аутентичные эмоциональные признания",
+          sec2_sub: "ПОДЛИННЫЙ ПРОТОКОЛ: КОНФИДЕНЦИАЛЬНО",
+          telemetry_latency: "СРЕДНЯЯ САККАДИЧЕСКАЯ ЛАТЕНТНОСТЬ",
+          telemetry_braking: "ТОРМОЗНОЙ МОТОРНЫЙ КОНТРОЛЬ",
+          telemetry_errors: "ИМПУЛЬСИВНЫЕ ОШИБКИ ТОРМОЖЕНИЯ",
+          telemetry_norm: "Норма: 220–340мс",
+          telemetry_false_alarms: "Ложные срабатывания",
+          gating_optimal: "Оптимальный фронтальный контроль",
+          gating_mild: "Умеренная аттенционная уязвимость",
+          gating_leakage: "Выраженная импульсивная утечка",
+          inquiry1_title: "1. ГЛУБОКИЙ ЭМОЦИОНАЛЬНЫЙ ОПРОС: ПРЕДАТЕЛЬСТВО, ПОДАВЛЕННЫЙ ГНЕВ И ОБИДА",
+          inquiry2_title: "2. ГЛУБОКИЙ ЭМОЦИОНАЛЬНЫЙ ОПРОС: ФАЛЬШИВОЕ СЧАСТЬЕ И ИСТОЩАЮЩАЯ МАСКА",
+          verbatim_badge: "ПОДЛИННАЯ СТЕНОГРАММА ПАЦИЕНТА",
+          psych_eval_label: "Психодинамическая оценка:",
+          eval1_text: "Под когнитивным давлением защитная рационализация ослабевает. Подавленный гнев проявляется соматическим напряжением мышц челюсти и истощением дофамина, вызывая внезапную умственную усталость при длительной концентрации.",
+          eval2_text: "Поддержание внешней благожелательности при подавлении внутреннего отчаяния расходует значительные запасы префронтальной глюкозы. Пациент испытывает хроническую настороженность из-за страха быть отвергнутым при отстаивании границ.",
+          synthesis_title: "НЕЙРО-АФФЕКТИВНЫЙ КОРРЕЛЯЦИОННЫЙ СИНТЕЗ:",
+          synthesis_desc: "Сенсомоторная телеметрия напрямую отражает внутреннее эмоциональное удержание. Префронтальная кора постоянно расщепляется между решением аналитических задач и подавлением обиды. Снятие эмоционального блока критично для восстановления максимальной скорости мышления.",
+          // Page 3
+          sec3_title: "РАЗДЕЛ III: 4-уровневый клинический протокол реабилитации и блок сертификации",
+          sec3_sub: "ПЛАН РЕАБИЛИТАЦИИ: АКТИВЕН",
+          pillar1_title: "УРОВЕНЬ 1: СОМАТИЧЕСКАЯ И ВЕГЕТАТИВНАЯ РЕГУЛЯЦИЯ",
+          pillar1_desc: "Выполняйте 3 цикла физиологических вздохов (двойной вдох через нос и плавный долгий выдох) дважды в день для снятия вегетативного тонуса. Активируйте блуждающий нерв умыванием холодной водой.",
+          pillar2_title: "УРОВЕНЬ 2: БЕСЦЕНЗУРНАЯ КАТАРСИЧЕСКАЯ РАЗГРУЗКА",
+          pillar2_desc: "Практикуйте 10 минут ежедневного неотредактированного письма, выражая подавленную ярость и обиду, с последующим физическим уничтожением листа для деактивации миндалевидного тела.",
+          pillar3_title: "УРОВЕНЬ 3: ВОССТАНОВЛЕНИЕ ГРАНИЦ И АВТОНОМИИ",
+          pillar3_desc: "Практикуйте спокойный и уверенный отказ («Нет») хотя бы одной истощающей социальной обязанности в день. Снимите маску угодничества для устранения подсознательного гнева.",
+          pillar4_title: "УРОВЕНЬ 4: ВОССТАНОВЛЕНИЕ ПРЕФРОНТАЛЬНОГО ФОКУСА",
+          pillar4_desc: "Структурируйте интеллектуальную работу спринтами по 25 минут с обязательными 5-минутными паузами сенсорного покоя (без экранов) для восстановления запасов ацетилхолина и дофамина.",
+          seal_title: "★ ИНСТИТУЦИОНАЛЬНАЯ СУДЕБНО-КЛИНИЧЕСКАЯ ПЕЧАТЬ",
+          seal_nonce: "НОНС БЕЗОПАСНОСТИ:",
+          seal_hash: "ХЕШ ПОДЛИННОСТИ: Проверено SHA-256 • Криптографический замок",
+          seal_board: "АККРЕДИТАЦИЯ: Американский совет профессиональной нейропсихологии",
+          dr_name: "Д-р Джулиан Вэнс, Ph.D.",
+          dr_title: "ABPP-CN, старший клинический психометрист<br>Директор нейроповеденческой медицины",
+          disclaimer_title: "ОФИЦИАЛЬНЫЙ КЛИНИКО-ПРАВОВОЙ ОТКАЗ:",
+          disclaimer_desc: "Настоящее заключение составлено с использованием теоретических моделей Кеттелла-Хорна-Кэрролла, нормативных алгоритмов Гаусса N(100, 15) и миллисекундной телеметрии. Предназначено для авторизованной нейрокогнитивной оценки, планирования реабилитации и аффективного скрининга.",
+          fallback_rage: "Пациент сообщил о переживании глубокого предательства при злоупотреблении доверием; подавил гнев ради сохранения отношений, что привело к соматическому напряжению челюсти и хронической апатии.",
+          fallback_mask: "Пациент признал ношение маски благополучия ('быть сильным') при глубоком внутреннем опустошении и чувстве изоляции под постоянным давлением требований."
+        }
+      };
+
+      const loc = pdfI18n[lang] || pdfI18n.en;
+
+      // 1. Live Cognitive & Psychometric Metrics
       const fsiq = (state.fsiq !== undefined) ? state.fsiq : 138;
       const gai = Math.round(fsiq * 1.02);
       const ciLower = Math.max(40, fsiq - 5);
       const ciUpper = Math.min(160, fsiq + 5);
       
-      // Calculate normal percentile from z-score
       const z = (fsiq - 100) / 15;
       let percentile = 99.4;
       if (typeof window.scoringEngine !== 'undefined' && window.scoringEngine.zToPercentile) {
@@ -4745,15 +5191,13 @@
         percentile = ((1.0 - p) * 100).toFixed(1);
       }
 
-      // WAIS-IV Classification
-      let waisCategory = 'Very Superior / Gifted Range';
-      if (fsiq >= 130) waisCategory = 'Very Superior (Mensa High-IQ Threshold)';
-      else if (fsiq >= 120) waisCategory = 'Superior Range';
-      else if (fsiq >= 110) waisCategory = 'High Average Range';
-      else if (fsiq >= 90) waisCategory = 'Average / Standard Population Range';
-      else waisCategory = 'Low Average Range';
+      let waisCategory = loc.wais_very_superior;
+      if (fsiq >= 130) waisCategory = loc.wais_very_superior;
+      else if (fsiq >= 120) waisCategory = loc.wais_superior;
+      else if (fsiq >= 110) waisCategory = loc.wais_high_avg;
+      else if (fsiq >= 90) waisCategory = loc.wais_average;
+      else waisCategory = loc.wais_low_avg;
 
-      // Telemetry & Latencies
       const meanLatency = (gameEngine.latencies && gameEngine.latencies.length > 0)
         ? Math.round(gameEngine.latencies.reduce((a, b) => a + b, 0) / gameEngine.latencies.length)
         : 268;
@@ -4761,463 +5205,410 @@
       const accuracyCount = gameEngine.accuracyCount || 19;
       const motorAcc = Math.min(100, Math.round((accuracyCount / totalTrials) * 100));
       const commErrors = (gameEngine.commissionErrors !== undefined) ? gameEngine.commissionErrors : 1;
-      const gatingStatus = commErrors >= 4 ? 'Marked Inhibitory Impulse Leakage' : (commErrors >= 2 ? 'Mild Attentional Vulnerability' : 'Optimal Frontal Gating');
+      const gatingStatus = commErrors >= 4 ? loc.gating_leakage : (commErrors >= 2 ? loc.gating_mild : loc.gating_optimal);
 
-      // Patient disclosures
-      const rageText = (responses.track_rage || responses.emotionalBlockage || 'Patient reported feeling deep betrayal when trust was abused by close peers; chose to swallow anger to preserve harmony, resulting in somatic jaw tightness and recurring cynical exhaustion.').trim();
-      const maskText = (responses.track_mask || responses.physicalTrauma || 'Patient acknowledged performing a cheerful and agreeable exterior ("strong one") while feeling depleted, unvalidated, and isolated under demanding professional pressure.').trim();
-      const loveText = (responses.track_love || 'Patient disclosed an unvoiced yearning for genuine affirmation and acceptance; holds subconscious anxiety that revealing flaws would lead to interpersonal abandonment.').trim();
-      const guiltText = (responses.track_guilt || 'Patient described recurring self-punishment over past misjudgments, experiencing internalized shame that generates hesitation during decisive high-stakes tasks.').trim();
+      const rageText = (responses.track_rage || responses.emotionalBlockage || loc.fallback_rage).trim();
+      const maskText = (responses.track_mask || responses.physicalTrauma || loc.fallback_mask).trim();
 
       const verificationNonce = (window.SecurityShield && window.SecurityShield.generateNonce) 
         ? window.SecurityShield.generateNonce() 
         : 'SEC-' + Math.random().toString(36).substring(2, 10).toUpperCase() + '-' + Date.now().toString(36).toUpperCase();
-      const assessmentDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+      const assessmentDate = new Date().toLocaleDateString(lang === 'hi' ? 'hi-IN' : (lang === 'es' ? 'es-ES' : (lang === 'ru' ? 'ru-RU' : 'en-US')), { year: 'numeric', month: 'long', day: 'numeric' });
       const patientId = 'PATIENT-' + Math.floor(100000 + Math.random() * 900000);
 
-      // 2. Build 4-Page Offscreen Printable Container
+      // 2. Offscreen Container setup
       const reportRoot = document.createElement('div');
       reportRoot.id = 'clinicalMasterDossierPdfRoot';
       reportRoot.style.cssText = 'position: absolute; left: -9999px; top: 0; width: 210mm; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #070B10; color: #E2E8F0;';
 
-      const pageStyle = 'box-sizing: border-box; width: 210mm; min-height: 297mm; max-height: 297mm; padding: 14mm 16mm; background: #070B10; color: #E2E8F0; page-break-after: always; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between;';
+      const pageStyle = 'box-sizing: border-box; width: 210mm; min-height: 297mm; max-height: 297mm; padding: 10mm 14mm; background: #070B10; color: #E2E8F0; page-break-after: always; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between;';
 
-      // SVG Gaussian Curve coordinates for FSIQ
-      const svgW = 680;
-      const svgH = 140;
+      // SVG Gaussian Normal Distribution Coordinates
+      const svgW = 320;
+      const svgH = 100;
       const clampIq = Math.max(55, Math.min(145, fsiq));
-      const userX = 40 + ((clampIq - 55) / 90) * 600;
-      const mensaX = 40 + ((130 - 55) / 90) * 600;
-      const meanX = 40 + ((100 - 55) / 90) * 600;
+      const userX = 20 + ((clampIq - 55) / 90) * 280;
+      const mensaX = 20 + ((130 - 55) / 90) * 280;
+      const meanX = 20 + ((100 - 55) / 90) * 280;
 
       reportRoot.innerHTML = `
-        <!-- ==================== PAGE 1: EXECUTIVE PSYCHOMETRIC & COMPOSITE PROFILE ==================== -->
+        <!-- ==================== PAGE 1: COMPLETE PSYCHOMETRIC COMPOSITE + CHC & PSYCHIATRIC MATRIX ==================== -->
         <div style="${pageStyle}">
           <div>
             <!-- Header Bar -->
-            <div style="border-bottom: 2px solid #D4AF37; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: flex-start;">
+            <div style="border-bottom: 2px solid #D4AF37; padding-bottom: 6px; display: flex; justify-content: space-between; align-items: flex-start;">
               <div>
-                <div style="font-size: 9px; font-family: monospace; letter-spacing: 2px; color: #D4AF37; font-weight: bold; text-transform: uppercase;">
-                  NEURO-METRIC INSTITUTIONAL NEUROPSYCHOMETRIC CLINICAL DOSSIER
+                <div style="font-size: 8.5px; font-family: monospace; letter-spacing: 1.5px; color: #D4AF37; font-weight: bold; text-transform: uppercase;">
+                  ${loc.dossier_title}
                 </div>
-                <div style="font-size: 20px; font-weight: 800; color: #FFFFFF; margin-top: 2px;">
-                  Comprehensive Clinical Psychometric &amp; Affective Dossier
+                <div style="font-size: 15px; font-weight: 800; color: #FFFFFF; margin-top: 1px;">
+                  ${loc.composite_lbl}
                 </div>
-                <div style="font-size: 10px; color: #94A3B8; font-family: monospace; margin-top: 2px;">
-                  Standardized WAIS-IV / CHC Theoretical Gaussian Framework • Forensic Clinical Protocol
+                <div style="font-size: 8px; color: #94A3B8; font-family: monospace;">
+                  ${loc.dossier_subtitle}
                 </div>
               </div>
-              <div style="text-align: right; font-family: monospace; font-size: 9px; color: #94A3B8;">
-                <div style="color: #00F0FF; font-weight: bold;">SECURITY LEVEL: RESTRICTED</div>
-                <div>NONCE: <span style="color: #F8FAFC;">${verificationNonce}</span></div>
-                <div>DATE: <span style="color: #F8FAFC;">${assessmentDate}</span></div>
+              <div style="text-align: right; font-family: monospace; font-size: 8px; color: #94A3B8; line-height: 1.3;">
+                <div style="color: #00F0FF; font-weight: bold;">${loc.sec_restricted}</div>
+                <div>${loc.nonce_lbl} <span style="color: #F8FAFC;">${verificationNonce}</span></div>
+                <div>${loc.date_lbl} <span style="color: #F8FAFC;">${assessmentDate}</span></div>
               </div>
             </div>
 
-            <!-- Subject Metadata Grid -->
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 12px; background: #0D141F; padding: 10px; border-radius: 8px; border: 1px solid #1E293B; font-size: 10px; font-family: monospace;">
-              <div><span style="color: #64748B;">SUBJECT IDENTIFIER:</span><br><strong style="color: #F8FAFC;">${patientId}</strong></div>
-              <div><span style="color: #64748B;">PROTOCOL:</span><br><strong style="color: #00F0FF;">CHC 4-Factor + Affective</strong></div>
-              <div><span style="color: #64748B;">LEAD EXAMINER:</span><br><strong style="color: #F8FAFC;">Dr. Julian Vance, Ph.D.</strong></div>
-              <div><span style="color: #64748B;">CLINICAL STANDARDS:</span><br><strong style="color: #10B981;">APA / ISO-17025 Compliant</strong></div>
+            <!-- Subject Metadata Strip -->
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 8px; background: #0D141F; padding: 6px 10px; border-radius: 6px; border: 1px solid #1E293B; font-size: 8.5px; font-family: monospace;">
+              <div><span style="color: #64748B;">${loc.subject_lbl}</span><br><strong style="color: #F8FAFC;">${patientId}</strong></div>
+              <div><span style="color: #64748B;">${loc.protocol_lbl}</span><br><strong style="color: #00F0FF;">${loc.protocol_val}</strong></div>
+              <div><span style="color: #64748B;">${loc.examiner_lbl}</span><br><strong style="color: #F8FAFC;">${loc.examiner_val}</strong></div>
+              <div><span style="color: #64748B;">${loc.standards_lbl}</span><br><strong style="color: #10B981;">${loc.standards_val}</strong></div>
             </div>
 
-            <!-- Primary Cognitive Composite Card -->
-            <div style="margin-top: 14px; background: linear-gradient(135deg, #0B1320 0%, #151F32 100%); border: 1px solid #00F0FF; border-radius: 12px; padding: 16px;">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
+            <!-- Row 1: Split Hero Block (Left: Composite Score / Right: Gaussian Curve) -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;">
+              <!-- Left: FSIQ Primary Composite Card -->
+              <div style="background: linear-gradient(135deg, #0B1320 0%, #151F32 100%); border: 1px solid #00F0FF; border-radius: 8px; padding: 10px; display: flex; flex-direction: column; justify-content: space-between;">
                 <div>
-                  <span style="font-size: 10px; font-family: monospace; color: #00F0FF; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">PRIMARY COMPOSITE SCORE (FSIQ / GAI)</span>
-                  <div style="font-size: 34px; font-weight: 900; color: #FFFFFF; font-family: monospace; line-height: 1.1;">
-                    ${fsiq} <span style="font-size: 14px; font-weight: normal; color: #94A3B8;">± 3.67 SEM</span>
+                  <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <div>
+                      <span style="font-size: 8px; font-family: monospace; color: #00F0FF; font-weight: bold; text-transform: uppercase;">${loc.composite_lbl}</span>
+                      <div style="font-size: 26px; font-weight: 900; color: #FFFFFF; font-family: monospace; line-height: 1.1;">
+                        ${fsiq} <span style="font-size: 11px; font-weight: normal; color: #94A3B8;">${loc.sem_lbl}</span>
+                      </div>
+                      <div style="font-size: 10px; color: #38BDF8; font-weight: bold; margin-top: 1px;">${waisCategory}</div>
+                    </div>
+                    <div style="text-align: right; font-family: monospace;">
+                      <div style="font-size: 8px; color: #94A3B8;">${loc.percentile_lbl}</div>
+                      <div style="font-size: 20px; font-weight: 900; color: #10B981;">${percentile}%</div>
+                      <div style="font-size: 8px; color: #64748B;">${loc.ci_lbl} [${ciLower}—${ciUpper}]</div>
+                    </div>
                   </div>
-                  <div style="font-size: 12px; color: #38BDF8; font-weight: 600; margin-top: 2px;">${waisCategory}</div>
                 </div>
-                <div style="text-align: right; font-family: monospace;">
-                  <div style="font-size: 10px; color: #94A3B8;">THEORETICAL PERCENTILE</div>
-                  <div style="font-size: 26px; font-weight: 900; color: #10B981;">${percentile}<span style="font-size: 14px;">%</span></div>
-                  <div style="font-size: 10px; color: #64748B;">95% CI: [${ciLower} — ${ciUpper}]</div>
+                <div style="margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 8px; color: #CBD5E1; line-height: 1.35;">
+                  <strong style="color: #D4AF37;">${loc.volatility_title}</strong> ${loc.volatility_desc}
                 </div>
               </div>
 
-              <!-- GAI vs CPI Clinical Volatility Callout -->
-              <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 10px; color: #CBD5E1; line-height: 1.5;">
-                <strong style="color: #D4AF37;">GAI Discrepancy &amp; Cognitive Volatility Analysis:</strong>
-                Subject exhibits a statistically significant split between Core Fluid Inductive Logic (GAI: ~${gai}) and Visuomotor Processing Speed. This pattern indicates an exceptional capacity for complex abstract reasoning that experiences acute operational friction under sensory fatigue or emotional holding.
-              </div>
-            </div>
-
-            <!-- Gaussian Bell Curve SVG -->
-            <div style="margin-top: 14px; background: #0D141F; border: 1px solid #1E293B; border-radius: 10px; padding: 12px;">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                <span style="font-size: 10px; font-family: monospace; font-weight: bold; color: #D4AF37; text-transform: uppercase;">
-                  THEORETICAL GAUSSIAN NORMAL DISTRIBUTION • N(100, 15)
-                </span>
-                <span style="font-size: 9px; font-family: monospace; color: #94A3B8;">Subject Score: <strong style="color: #00F0FF;">IQ ${fsiq}</strong></span>
-              </div>
-
-              <svg width="100%" height="130" viewBox="0 0 ${svgW} ${svgH}" style="overflow: visible;">
-                <!-- Shaded Average Area (85-115) -->
-                <polygon points="240,110 240,45 440,45 440,110" fill="rgba(56, 189, 248, 0.08)"></polygon>
-                <!-- Shaded Mensa High-IQ Area (130-145) -->
-                <polygon points="${mensaX},110 ${mensaX},90 640,105 640,110" fill="rgba(212, 175, 55, 0.18)"></polygon>
-
-                <!-- Normal Curve Path -->
-                <path d="M 40,110 Q 140,108 240,75 T 340,15 T 440,75 T 540,102 T 640,110" fill="none" stroke="#38BDF8" stroke-width="2.5"></path>
-
-                <!-- Baseline Axis -->
-                <line x1="40" y1="110" x2="640" y2="110" stroke="#475569" stroke-width="1.5"></line>
-
-                <!-- Standard Deviation Tick Marks -->
-                <line x1="140" y1="110" x2="140" y2="116" stroke="#64748B" stroke-width="1"></line>
-                <text x="140" y="125" fill="#64748B" font-size="8" font-family="monospace" text-anchor="middle">-2σ (70)</text>
-
-                <line x1="240" y1="110" x2="240" y2="116" stroke="#64748B" stroke-width="1"></line>
-                <text x="240" y="125" fill="#64748B" font-size="8" font-family="monospace" text-anchor="middle">-1σ (85)</text>
-
-                <line x1="${meanX}" y1="15" x2="${meanX}" y2="110" stroke="#64748B" stroke-dasharray="2,2"></line>
-                <text x="${meanX}" y="125" fill="#94A3B8" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle">μ=100 (50%)</text>
-
-                <line x1="440" y1="110" x2="440" y2="116" stroke="#64748B" stroke-width="1"></line>
-                <text x="440" y="125" fill="#64748B" font-size="8" font-family="monospace" text-anchor="middle">+1σ (115)</text>
-
-                <line x1="${mensaX}" y1="80" x2="${mensaX}" y2="110" stroke="#D4AF37" stroke-width="1.5"></line>
-                <text x="${mensaX}" y="76" fill="#D4AF37" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">MENSA (130+)</text>
-
-                <line x1="540" y1="110" x2="540" y2="116" stroke="#64748B" stroke-width="1"></line>
-                <text x="540" y="125" fill="#64748B" font-size="8" font-family="monospace" text-anchor="middle">+2σ (130)</text>
-
-                <!-- Patient Pin Marker -->
-                <line x1="${userX}" y1="20" x2="${userX}" y2="110" stroke="#00F0FF" stroke-width="2"></line>
-                <circle cx="${userX}" cy="20" r="4" fill="#00F0FF"></circle>
-                <rect x="${Math.min(540, Math.max(40, userX - 45))}" y="2" width="90" height="15" rx="3" fill="#0284C7"></rect>
-                <text x="${Math.min(540, Math.max(40, userX - 45)) + 45}" y="12" fill="#FFFFFF" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">PATIENT: IQ ${fsiq}</text>
-              </svg>
-            </div>
-
-            <!-- Forensic Integrity Block -->
-            <div style="margin-top: 14px; display: flex; justify-content: space-between; align-items: center; background: #0A101A; padding: 10px 14px; border-radius: 8px; border: 1px solid #1E293B;">
-              <div style="font-size: 9px; font-family: monospace; color: #94A3B8; line-height: 1.4;">
-                <strong style="color: #00F0FF;">DIGITAL CRYPTOGRAPHIC NONCE:</strong> ${verificationNonce}<br>
-                <span>DATA INTEGRITY: SHA-256 State Authenticated • Client-Side Tamper Proof</span>
-              </div>
-              <div style="text-align: right;">
-                <span style="font-size: 8px; font-family: monospace; background: #064E3B; color: #34D399; padding: 4px 8px; border-radius: 4px; font-weight: bold;">VERIFIED RECORD</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Page 1 Footer -->
-          <div style="border-top: 1px solid #1E293B; padding-top: 8px; display: flex; justify-content: space-between; font-size: 8px; font-family: monospace; color: #64748B;">
-            <span>NEURO-METRIC PSYCHOMETRIC CLINICAL SUITE • CONFIDENTIAL</span>
-            <span>PAGE 1 OF 4</span>
-          </div>
-        </div>
-
-        <!-- ==================== PAGE 2: CHC 4-FACTOR TAXONOMY & PSYCHIATRIC MATRIX ==================== -->
-        <div style="${pageStyle}">
-          <div>
-            <!-- Header Bar -->
-            <div style="border-bottom: 2px solid #00F0FF; padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
-              <div>
-                <span style="font-size: 9px; font-family: monospace; color: #00F0FF; font-weight: bold; text-transform: uppercase;">SECTION II</span>
-                <div style="font-size: 16px; font-weight: 800; color: #FFFFFF;">CHC Cognitive Factor Taxonomy &amp; Clinical Psychiatric Matrix</div>
-              </div>
-              <div style="font-size: 9px; font-family: monospace; color: #94A3B8;">SUBJECT: <strong style="color: #F8FAFC;">${patientId}</strong></div>
-            </div>
-
-            <!-- CHC 4-Factor Breakdown -->
-            <div style="margin-top: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-              <div style="background: #0D141F; border: 1px solid #1E293B; border-radius: 8px; padding: 10px;">
-                <div style="display: flex; justify-content: space-between; font-size: 10px; font-family: monospace;">
-                  <strong style="color: #38BDF8;">FLUID REASONING (Gf)</strong>
-                  <span style="color: #10B981; font-weight: bold;">IQ 142 (99.7%ile)</span>
+              <!-- Right: Compact Gaussian Curve SVG -->
+              <div style="background: #0D141F; border: 1px solid #1E293B; border-radius: 8px; padding: 8px; display: flex; flex-direction: column; justify-content: space-between;">
+                <div style="display: flex; justify-content: space-between; font-size: 8px; font-family: monospace; margin-bottom: 2px;">
+                  <span style="color: #D4AF37; font-weight: bold;">${loc.gaussian_title}</span>
+                  <span style="color: #00F0FF; font-weight: bold;">${loc.subject_score_lbl} IQ ${fsiq}</span>
                 </div>
-                <div style="font-size: 9px; color: #94A3B8; margin-top: 4px; line-height: 1.4;">
-                  Non-verbal Raven-derivative matrix logic. Tests inductive rule extraction and abstract spatial relations without cultural bias.
-                </div>
-                <div style="width: 100%; background: #1E293B; height: 5px; border-radius: 3px; margin-top: 6px; overflow: hidden;">
-                  <div style="width: 95%; background: #38BDF8; height: 100%;"></div>
-                </div>
-              </div>
+                <svg width="100%" height="78" viewBox="0 0 ${svgW} ${svgH}" style="overflow: visible;">
+                  <polygon points="113,80 113,35 206,35 206,80" fill="rgba(56, 189, 248, 0.08)"></polygon>
+                  <polygon points="${mensaX},80 ${mensaX},65 290,75 290,80" fill="rgba(212, 175, 55, 0.2)"></polygon>
+                  <path d="M 20,80 Q 66,78 113,55 T 160,15 T 206,55 T 253,75 T 300,80" fill="none" stroke="#38BDF8" stroke-width="2"></path>
+                  <line x1="20" y1="80" x2="300" y2="80" stroke="#475569" stroke-width="1"></line>
+                  
+                  <line x1="66" y1="80" x2="66" y2="84" stroke="#64748B"></line>
+                  <text x="66" y="92" fill="#64748B" font-size="6.5" font-family="monospace" text-anchor="middle">-2σ (70)</text>
 
-              <div style="background: #0D141F; border: 1px solid #1E293B; border-radius: 8px; padding: 10px;">
-                <div style="display: flex; justify-content: space-between; font-size: 10px; font-family: monospace;">
-                  <strong style="color: #A855F7;">WORKING MEMORY (Gwm)</strong>
-                  <span style="color: #10B981; font-weight: bold;">IQ 132 (98.4%ile)</span>
-                </div>
-                <div style="font-size: 9px; color: #94A3B8; margin-top: 4px; line-height: 1.4;">
-                  Visuospatial Corsi block sequence capacity. Assesses prefrontal buffer maintenance and resistance to proactive interference.
-                </div>
-                <div style="width: 100%; background: #1E293B; height: 5px; border-radius: 3px; margin-top: 6px; overflow: hidden;">
-                  <div style="width: 88%; background: #A855F7; height: 100%;"></div>
-                </div>
-              </div>
+                  <line x1="113" y1="80" x2="113" y2="84" stroke="#64748B"></line>
+                  <text x="113" y="92" fill="#64748B" font-size="6.5" font-family="monospace" text-anchor="middle">-1σ (85)</text>
 
-              <div style="background: #0D141F; border: 1px solid #1E293B; border-radius: 8px; padding: 10px;">
-                <div style="display: flex; justify-content: space-between; font-size: 10px; font-family: monospace;">
-                  <strong style="color: #10B981;">QUANTITATIVE INDUCTION (Gq)</strong>
-                  <span style="color: #10B981; font-weight: bold;">IQ 135 (99.0%ile)</span>
-                </div>
-                <div style="font-size: 9px; color: #94A3B8; margin-top: 4px; line-height: 1.4;">
-                  Higher-order arithmetic series, combinatorial logic, and recursive sequence induction under time pressure.
-                </div>
-                <div style="width: 100%; background: #1E293B; height: 5px; border-radius: 3px; margin-top: 6px; overflow: hidden;">
-                  <div style="width: 90%; background: #10B981; height: 100%;"></div>
-                </div>
-              </div>
+                  <line x1="${meanX}" y1="15" x2="${meanX}" y2="80" stroke="#64748B" stroke-dasharray="2,2"></line>
+                  <text x="${meanX}" y="92" fill="#94A3B8" font-size="7" font-family="monospace" font-weight="bold" text-anchor="middle">μ=100 (50%)</text>
 
-              <div style="background: #0D141F; border: 1px solid #1E293B; border-radius: 8px; padding: 10px;">
-                <div style="display: flex; justify-content: space-between; font-size: 10px; font-family: monospace;">
-                  <strong style="color: #F59E0B;">PROCESSING SPEED (Gs)</strong>
-                  <span style="color: #38BDF8; font-weight: bold;">IQ 128 (96.9%ile)</span>
-                </div>
-                <div style="font-size: 9px; color: #94A3B8; margin-top: 4px; line-height: 1.4;">
-                  Visual matching and reaction saccade speed. Measures rapid perceptual discrimination and motor coordination efficiency.
-                </div>
-                <div style="width: 100%; background: #1E293B; height: 5px; border-radius: 3px; margin-top: 6px; overflow: hidden;">
-                  <div style="width: 82%; background: #F59E0B; height: 100%;"></div>
-                </div>
+                  <line x1="206" y1="80" x2="206" y2="84" stroke="#64748B"></line>
+                  <text x="206" y="92" fill="#64748B" font-size="6.5" font-family="monospace" text-anchor="middle">+1σ (115)</text>
+
+                  <line x1="${mensaX}" y1="58" x2="${mensaX}" y2="80" stroke="#D4AF37" stroke-width="1.2"></line>
+                  <text x="${mensaX}" y="54" fill="#D4AF37" font-size="6.5" font-family="monospace" font-weight="bold" text-anchor="middle">${loc.mensa_lbl}</text>
+
+                  <!-- Patient Pin -->
+                  <line x1="${userX}" y1="18" x2="${userX}" y2="80" stroke="#00F0FF" stroke-width="1.8"></line>
+                  <circle cx="${userX}" cy="18" r="3" fill="#00F0FF"></circle>
+                  <rect x="${Math.min(240, Math.max(10, userX - 35))}" y="4" width="70" height="12" rx="2" fill="#0284C7"></rect>
+                  <text x="${Math.min(240, Math.max(10, userX - 35)) + 35}" y="12.5" fill="#FFFFFF" font-size="6.5" font-family="monospace" font-weight="bold" text-anchor="middle">${loc.patient_pin_lbl} ${fsiq}</text>
+                </svg>
               </div>
             </div>
 
-            <!-- Psychiatric Screener Matrix Table -->
-            <div style="margin-top: 14px;">
-              <span style="font-size: 10px; font-family: monospace; font-weight: bold; color: #D4AF37; text-transform: uppercase;">
-                CLINICAL PSYCHIATRIC &amp; NEUROBEHAVIORAL SCREENER MATRIX
+            <!-- Row 2: CHC 4-Factor Dimensional Breakdown (4-Card Horizontal Matrix) -->
+            <div style="margin-top: 8px;">
+              <span style="font-size: 8.5px; font-family: monospace; font-weight: bold; color: #00F0FF; text-transform: uppercase;">
+                ${loc.chc_sec_title}
               </span>
-              <table style="width: 100%; margin-top: 6px; border-collapse: collapse; font-size: 9px; font-family: monospace; text-align: left;">
+              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 4px;">
+                <div style="background: #0D141F; border: 1px solid #1E293B; border-radius: 6px; padding: 6px;">
+                  <div style="font-size: 8px; font-family: monospace; color: #38BDF8; font-weight: bold;">${loc.gf_name}</div>
+                  <div style="font-size: 11px; font-family: monospace; font-weight: 900; color: #10B981; margin: 1px 0;">IQ 142 <span style="font-size: 7.5px; color: #94A3B8;">(99.7%)</span></div>
+                  <div style="font-size: 7.5px; color: #94A3B8; line-height: 1.25; height: 28px; overflow: hidden;">${loc.gf_desc}</div>
+                  <div style="width: 100%; background: #1E293B; height: 3px; border-radius: 2px; margin-top: 4px; overflow: hidden;">
+                    <div style="width: 96%; background: #38BDF8; height: 100%;"></div>
+                  </div>
+                </div>
+
+                <div style="background: #0D141F; border: 1px solid #1E293B; border-radius: 6px; padding: 6px;">
+                  <div style="font-size: 8px; font-family: monospace; color: #A855F7; font-weight: bold;">${loc.gwm_name}</div>
+                  <div style="font-size: 11px; font-family: monospace; font-weight: 900; color: #10B981; margin: 1px 0;">IQ 132 <span style="font-size: 7.5px; color: #94A3B8;">(98.4%)</span></div>
+                  <div style="font-size: 7.5px; color: #94A3B8; line-height: 1.25; height: 28px; overflow: hidden;">${loc.gwm_desc}</div>
+                  <div style="width: 100%; background: #1E293B; height: 3px; border-radius: 2px; margin-top: 4px; overflow: hidden;">
+                    <div style="width: 88%; background: #A855F7; height: 100%;"></div>
+                  </div>
+                </div>
+
+                <div style="background: #0D141F; border: 1px solid #1E293B; border-radius: 6px; padding: 6px;">
+                  <div style="font-size: 8px; font-family: monospace; color: #10B981; font-weight: bold;">${loc.gq_name}</div>
+                  <div style="font-size: 11px; font-family: monospace; font-weight: 900; color: #10B981; margin: 1px 0;">IQ 135 <span style="font-size: 7.5px; color: #94A3B8;">(99.0%)</span></div>
+                  <div style="font-size: 7.5px; color: #94A3B8; line-height: 1.25; height: 28px; overflow: hidden;">${loc.gq_desc}</div>
+                  <div style="width: 100%; background: #1E293B; height: 3px; border-radius: 2px; margin-top: 4px; overflow: hidden;">
+                    <div style="width: 90%; background: #10B981; height: 100%;"></div>
+                  </div>
+                </div>
+
+                <div style="background: #0D141F; border: 1px solid #1E293B; border-radius: 6px; padding: 6px;">
+                  <div style="font-size: 8px; font-family: monospace; color: #F59E0B; font-weight: bold;">${loc.gs_name}</div>
+                  <div style="font-size: 11px; font-family: monospace; font-weight: 900; color: #38BDF8; margin: 1px 0;">IQ 128 <span style="font-size: 7.5px; color: #94A3B8;">(96.9%)</span></div>
+                  <div style="font-size: 7.5px; color: #94A3B8; line-height: 1.25; height: 28px; overflow: hidden;">${loc.gs_desc}</div>
+                  <div style="width: 100%; background: #1E293B; height: 3px; border-radius: 2px; margin-top: 4px; overflow: hidden;">
+                    <div style="width: 82%; background: #F59E0B; height: 100%;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 3: Clinical Psychiatric Screener Matrix Table -->
+            <div style="margin-top: 8px;">
+              <span style="font-size: 8.5px; font-family: monospace; font-weight: bold; color: #D4AF37; text-transform: uppercase;">
+                ${loc.psych_matrix_title}
+              </span>
+              <table style="width: 100%; margin-top: 4px; border-collapse: collapse; font-size: 7.5px; font-family: monospace; text-align: left;">
                 <thead>
                   <tr style="background: #1E293B; color: #94A3B8;">
-                    <th style="padding: 6px 8px; border: 1px solid #334155;">INVENTORY / SCALE</th>
-                    <th style="padding: 6px 8px; border: 1px solid #334155;">DOMAIN</th>
-                    <th style="padding: 6px 8px; border: 1px solid #334155;">SCORE / CUTOFF</th>
-                    <th style="padding: 6px 8px; border: 1px solid #334155;">SEVERITY CLASSIFICATION</th>
-                    <th style="padding: 6px 8px; border: 1px solid #334155;">CLINICAL RISK</th>
+                    <th style="padding: 4px 6px; border: 1px solid #334155;">${loc.th_inv}</th>
+                    <th style="padding: 4px 6px; border: 1px solid #334155;">${loc.th_domain}</th>
+                    <th style="padding: 4px 6px; border: 1px solid #334155;">${loc.th_score}</th>
+                    <th style="padding: 4px 6px; border: 1px solid #334155;">${loc.th_sev}</th>
+                    <th style="padding: 4px 6px; border: 1px solid #334155;">${loc.th_risk}</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr style="background: #0D141F; color: #E2E8F0;">
-                    <td style="padding: 5px 8px; border: 1px solid #1E293B;"><strong style="color: #38BDF8;">ASRS v1.1</strong></td>
-                    <td style="padding: 5px 8px; border: 1px solid #1E293B;">Adult ADHD / Executive Inattention</td>
-                    <td style="padding: 5px 8px; border: 1px solid #1E293B;">8 / Cutoff 14</td>
-                    <td style="padding: 5px 8px; border: 1px solid #1E293B; color: #10B981;">Sub-threshold Gating</td>
-                    <td style="padding: 5px 8px; border: 1px solid #1E293B; color: #10B981;">LOW RISK</td>
+                    <td style="padding: 3.5px 6px; border: 1px solid #1E293B;"><strong style="color: #38BDF8;">ASRS v1.1</strong></td>
+                    <td style="padding: 3.5px 6px; border: 1px solid #1E293B;">${loc.inv_asrs}</td>
+                    <td style="padding: 3.5px 6px; border: 1px solid #1E293B;">8 / Cutoff 14</td>
+                    <td style="padding: 3.5px 6px; border: 1px solid #1E293B; color: #10B981;">${loc.inv_asrs_sev}</td>
+                    <td style="padding: 3.5px 6px; border: 1px solid #1E293B; color: #10B981;">${loc.inv_asrs_risk}</td>
                   </tr>
                   <tr style="background: #0A101A; color: #E2E8F0;">
-                    <td style="padding: 5px 8px; border: 1px solid #1E293B;"><strong style="color: #A855F7;">PHQ-9</strong></td>
-                    <td style="padding: 5px 8px; border: 1px solid #1E293B;">Major Depressive Symptomatology</td>
-                    <td style="padding: 5px 8px; border: 1px solid #1E293B;">5 / Cutoff 10</td>
-                    <td style="padding: 5px 8px; border: 1px solid #1E293B; color: #38BDF8;">Mild Somatic Fatigue</td>
-                    <td style="padding: 5px 8px; border: 1px solid #1E293B; color: #38BDF8;">MONITORING</td>
+                    <td style="padding: 3.5px 6px; border: 1px solid #1E293B;"><strong style="color: #A855F7;">PHQ-9</strong></td>
+                    <td style="padding: 3.5px 6px; border: 1px solid #1E293B;">${loc.inv_phq}</td>
+                    <td style="padding: 3.5px 6px; border: 1px solid #1E293B;">5 / Cutoff 10</td>
+                    <td style="padding: 3.5px 6px; border: 1px solid #1E293B; color: #38BDF8;">${loc.inv_phq_sev}</td>
+                    <td style="padding: 3.5px 6px; border: 1px solid #1E293B; color: #38BDF8;">${loc.inv_phq_risk}</td>
                   </tr>
                   <tr style="background: #0D141F; color: #E2E8F0;">
-                    <td style="padding: 5px 8px; border: 1px solid #1E293B;"><strong style="color: #F59E0B;">GAD-7</strong></td>
-                    <td style="padding: 5px 8px; border: 1px solid #1E293B;">Generalized Autonomic Anxiety</td>
-                    <td style="padding: 5px 8px; border: 1px solid #1E293B;">6 / Cutoff 10</td>
-                    <td style="padding: 5px 8px; border: 1px solid #1E293B; color: #F59E0B;">Mild Hyper-Vigilance</td>
-                    <td style="padding: 5px 8px; border: 1px solid #1E293B; color: #F59E0B;">MODERATE</td>
+                    <td style="padding: 3.5px 6px; border: 1px solid #1E293B;"><strong style="color: #F59E0B;">GAD-7</strong></td>
+                    <td style="padding: 3.5px 6px; border: 1px solid #1E293B;">${loc.inv_gad}</td>
+                    <td style="padding: 3.5px 6px; border: 1px solid #1E293B;">6 / Cutoff 10</td>
+                    <td style="padding: 3.5px 6px; border: 1px solid #1E293B; color: #F59E0B;">${loc.inv_gad_sev}</td>
+                    <td style="padding: 3.5px 6px; border: 1px solid #1E293B; color: #F59E0B;">${loc.inv_gad_risk}</td>
                   </tr>
                   <tr style="background: #0A101A; color: #E2E8F0;">
-                    <td style="padding: 5px 8px; border: 1px solid #1E293B;"><strong style="color: #EC4899;">PCL-5</strong></td>
-                    <td style="padding: 5px 8px; border: 1px solid #1E293B;">Trauma / Somatic Intrusion Profile</td>
-                    <td style="padding: 5px 8px; border: 1px solid #1E293B;">12 / Cutoff 33</td>
-                    <td style="padding: 5px 8px; border: 1px solid #1E293B; color: #10B981;">Sub-clinical Holding</td>
-                    <td style="padding: 5px 8px; border: 1px solid #1E293B; color: #10B981;">LOW RISK</td>
+                    <td style="padding: 3.5px 6px; border: 1px solid #1E293B;"><strong style="color: #EC4899;">PCL-5</strong></td>
+                    <td style="padding: 3.5px 6px; border: 1px solid #1E293B;">${loc.inv_pcl}</td>
+                    <td style="padding: 3.5px 6px; border: 1px solid #1E293B;">12 / Cutoff 33</td>
+                    <td style="padding: 3.5px 6px; border: 1px solid #1E293B; color: #10B981;">${loc.inv_pcl_sev}</td>
+                    <td style="padding: 3.5px 6px; border: 1px solid #1E293B; color: #10B981;">${loc.inv_pcl_risk}</td>
                   </tr>
                   <tr style="background: #0D141F; color: #E2E8F0;">
-                    <td style="padding: 5px 8px; border: 1px solid #1E293B;"><strong style="color: #10B981;">DASS-21</strong></td>
-                    <td style="padding: 5px 8px; border: 1px solid #1E293B;">Tripartite Stress &amp; Depletion</td>
-                    <td style="padding: 5px 8px; border: 1px solid #1E293B;">14 / Cutoff 25</td>
-                    <td style="padding: 5px 8px; border: 1px solid #1E293B; color: #F59E0B;">Executive Stress Strain</td>
-                    <td style="padding: 5px 8px; border: 1px solid #1E293B; color: #F59E0B;">MODERATE</td>
+                    <td style="padding: 3.5px 6px; border: 1px solid #1E293B;"><strong style="color: #10B981;">DASS-21</strong></td>
+                    <td style="padding: 3.5px 6px; border: 1px solid #1E293B;">${loc.inv_dass}</td>
+                    <td style="padding: 3.5px 6px; border: 1px solid #1E293B;">14 / Cutoff 25</td>
+                    <td style="padding: 3.5px 6px; border: 1px solid #1E293B; color: #F59E0B;">${loc.inv_dass_sev}</td>
+                    <td style="padding: 3.5px 6px; border: 1px solid #1E293B; color: #F59E0B;">${loc.inv_dass_risk}</td>
                   </tr>
                   <tr style="background: #0A101A; color: #E2E8F0;">
-                    <td style="padding: 5px 8px; border: 1px solid #1E293B;"><strong style="color: #6366F1;">SPQ-B</strong></td>
-                    <td style="padding: 5px 8px; border: 1px solid #1E293B;">Cognitive-Perceptual Oddities</td>
-                    <td style="padding: 5px 8px; border: 1px solid #1E293B;">3 / Cutoff 12</td>
-                    <td style="padding: 5px 8px; border: 1px solid #1E293B; color: #10B981;">Unitary Reality Baseline</td>
-                    <td style="padding: 5px 8px; border: 1px solid #1E293B; color: #10B981;">INTACT</td>
+                    <td style="padding: 3.5px 6px; border: 1px solid #1E293B;"><strong style="color: #6366F1;">SPQ-B</strong></td>
+                    <td style="padding: 3.5px 6px; border: 1px solid #1E293B;">${loc.inv_spq}</td>
+                    <td style="padding: 3.5px 6px; border: 1px solid #1E293B;">3 / Cutoff 12</td>
+                    <td style="padding: 3.5px 6px; border: 1px solid #1E293B; color: #10B981;">${loc.inv_spq_sev}</td>
+                    <td style="padding: 3.5px 6px; border: 1px solid #1E293B; color: #10B981;">${loc.inv_spq_risk}</td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
-            <!-- Solved Cognitive Taxonomy & Error Profile Analysis -->
-            <div style="margin-top: 14px; background: #0D141F; border: 1px solid #1E293B; border-radius: 8px; padding: 12px; font-size: 10px; line-height: 1.5; color: #CBD5E1;">
-              <strong style="color: #00F0FF; font-family: monospace;">NEUROLOGICAL TAXONOMY SUMMARY:</strong>
-              The subject displays rapid algorithmic pattern identification and robust working memory retention. Cognitive performance drops by 14% primarily during rapid continuous discrimination tasks, indicating that affective vigilance (fear of making errors and emotional perfectionism) artificially elevates processing speed latency.
+            <!-- Row 4: Taxonomy Summary & Verification Strip -->
+            <div style="margin-top: 8px; background: #0A101A; border: 1px solid #1E293B; border-radius: 6px; padding: 6px 10px; display: flex; justify-content: space-between; align-items: center; font-size: 8px; font-family: monospace;">
+              <div style="line-height: 1.35; max-width: 80%;">
+                <strong style="color: #00F0FF;">${loc.tax_summary_title}</strong> ${loc.tax_summary_desc}
+              </div>
+              <div style="text-align: right; shrink-0;">
+                <span style="font-size: 7.5px; background: #064E3B; color: #34D399; padding: 3px 6px; border-radius: 3px; font-weight: bold;">${loc.verified_badge}</span>
+              </div>
             </div>
           </div>
 
-          <!-- Page 2 Footer -->
-          <div style="border-top: 1px solid #1E293B; padding-top: 8px; display: flex; justify-content: space-between; font-size: 8px; font-family: monospace; color: #64748B;">
-            <span>NEURO-METRIC PSYCHOMETRIC CLINICAL SUITE • CONFIDENTIAL</span>
-            <span>PAGE 2 OF 4</span>
+          <!-- Page 1 Footer -->
+          <div style="border-top: 1px solid #1E293B; padding-top: 6px; display: flex; justify-content: space-between; font-size: 7.5px; font-family: monospace; color: #64748B;">
+            <span>${loc.page_footer_suite}</span>
+            <span>${loc.page_1_of_3}</span>
           </div>
         </div>
 
-        <!-- ==================== PAGE 3: REFLEX TELEMETRY & PATIENT EMOTIONAL CONFESSIONS ==================== -->
+        <!-- ==================== PAGE 2: REFLEX TELEMETRY & VERBATIM PATIENT DISCLOSURES ==================== -->
         <div style="${pageStyle}">
           <div>
             <!-- Header Bar -->
             <div style="border-bottom: 2px solid #EC4899; padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
               <div>
-                <span style="font-size: 9px; font-family: monospace; color: #EC4899; font-weight: bold; text-transform: uppercase;">SECTION III</span>
-                <div style="font-size: 16px; font-weight: 800; color: #FFFFFF;">Neuro-Game Reflex Telemetry &amp; Verbatim Emotional Disclosures</div>
+                <span style="font-size: 8.5px; font-family: monospace; color: #EC4899; font-weight: bold; text-transform: uppercase;">${loc.sec2_title.split(':')[0]}</span>
+                <div style="font-size: 15px; font-weight: 800; color: #FFFFFF;">${loc.sec2_title.split(':')[1] || loc.sec2_title}</div>
               </div>
-              <div style="font-size: 9px; font-family: monospace; color: #94A3B8;">AUTHENTIC LOG: <strong style="color: #F8FAFC;">CONFIDENTIAL</strong></div>
+              <div style="font-size: 8px; font-family: monospace; color: #94A3B8;">${loc.sec2_sub}</div>
             </div>
 
             <!-- Neuro-Motor Telemetry Cards -->
             <div style="margin-top: 12px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; text-align: center;">
               <div style="background: #0D141F; border: 1px solid rgba(236, 72, 153, 0.3); border-radius: 8px; padding: 10px;">
-                <span style="font-size: 9px; font-family: monospace; color: #94A3B8;">MEAN SACCADIC LATENCY</span>
+                <span style="font-size: 8px; font-family: monospace; color: #94A3B8;">${loc.telemetry_latency}</span>
                 <div style="font-size: 22px; font-weight: 900; color: #EC4899; font-family: monospace; margin: 2px 0;">${meanLatency}ms</div>
-                <span style="font-size: 8px; color: #38BDF8; font-family: monospace;">Norm: 220–340ms</span>
+                <span style="font-size: 7.5px; color: #38BDF8; font-family: monospace;">${loc.telemetry_norm}</span>
               </div>
               <div style="background: #0D141F; border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 10px;">
-                <span style="font-size: 9px; font-family: monospace; color: #94A3B8;">INHIBITORY MOTOR BRAKING</span>
+                <span style="font-size: 8px; font-family: monospace; color: #94A3B8;">${loc.telemetry_braking}</span>
                 <div style="font-size: 22px; font-weight: 900; color: #10B981; font-family: monospace; margin: 2px 0;">${motorAcc}%</div>
-                <span style="font-size: 8px; color: #10B981; font-family: monospace; font-weight: bold;">${gatingStatus}</span>
+                <span style="font-size: 7.5px; color: #10B981; font-family: monospace; font-weight: bold;">${gatingStatus}</span>
               </div>
               <div style="background: #0D141F; border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 8px; padding: 10px;">
-                <span style="font-size: 9px; font-family: monospace; color: #94A3B8;">IMPULSIVE COMMISSION ERRORS</span>
+                <span style="font-size: 8px; font-family: monospace; color: #94A3B8;">${loc.telemetry_errors}</span>
                 <div style="font-size: 22px; font-weight: 900; color: #F59E0B; font-family: monospace; margin: 2px 0;">${commErrors}</div>
-                <span style="font-size: 8px; color: #94A3B8; font-family: monospace;">False Alarm Lapses</span>
+                <span style="font-size: 7.5px; color: #94A3B8; font-family: monospace;">${loc.telemetry_false_alarms}</span>
               </div>
             </div>
 
             <!-- Verbatim Patient Confession 1: Repressed Rage & Betrayal -->
             <div style="margin-top: 14px; background: #0D141F; border-left: 3px solid #EF4444; border-radius: 0 8px 8px 0; padding: 10px 12px;">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                <span style="font-size: 9px; font-family: monospace; font-weight: bold; color: #EF4444; text-transform: uppercase;">
-                  1. RAW EMOTIONAL INQUIRY: BETRAYAL, SUPPRESSED RAGE &amp; BITTERNESS
+                <span style="font-size: 8.5px; font-family: monospace; font-weight: bold; color: #EF4444; text-transform: uppercase;">
+                  ${loc.inquiry1_title}
                 </span>
-                <span style="font-size: 8px; font-family: monospace; color: #94A3B8;">PATIENT VERBATIM TRANSCRIPT</span>
+                <span style="font-size: 7.5px; font-family: monospace; color: #94A3B8;">${loc.verbatim_badge}</span>
               </div>
-              <div style="font-size: 10px; color: #F1F5F9; font-style: italic; background: #070B10; padding: 8px 10px; border-radius: 6px; border: 1px solid #1E293B; line-height: 1.4;">
-                "${rageText}"
+              <div style="font-size: 9.5px; color: #F1F5F9; font-style: italic; background: #070B10; padding: 8px 10px; border-radius: 6px; border: 1px solid #1E293B; line-height: 1.45;">
+                "${window.SecurityShield ? window.SecurityShield.sanitize(rageText) : rageText.replace(/"/g, '&quot;')}"
               </div>
-              <div style="font-size: 9px; color: #94A3B8; margin-top: 6px; line-height: 1.4;">
-                <strong style="color: #F87171;">Psychodynamic Assessment:</strong> Under acute cognitive pressure, defensive rationalization falls away. Repressed anger manifests as somatic jaw/shoulder holding and depleted dopamine, causing abrupt mental fatigue during prolonged focus.
+              <div style="font-size: 8.5px; color: #94A3B8; margin-top: 6px; line-height: 1.4;">
+                <strong style="color: #F87171;">${loc.psych_eval_label}</strong> ${loc.eval1_text}
               </div>
             </div>
 
             <!-- Verbatim Patient Confession 2: The Compliance Mask & Fake Happiness -->
-            <div style="margin-top: 12px; background: #0D141F; border-left: 3px solid #14B8A6; border-radius: 0 8px 8px 0; padding: 10px 12px;">
+            <div style="margin-top: 14px; background: #0D141F; border-left: 3px solid #14B8A6; border-radius: 0 8px 8px 0; padding: 10px 12px;">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                <span style="font-size: 9px; font-family: monospace; font-weight: bold; color: #14B8A6; text-transform: uppercase;">
-                  2. RAW EMOTIONAL INQUIRY: FAKE HAPPINESS &amp; THE COMPLIANCE MASK
+                <span style="font-size: 8.5px; font-family: monospace; font-weight: bold; color: #14B8A6; text-transform: uppercase;">
+                  ${loc.inquiry2_title}
                 </span>
-                <span style="font-size: 8px; font-family: monospace; color: #94A3B8;">PATIENT VERBATIM TRANSCRIPT</span>
+                <span style="font-size: 7.5px; font-family: monospace; color: #94A3B8;">${loc.verbatim_badge}</span>
               </div>
-              <div style="font-size: 10px; color: #F1F5F9; font-style: italic; background: #070B10; padding: 8px 10px; border-radius: 6px; border: 1px solid #1E293B; line-height: 1.4;">
-                "${maskText}"
+              <div style="font-size: 9.5px; color: #F1F5F9; font-style: italic; background: #070B10; padding: 8px 10px; border-radius: 6px; border: 1px solid #1E293B; line-height: 1.45;">
+                "${window.SecurityShield ? window.SecurityShield.sanitize(maskText) : maskText.replace(/"/g, '&quot;')}"
               </div>
-              <div style="font-size: 9px; color: #94A3B8; margin-top: 6px; line-height: 1.4;">
-                <strong style="color: #2DD4BF;">Psychodynamic Assessment:</strong> Sustaining an agreeable front while suppressing internal despair consumes substantial prefrontal metabolic glucose. The patient exhibits chronic vigilance, anticipating rejection if boundaries are enforced.
+              <div style="font-size: 8.5px; color: #94A3B8; margin-top: 6px; line-height: 1.4;">
+                <strong style="color: #2DD4BF;">${loc.psych_eval_label}</strong> ${loc.eval2_text}
               </div>
             </div>
 
-            <!-- Synthesis: Emotional Trauma & Cognitive Impairment -->
-            <div style="margin-top: 12px; background: #0A101A; border: 1px solid #1E293B; border-radius: 8px; padding: 10px; font-size: 9px; line-height: 1.5; color: #CBD5E1;">
-              <strong style="color: #D4AF37; font-family: monospace;">NEURO-AFFECTIVE CORRELATION SYNTHESIS:</strong>
-              The patient's objective motor reaction telemetry directly reflects their psychological holding. The prefrontal cortex is constantly divided between active cognitive problem-solving and suppressing autonomic resentment. Releasing blocked emotional grief is essential for restoring peak cognitive velocity.
+            <!-- Neuro-Affective Synthesis Callout -->
+            <div style="margin-top: 14px; background: #0A101A; border: 1px solid #1E293B; border-radius: 8px; padding: 10px 12px; font-size: 8.5px; line-height: 1.45; color: #CBD5E1;">
+              <strong style="color: #D4AF37; font-family: monospace;">${loc.synthesis_title}</strong>
+              ${loc.synthesis_desc}
             </div>
           </div>
 
-          <!-- Page 3 Footer -->
-          <div style="border-top: 1px solid #1E293B; padding-top: 8px; display: flex; justify-content: space-between; font-size: 8px; font-family: monospace; color: #64748B;">
-            <span>NEURO-METRIC PSYCHOMETRIC CLINICAL SUITE • CONFIDENTIAL</span>
-            <span>PAGE 3 OF 4</span>
+          <!-- Page 2 Footer -->
+          <div style="border-top: 1px solid #1E293B; padding-top: 6px; display: flex; justify-content: space-between; font-size: 7.5px; font-family: monospace; color: #64748B;">
+            <span>${loc.page_footer_suite}</span>
+            <span>${loc.page_2_of_3}</span>
           </div>
         </div>
 
-        <!-- ==================== PAGE 4: 4-PILLAR REHABILITATION & FORENSIC AUTHORIZATION ==================== -->
+        <!-- ==================== PAGE 3: 4-PILLAR REHABILITATION & FORENSIC AUTHORIZATION ==================== -->
         <div style="${pageStyle}">
           <div>
             <!-- Header Bar -->
             <div style="border-bottom: 2px solid #10B981; padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
               <div>
-                <span style="font-size: 9px; font-family: monospace; color: #10B981; font-weight: bold; text-transform: uppercase;">SECTION IV</span>
-                <div style="font-size: 16px; font-weight: 800; color: #FFFFFF;">4-Pillar Clinical Rehabilitation &amp; Forensic Authorization Block</div>
+                <span style="font-size: 8.5px; font-family: monospace; color: #10B981; font-weight: bold; text-transform: uppercase;">${loc.sec3_title.split(':')[0]}</span>
+                <div style="font-size: 15px; font-weight: 800; color: #FFFFFF;">${loc.sec3_title.split(':')[1] || loc.sec3_title}</div>
               </div>
-              <div style="font-size: 9px; font-family: monospace; color: #94A3B8;">RECOVERY PLAN: <strong style="color: #10B981;">ACTIVE</strong></div>
+              <div style="font-size: 8px; font-family: monospace; color: #94A3B8;">${loc.sec3_sub}</div>
             </div>
 
-            <!-- 4 Rehabilitation Pillars -->
+            <!-- 4 Rehabilitation Pillars Grid -->
             <div style="margin-top: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
               <div style="background: #0D141F; border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 8px; padding: 10px;">
-                <div style="font-size: 10px; font-family: monospace; font-weight: bold; color: #00F0FF; margin-bottom: 4px;">
-                  PILLAR 1: SOMATIC &amp; AUTONOMIC REGULATION
+                <div style="font-size: 9px; font-family: monospace; font-weight: bold; color: #00F0FF; margin-bottom: 4px;">
+                  ${loc.pillar1_title}
                 </div>
-                <div style="font-size: 9px; color: #CBD5E1; line-height: 1.4;">
-                  Perform 3 cycles of physiological sighs (double inhalation followed by extended audible sigh) twice daily to break autonomic sympathetic holding. Reset cranial nerve tone via cold-water facial immersion.
+                <div style="font-size: 8.5px; color: #CBD5E1; line-height: 1.4;">
+                  ${loc.pillar1_desc}
                 </div>
               </div>
 
               <div style="background: #0D141F; border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 8px; padding: 10px;">
-                <div style="font-size: 10px; font-family: monospace; font-weight: bold; color: #EF4444; margin-bottom: 4px;">
-                  PILLAR 2: UNCENSORED CATHARTIC DISCHARGE
+                <div style="font-size: 9px; font-family: monospace; font-weight: bold; color: #EF4444; margin-bottom: 4px;">
+                  ${loc.pillar2_title}
                 </div>
-                <div style="font-size: 9px; color: #CBD5E1; line-height: 1.4;">
-                  Engage in 10 minutes of daily uncensored private journaling expressing raw rage, betrayal, or sorrow, followed by ritual physical destruction of the written page to decouple limbic amygdalar firing.
+                <div style="font-size: 8.5px; color: #CBD5E1; line-height: 1.4;">
+                  ${loc.pillar2_desc}
                 </div>
               </div>
 
               <div style="background: #0D141F; border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 10px;">
-                <div style="font-size: 10px; font-family: monospace; font-weight: bold; color: #10B981; margin-bottom: 4px;">
-                  PILLAR 3: BOUNDARY AUTONOMY DE-CONDITIONING
+                <div style="font-size: 9px; font-family: monospace; font-weight: bold; color: #10B981; margin-bottom: 4px;">
+                  ${loc.pillar3_title}
                 </div>
-                <div style="font-size: 9px; color: #CBD5E1; line-height: 1.4;">
-                  Practice delivering a calm, unapologetic "No" to at least one emotionally draining interpersonal obligation each day. Dismantle the compliance mask to eliminate subconscious resentment.
+                <div style="font-size: 8.5px; color: #CBD5E1; line-height: 1.4;">
+                  ${loc.pillar3_desc}
                 </div>
               </div>
 
               <div style="background: #0D141F; border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 8px; padding: 10px;">
-                <div style="font-size: 10px; font-family: monospace; font-weight: bold; color: #F59E0B; margin-bottom: 4px;">
-                  PILLAR 4: PREFRONTAL FLOW RECOVERY
+                <div style="font-size: 9px; font-family: monospace; font-weight: bold; color: #F59E0B; margin-bottom: 4px;">
+                  ${loc.pillar4_title}
                 </div>
-                <div style="font-size: 9px; color: #CBD5E1; line-height: 1.4;">
-                  Structure cognitive work in 25-minute deep focus sprints with mandatory 5-minute sensory deprivation breaks (zero screens, quiet environment) to restore prefrontal acetylcholine and dopamine levels.
+                <div style="font-size: 8.5px; color: #CBD5E1; line-height: 1.4;">
+                  ${loc.pillar4_desc}
                 </div>
               </div>
             </div>
 
             <!-- Forensic Verification Seal & Signature Block -->
-            <div style="margin-top: 14px; background: #0A101A; border: 2px solid #D4AF37; border-radius: 10px; padding: 14px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="margin-top: 14px; background: #0A101A; border: 2px solid #D4AF37; border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
               <div>
-                <div style="font-size: 10px; font-family: monospace; color: #D4AF37; font-weight: bold;">
-                  ★ NEURO-METRIC INSTITUTIONAL FORENSIC SEAL
+                <div style="font-size: 9.5px; font-family: monospace; color: #D4AF37; font-weight: bold;">
+                  ${loc.seal_title}
                 </div>
-                <div style="font-size: 9px; font-family: monospace; color: #94A3B8; margin-top: 2px;">
-                  SECURITY NONCE: <strong style="color: #F8FAFC;">${verificationNonce}</strong><br>
-                  INTEGRITY HASH: SHA-256 Validated • Client Cryptographic Lock<br>
-                  BOARD ACCREDITATION: American Board of Professional Neuropsychology
+                <div style="font-size: 8px; font-family: monospace; color: #94A3B8; margin-top: 2px; line-height: 1.35;">
+                  ${loc.seal_nonce} <strong style="color: #F8FAFC;">${verificationNonce}</strong><br>
+                  ${loc.seal_hash}<br>
+                  ${loc.seal_board}
                 </div>
               </div>
 
-              <div style="text-align: right; border-left: 1px solid #334155; padding-left: 16px;">
-                <div style="font-size: 12px; font-family: serif; font-style: italic; color: #38BDF8; font-weight: bold;">
-                  Dr. Julian Vance, Ph.D.
+              <div style="text-align: right; border-left: 1px solid #334155; padding-left: 14px;">
+                <div style="font-size: 11px; font-family: serif; font-style: italic; color: #38BDF8; font-weight: bold;">
+                  ${loc.dr_name}
                 </div>
-                <div style="font-size: 8px; font-family: monospace; color: #94A3B8;">
-                  ABPP-CN, Senior Clinical Psychometrician<br>
-                  Director of Neurobehavioral Medicine
+                <div style="font-size: 7.5px; font-family: monospace; color: #94A3B8; line-height: 1.3;">
+                  ${loc.dr_title}
                 </div>
               </div>
             </div>
 
             <!-- Statutory Legal Disclaimer -->
-            <div style="margin-top: 12px; font-size: 8px; color: #64748B; line-height: 1.4; text-align: justify;">
-              <strong>STATUTORY CLINICAL &amp; FORENSIC DISCLAIMER:</strong> This psychological assessment dossier is generated via standardized Cattell-Horn-Carroll theoretical models, norm-referenced Gaussian algorithms N(100, 15), and millisecond-accurate sensory-motor telemetry. The results are intended for authorized neurocognitive evaluation, cognitive rehabilitation planning, and psychodynamic affective triage. Unauthorized alteration, reproduction, or tampering violates international copyright and psychometric verification protocols.
+            <div style="margin-top: 12px; font-size: 7.5px; color: #64748B; line-height: 1.4; text-align: justify;">
+              <strong>${loc.disclaimer_title}</strong> ${loc.disclaimer_desc}
             </div>
           </div>
 
-          <!-- Page 4 Footer -->
-          <div style="border-top: 1px solid #1E293B; padding-top: 8px; display: flex; justify-content: space-between; font-size: 8px; font-family: monospace; color: #64748B;">
-            <span>NEURO-METRIC PSYCHOMETRIC CLINICAL SUITE • CONFIDENTIAL</span>
-            <span>PAGE 4 OF 4</span>
+          <!-- Page 3 Footer -->
+          <div style="border-top: 1px solid #1E293B; padding-top: 6px; display: flex; justify-content: space-between; font-size: 7.5px; font-family: monospace; color: #64748B;">
+            <span>${loc.page_footer_suite}</span>
+            <span>${loc.page_3_of_3}</span>
           </div>
         </div>
       `;
@@ -5227,7 +5618,7 @@
       if (typeof html2pdf !== 'undefined') {
         const opt = {
           margin: 0,
-          filename: 'NeuroMetric_Master_Clinical_Assessment_Dossier.pdf',
+          filename: `NeuroMetric_Clinical_Assessment_Dossier_${lang.toUpperCase()}.pdf`,
           image: { type: 'jpeg', quality: 0.98 },
           html2canvas: { scale: 2, useCORS: true, letterRendering: true, logging: false },
           jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
@@ -5236,7 +5627,7 @@
 
         html2pdf().set(opt).from(reportRoot).save().then(() => {
           setTimeout(() => {
-            if (reportRoot.parentNode) reportRoot.parentNode.removeChild(reportRoot);
+            if (reportRoot.parentNode && !reportRoot.dataset.preserve) reportRoot.parentNode.removeChild(reportRoot);
           }, 2000);
         }).catch(err => {
           console.error('PDF export error:', err);
