@@ -284,7 +284,7 @@
         </div>
         <div>
           <span class="font-extrabold tracking-wider text-sm text-white block">NEURO<span class="text-cyan-400">METRIC</span></span>
-          <span class="text-[9px] font-mono text-purple-300 uppercase tracking-widest">Cognitive Battery Hub</span>
+          <span class="text-[9px] font-mono text-purple-300 uppercase tracking-widest" data-i18n="sidebar_hub_sub">Cognitive Battery Hub</span>
         </div>
       </div>
       <button onclick="toggleSidebar(false)" class="w-7 h-7 rounded-lg bg-slate-900 border border-slate-700 hover:border-cyan-400 text-slate-400 hover:text-white flex items-center justify-center text-xs font-mono transition touch-manipulation">
@@ -297,7 +297,7 @@
       <div>
         <span class="text-[10px] font-mono uppercase tracking-widest text-cyan-400 font-bold block mb-2 px-2 flex items-center justify-between">
           <span data-i18n="sidebar_sec_battery">PRIMARY CHC FSIQ BATTERY</span>
-          <span class="text-[9px] text-emerald-400 font-mono">4 SUBTESTS ACTIVE</span>
+          <span class="text-[9px] text-emerald-400 font-mono" data-i18n="sidebar_subtests_active">4 SUBTESTS ACTIVE</span>
         </span>
         <div class="p-3.5 rounded-2xl bg-cyan-950/40 border border-cyan-400/50 hover:bg-cyan-900/40 transition flex flex-col space-y-2.5 holo-glow-cyan">
           <div class="flex items-start space-x-3">
@@ -305,7 +305,7 @@
             <div class="flex-1">
               <h4 class="text-xs font-bold text-white flex items-center space-x-1.5">
                 <span data-i18n="sidebar_engine_title">Core CHC Intelligence Engine</span>
-                <span class="text-[8px] bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded font-mono font-bold">ALL LIVE</span>
+                <span class="text-[8px] bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded font-mono font-bold" data-i18n="sidebar_all_live">ALL LIVE</span>
               </h4>
               <p class="text-[10px] text-slate-300 mt-0.5 leading-relaxed">
                 <span data-i18n="sidebar_engine_desc">Complete 4-factor battery: Fluid Matrices (Gf), Corsi Memory (Gwm), Quantitative Induction (Gq), and Rapid Speed (Gs).</span>
@@ -333,7 +333,7 @@
       </div>
 
       <div>
-        <span class="text-[10px] font-mono uppercase tracking-widest text-slate-400 font-bold block mb-2 px-2">SCIENTIFIC SCREENERS & PARADIGMS</span>
+        <span class="text-[10px] font-mono uppercase tracking-widest text-slate-400 font-bold block mb-2 px-2" data-i18n="sidebar_screeners_heading">SCIENTIFIC SCREENERS & PARADIGMS</span>
         <div class="space-y-3">
           
           <!-- Memory Recognition Engine -->
@@ -341,19 +341,15 @@
             <div class="flex items-start space-x-3">
               <span class="text-xl text-indigo-400 shrink-0">🧠</span>
               <div class="flex-1">
-                <h4 class="text-xs font-bold text-slate-200">Memory Recognition (DMTS)</h4>
-                <p class="text-[10px] text-slate-400 mt-0.5 leading-relaxed">
+                <h4 class="text-xs font-bold text-slate-200" data-i18n="dmts_title">Memory Recognition (DMTS)</h4>
+                <p class="text-[10px] text-slate-400 mt-0.5 leading-relaxed" data-i18n="dmts_sidebar_desc">
                   Delayed Match-to-Sample visual memory retention & recall latency (PEBL library model).
                 </p>
               </div>
             </div>
             <div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
-              <button onclick="AssessmentController.launch('memory')" class="flex-1 py-1.5 rounded-lg bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 font-mono text-[10px] font-bold border border-indigo-500/40 transition active:scale-95 touch-manipulation">
-                ▶ Launch Test
-              </button>
-              <button onclick="openResearchModal('memory')" class="px-3 py-1.5 rounded-lg bg-slate-800/60 hover:bg-slate-800 text-slate-400 hover:text-white font-mono text-[10px] transition touch-manipulation">
-                Intel
-              </button>
+              <button onclick="AssessmentController.launch( class="flex-1 py-1.5 rounded-lg bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 font-mono text-[10px] font-bold border border-indigo-500/40 transition active:scale-95 touch-manipulation")" class="flex-1 py-1.5 rounded-lg bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 font-mono text-[10px] font-bold border border-indigo-500/40 transition active:scale-95 touch-manipulation" data-i18n="btn_launch_test">▶ Launch Test</button>
+              <button onclick="openResearchModal( class="px-3 py-1.5 rounded-lg bg-slate-800/60 hover:bg-slate-800 text-slate-400 hover:text-white font-mono text-[10px] transition touch-manipulation")" class="px-3 py-1.5 rounded-lg bg-slate-800/60 hover:bg-slate-800 text-slate-400 hover:text-white font-mono text-[10px] transition touch-manipulation" data-i18n="btn_intel">Intel</button>
             </div>
           </div>
 
@@ -362,19 +358,15 @@
             <div class="flex items-start space-x-3">
               <span class="text-xl text-emerald-400 shrink-0">⚡</span>
               <div class="flex-1">
-                <h4 class="text-xs font-bold text-slate-200">Neuroplasticity Tracker</h4>
-                <p class="text-[10px] text-slate-400 mt-0.5 leading-relaxed">
+                <h4 class="text-xs font-bold text-slate-200" data-i18n="nback_title">Neuroplasticity Tracker</h4>
+                <p class="text-[10px] text-slate-400 mt-0.5 leading-relaxed" data-i18n="nback_sidebar_desc">
                   Adaptive Dual N-Back working memory updating challenge (Jaeggi PNAS model).
                 </p>
               </div>
             </div>
             <div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
-              <button onclick="AssessmentController.launch('neuroplasticity')" class="flex-1 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-mono text-[10px] font-bold border border-emerald-500/40 transition active:scale-95 touch-manipulation">
-                ▶ Launch Test
-              </button>
-              <button onclick="openResearchModal('neuroplasticity')" class="px-3 py-1.5 rounded-lg bg-slate-800/60 hover:bg-slate-800 text-slate-400 hover:text-white font-mono text-[10px] transition touch-manipulation">
-                Intel
-              </button>
+              <button onclick="AssessmentController.launch( class="flex-1 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-mono text-[10px] font-bold border border-emerald-500/40 transition active:scale-95 touch-manipulation")" class="flex-1 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-mono text-[10px] font-bold border border-emerald-500/40 transition active:scale-95 touch-manipulation" data-i18n="btn_launch_test">▶ Launch Test</button>
+              <button onclick="openResearchModal( class="px-3 py-1.5 rounded-lg bg-slate-800/60 hover:bg-slate-800 text-slate-400 hover:text-white font-mono text-[10px] transition touch-manipulation")" class="px-3 py-1.5 rounded-lg bg-slate-800/60 hover:bg-slate-800 text-slate-400 hover:text-white font-mono text-[10px] transition touch-manipulation" data-i18n="btn_intel">Intel</button>
             </div>
           </div>
 
@@ -383,27 +375,23 @@
             <div class="flex items-start space-x-3">
               <span class="text-xl text-purple-400 shrink-0">🎭</span>
               <div class="flex-1">
-                <h4 class="text-xs font-bold text-slate-200">Dark Triad & Big Five (IPIP)</h4>
-                <p class="text-[10px] text-slate-400 mt-0.5 leading-relaxed">
+                <h4 class="text-xs font-bold text-slate-200" data-i18n="darktriad_title">Dark Triad & Big Five (IPIP)</h4>
+                <p class="text-[10px] text-slate-400 mt-0.5 leading-relaxed" data-i18n="darktriad_sidebar_desc">
                   Sub-clinical screening (SD3 & IPIP-NEO) for Machiavellianism, nerve, and OCEAN traits.
                 </p>
               </div>
             </div>
             <div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
-              <button onclick="AssessmentController.launch('darktriad')" class="flex-1 py-1.5 rounded-lg bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 font-mono text-[10px] font-bold border border-purple-500/40 transition active:scale-95 touch-manipulation">
-                ▶ Launch Test
-              </button>
-              <button onclick="openResearchModal('darktriad')" class="px-3 py-1.5 rounded-lg bg-slate-800/60 hover:bg-slate-800 text-slate-400 hover:text-white font-mono text-[10px] transition touch-manipulation">
-                Intel
-              </button>
+              <button onclick="AssessmentController.launch( class="flex-1 py-1.5 rounded-lg bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 font-mono text-[10px] font-bold border border-purple-500/40 transition active:scale-95 touch-manipulation")" class="flex-1 py-1.5 rounded-lg bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 font-mono text-[10px] font-bold border border-purple-500/40 transition active:scale-95 touch-manipulation" data-i18n="btn_launch_test">▶ Launch Test</button>
+              <button onclick="openResearchModal( class="px-3 py-1.5 rounded-lg bg-slate-800/60 hover:bg-slate-800 text-slate-400 hover:text-white font-mono text-[10px] transition touch-manipulation")" class="px-3 py-1.5 rounded-lg bg-slate-800/60 hover:bg-slate-800 text-slate-400 hover:text-white font-mono text-[10px] transition touch-manipulation" data-i18n="btn_intel">Intel</button>
             </div>
           </div>
 
           <!-- CLINICAL PSYCHIATRIC & NEURODIVERGENCE BATTERIES -->
       <div>
         <span class="text-[10px] font-mono uppercase tracking-widest text-emerald-400 font-bold block mb-2 px-2 flex items-center justify-between">
-          <span>CLINICAL PSYCHIATRIC SUITE</span>
-          <span class="text-[9px] text-cyan-300 font-mono">DSM-5 & WHO MODELS</span>
+          <span data-i18n="sidebar_clinical_heading">CLINICAL PSYCHIATRIC SUITE</span>
+          <span class="text-[9px] text-cyan-300 font-mono" data-i18n="sidebar_clinical_sub">DSM-5 & WHO MODELS</span>
         </span>
         <div class="space-y-2.5">
           
@@ -412,14 +400,12 @@
             <div class="flex items-start space-x-2.5">
               <span class="text-base text-emerald-400 shrink-0">🎯</span>
               <div class="flex-1">
-                <h4 class="text-xs font-bold text-slate-200">ADHD Screener (ASRS v1.1)</h4>
-                <p class="text-[10px] text-slate-400 leading-tight">WHO adult attention-deficit, hyperactivity & executive focus inventory (18 items).</p>
+                <h4 class="text-xs font-bold text-slate-200" data-i18n="screener_adhd_title">ADHD Screener (ASRS v1.1)</h4>
+                <p class="text-[10px] text-slate-400 leading-tight" data-i18n="screener_adhd_desc">WHO adult attention-deficit, hyperactivity & executive focus inventory (18 items).</p>
               </div>
             </div>
             <div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
-              <button onclick="AssessmentController.launchClinical('adhd')" class="flex-1 py-1 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-mono text-[10px] font-bold border border-emerald-500/40 transition active:scale-95 touch-manipulation">
-                ▶ Launch Screener
-              </button>
+              <button onclick="AssessmentController.launchClinical( class="flex-1 py-1 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-mono text-[10px] font-bold border border-emerald-500/40 transition active:scale-95 touch-manipulation")" class="flex-1 py-1 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-mono text-[10px] font-bold border border-emerald-500/40 transition active:scale-95 touch-manipulation" data-i18n="btn_launch_screener">▶ Launch Screener</button>
             </div>
           </div>
 
@@ -428,14 +414,12 @@
             <div class="flex items-start space-x-2.5">
               <span class="text-base text-cyan-400 shrink-0">🌀</span>
               <div class="flex-1">
-                <h4 class="text-xs font-bold text-slate-200">Schizotypy Screener (SPQ-B)</h4>
-                <p class="text-[10px] text-slate-400 leading-tight">Cognitive-perceptual anomalies, magical ideation & disorganized thought (22 items).</p>
+                <h4 class="text-xs font-bold text-slate-200" data-i18n="screener_schizotypy_title">Schizotypy Screener (SPQ-B)</h4>
+                <p class="text-[10px] text-slate-400 leading-tight" data-i18n="screener_schizotypy_desc">Cognitive-perceptual anomalies, magical ideation & disorganized thought (22 items).</p>
               </div>
             </div>
             <div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
-              <button onclick="AssessmentController.launchClinical('schizotypy')" class="flex-1 py-1 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 font-mono text-[10px] font-bold border border-cyan-500/40 transition active:scale-95 touch-manipulation">
-                ▶ Launch Screener
-              </button>
+              <button onclick="AssessmentController.launchClinical( class="flex-1 py-1 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 font-mono text-[10px] font-bold border border-cyan-500/40 transition active:scale-95 touch-manipulation")" class="flex-1 py-1 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 font-mono text-[10px] font-bold border border-cyan-500/40 transition active:scale-95 touch-manipulation" data-i18n="btn_launch_screener">▶ Launch Screener</button>
             </div>
           </div>
 
@@ -444,14 +428,12 @@
             <div class="flex items-start space-x-2.5">
               <span class="text-base text-purple-400 shrink-0">🔄</span>
               <div class="flex-1">
-                <h4 class="text-xs font-bold text-slate-200">OCD Inventory (OCI-R)</h4>
-                <p class="text-[10px] text-slate-400 leading-tight">Checking, washing, ordering, obsessing, neutralizing & hoarding scale (18 items).</p>
+                <h4 class="text-xs font-bold text-slate-200" data-i18n="screener_ocd_title">OCD Inventory (OCI-R)</h4>
+                <p class="text-[10px] text-slate-400 leading-tight" data-i18n="screener_ocd_desc">Checking, washing, ordering, obsessing, neutralizing & hoarding scale (18 items).</p>
               </div>
             </div>
             <div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
-              <button onclick="AssessmentController.launchClinical('ocd')" class="flex-1 py-1 rounded-lg bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 font-mono text-[10px] font-bold border border-purple-500/40 transition active:scale-95 touch-manipulation">
-                ▶ Launch Screener
-              </button>
+              <button onclick="AssessmentController.launchClinical( class="flex-1 py-1 rounded-lg bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 font-mono text-[10px] font-bold border border-purple-500/40 transition active:scale-95 touch-manipulation")" class="flex-1 py-1 rounded-lg bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 font-mono text-[10px] font-bold border border-purple-500/40 transition active:scale-95 touch-manipulation" data-i18n="btn_launch_screener">▶ Launch Screener</button>
             </div>
           </div>
 
@@ -460,14 +442,12 @@
             <div class="flex items-start space-x-2.5">
               <span class="text-base text-amber-400 shrink-0">🧩</span>
               <div class="flex-1">
-                <h4 class="text-xs font-bold text-slate-200">Autism Quotient (AQ-10)</h4>
-                <p class="text-[10px] text-slate-400 leading-tight">Baron-Cohen neurodiversity, attention switching & detail processing (10 items).</p>
+                <h4 class="text-xs font-bold text-slate-200" data-i18n="screener_autism_title">Autism Quotient (AQ-10)</h4>
+                <p class="text-[10px] text-slate-400 leading-tight" data-i18n="screener_autism_desc">Baron-Cohen neurodiversity, attention switching & detail processing (10 items).</p>
               </div>
             </div>
             <div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
-              <button onclick="AssessmentController.launchClinical('autism')" class="flex-1 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-mono text-[10px] font-bold border border-amber-500/40 transition active:scale-95 touch-manipulation">
-                ▶ Launch Screener
-              </button>
+              <button onclick="AssessmentController.launchClinical( class="flex-1 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-mono text-[10px] font-bold border border-amber-500/40 transition active:scale-95 touch-manipulation")" class="flex-1 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-mono text-[10px] font-bold border border-amber-500/40 transition active:scale-95 touch-manipulation" data-i18n="btn_launch_screener">▶ Launch Screener</button>
             </div>
           </div>
 
@@ -476,14 +456,12 @@
             <div class="flex items-start space-x-2.5">
               <span class="text-base text-rose-400 shrink-0">💓</span>
               <div class="flex-1">
-                <h4 class="text-xs font-bold text-slate-200">Anxiety Scale (GAD-7)</h4>
-                <p class="text-[10px] text-slate-400 leading-tight">Spitzer generalized anxiety, autonomic arousal & cognitive worry (7 items).</p>
+                <h4 class="text-xs font-bold text-slate-200" data-i18n="screener_anxiety_title">Anxiety Scale (GAD-7)</h4>
+                <p class="text-[10px] text-slate-400 leading-tight" data-i18n="screener_anxiety_desc">Spitzer generalized anxiety, autonomic arousal & cognitive worry (7 items).</p>
               </div>
             </div>
             <div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
-              <button onclick="AssessmentController.launchClinical('anxiety')" class="flex-1 py-1 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 font-mono text-[10px] font-bold border border-rose-500/40 transition active:scale-95 touch-manipulation">
-                ▶ Launch Screener
-              </button>
+              <button onclick="AssessmentController.launchClinical( class="flex-1 py-1 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 font-mono text-[10px] font-bold border border-rose-500/40 transition active:scale-95 touch-manipulation")" class="flex-1 py-1 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 font-mono text-[10px] font-bold border border-rose-500/40 transition active:scale-95 touch-manipulation" data-i18n="btn_launch_screener">▶ Launch Screener</button>
             </div>
           </div>
 
@@ -492,14 +470,12 @@
             <div class="flex items-start space-x-2.5">
               <span class="text-base text-blue-400 shrink-0">🌧️</span>
               <div class="flex-1">
-                <h4 class="text-xs font-bold text-slate-200">Depression (PHQ-9)</h4>
-                <p class="text-[10px] text-slate-400 leading-tight">Kroenke major depressive symptoms, anhedonia & fatigue index (9 items).</p>
+                <h4 class="text-xs font-bold text-slate-200" data-i18n="screener_depression_title">Depression (PHQ-9)</h4>
+                <p class="text-[10px] text-slate-400 leading-tight" data-i18n="screener_depression_desc">Kroenke major depressive symptoms, anhedonia & fatigue index (9 items).</p>
               </div>
             </div>
             <div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
-              <button onclick="AssessmentController.launchClinical('depression')" class="flex-1 py-1 rounded-lg bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 font-mono text-[10px] font-bold border border-blue-500/40 transition active:scale-95 touch-manipulation">
-                ▶ Launch Screener
-              </button>
+              <button onclick="AssessmentController.launchClinical( class="flex-1 py-1 rounded-lg bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 font-mono text-[10px] font-bold border border-blue-500/40 transition active:scale-95 touch-manipulation")" class="flex-1 py-1 rounded-lg bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 font-mono text-[10px] font-bold border border-blue-500/40 transition active:scale-95 touch-manipulation" data-i18n="btn_launch_screener">▶ Launch Screener</button>
             </div>
           </div>
 
@@ -508,14 +484,12 @@
             <div class="flex items-start space-x-2.5">
               <span class="text-base text-teal-400 shrink-0">📊</span>
               <div class="flex-1">
-                <h4 class="text-xs font-bold text-slate-200">Executive Deficits (BRIEF-A)</h4>
-                <p class="text-[10px] text-slate-400 leading-tight">Inhibition, cognitive shift, working memory & plan/organize scale (14 items).</p>
+                <h4 class="text-xs font-bold text-slate-200" data-i18n="screener_executive_title">Executive Deficits (BRIEF-A)</h4>
+                <p class="text-[10px] text-slate-400 leading-tight" data-i18n="screener_executive_desc">Inhibition, cognitive shift, working memory & plan/organize scale (14 items).</p>
               </div>
             </div>
             <div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
-              <button onclick="AssessmentController.launchClinical('executive')" class="flex-1 py-1 rounded-lg bg-teal-500/20 hover:bg-teal-500/30 text-teal-300 font-mono text-[10px] font-bold border border-teal-500/40 transition active:scale-95 touch-manipulation">
-                ▶ Launch Screener
-              </button>
+              <button onclick="AssessmentController.launchClinical( class="flex-1 py-1 rounded-lg bg-teal-500/20 hover:bg-teal-500/30 text-teal-300 font-mono text-[10px] font-bold border border-teal-500/40 transition active:scale-95 touch-manipulation")" class="flex-1 py-1 rounded-lg bg-teal-500/20 hover:bg-teal-500/30 text-teal-300 font-mono text-[10px] font-bold border border-teal-500/40 transition active:scale-95 touch-manipulation" data-i18n="btn_launch_screener">▶ Launch Screener</button>
             </div>
           </div>
 
@@ -524,14 +498,12 @@
             <div class="flex items-start space-x-2.5">
               <span class="text-base text-indigo-400 shrink-0">🛡️</span>
               <div class="flex-1">
-                <h4 class="text-xs font-bold text-slate-200">Trauma & Stress (PCL-5)</h4>
-                <p class="text-[10px] text-slate-400 leading-tight">Intrusion, avoidance, hyperarousal & acute stress reactivity (8 items).</p>
+                <h4 class="text-xs font-bold text-slate-200" data-i18n="screener_trauma_title">Trauma & Stress (PCL-5)</h4>
+                <p class="text-[10px] text-slate-400 leading-tight" data-i18n="screener_trauma_desc">Intrusion, avoidance, hyperarousal & acute stress reactivity (8 items).</p>
               </div>
             </div>
             <div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
-              <button onclick="AssessmentController.launchClinical('trauma')" class="flex-1 py-1 rounded-lg bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 font-mono text-[10px] font-bold border border-indigo-500/40 transition active:scale-95 touch-manipulation">
-                ▶ Launch Screener
-              </button>
+              <button onclick="AssessmentController.launchClinical( class="flex-1 py-1 rounded-lg bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 font-mono text-[10px] font-bold border border-indigo-500/40 transition active:scale-95 touch-manipulation")" class="flex-1 py-1 rounded-lg bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 font-mono text-[10px] font-bold border border-indigo-500/40 transition active:scale-95 touch-manipulation" data-i18n="btn_launch_screener">▶ Launch Screener</button>
             </div>
           </div>
 
@@ -543,27 +515,23 @@
             <div class="flex items-start space-x-3">
               <span class="text-xl text-cyan-400 shrink-0">🌐</span>
               <div class="flex-1">
-                <h4 class="text-xs font-bold text-slate-200">Multiple Intelligences</h4>
-                <p class="text-[10px] text-slate-400 mt-0.5 leading-relaxed">
+                <h4 class="text-xs font-bold text-slate-200" data-i18n="screener_multi_title">Multiple Intelligences</h4>
+                <p class="text-[10px] text-slate-400 mt-0.5 leading-relaxed" data-i18n="screener_multi_desc">
                   Howard Gardner 8-domain cognitive profile & spatial-logical strengths screener.
                 </p>
               </div>
             </div>
             <div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
-              <button onclick="AssessmentController.launch('multi_intelligence')" class="flex-1 py-1.5 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 font-mono text-[10px] font-bold border border-cyan-500/40 transition active:scale-95 touch-manipulation">
-                ▶ Launch Test
-              </button>
-              <button onclick="openResearchModal('multi_intelligence')" class="px-3 py-1.5 rounded-lg bg-slate-800/60 hover:bg-slate-800 text-slate-400 hover:text-white font-mono text-[10px] transition touch-manipulation">
-                Intel
-              </button>
+              <button onclick="AssessmentController.launch( class="flex-1 py-1.5 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 font-mono text-[10px] font-bold border border-cyan-500/40 transition active:scale-95 touch-manipulation")" class="flex-1 py-1.5 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 font-mono text-[10px] font-bold border border-cyan-500/40 transition active:scale-95 touch-manipulation" data-i18n="btn_launch_test">▶ Launch Test</button>
+              <button onclick="openResearchModal( class="px-3 py-1.5 rounded-lg bg-slate-800/60 hover:bg-slate-800 text-slate-400 hover:text-white font-mono text-[10px] transition touch-manipulation")" class="px-3 py-1.5 rounded-lg bg-slate-800/60 hover:bg-slate-800 text-slate-400 hover:text-white font-mono text-[10px] transition touch-manipulation" data-i18n="btn_intel">Intel</button>
             </div>
           </div>
 
           <!-- THERAPEUTIC NEURO-GAMES SUITE -->
           <div class="mt-4 pt-3 border-t border-slate-800/80">
             <span class="text-[10px] font-mono uppercase tracking-widest text-pink-400 font-bold block mb-2 px-2 flex items-center justify-between">
-              <span>THERAPEUTIC NEURO-GAMES</span>
-              <span class="text-[9px] text-pink-300 font-mono">REHAB & CLINICAL PROBES</span>
+              <span data-i18n="sidebar_games_heading">THERAPEUTIC NEURO-GAMES</span>
+              <span class="text-[9px] text-pink-300 font-mono" data-i18n="sidebar_games_sub">REHAB & CLINICAL PROBES</span>
             </span>
             <div class="space-y-2.5">
               
@@ -572,14 +540,12 @@
                 <div class="flex items-start space-x-2.5">
                   <span class="text-base text-pink-400 shrink-0">⚡</span>
                   <div class="flex-1">
-                    <h4 class="text-xs font-bold text-slate-200">Go/No-Go Neuro-Reflex</h4>
-                    <p class="text-[10px] text-slate-400 leading-tight">Prefrontal motor braking & reaction speed with 3-minute somatic emotional probe.</p>
+                    <h4 class="text-xs font-bold text-slate-200" data-i18n="game_gonogo_title">Go/No-Go Neuro-Reflex</h4>
+                    <p class="text-[10px] text-slate-400 leading-tight" data-i18n="game_gonogo_desc">Prefrontal motor braking & reaction speed with 3-minute somatic emotional probe.</p>
                   </div>
                 </div>
                 <div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
-                  <button onclick="AssessmentController.launchGame('gonogo')" class="flex-1 py-1 rounded-lg bg-pink-500/20 hover:bg-pink-500/30 text-pink-300 font-mono text-[10px] font-bold border border-pink-500/40 transition active:scale-95 touch-manipulation">
-                    ▶ Play Game
-                  </button>
+                  <button onclick="AssessmentController.launchGame( class="flex-1 py-1 rounded-lg bg-pink-500/20 hover:bg-pink-500/30 text-pink-300 font-mono text-[10px] font-bold border border-pink-500/40 transition active:scale-95 touch-manipulation")" class="flex-1 py-1 rounded-lg bg-pink-500/20 hover:bg-pink-500/30 text-pink-300 font-mono text-[10px] font-bold border border-pink-500/40 transition active:scale-95 touch-manipulation" data-i18n="btn_play_game">▶ Play Game</button>
                 </div>
               </div>
 
@@ -588,14 +554,12 @@
                 <div class="flex items-start space-x-2.5">
                   <span class="text-base text-teal-400 shrink-0">🎯</span>
                   <div class="flex-1">
-                    <h4 class="text-xs font-bold text-slate-200">Saccadic Pursuit (TBI Rehab)</h4>
-                    <p class="text-[10px] text-slate-400 leading-tight">Bilateral visual tracking for concussion recovery with structural trauma inquiry.</p>
+                    <h4 class="text-xs font-bold text-slate-200" data-i18n="game_pursuit_title">Saccadic Pursuit (TBI Rehab)</h4>
+                    <p class="text-[10px] text-slate-400 leading-tight" data-i18n="game_pursuit_desc">Bilateral visual tracking for concussion recovery with structural trauma inquiry.</p>
                   </div>
                 </div>
                 <div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
-                  <button onclick="AssessmentController.launchGame('pursuit')" class="flex-1 py-1 rounded-lg bg-teal-500/20 hover:bg-teal-500/30 text-teal-300 font-mono text-[10px] font-bold border border-teal-500/40 transition active:scale-95 touch-manipulation">
-                    ▶ Play Game
-                  </button>
+                  <button onclick="AssessmentController.launchGame( class="flex-1 py-1 rounded-lg bg-teal-500/20 hover:bg-teal-500/30 text-teal-300 font-mono text-[10px] font-bold border border-teal-500/40 transition active:scale-95 touch-manipulation")" class="flex-1 py-1 rounded-lg bg-teal-500/20 hover:bg-teal-500/30 text-teal-300 font-mono text-[10px] font-bold border border-teal-500/40 transition active:scale-95 touch-manipulation" data-i18n="btn_play_game">▶ Play Game</button>
                 </div>
               </div>
 
@@ -604,14 +568,12 @@
                 <div class="flex items-start space-x-2.5">
                   <span class="text-base text-amber-400 shrink-0">🔮</span>
                   <div class="flex-1">
-                    <h4 class="text-xs font-bold text-slate-200">Affective Stroop Switch</h4>
-                    <p class="text-[10px] text-slate-400 leading-tight">Cognitive decoupling & conflict inhibition with ego-defense bypass analysis.</p>
+                    <h4 class="text-xs font-bold text-slate-200" data-i18n="game_stroop_title">Affective Stroop Switch</h4>
+                    <p class="text-[10px] text-slate-400 leading-tight" data-i18n="game_stroop_desc">Cognitive decoupling & conflict inhibition with ego-defense bypass analysis.</p>
                   </div>
                 </div>
                 <div class="flex items-center space-x-2 pt-1 border-t border-slate-800/80">
-                  <button onclick="AssessmentController.launchGame('stroop')" class="flex-1 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-mono text-[10px] font-bold border border-amber-500/40 transition active:scale-95 touch-manipulation">
-                    ▶ Play Game
-                  </button>
+                  <button onclick="AssessmentController.launchGame( class="flex-1 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-mono text-[10px] font-bold border border-amber-500/40 transition active:scale-95 touch-manipulation")" class="flex-1 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-mono text-[10px] font-bold border border-amber-500/40 transition active:scale-95 touch-manipulation" data-i18n="btn_play_game">▶ Play Game</button>
                 </div>
               </div>
 
@@ -625,7 +587,7 @@
     <!-- Sidebar Footer / Quick Tools -->
     <div class="p-4 border-t border-cyan-500/20 bg-slate-950/80 space-y-2">
       <div class="flex items-center justify-between text-[11px] font-mono text-slate-400">
-        <span>Binaural Focus FM:</span>
+        <span data-i18n="binaural_label">Binaural Focus FM:</span>
         <button onclick="FocusAudioEngine.toggle()" id="sidebarAudioBtn" class="text-purple-300 hover:text-white font-bold">
           [ OFF ]
         </button>
@@ -759,7 +721,7 @@
             <div>
               <div class="flex items-center justify-between mb-2">
                 <span class="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-400/40 text-cyan-300 font-mono text-xs flex items-center justify-center font-bold">Gf</span>
-                <span class="text-[9px] font-mono bg-cyan-500/20 text-cyan-300 font-bold px-2 py-0.5 rounded">ACTIVE</span>
+                <span class="text-[9px] font-mono bg-cyan-500/20 text-cyan-300 font-bold px-2 py-0.5 rounded" data-i18n="badge_active">ACTIVE</span>
               </div>
               <h3 class="font-bold text-white text-sm group-hover:text-cyan-300 transition" data-i18n="subtest_gf_title">Fluid Matrix Induction</h3>
               <p class="text-xs text-slate-400 mt-1 leading-relaxed" data-i18n="subtest_gf_desc">8 non-verbal geometric matrices testing topological rotation, XOR boolean operations, and symbolic induction.</p>
@@ -774,7 +736,7 @@
             <div>
               <div class="flex items-center justify-between mb-2">
                 <span class="w-8 h-8 rounded-lg bg-indigo-500/20 border border-indigo-400/40 text-indigo-300 font-mono text-xs flex items-center justify-center font-bold">Gwm</span>
-                <span class="text-[9px] font-mono bg-indigo-500/20 text-indigo-300 font-bold px-2 py-0.5 rounded">ACTIVE</span>
+                <span class="text-[9px] font-mono bg-indigo-500/20 text-indigo-300 font-bold px-2 py-0.5 rounded" data-i18n="badge_active">ACTIVE</span>
               </div>
               <h3 class="font-bold text-white text-sm group-hover:text-indigo-300 transition" data-i18n="subtest_gwm_title">Spatial Working Memory</h3>
               <p class="text-xs text-slate-400 mt-1 leading-relaxed" data-i18n="subtest_gwm_desc">16-block interactive Corsi span measuring visuospatial memory encoding, sequence buffer, and prefrontal recall.</p>
@@ -789,7 +751,7 @@
             <div>
               <div class="flex items-center justify-between mb-2">
                 <span class="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 font-mono text-xs flex items-center justify-center font-bold">Gq</span>
-                <span class="text-[9px] font-mono bg-emerald-500/20 text-emerald-300 font-bold px-2 py-0.5 rounded">ACTIVE</span>
+                <span class="text-[9px] font-mono bg-emerald-500/20 text-emerald-300 font-bold px-2 py-0.5 rounded" data-i18n="badge_active">ACTIVE</span>
               </div>
               <h3 class="font-bold text-white text-sm group-hover:text-emerald-300 transition" data-i18n="subtest_gq_title">Quantitative Induction</h3>
               <p class="text-xs text-slate-400 mt-1 leading-relaxed" data-i18n="subtest_gq_desc">6 high-order quantitative problems testing recursive growth, prime power differentials, and mathematical logic.</p>
@@ -804,7 +766,7 @@
             <div>
               <div class="flex items-center justify-between mb-2">
                 <span class="w-8 h-8 rounded-lg bg-purple-500/20 border border-purple-400/40 text-purple-300 font-mono text-xs flex items-center justify-center font-bold">Gs</span>
-                <span class="text-[9px] font-mono bg-purple-500/20 text-purple-300 font-bold px-2 py-0.5 rounded">ACTIVE</span>
+                <span class="text-[9px] font-mono bg-purple-500/20 text-purple-300 font-bold px-2 py-0.5 rounded" data-i18n="badge_active">ACTIVE</span>
               </div>
               <h3 class="font-bold text-white text-sm group-hover:text-purple-300 transition" data-i18n="subtest_gs_title">Processing Speed</h3>
               <p class="text-xs text-slate-400 mt-1 leading-relaxed" data-i18n="subtest_gs_desc">45-second high-speed visual discrimination measuring symbol throughput, reaction time, and decision latency.</p>
@@ -865,9 +827,9 @@
           <div class="flex items-center justify-between mb-4">
             <h4 class="text-xs font-mono uppercase tracking-wider text-pink-400 font-bold flex items-center gap-2">
               <span class="w-2 h-2 rounded-full bg-pink-400 animate-pulse"></span>
-              <span>Therapeutic Neuro-Games & Somato-Affective Elicitation</span>
+              <span data-i18n="game_intro_heading">Therapeutic Neuro-Games & Somato-Affective Elicitation</span>
             </h4>
-            <span class="text-[10px] font-mono text-slate-400">Interleaved 3-Minute Cognitive Probes</span>
+            <span class="text-[10px] font-mono text-slate-400" data-i18n="game_intro_sub">Interleaved 3-Minute Cognitive Probes</span>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
             
@@ -876,13 +838,13 @@
               <div>
                 <div class="flex items-center gap-2 mb-1.5">
                   <span class="w-7 h-7 rounded bg-pink-500/20 text-pink-300 font-mono text-xs flex items-center justify-center font-bold">GN</span>
-                  <h5 class="font-bold text-white text-xs group-hover:text-pink-300 transition">Go/No-Go Reflex</h5>
+                  <h5 class="font-bold text-white text-xs group-hover:text-pink-300 transition" data-i18n="game_gonogo_title">Go/No-Go Reflex</h5>
                 </div>
-                <p class="text-[11px] text-slate-400 leading-relaxed">
+                <p class="text-[11px] text-slate-400 leading-relaxed" data-i18n="game_gonogo_card_desc">
                   Fast-paced motor braking & impulse control. Halts for a 3-min probe on blocked emotional tension in the brain.
                 </p>
               </div>
-              <button onclick="AssessmentController.launchGame('gonogo')" class="w-full py-2 rounded-xl bg-pink-500/20 hover:bg-pink-500/30 text-pink-300 border border-pink-400/50 font-mono text-xs font-bold transition active:scale-95 touch-manipulation">
+              <button onclick="AssessmentController.launchGame('gonogo')" class="w-full py-2 rounded-xl bg-pink-500/20 hover:bg-pink-500/30 text-pink-300 border border-pink-400/50 font-mono text-xs font-bold transition active:scale-95 touch-manipulation" data-i18n="btn_play_gonogo">
                 ▶ Play Go/No-Go
               </button>
             </div>
@@ -892,13 +854,13 @@
               <div>
                 <div class="flex items-center gap-2 mb-1.5">
                   <span class="w-7 h-7 rounded bg-teal-500/20 text-teal-300 font-mono text-xs flex items-center justify-center font-bold">SP</span>
-                  <h5 class="font-bold text-white text-xs group-hover:text-teal-300 transition">Saccadic Pursuit (TBI)</h5>
+                  <h5 class="font-bold text-white text-xs group-hover:text-teal-300 transition" data-i18n="game_pursuit_title">Saccadic Pursuit (TBI)</h5>
                 </div>
-                <p class="text-[11px] text-slate-400 leading-relaxed">
+                <p class="text-[11px] text-slate-400 leading-relaxed" data-i18n="game_pursuit_card_desc">
                   Bilateral ocular tracking & concussion rehab. Interleaves structured 3-minute inquiries into past physical head injuries.
                 </p>
               </div>
-              <button onclick="AssessmentController.launchGame('pursuit')" class="w-full py-2 rounded-xl bg-teal-500/20 hover:bg-teal-500/30 text-teal-300 border border-teal-400/50 font-mono text-xs font-bold transition active:scale-95 touch-manipulation">
+              <button onclick="AssessmentController.launchGame('pursuit')" class="w-full py-2 rounded-xl bg-teal-500/20 hover:bg-teal-500/30 text-teal-300 border border-teal-400/50 font-mono text-xs font-bold transition active:scale-95 touch-manipulation" data-i18n="btn_play_pursuit">
                 ▶ Play Pursuit
               </button>
             </div>
@@ -908,13 +870,13 @@
               <div>
                 <div class="flex items-center gap-2 mb-1.5">
                   <span class="w-7 h-7 rounded bg-amber-500/20 text-amber-300 font-mono text-xs flex items-center justify-center font-bold">ST</span>
-                  <h5 class="font-bold text-white text-xs group-hover:text-amber-300 transition">Affective Stroop</h5>
+                  <h5 class="font-bold text-white text-xs group-hover:text-amber-300 transition" data-i18n="game_stroop_title">Affective Stroop</h5>
                 </div>
-                <p class="text-[11px] text-slate-400 leading-relaxed">
+                <p class="text-[11px] text-slate-400 leading-relaxed" data-i18n="game_stroop_card_desc">
                   Incongruent color-word interference. Bypasses psychological ego defenses to extract authentic cognitive reasoning.
                 </p>
               </div>
-              <button onclick="AssessmentController.launchGame('stroop')" class="w-full py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-400/50 font-mono text-xs font-bold transition active:scale-95 touch-manipulation">
+              <button onclick="AssessmentController.launchGame('stroop')" class="w-full py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-400/50 font-mono text-xs font-bold transition active:scale-95 touch-manipulation" data-i18n="btn_play_stroop">
                 ▶ Play Stroop
               </button>
             </div>
@@ -1609,7 +1571,7 @@
             <span id="memoryTrialBadge" class="text-xs font-mono text-indigo-300 font-bold bg-indigo-950/60 px-3 py-1.5 rounded-xl border border-indigo-500/30">
               Trial 1 of 40
             </span>
-            <button onclick="AssessmentController.exitToMenu()" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-red-400 text-xs font-mono text-red-400 hover:text-red-300 transition touch-manipulation" data-i18n="exit_btn">Exit</button>
+            <button onclick="AssessmentController.exitToMenu()" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-red-400 text-xs font-mono text-red-400 hover:text-red-300 transition touch-manipulation" data-i18n="exit_btn" data-i18n="btn_exit">>Exit</button>
           </div>
         </div>
 
@@ -1652,7 +1614,7 @@
             <span id="nbackStepBadge" class="text-xs font-mono text-emerald-300 font-bold bg-emerald-950/60 px-3 py-1.5 rounded-xl border border-emerald-500/30">
               Step 1 of 40
             </span>
-            <button onclick="AssessmentController.exitToMenu()" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-red-400 text-xs font-mono text-red-400 hover:text-red-300 transition touch-manipulation">Exit</button>
+            <button onclick="AssessmentController.exitToMenu()" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-red-400 text-xs font-mono text-red-400 hover:text-red-300 transition touch-manipulation" data-i18n="btn_exit">>Exit</button>
           </div>
         </div>
 
@@ -1725,7 +1687,7 @@
             <span id="personalityItemBadge" class="text-xs font-mono text-purple-300 font-bold bg-purple-950/60 px-3 py-1.5 rounded-xl border border-purple-500/30">
               Statement 1 of 9
             </span>
-            <button onclick="AssessmentController.exitToMenu()" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-red-400 text-xs font-mono text-red-400 hover:text-red-300 transition touch-manipulation">Exit</button>
+            <button onclick="AssessmentController.exitToMenu()" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-red-400 text-xs font-mono text-red-400 hover:text-red-300 transition touch-manipulation" data-i18n="btn_exit">>Exit</button>
           </div>
         </div>
 
@@ -1801,7 +1763,7 @@
             <span id="multiItemBadge" class="text-xs font-mono text-cyan-300 font-bold bg-cyan-950/60 px-3 py-1.5 rounded-xl border border-cyan-500/30">
               Domain 1 of 8
             </span>
-            <button onclick="AssessmentController.exitToMenu()" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-red-400 text-xs font-mono text-red-400 hover:text-red-300 transition touch-manipulation">Exit</button>
+            <button onclick="AssessmentController.exitToMenu()" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-red-400 text-xs font-mono text-red-400 hover:text-red-300 transition touch-manipulation" data-i18n="btn_exit">>Exit</button>
           </div>
         </div>
 
@@ -1874,7 +1836,7 @@
         </div>
         <div class="flex items-center space-x-2.5">
           <span id="clinicalItemBadge" class="text-xs font-mono font-bold px-3 py-1.5 rounded-xl bg-emerald-950/60 text-emerald-300 border border-emerald-500/30">Item 1 of 18</span>
-          <button onclick="AssessmentController.exitToMenu()" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-red-400 text-xs font-mono text-red-400 hover:text-red-300 transition touch-manipulation">Exit</button>
+          <button onclick="AssessmentController.exitToMenu()" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-red-400 text-xs font-mono text-red-400 hover:text-red-300 transition touch-manipulation" data-i18n="btn_exit">>Exit</button>
         </div>
       </div>
 
@@ -1921,7 +1883,7 @@
         <div class="flex items-center space-x-2.5">
           <span id="neuroGameRoundBadge" class="text-xs font-mono font-bold px-3 py-1.5 rounded-xl bg-pink-950/60 text-pink-300 border border-pink-500/30">Round 1 / 2</span>
           <span id="neuroGameStatsBadge" class="hidden sm:inline-block text-xs font-mono px-3 py-1.5 rounded-xl bg-slate-900 text-cyan-300 border border-cyan-500/30">Score: 0 | Acc: 100%</span>
-          <button onclick="AssessmentController.exitToMenu()" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-red-400 text-xs font-mono text-red-400 hover:text-red-300 transition touch-manipulation">Exit</button>
+          <button onclick="AssessmentController.exitToMenu()" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-red-400 text-xs font-mono text-red-400 hover:text-red-300 transition touch-manipulation" data-i18n="btn_exit">>Exit</button>
         </div>
       </div>
 
@@ -2071,12 +2033,12 @@
   <!-- ==================== FOOTER ==================== -->
   <footer class="no-print border-t border-cyan-500/20 bg-slate-950/70 backdrop-blur px-6 py-2.5 flex items-center justify-between text-xs font-mono text-slate-400">
     <div class="flex items-center space-x-4">
-      <span>CALIBRATION: <span class="text-emerald-400">IRT / CHC Model</span></span>
-      <span>3D ACCELERATION: <span class="text-cyan-300">Three.js WebGL</span></span>
-      <span>CHROMIUM APP: <span class="text-cyan-400 font-bold">Active</span></span>
+      <span><span data-i18n="footer_calibration">CALIBRATION:</span> <span class="text-emerald-400" data-i18n="footer_irt">IRT / CHC Model</span></span>
+      <span><span data-i18n="footer_acceleration">3D ACCELERATION:</span> <span class="text-cyan-300" data-i18n="footer_threejs">Three.js WebGL</span></span>
+      <span><span data-i18n="footer_chromium">CHROMIUM APP:</span> <span class="text-cyan-400 font-bold" data-i18n="footer_active">Active</span></span>
     </div>
     <div>
-      <span>PSYCHOMETRIC INTEGRITY: WECHSLER SCALE (μ=100, σ=15)</span>
+      <span data-i18n="footer_integrity">PSYCHOMETRIC INTEGRITY: WECHSLER SCALE (μ=100, σ=15)</span>
     </div>
   </footer>
 
@@ -2228,6 +2190,86 @@
         itemElapsedInterval: null,
         
         subtestScores: {
+          "sidebar_hub_sub": "Centro de Batería Cognitiva",
+          "sidebar_subtests_active": "4 SUBPRUEBAS ACTIVAS",
+          "sidebar_all_live": "TODOS EN VIVO",
+          "sidebar_screeners_heading": "EVALUACIONES Y PARADIGMAS CIENTÍFICOS",
+          "btn_launch_test": "▶ Iniciar prueba",
+          "btn_intel": "Info",
+          "btn_launch_screener": "▶ Iniciar evaluación",
+          "btn_play_game": "▶ Jugar juego",
+          "btn_exit": "Salir",
+          "dmts_sidebar_desc": "Retención de memoria visual y latencia de recuerdo por emparejamiento demorado (modelo PEBL).",
+          "nback_sidebar_desc": "Desafío adaptativo de actualización de memoria de trabajo Dual N-Back (modelo PNAS de Jaeggi).",
+          "darktriad_title": "Tríada Oscura y Cinco Grandes (IPIP)",
+          "darktriad_sidebar_desc": "Detección subclínica (SD3 e IPIP-NEO) de maquiavelismo, temple y rasgos OCEAN.",
+          "sidebar_clinical_heading": "SUITE PSIQUIÁTRICA CLÍNICA",
+          "sidebar_clinical_sub": "MODELOS DSM-5 Y OMS",
+          "screener_adhd_title": "Evaluación de TDAH (ASRS v1.1)",
+          "screener_adhd_desc": "Inventario de déficit de atención, hiperactividad y enfoque ejecutivo en adultos (18 ítems).",
+          "screener_schizotypy_title": "Cuestionario de Esquizotipia (SPQ-B)",
+          "screener_schizotypy_desc": "Anomalías cognitivo-perceptivas, ideación mágica y pensamiento desorganizado (22 ítems).",
+          "screener_ocd_title": "Inventario de TOC (OCI-R)",
+          "screener_ocd_desc": "Escala de comprobación, lavado, orden, obsesiones, neutralización y acumulación (18 ítems).",
+          "screener_autism_title": "Cociente de Autismo (AQ-10)",
+          "screener_autism_desc": "Neurodiversidad de Baron-Cohen, cambio de atención y procesamiento de detalles (10 ítems).",
+          "screener_anxiety_title": "Escala de Ansiedad (GAD-7)",
+          "screener_anxiety_desc": "Ansiedad generalizada de Spitzer, excitación autonómica y preocupación cognitiva (7 ítems).",
+          "screener_depression_title": "Depresión (PHQ-9)",
+          "screener_depression_desc": "Síntomas depresivos mayores de Kroenke, anhedonia e índice de fatiga (9 ítems).",
+          "screener_executive_title": "Déficits Ejecutivos (BRIEF-A)",
+          "screener_executive_desc": "Escala de inhibición, cambio cognitivo, memoria de trabajo y organización (14 ítems).",
+          "screener_trauma_title": "Trauma y Estrés Agudo (PCL-5)",
+          "screener_trauma_desc": "Intrusión, evitación, hiperactivación y reactividad al estrés agudo (8 ítems).",
+          "screener_multi_title": "Inteligencias Múltiples",
+          "screener_multi_desc": "Perfil cognitivo de 8 dominios de Gardner y fortalezas espaciales-lógicas.",
+          "sidebar_games_heading": "JUEGOS NEUROLÓGICOS TERAPÉUTICOS",
+          "sidebar_games_sub": "REHABILITACIÓN Y EVALUACIÓN CLÍNICA",
+          "game_intro_heading": "Juegos Neurológicos Terapéuticos y Exploración Somato-Afectiva",
+          "game_intro_sub": "Sondas Cognitivas Intercaladas de 3 Minutos",
+          "game_gonogo_title": "Neuro-Reflejo Go/No-Go",
+          "game_gonogo_desc": "Freno motor prefrontal y velocidad de reacción con sonda emocional somática de 3 minutos.",
+          "game_gonogo_card_desc": "Frenado motor rápido y control de impulsos. Se detiene para una indagación de 3 minutos sobre tensión reprimida.",
+          "game_pursuit_title": "Seguimiento Sacádico (TCE)",
+          "game_pursuit_desc": "Seguimiento visual bilateral para recuperación de conmociones con indagación de trauma estructural.",
+          "game_pursuit_card_desc": "Seguimiento ocular bilateral y rehabilitación de conmociones con análisis estructurado de lesiones craneales.",
+          "game_stroop_title": "Cambio Stroop Afectivo",
+          "game_stroop_desc": "Desacoplamiento cognitivo e inhibición de conflictos eludiendo defensas del ego.",
+          "game_stroop_card_desc": "Interferencia color-palabra incongruente. Elude defensas psicológicas para extraer razonamiento cognitivo auténtico.",
+          "btn_play_gonogo": "▶ Jugar Go/No-Go",
+          "btn_play_pursuit": "▶ Jugar Seguimiento",
+          "btn_play_stroop": "▶ Jugar Stroop",
+          "binaural_label": "Binaural Focus FM:",
+          "hero_psychometrics_badge": "Psicometría Abierta y Modelo Cognitivo CHC",
+          "badge_active": "ACTIVO",
+          "clinical_level_label": "Nivel clínico {val} • Opción de calificación {num}",
+          "score_label": "Puntaje: {val}",
+          "footer_integrity": "INTEGRIDAD PSICOMÉTRICA: ESCALA WECHSLER (μ=100, σ=15)",
+          "footer_calibration": "CALIBRACIÓN:",
+          "footer_irt": "Modelo IRT / CHC",
+          "footer_acceleration": "ACELERACIÓN 3D:",
+          "footer_threejs": "Three.js WebGL",
+          "footer_chromium": "APLICACIÓN CHROMIUM:",
+          "footer_active": "Activa",
+          "game_header_sub_gonogo": "Frenado Motor Prefrontal y Velocidad de Reacción",
+          "game_header_sub_pursuit": "Seguimiento Visual Bilateral y Recuperación de Trauma Craneal",
+          "game_header_sub_stroop": "Desacoplamiento Emocional y Flexibilidad Cognitiva",
+          "game_instr_gonogo": "⚡ DISPARA en ESFERA VERDE (Espacio/Pedal). INHIBE en ESFERA ROJA (Mantén).",
+          "game_instr_pursuit": "🎯 HAZ CLIC/TOCA LA ESFERA ORBITAL a medida que se desplaza.",
+          "game_instr_stroop": "🔮 SELECCIONA EL COLOR DE LA FUENTE — ¡Ignora la palabra escrita!",
+          "game_pedal_strike": "⚡ DISPARAR / REACCIONAR (ESPACIO)",
+          "intermission_heading": "INTERMISIÓN DIAGNÓSTICA CLÍNICA • EXPLORACIÓN AFECTIVA REPRIMIDA",
+          "intermission_sub": "Defensas Cognitivas Suprimidas: Canales ejecutivos saturados. Protocolo de autenticidad activo.",
+          "thinking_window": "VENTANA DE REFLEXIÓN:",
+          "intermission_principle_title": "Principio Diagnóstico Neuro-Somático:",
+          "intermission_principle_text": "Bajo estrés continuo de reacción, los mecanismos de defensa del ego frontal (racionalización, desapego emocional) se debilitan. Las preguntas a continuación se dirigen a los factores biológicos fundamentales de su fricción cognitiva: trauma emocional reprimido y lesión craneal estructural. Formule una respuesta rigurosa y lógica.",
+          "intermission_btn_submit": "Confirmar Razonamiento Lógico y Continuar →",
+          "intermission_q1_cat": "INDAGACIÓN DIAGNÓSTICA PRINCIPAL: BLOQUEO EMOCIONAL SOMÁTICO",
+          "intermission_q1_text": "En medicina neurosomática, el trauma emocional profundo y el malestar suprimido (ira no expresada, duelo, impotencia) no desaparecen; se secuestran físicamente en vías neuronales y miofasciales, restringiendo el flujo cognitivo. Bajo la velocidad de este juego, ¿dónde sintió tensión visceral (mandíbula, garganta, pecho, ceño)? Rastreando esa sensación hacia atrás: ¿Qué conflicto emocional reprimido está encerrado allí?",
+          "intermission_q1_ph": "Identifique la ubicación física exacta de la tensión, el origen histórico de la emoción reprimida y cómo obstruye su flujo mental bajo estrés (mínimo 20 palabras)...",
+          "intermission_q2_cat": "INDAGACIÓN DE NEURO-TRAUMA: LESIÓN CRANEAL Y ESTRUCTURAL",
+          "intermission_q2_text": "El trauma cerebral estructural—incluyendo conmociones deportivas, latigazos cervicales, caídas o golpes en la cabeza—daña con frecuencia microestructuras axonales delicadas, provocando retrasos en la latencia de reacción y desregulación autonómica. Documente cualquier lesión física en la cabeza, cuello o columna. ¿Cómo se correlaciona con la fatiga mental y fallas ejecutivas actuales?",
+          "intermission_q2_ph": "Detalle todas las conmociones cerebrales pasadas, latigazos o impactos. Explique lógicamente cómo afectan su resistencia cognitiva y concentración actual...",
           Gf: { raw: 0, total: 8, latencies: [], items: [] },
           Gwm: { spanReached: 4, trialsSuccess: 0, totalTrials: 5 },
           Gq: { raw: 0, total: 6, latencies: [], items: [] },
@@ -5133,10 +5175,10 @@
               <span class="w-7 h-7 rounded-lg bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 font-bold flex items-center justify-center text-xs group-hover:bg-emerald-400 group-hover:text-black transition font-mono">[${num}]</span>
               <div>
                 <span class="text-white font-medium text-sm block group-hover:text-emerald-200 transition">${optLabel}</span>
-                <span class="text-[10px] text-slate-400 font-mono">Clinical level ${opt.value} &bull; Rating option ${num}</span>
+                <span class="text-[10px] text-slate-400 font-mono">${window.I18nEngine ? window.I18nEngine.t('clinical_level_label', 'Clinical level {val} • Rating option {num}').replace('{val}', opt.value).replace('{num}', num) : `Clinical level ${opt.value} • Rating option ${num}`}</span>
               </div>
             </div>
-            <span class="text-slate-400 font-bold group-hover:text-emerald-300 text-xs px-2.5 py-1 rounded-md bg-slate-950/60 border border-slate-800">Score: ${opt.value}</span>
+            <span class="text-slate-400 font-bold group-hover:text-emerald-300 text-xs px-2.5 py-1 rounded-md bg-slate-950/60 border border-slate-800">${window.I18nEngine ? window.I18nEngine.t('score_label', 'Score: {val}').replace('{val}', opt.value) : `Score: ${opt.value}`}</span>
           `;
           btn.onclick = () => this.recordAnswer(opt.value);
           grid.appendChild(btn);
@@ -5341,23 +5383,45 @@
       },
 
       updateHUD() {
-        const cfg = this.gamesConfig[this.activeGame] || this.gamesConfig.gonogo;
+        const i18n = window.I18nEngine;
+        let title = this.gamesConfig[this.activeGame]?.title || 'Go/No-Go Neuro-Reflex';
+        let sub = this.gamesConfig[this.activeGame]?.subtitle || 'Prefrontal Motor Braking & Reaction Speed';
+        let instr = this.gamesConfig[this.activeGame]?.instruction || '';
+
+        if (i18n) {
+          if (this.activeGame === 'gonogo') {
+            title = i18n.t('game_gonogo_title', title);
+            sub = i18n.t('game_header_sub_gonogo', sub);
+            instr = i18n.t('game_instr_gonogo', instr);
+          } else if (this.activeGame === 'pursuit') {
+            title = i18n.t('game_pursuit_title', title);
+            sub = i18n.t('game_header_sub_pursuit', sub);
+            instr = i18n.t('game_instr_pursuit', instr);
+          } else if (this.activeGame === 'stroop') {
+            title = i18n.t('game_stroop_title', title);
+            sub = i18n.t('game_header_sub_stroop', sub);
+            instr = i18n.t('game_instr_stroop', instr);
+          }
+        }
+
         const titleEl = document.getElementById('neuroGameHeaderTitle');
         const subEl = document.getElementById('neuroGameHeaderSub');
         const roundBadge = document.getElementById('neuroGameRoundBadge');
         const statsBadge = document.getElementById('neuroGameStatsBadge');
         const instrText = document.getElementById('neuroGameInstructionText');
         const trialInd = document.getElementById('neuroGameTrialIndicator');
+        const pedalBtn = document.getElementById('neuroGameActionPedal');
 
-        if (titleEl) titleEl.innerText = cfg.title;
-        if (subEl) subEl.innerText = cfg.subtitle;
+        if (titleEl) titleEl.innerText = title;
+        if (subEl) subEl.innerText = sub;
         if (roundBadge) roundBadge.innerText = `Round ${this.currentRound} / ${this.maxRounds}`;
         
         const totalAttempts = this.currentTrial;
         const acc = totalAttempts > 0 ? Math.round((this.accuracyCount / totalAttempts) * 100) : 100;
         if (statsBadge) statsBadge.innerText = `Score: ${this.score} | Acc: ${acc}%`;
-        if (instrText) instrText.innerText = cfg.instruction;
+        if (instrText) instrText.innerText = instr;
         if (trialInd) trialInd.innerText = `Trial ${this.currentTrial + 1} / ${this.totalTrials}`;
+        if (pedalBtn && i18n) pedalBtn.innerText = i18n.t('game_pedal_strike', '⚡ STRIKE / REACT (SPACE)');
       },
 
       startRound(roundNumber) {
@@ -5681,21 +5745,30 @@
         if (arena) arena.classList.add('hidden');
         if (intermission) intermission.classList.remove('hidden');
 
-        const inq = intermissionIndex === 1 
-          ? this.diagnosticInquiries.round1 
-          : this.diagnosticInquiries.round2;
+        const i18n = window.I18nEngine;
+        let cat = intermissionIndex === 1 
+          ? (i18n ? i18n.t('intermission_q1_cat') : this.diagnosticInquiries.round1.category)
+          : (i18n ? i18n.t('intermission_q2_cat') : this.diagnosticInquiries.round2.category);
+        let qText = intermissionIndex === 1
+          ? (i18n ? i18n.t('intermission_q1_text') : this.diagnosticInquiries.round1.question)
+          : (i18n ? i18n.t('intermission_q2_text') : this.diagnosticInquiries.round2.question);
+        let ph = intermissionIndex === 1
+          ? (i18n ? i18n.t('intermission_q1_ph') : this.diagnosticInquiries.round1.placeholder)
+          : (i18n ? i18n.t('intermission_q2_ph') : this.diagnosticInquiries.round2.placeholder);
 
         const catEl = document.getElementById('intermissionPromptCategory');
         const qEl = document.getElementById('intermissionPromptQuestion');
         const inputEl = document.getElementById('intermissionAnswerInput');
+        const submitBtn = document.getElementById('intermissionSubmitBtn');
 
-        if (catEl) catEl.innerText = inq.category;
-        if (qEl) qEl.innerText = inq.question;
+        if (catEl) catEl.innerText = cat;
+        if (qEl) qEl.innerText = qText;
         if (inputEl) {
           inputEl.value = '';
-          inputEl.placeholder = inq.placeholder;
+          inputEl.placeholder = ph;
           inputEl.focus();
         }
+        if (submitBtn && i18n) submitBtn.innerText = i18n.t('intermission_btn_submit', 'Confirm Logical Rationale & Continue →');
 
         // 180 seconds (3 minutes) countdown
         this.intermissionTimeLeft = 180;
@@ -5947,6 +6020,86 @@
       
       translations: {
         en: {
+          "sidebar_hub_sub": "Cognitive Battery Hub",
+          "sidebar_subtests_active": "4 SUBTESTS ACTIVE",
+          "sidebar_all_live": "ALL LIVE",
+          "sidebar_screeners_heading": "SCIENTIFIC SCREENERS & PARADIGMS",
+          "btn_launch_test": "▶ Launch Test",
+          "btn_intel": "Intel",
+          "btn_launch_screener": "▶ Launch Screener",
+          "btn_play_game": "▶ Play Game",
+          "btn_exit": "Exit",
+          "dmts_sidebar_desc": "Delayed Match-to-Sample visual memory retention & recall latency (PEBL library model).",
+          "nback_sidebar_desc": "Adaptive Dual N-Back working memory updating challenge (Jaeggi PNAS model).",
+          "darktriad_title": "Dark Triad & Big Five (IPIP)",
+          "darktriad_sidebar_desc": "Sub-clinical screening (SD3 & IPIP-NEO) for Machiavellianism, nerve, and OCEAN traits.",
+          "sidebar_clinical_heading": "CLINICAL PSYCHIATRIC SUITE",
+          "sidebar_clinical_sub": "DSM-5 & WHO MODELS",
+          "screener_adhd_title": "ADHD Screener (ASRS v1.1)",
+          "screener_adhd_desc": "WHO adult attention-deficit, hyperactivity & executive focus inventory (18 items).",
+          "screener_schizotypy_title": "Schizotypy Screener (SPQ-B)",
+          "screener_schizotypy_desc": "Cognitive-perceptual anomalies, magical ideation & disorganized thought (22 items).",
+          "screener_ocd_title": "OCD Inventory (OCI-R)",
+          "screener_ocd_desc": "Checking, washing, ordering, obsessing, neutralizing & hoarding scale (18 items).",
+          "screener_autism_title": "Autism Quotient (AQ-10)",
+          "screener_autism_desc": "Baron-Cohen neurodiversity, attention switching & detail processing (10 items).",
+          "screener_anxiety_title": "Anxiety Scale (GAD-7)",
+          "screener_anxiety_desc": "Spitzer generalized anxiety, autonomic arousal & cognitive worry (7 items).",
+          "screener_depression_title": "Depression (PHQ-9)",
+          "screener_depression_desc": "Kroenke major depressive symptoms, anhedonia & fatigue index (9 items).",
+          "screener_executive_title": "Executive Deficits (BRIEF-A)",
+          "screener_executive_desc": "Inhibition, cognitive shift, working memory & plan/organize scale (14 items).",
+          "screener_trauma_title": "Trauma & Stress (PCL-5)",
+          "screener_trauma_desc": "Intrusion, avoidance, hyperarousal & acute stress reactivity (8 items).",
+          "screener_multi_title": "Multiple Intelligences",
+          "screener_multi_desc": "Howard Gardner 8-domain cognitive profile & spatial-logical strengths screener.",
+          "sidebar_games_heading": "THERAPEUTIC NEURO-GAMES",
+          "sidebar_games_sub": "REHAB & CLINICAL PROBES",
+          "game_intro_heading": "Therapeutic Neuro-Games & Somato-Affective Elicitation",
+          "game_intro_sub": "Interleaved 3-Minute Cognitive Probes",
+          "game_gonogo_title": "Go/No-Go Reflex",
+          "game_gonogo_desc": "Prefrontal motor braking & reaction speed with 3-minute somatic emotional probe.",
+          "game_gonogo_card_desc": "Fast-paced motor braking & impulse control. Halts for a 3-min probe on blocked emotional tension in the brain.",
+          "game_pursuit_title": "Saccadic Pursuit (TBI)",
+          "game_pursuit_desc": "Bilateral visual tracking for concussion recovery with structural trauma inquiry.",
+          "game_pursuit_card_desc": "Bilateral ocular tracking & concussion rehab. Interleaves structured 3-minute inquiries into past physical head injuries.",
+          "game_stroop_title": "Affective Stroop",
+          "game_stroop_desc": "Cognitive decoupling & conflict inhibition with ego-defense bypass analysis.",
+          "game_stroop_card_desc": "Incongruent color-word interference. Bypasses psychological ego defenses to extract authentic cognitive reasoning.",
+          "btn_play_gonogo": "▶ Play Go/No-Go",
+          "btn_play_pursuit": "▶ Play Pursuit",
+          "btn_play_stroop": "▶ Play Stroop",
+          "binaural_label": "Binaural Focus FM:",
+          "hero_psychometrics_badge": "Open Psychometrics & CHC Cognitive Model",
+          "badge_active": "ACTIVE",
+          "clinical_level_label": "Clinical level {val} • Rating option {num}",
+          "score_label": "Score: {val}",
+          "footer_integrity": "PSYCHOMETRIC INTEGRITY: WECHSLER SCALE (μ=100, σ=15)",
+          "footer_calibration": "CALIBRATION:",
+          "footer_irt": "IRT / CHC Model",
+          "footer_acceleration": "3D ACCELERATION:",
+          "footer_threejs": "Three.js WebGL",
+          "footer_chromium": "CHROMIUM APP:",
+          "footer_active": "Active",
+          "game_header_sub_gonogo": "Prefrontal Motor Braking & Reaction Speed",
+          "game_header_sub_pursuit": "Bilateral Visual Tracking & Cranial Trauma Recovery",
+          "game_header_sub_stroop": "Emotional Decoupling & Cognitive Flexibility",
+          "game_instr_gonogo": "⚡ STRIKE on GREEN ORB (Space/Pedal). INHIBIT on RED ORB (Hold).",
+          "game_instr_pursuit": "🎯 CLICK/TAP THE PULSING ORBITAL SPHERE as it moves.",
+          "game_instr_stroop": "🔮 SELECT THE COLOR OF THE FONT — Override the written word!",
+          "game_pedal_strike": "⚡ STRIKE / REACT (SPACE)",
+          "intermission_heading": "CLINICAL DIAGNOSTIC INTERMISSION • REPRESSED AFFECTIVE ELICITATION",
+          "intermission_sub": "Cognitive Defenses Suppressed: Executive channels are saturated. Authenticity protocol engaged.",
+          "thinking_window": "THINKING WINDOW:",
+          "intermission_principle_title": "Neuro-Somatic Diagnostic Principle:",
+          "intermission_principle_text": "Under sustained reaction stress, the frontal ego-defense mechanisms (rationalization, emotional detachment, intellectualized minimization) weaken. The questions below target the root biological drivers of your cognitive friction: blocked emotional trauma and physical structural/cranial injury. Formulate a rigorous, logical response.",
+          "intermission_btn_submit": "Confirm Logical Rationale & Continue →",
+          "intermission_q1_cat": "CORE DIAGNOSTIC INQUIRY: SOMATIC EMOTIONAL BLOCKAGE",
+          "intermission_q1_text": "In neuro-somatic medicine, deep-seated emotional trauma and suppressed distress (chronic unexpressed anger, grief, helplessness, or terror) do not vanish; they get physically sequestered in neural pathways and myofascial tissue, restricting cognitive flow and executive braking. Under the speed and pressure of this game, where in your body (jaw, throat, chest, shoulders, brow, stomach) did you feel visceral tension or tightness? Trace that physical sensation backward: What specific unresolved emotional conflict or painful truth is locked behind it?",
+          "intermission_q1_ph": "Identify the exact physical location of tension, the historical origin of the repressed emotion, and how it obstructs your mental flow under stress (logical formulation, min 20 words)...",
+          "intermission_q2_cat": "NEURO-TRAUMA INQUIRY: PHYSICAL INJURY & CEREBRAL IMPACT",
+          "intermission_q2_text": "Structural brain trauma—including sports concussions, vehicular whiplash, childhood falls, or blunt cranial impact—frequently damages delicate axonal micro-structures, resulting in permanent micro-delays in reaction latency and autonomic dysregulation. Document any physical head, neck, spinal, or bodily injuries you have experienced. How does that physical structural injury correlate with the mental fatigue, sensory sensitivity, or executive lapses you encounter in daily life?",
+          "intermission_q2_ph": "Detail all past concussions, whiplash, head/neck impacts, or sports injuries. Explain logically how they affect your current cognitive endurance and focus...",
 "spatial_suite": "Spatial Subtest Suite",
         "subtest_gf_sub": "Gf Factor • 8 Puzzles",
         "subtest_gwm_sub": "Gwm Factor • Corsi Span",
@@ -6099,6 +6252,86 @@
         },
 
         hi: {
+          "sidebar_hub_sub": "संज्ञानात्मक परीक्षण केंद्र",
+          "sidebar_subtests_active": "4 उपपरीक्षण सक्रिय",
+          "sidebar_all_live": "सभी लाइव",
+          "sidebar_screeners_heading": "वैज्ञानिक स्क्रीनर एवं प्रतिमान",
+          "btn_launch_test": "▶ परीक्षण शुरू करें",
+          "btn_intel": "जानकारी",
+          "btn_launch_screener": "▶ स्क्रीनर शुरू करें",
+          "btn_play_game": "▶ गेम खेलें",
+          "btn_exit": "बाहर निकलें",
+          "dmts_sidebar_desc": "विलंबित मिलान-से-नमूना दृश्य स्मृति प्रतिधारण और स्मरण विलंबता (PEBL मॉडल)।",
+          "nback_sidebar_desc": "अनुकूली डुअल एन-बैक कार्यशील स्मृति अद्यतन चुनौती (जैग्गी पीएनएएस मॉडल)।",
+          "darktriad_title": "डार्क ट्रायड और बिग फाइव (IPIP)",
+          "darktriad_sidebar_desc": "मैकियावेलियनिज़्म, तंत्रिका और OCEAN लक्षणों के लिए उप-नैदानिक स्क्रीनिंग (SD3 और IPIP-NEO)।",
+          "sidebar_clinical_heading": "नैदानिक मनोरोग सूट",
+          "sidebar_clinical_sub": "डीएसएम-5 एवं डब्ल्यूएचओ मॉडल",
+          "screener_adhd_title": "एडीएचडी स्क्रीनर (ASRS v1.1)",
+          "screener_adhd_desc": "डब्ल्यूएचओ वयस्क ध्यान-अभाव, अतिसक्रियता और कार्यकारी फोकस सूची (18 आइटम)।",
+          "screener_schizotypy_title": "स्किज़ोटाइपी स्क्रीनर (SPQ-B)",
+          "screener_schizotypy_desc": "संज्ञानात्मक-अवधारणात्मक विसंगतियां, जादुई विचार और अव्यवस्थित सोच (22 आइटम)।",
+          "screener_ocd_title": "ओसीडी सूची (OCI-R)",
+          "screener_ocd_desc": "जांच, धुलाई, क्रमबद्धता, जुनून, बेअसर करना और जमाखोरी पैमाना (18 आइटम)।",
+          "screener_autism_title": "ऑटिज़्म भागफल (AQ-10)",
+          "screener_autism_desc": "बैरन-कोहेन न्यूरोडाइवर्सिटी, ध्यान बदलना और विवरण प्रसंस्करण (10 आइटम)।",
+          "screener_anxiety_title": "चिंता पैमाना (GAD-7)",
+          "screener_anxiety_desc": "स्पिट्ज़र सामान्यीकृत चिंता, स्वायत्त उत्तेजना और संज्ञानात्मक चिंता (7 आइटम)।",
+          "screener_depression_title": "अवसाद पैमाना (PHQ-9)",
+          "screener_depression_desc": "क्रोनके प्रमुख अवसादग्रस्त लक्षण, एनहेडोनिया और थकान सूचकांक (9 आइटम)।",
+          "screener_executive_title": "कार्यकारी कमियां (BRIEF-A)",
+          "screener_executive_desc": "अवरोध, संज्ञानात्मक बदलाव, कार्यशील स्मृति और योजना/संगठन पैमाना (14 आइटम)।",
+          "screener_trauma_title": "आघात और तनाव (PCL-5)",
+          "screener_trauma_desc": "घुसपैठ, परिहार, अति-उत्तेजना और तीव्र तनाव प्रतिक्रियाशीलता (8 आइटम)।",
+          "screener_multi_title": "एकाधिक बुद्धिमत्ता सूची",
+          "screener_multi_desc": "हावर्ड गार्डनर 8-डोमेन संज्ञानात्मक प्रोफ़ाइल और स्थानिक-तार्किक क्षमता स्क्रीनर।",
+          "sidebar_games_heading": "उपचारात्मक न्यूरो-गेम्स",
+          "sidebar_games_sub": "पुनर्वास एवं नैदानिक जांच",
+          "game_intro_heading": "उपचारात्मक न्यूरो-गेम्स एवं सोमाटो-भावनात्मक जांच",
+          "game_intro_sub": "मध्यवर्ती 3-मिनट संज्ञानात्मक जांच",
+          "game_gonogo_title": "गो/नो-गो रिफ्लेक्स",
+          "game_gonogo_desc": "प्रीफ्रंटल मोटर ब्रेकिंग और प्रतिक्रिया गति के साथ 3-मिनट सोमाटिक भावनात्मक जांच।",
+          "game_gonogo_card_desc": "तेज गति से मोटर ब्रेकिंग और आवेग नियंत्रण। मस्तिष्क में अवरुद्ध भावनात्मक तनाव पर 3 मिनट की जांच।",
+          "game_pursuit_title": "सैकैडिक परसूट (TBI पुनर्वास)",
+          "game_pursuit_desc": "संरचनात्मक आघात जांच के साथ चोट से उबरने के लिए द्विपक्षीय दृश्य ट्रैकिंग।",
+          "game_pursuit_card_desc": "द्विपक्षीय दृश्य ट्रैकिंग और चोट पुनर्वास। सिर की पिछली शारीरिक चोटों की संरचित 3-मिनट जांच।",
+          "game_stroop_title": "अफेक्टिव स्ट्रूप स्विच",
+          "game_stroop_desc": "अहं-रक्षा तंत्र को दरकिनार करते हुए संज्ञानात्मक विकूपलिंग और संघर्ष अवरोध।",
+          "game_stroop_card_desc": "असंगत रंग-शब्द हस्तक्षेप। प्रामाणिक संज्ञानात्मक तर्क निकालने के लिए मनोवैज्ञानिक सुरक्षा तंत्र को दरकिनार करता है।",
+          "btn_play_gonogo": "▶ गो/नो-गो खेलें",
+          "btn_play_pursuit": "▶ परसूट खेलें",
+          "btn_play_stroop": "▶ स्ट्रूप खेलें",
+          "binaural_label": "बाइनॉरल फोकस एफएम:",
+          "hero_psychometrics_badge": "ओपन साइकोमेट्रिक्स एवं CHC संज्ञानात्मक मॉडल",
+          "badge_active": "सक्रिय",
+          "clinical_level_label": "नैदानिक स्तर {val} • रेटिंग विकल्प {num}",
+          "score_label": "अंक: {val}",
+          "footer_integrity": "मनोवैज्ञानिक अखंडता: वेक्स्लर स्केल (μ=100, σ=15)",
+          "footer_calibration": "अंशांकन:",
+          "footer_irt": "IRT / CHC मॉडल",
+          "footer_acceleration": "3D त्वरण:",
+          "footer_threejs": "थ्री.जेएस वेबजीएल",
+          "footer_chromium": "क्रोमियम ऐप:",
+          "footer_active": "सक्रिय",
+          "game_header_sub_gonogo": "प्रीफ्रंटल मोटर ब्रेकिंग एवं प्रतिक्रिया गति",
+          "game_header_sub_pursuit": "द्विपक्षीय दृश्य ट्रैकिंग एवं कपाल आघात पुनर्वास",
+          "game_header_sub_stroop": "भावनात्मक विकूपलिंग एवं संज्ञानात्मक लचीलापन",
+          "game_instr_gonogo": "⚡ हरे गोले पर तुरंत प्रहार करें (स्पेस/पैडल)। लाल गोले पर रुकें (नियंत्रण रखें)।",
+          "game_instr_pursuit": "🎯 गतिमान कक्षीय गोले पर क्लिक/टैप करें।",
+          "game_instr_stroop": "🔮 फ़ॉन्ट का रंग चुनें — लिखे गए शब्द पर ध्यान न दें!",
+          "game_pedal_strike": "⚡ प्रहार / प्रतिक्रिया (SPACE)",
+          "intermission_heading": "नैदानिक अंतरिम जांच • दमित भावनात्मक उद्दीपन",
+          "intermission_sub": "संज्ञानात्मक सुरक्षा तंत्र निष्क्रिय: कार्यकारी चैनल संतृप्त हैं। प्रामाणिकता प्रोटोकॉल सक्रिय।",
+          "thinking_window": "चिंतन अवधि:",
+          "intermission_principle_title": "न्यूरो-सोमैटिक नैदानिक सिद्धांत:",
+          "intermission_principle_text": "लगातार प्रतिक्रिया दबाव के तहत, ललाट का आत्म-रक्षा तंत्र (तर्कसंगतीकरण, भावनात्मक अलगाव) कमजोर हो जाता है। नीचे दिए गए प्रश्न आपके संज्ञानात्मक घर्षण के मूल जैविक चालकों को लक्षित करते हैं: अवरुद्ध भावनात्मक आघात और शारीरिक कपाल चोट। एक सटीक, तार्किक उत्तर तैयार करें।",
+          "intermission_btn_submit": "तार्किक विश्लेषण की पुष्टि करें एवं आगे बढ़ें →",
+          "intermission_q1_cat": "मुख्य नैदानिक जांच: शारीरिक भावनात्मक अवरोध",
+          "intermission_q1_text": "न्यूरो-सोमैटिक चिकित्सा में, गहरा भावनात्मक आघात और दमित संकट (अव्यक्त क्रोध, दुःख, असहायता) गायब नहीं होते; वे तंत्रिका मार्गों और मांसपेशियों में शारीरिक रूप से बंद हो जाते हैं, जिससे संज्ञानात्मक प्रवाह बाधित होता है। इस खेल की गति और दबाव के तहत, आपने अपने शरीर (जबड़े, गले, छाती, पेट) में कहाँ खिंचाव महसूस किया? उस शारीरिक संवेदना के पीछे कौन सा अनसुलझा भावनात्मक संघर्ष या दर्दनाक सच छुपा है?",
+          "intermission_q1_ph": "तनाव की सटीक शारीरिक स्थिति, दमित भावना की ऐतिहासिक उत्पत्ति, और तनाव में यह आपके मानसिक प्रवाह को कैसे बाधित करती है, इसका विवरण दें (तार्किक उत्तर, न्यूनतम 20 शब्द)...",
+          "intermission_q2_cat": "न्यूरो-ट्रॉमा जांच: शारीरिक चोट एवं कपाल प्रभाव",
+          "intermission_q2_text": "संरचनात्मक मस्तिष्क आघात—जैसे खेल में चोट, वाहन व्हिपलैश, बचपन में गिरना, या सिर पर आघात—अक्सर अक्षतंतु सूक्ष्म-संरचनाओं को नुकसान पहुँचाता है, जिससे प्रतिक्रिया विलंबता और स्वायत्त शिथिलता होती है। अपने जीवन में लगी किसी भी शारीरिक सिर, गर्दन या रीढ़ की हड्डी की चोट का विवरण दें। वह चोट आज आपके मानसिक तनाव और एकाग्रता से कैसे संबंधित है?",
+          "intermission_q2_ph": "अतीत के सभी आघातों, चोटों या खेलों में लगी चोटों का विवरण दें। तार्किक रूप से बताएं कि वे आपकी वर्तमान संज्ञानात्मक सहनशक्ति को कैसे प्रभावित करते हैं...",
 "spatial_suite": "स्थानिक सबटेस्ट सूट",
         "subtest_gf_sub": "Gf कारक • 8 पहेलियाँ",
         "subtest_gwm_sub": "Gwm कारक • कोर्सी स्पैन",
@@ -6403,6 +6636,86 @@
         },
 
         ru: {
+          "sidebar_hub_sub": "Центр когнитивных батарей",
+          "sidebar_subtests_active": "4 СУБТЕСТА АКТИВНЫ",
+          "sidebar_all_live": "ВСЕ ДОСТУПНЫ",
+          "sidebar_screeners_heading": "НАУЧНЫЕ СКРИНИНГИ И ПАРАДИГМЫ",
+          "btn_launch_test": "▶ Начать тест",
+          "btn_intel": "Инфо",
+          "btn_launch_screener": "▶ Начать скрининг",
+          "btn_play_game": "▶ Играть",
+          "btn_exit": "Выход",
+          "dmts_sidebar_desc": "Удержание зрительной памяти и латентность воспоминания при отсроченном сопоставлении (PEBL).",
+          "nback_sidebar_desc": "Адаптивное обновление рабочей памяти Dual N-Back (модель PNAS Jaeggi).",
+          "darktriad_title": "Темная триада и Большая пятерка (IPIP)",
+          "darktriad_sidebar_desc": "Субклинический скрининг (SD3 и IPIP-NEO) макиавеллизма, выдержки и черт OCEAN.",
+          "sidebar_clinical_heading": "КЛИНИЧЕСКИЙ ПСИХИАТРИЧЕСКИЙ КОМПЛЕКС",
+          "sidebar_clinical_sub": "МОДЕЛИ DSM-5 И ВОЗ",
+          "screener_adhd_title": "Скрининг СДВГ (ASRS v1.1)",
+          "screener_adhd_desc": "Опросник дефицита внимания, гиперактивности и исполнительного фокуса у взрослых (18 пунктов).",
+          "screener_schizotypy_title": "Скрининг шизотипии (SPQ-B)",
+          "screener_schizotypy_desc": "Когнитивно-перцептивные аномалии, магическое мышление и дезорганизация мыслей (22 пункта).",
+          "screener_ocd_title": "Опросник ОКР (OCI-R)",
+          "screener_ocd_desc": "Шкала проверки, мытья, порядка, навязчивостей, нейтрализации и накопления (18 пунктов).",
+          "screener_autism_title": "Коэффициент аутизма (AQ-10)",
+          "screener_autism_desc": "Нейроразнообразие Барона-Коэна, переключение внимания и детализация (10 пунктов).",
+          "screener_anxiety_title": "Шкала тревоги (GAD-7)",
+          "screener_anxiety_desc": "Генерализованная тревожность Спитцера, вегетативное возбуждение и беспокойство (7 пунктов).",
+          "screener_depression_title": "Шкала депрессии (PHQ-9)",
+          "screener_depression_desc": "Основные симптомы депрессии по Кронке, ангедония и индекс утомляемости (9 пунктов).",
+          "screener_executive_title": "Исполнительные нарушения (BRIEF-A)",
+          "screener_executive_desc": "Шкала торможения, переключения, рабочей памяти и организации (14 пунктов).",
+          "screener_trauma_title": "Травма и стресс (PCL-5)",
+          "screener_trauma_desc": "Вторжение, избегание, гиперактивация и острая стрессовая реактивность (8 пунктов).",
+          "screener_multi_title": "Множественный интеллект",
+          "screener_multi_desc": "Профиль Говарда Гарднера по 8 доменам и пространственно-логическим способностям.",
+          "sidebar_games_heading": "ТЕРАПЕВТИЧЕСКИЕ НЕЙРО-ИГРЫ",
+          "sidebar_games_sub": "РЕАБИЛИТАЦИЯ И КЛИНИЧЕСКИЕ ПРОБЫ",
+          "game_intro_heading": "Терапевтические нейроигры и сомато-аффективная диагностика",
+          "game_intro_sub": "Интервальные 3-минутные когнитивные пробы",
+          "game_gonogo_title": "Нейро-рефлекс Go/No-Go",
+          "game_gonogo_desc": "Префронтальное моторное торможение и скорость реакции с 3-минутной соматической эмоциональной пробой.",
+          "game_gonogo_card_desc": "Высокоскоростное моторное торможение и контроль импульсов. Остановка на 3-минутную пробу заблокированного эмоционального напряжения.",
+          "game_pursuit_title": "Саккадическое слежение (ЧМТ)",
+          "game_pursuit_desc": "Билатеральное зрительное слежение для восстановления после сотрясений с анализом структурной травмы.",
+          "game_pursuit_card_desc": "Билатеральное зрительное слежение и реабилитация после сотрясений с глубоким анализом черепно-мозговых травм.",
+          "game_stroop_title": "Аффективный Струп",
+          "game_stroop_desc": "Когнитивное разделение и подавление конфликтов в обход эго-защит.",
+          "game_stroop_card_desc": "Инконгруэнтная интерференция цвет-слово. Обходит психологические защиты для выявления истинной когнитивной логики.",
+          "btn_play_gonogo": "▶ Играть в Go/No-Go",
+          "btn_play_pursuit": "▶ Играть в Слежение",
+          "btn_play_stroop": "▶ Играть в Струп",
+          "binaural_label": "Бинауральный фокус FM:",
+          "hero_psychometrics_badge": "Открытая психометрика и когнитивная модель CHC",
+          "badge_active": "АКТИВНО",
+          "clinical_level_label": "Клинический уровень {val} • Вариант оценки {num}",
+          "score_label": "Балл: {val}",
+          "footer_integrity": "ПСИХОМЕТРИЧЕСКАЯ НАДЕЖНОСТЬ: ШКАЛА ВЕКСЛЕРА (μ=100, σ=15)",
+          "footer_calibration": "КАЛИБРОВКА:",
+          "footer_irt": "Модель IRT / CHC",
+          "footer_acceleration": "3D-УСКОРЕНИЕ:",
+          "footer_threejs": "Three.js WebGL",
+          "footer_chromium": "ПРИЛОЖЕНИЕ CHROMIUM:",
+          "footer_active": "Активно",
+          "game_header_sub_gonogo": "Префронтальное моторное торможение и скорость реакции",
+          "game_header_sub_pursuit": "Билатеральное зрительное слежение и реабилитация после травм",
+          "game_header_sub_stroop": "Аффективное разделение и когнитивная гибкость",
+          "game_instr_gonogo": "⚡ УДАРЯЙТЕ по ЗЕЛЕНОЙ СФЕРЕ (Пробел/Педаль). ТОРМОЗИТЕ на КРАСНОЙ СФЕРЕ (Держите).",
+          "game_instr_pursuit": "🎯 НАЖИМАЙТЕ НА ПУЛЬСИРУЮЩУЮ СФЕРУ во время ее движения.",
+          "game_instr_stroop": "🔮 ВЫБЕРИТЕ ЦВЕТ ШРИФТА — Не читайте само слово!",
+          "game_pedal_strike": "⚡ УДАРИТЬ / РЕАКЦИЯ (ПРОБЕЛ)",
+          "intermission_heading": "КЛИНИЧЕСКАЯ ДИАГНОСТИЧЕСКАЯ ИНТЕРМИССИЯ • ПОДАВЛЕННЫЙ АФФЕКТ",
+          "intermission_sub": "Когнитивные защиты подавлены: Исполнительные ресурсы насыщены. Протокол аутентичности активен.",
+          "thinking_window": "ОКНО РАЗМЫШЛЕНИЙ:",
+          "intermission_principle_title": "Нейросоматический диагностический принцип:",
+          "intermission_principle_text": "При постоянном стрессе высокой скорости фронтальные механизмы психологической защиты (рационализация, эмоциональное дистанцирование) ослабевают. Вопросы ниже нацелены на фундаментальные биологические причины когнитивных сбоев: заблокированные эмоциональные травмы и физические травмы головы/шеи. Сформулируйте строгий логический ответ.",
+          "intermission_btn_submit": "Подтвердить логический анализ и продолжить →",
+          "intermission_q1_cat": "ГЛАВНЫЙ ДИАГНОСТИЧЕСКИЙ ЗАПРОС: СОМАТИЧЕСКИЙ ЭМОЦИОНАЛЬНЫЙ БЛОК",
+          "intermission_q1_text": "В нейросоматической медицине глубокие эмоциональные травмы и подавленный дистресс (невыраженный гнев, скорбь, бессилие, страх) не исчезают; они физически блокируются в нейронных путях и фасциях, нарушая когнитивный поток. Где в теле (челюсть, горло, грудь, лоб) вы ощутили физическое напряжение? Раскручивая это назад: какой неразрешенный эмоциональный конфликт спрятан за этим?",
+          "intermission_q1_ph": "Укажите точную физическую локализацию напряжения, историю подавленной эмоции и то, как она блокирует вашу ясность ума (логический ответ, минимум 20 слов)...",
+          "intermission_q2_cat": "НЕЙРОТРАВМАТИЧЕСКИЙ ЗАПРОС: ФИЗИЧЕСКИЕ ТРАВМЫ И КРАНИАЛЬНЫЙ СЛЕД",
+          "intermission_q2_text": "Структурные повреждения мозга — спортивные сотрясения, хлыстовые травмы шеи, падения в детстве или удары по голове — повреждают аксональные микроструктуры, вызывая задержки реакции и истощение. Опишите любые физические травмы головы, шеи или позвоночника. Как они связаны с текущей утомляемостью и провалами внимания?",
+          "intermission_q2_ph": "Опишите все перенесенные сотрясения, хлыстовые травмы или спортивные удары. Логически объясните их влияние на текущую когнитивную выносливость...",
 "spatial_suite": "Набор пространственных субтестов",
         "subtest_gf_sub": "Фактор Gf • 8 матриц",
         "subtest_gwm_sub": "Фактор Gwm • Тест Корси",
@@ -6676,6 +6989,12 @@
           if (prevBtn) prevBtn.textContent = dict.btn_prev;
           const nextBtn = document.getElementById('btnNextItem');
           if (nextBtn) nextBtn.textContent = dict.btn_confirm_next;
+        }
+
+        // G. If NeuroGame Screen is active
+        const screenGame = document.getElementById('screenNeuroGame');
+        if (screenGame && !screenGame.classList.contains('hidden') && window.NeuroGameEngine) {
+          window.NeuroGameEngine.updateHUD();
         }
       },
 
