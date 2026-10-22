@@ -2448,11 +2448,13 @@
         this.startItemLatencyTicker();
 
         const item = this.gfItems[index];
+        const gfTitle = window.I18nEngine ? window.I18nEngine.t('subtest_gf_title', 'Fluid Matrix Induction (Gf)') : 'Fluid Matrix Induction (Gf)';
+        const itemLbl = window.I18nEngine ? window.I18nEngine.t('item_label', 'Item') : 'Item';
         document.getElementById('stimulusSubtestTitle').innerHTML = `
           <span class="inline-block w-2 h-2 rounded-full bg-cyan-400"></span>
-          <span>Fluid Matrix Induction (Gf) — Item ${index + 1} / ${this.gfItems.length}</span>
+          <span>${gfTitle} — ${itemLbl} ${index + 1} / ${this.gfItems.length}</span>
         `;
-        document.getElementById('stimulusInstructions').textContent = 'Determine the logical transformation and select the completing holographic piece.';
+        document.getElementById('stimulusInstructions').textContent = window.I18nEngine ? window.I18nEngine.t('matrix_instructions', 'Determine the logical transformation and select the completing holographic piece.') : 'Determine the logical transformation and select the completing holographic piece.';
         document.getElementById('stimulusCanvas').innerHTML = item.questionRender();
 
         this.renderOptions(item.options);
@@ -2467,15 +2469,18 @@
         this.startItemLatencyTicker();
 
         const item = this.gqItems[index];
+        const gqTitle = window.I18nEngine ? window.I18nEngine.t('subtest_gq_title', 'Quantitative Induction (Gq)') : 'Quantitative Induction (Gq)';
+        const itemLbl = window.I18nEngine ? window.I18nEngine.t('item_label', 'Item') : 'Item';
+        const seqTitle = window.I18nEngine ? window.I18nEngine.t('gq_seq_title', 'Mathematical Sequence Problem') : 'Mathematical Sequence Problem';
         document.getElementById('stimulusSubtestTitle').innerHTML = `
           <span class="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
-          <span>Quantitative Induction (Gq) — Item ${index + 1} / ${this.gqItems.length}</span>
+          <span>${gqTitle} — ${itemLbl} ${index + 1} / ${this.gqItems.length}</span>
         `;
-        document.getElementById('stimulusInstructions').textContent = 'Deduce the mathematical function governing the series.';
+        document.getElementById('stimulusInstructions').textContent = window.I18nEngine ? window.I18nEngine.t('gq_instructions', 'Deduce the mathematical function governing the series.') : 'Deduce the mathematical function governing the series.';
 
         document.getElementById('stimulusCanvas').innerHTML = `
           <div class="flex flex-col items-center justify-center py-8 space-y-4">
-            <span class="text-xs font-mono text-cyan-400 uppercase tracking-widest font-bold">Mathematical Sequence Problem</span>
+            <span class="text-xs font-mono text-cyan-400 uppercase tracking-widest font-bold">${seqTitle}</span>
             <div class="px-8 py-5 rounded-2xl bg-slate-950/80 border border-cyan-400/40 font-mono text-2xl sm:text-3xl font-extrabold text-white tracking-wider holo-glow-cyan">
               ${item.question}
             </div>
@@ -3798,8 +3803,9 @@
         const trial = this.generateTrial(index);
         this.currentTrialData = trial;
 
-        document.getElementById('memoryTrialBadge').textContent = `Trial ${index + 1} of ${this.totalTrials}`;
-        document.getElementById('memoryInstructionText').textContent = 'Phase 1: Memorize target matrix configuration (2.5s)...';
+        const trialLbl = window.I18nEngine ? window.I18nEngine.t('trial_label', 'Trial') : 'Trial';
+        document.getElementById('memoryTrialBadge').textContent = `${trialLbl} ${index + 1} of ${this.totalTrials}`;
+        document.getElementById('memoryInstructionText').textContent = window.I18nEngine ? window.I18nEngine.t('dmts_phase1') : 'Phase 1: Memorize the abstract vector target glyph...';
 
         const pct = Math.round(((index) / this.totalTrials) * 100);
         const pb1 = document.getElementById('memoryProgressBar');
@@ -4071,10 +4077,15 @@
         const responsePanel = document.getElementById('nbackResponsePanel');
         const pillEl = document.getElementById('nbackEncodingTimerPill');
 
+        const stepLbl = window.I18nEngine ? window.I18nEngine.t('step_label', 'Step') : 'Step';
+        const badgeEl = document.getElementById('nbackStepBadge');
+        if (badgeEl) badgeEl.textContent = `${stepLbl} ${index + 1} of ${this.totalSteps}`;
+
         if (index < this.n) {
           // ==================== ENCODING-ONLY BUFFER (i <= N) ====================
           if (instructionEl) {
-            instructionEl.textContent = `ENCODING PHASE: Memorize spatial position & letter (Step ${index + 1} of ${this.n})... Auto-advancing`;
+            const encMsg = window.I18nEngine ? window.I18nEngine.t('nback_encoding_prompt').replace('{step}', index + 1) : `ENCODING PHASE: Memorize spatial position & letter (Step ${index + 1} of ${this.n})... Auto-advancing`;
+            instructionEl.textContent = encMsg;
           }
           if (encodingPanel) encodingPanel.classList.remove('hidden');
           if (responsePanel) responsePanel.classList.add('hidden');
@@ -4096,7 +4107,7 @@
         } else {
           // ==================== ACTIVE COMPARISON PHASE (i > N) ====================
           if (instructionEl) {
-            instructionEl.textContent = 'EVALUATE MATCH: Does current stimulus match 2 steps back?';
+            instructionEl.textContent = window.I18nEngine ? window.I18nEngine.t('nback_active_prompt') : 'EVALUATE MATCH: Does current stimulus match 2 steps back?';
           }
           if (encodingPanel) encodingPanel.classList.add('hidden');
           if (responsePanel) responsePanel.classList.remove('hidden');
@@ -4263,9 +4274,23 @@
 
         this.currentIndex = index;
         const q = this.questions[index];
-        document.getElementById('personalityItemBadge').textContent = `Statement ${index + 1} of ${this.questions.length}`;
-        document.getElementById('personalityCategoryLabel').textContent = q.cat;
-        document.getElementById('personalityStatementText').textContent = `"${q.text}"`;
+        const stmtLbl = window.I18nEngine ? window.I18nEngine.t('statement_label', 'Statement') : 'Statement';
+        document.getElementById('personalityItemBadge').textContent = `${stmtLbl} ${index + 1} of ${this.questions.length}`;
+        
+        let transText = q.text;
+        let transCat = q.cat;
+        if (window.I18nEngine && window.I18nEngine.getPersonalityItem) {
+          const itemTrans = window.I18nEngine.getPersonalityItem(index);
+          if (itemTrans) {
+            transText = itemTrans.text;
+            transCat = itemTrans.cat;
+          }
+        }
+        document.getElementById('personalityCategoryLabel').textContent = transCat;
+        document.getElementById('personalityStatementText').textContent = `"${transText}"`;
+        if (window.I18nEngine && window.I18nEngine.updatePersonalityLikert) {
+          window.I18nEngine.updatePersonalityLikert();
+        }
 
         const pct = Math.round(((index) / this.questions.length) * 100);
         const pb3 = document.getElementById('personalityProgressBar'); if (pb3) { pb3.style.width = `${pct}%`; }
@@ -4414,9 +4439,23 @@
 
         this.currentIndex = index;
         const d = this.domains[index];
-        document.getElementById('multiItemBadge').textContent = `Statement ${index + 1} of ${this.domains.length}`;
-        document.getElementById('multiCategoryLabel').textContent = d.label;
-        document.getElementById('multiStatementText').textContent = `"${d.text}"`;
+        const stmtLbl = window.I18nEngine ? window.I18nEngine.t('statement_label', 'Statement') : 'Statement';
+        document.getElementById('multiItemBadge').textContent = `${stmtLbl} ${index + 1} of ${this.domains.length}`;
+        
+        let transText = d.text;
+        let transCat = d.label;
+        if (window.I18nEngine && window.I18nEngine.getMultiItem) {
+          const itemTrans = window.I18nEngine.getMultiItem(index);
+          if (itemTrans) {
+            transText = itemTrans.text;
+            transCat = itemTrans.label;
+          }
+        }
+        document.getElementById('multiCategoryLabel').textContent = transCat;
+        document.getElementById('multiStatementText').textContent = `"${transText}"`;
+        if (window.I18nEngine && window.I18nEngine.updateMultiLikert) {
+          window.I18nEngine.updateMultiLikert();
+        }
 
         const pct = Math.round(((index) / this.domains.length) * 100);
         const pb4 = document.getElementById('multiProgressBar'); if (pb4) { pb4.style.width = `${pct}%`; }
@@ -4806,7 +4845,8 @@
         this.currentIndex = index;
         const q = inv.questions[index];
         
-        document.getElementById('clinicalItemBadge').textContent = `Item ${index + 1} of ${inv.questions.length}`;
+        const itemLbl = window.I18nEngine ? window.I18nEngine.t('item_label', 'Item') : 'Item';
+        document.getElementById('clinicalItemBadge').textContent = `${itemLbl} ${index + 1} of ${inv.questions.length}`;
         document.getElementById('clinicalCategoryBadge').textContent = inv.category;
         document.getElementById('clinicalQuestionText').textContent = `"${q.text}"`;
 
@@ -4814,11 +4854,12 @@
         const pb = document.getElementById('clinicalProgressBar');
         if (pb) pb.style.width = `${pct}%`;
 
-        // Render Options
+        // Render Options with translated labels
         const grid = document.getElementById('clinicalOptionsGrid');
         grid.innerHTML = '';
         inv.options.forEach((opt, idx) => {
           const num = idx + 1;
+          const optLabel = window.I18nEngine ? window.I18nEngine.getClinicalOptionLabel(opt.label) : opt.label;
           const btn = document.createElement('button');
           btn.className = 'w-full p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-emerald-400/70 hover:bg-emerald-950/20 text-left flex items-center justify-between text-xs font-mono transition touch-manipulation group cursor-pointer active:scale-[0.99]';
           btn.setAttribute('data-opt-key', num);
@@ -4826,7 +4867,7 @@
             <div class="flex items-center space-x-3.5">
               <span class="w-7 h-7 rounded-lg bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 font-bold flex items-center justify-center text-xs group-hover:bg-emerald-400 group-hover:text-black transition font-mono">[${num}]</span>
               <div>
-                <span class="text-white font-medium text-sm block group-hover:text-emerald-200 transition">${opt.label}</span>
+                <span class="text-white font-medium text-sm block group-hover:text-emerald-200 transition">${optLabel}</span>
                 <span class="text-[10px] text-slate-400 font-mono">Clinical level ${opt.value} &bull; Rating option ${num}</span>
               </div>
             </div>
@@ -4961,12 +5002,28 @@
 
     window.I18nEngine = {
       currentLang: 'en',
+      
       translations: {
         en: {
           select_language: "Select Language",
           session_online: "Neural Synapse Online",
           audio_btn: "Focus Audio",
           reset_btn: "Reset",
+          top_active_label: "ACTIVE:",
+          top_battery_label: "BATTERY:",
+          item_label: "Item",
+          statement_label: "Statement",
+          domain_label: "Domain",
+          trial_label: "Trial",
+          step_label: "Step",
+          exit_btn: "Exit",
+          return_menu: "Return to Battery Menu",
+          btn_prev: "← Previous",
+          btn_confirm_next: "Confirm & Next →",
+          btn_submit_seq: "Submit Sequence",
+          btn_download_pdf: "Download Official Clinical Dossier (PDF)",
+          
+          // Intro & Hero
           intro_badge: "Wechsler-Calibrated Norming Engine (μ = 100, σ = 15) • 3D Spatial HUD",
           intro_title: 'Holographic Cognitive & <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-300 to-purple-400">IQ and Intelligence</span>',
           intro_desc: "Built upon Cattell–Horn–Carroll (CHC) theory and clinical neurocognitive standards. Evaluates four fundamental cognitive dimensions with millisecond response latency, non-verbal culture-fair item calibration, and automated General Ability Index (GAI) detection.",
@@ -4993,13 +5050,94 @@
           dmts_btn: "▶ Launch DMTS",
           nback_title: "Neuroplasticity Tracker (Dual N-Back)",
           nback_desc: "Jaeggi PNAS paradigm with sequential encoding buffer & active pedals.",
-          nback_btn: "▶ Launch N-Back"
+          nback_btn: "▶ Launch N-Back",
+          sidebar_title: "Cognitive Battery Hub",
+          sidebar_subtitle: "Cattell-Horn-Carroll & Clinical Protocols",
+
+          // Workspace & Subtests
+          spatial_suite: "Spatial Subtest Suite",
+          matrix_instructions: "Determine the logical transformation and select the completing holographic piece.",
+          gq_instructions: "Deduce the mathematical function governing the series.",
+          gq_seq_title: "Mathematical Sequence Problem",
+          corsi_instructions: "Observe the sequence of illuminated blocks carefully.",
+          corsi_status_memorize: "Trial {trial}: Memorize the sequence of glowing blocks...",
+          corsi_status_your_turn: "Your turn! Tap the blocks in the EXACT order they flashed.",
+          corsi_indicator_displaying: "Pattern displaying... observe closely.",
+          corsi_indicator_selected: "Sequence: {count} / {span} selected",
+          corsi_span_label: "Span Length: {span} Blocks",
+          speed_instructions: "Determine instantly: Does the Target Symbol appear inside the Search Array?",
+          speed_time_remaining: "TIME REMAINING:",
+          speed_target_label: "TARGET GLYPH",
+          speed_search_label: "SEARCH ARRAY",
+          speed_btn_yes: "[YES] PRESENT",
+          speed_btn_no: "[NO] ABSENT",
+          speed_btn_hint_y: "Tap or Key: Y",
+          speed_btn_hint_n: "Tap or Key: N",
+          response_bank_title: "Response Bank (Tap or [1-6])",
+          none_selected: "None selected",
+
+          // DMTS
+          dmts_phase1: "Phase 1: Memorize the abstract vector target glyph...",
+          dmts_phase2: "Phase 2: MASK BUFFER ACTIVE: Retaining visual memory trace...",
+          dmts_phase3: "Phase 3: DISCRIMINATION PHASE: Select matching pattern below",
+
+          // Dual N-Back
+          nback_encoding_prompt: "ENCODING PHASE: Memorize spatial position & letter (Step {step} of 2)... Auto-advancing",
+          nback_active_prompt: "EVALUATE MATCH: Does current stimulus match 2 steps back?",
+          nback_btn_continue: "Next / Continue (Space)",
+          nback_btn_pos: "Position Match",
+          nback_btn_let: "Letter Match",
+          nback_btn_both: "Dual Match",
+          nback_btn_none: "No Match",
+
+          // Personality Likert
+          likert_select_agreement: "Select Agreement Level:",
+          likert_tap_hint: "Tap card or press key [1] — [5]",
+          likert_strongly_disagree: "Strongly Disagree",
+          likert_disagree: "Disagree",
+          likert_neutral: "Neutral",
+          likert_agree: "Agree",
+          likert_strongly_agree: "Strongly Agree",
+          likert_motive_1: "Completely false / Reject",
+          likert_motive_2: "Rarely true / Tend against",
+          likert_motive_3: "Uncertain / Contextual",
+          likert_motive_4: "Frequently true / Endorse",
+          likert_motive_5: "Completely true / Core trait",
+
+          // Multi Intelligence Likert
+          multi_select_strength: "How Strongly Does This Describe Your Cognitive Strength?",
+          multi_low_match: "Low Match",
+          multi_moderate_low: "Moderate-Low",
+          multi_average_match: "Average Match",
+          multi_strong_match: "Strong Match",
+          multi_definite_strength: "Definite Strength",
+          multi_motive_1: "Minimal strength / Rarely used",
+          multi_motive_2: "Occasional ability / Secondary",
+          multi_motive_3: "Moderate / Standard capability",
+          multi_motive_4: "Consistent strength / Frequent",
+          multi_motive_5: "Dominant trait / Natural mastery"
         },
+
         hi: {
           select_language: "भाषा चुनें",
           session_online: "तंत्रिका अन्तर्ग्रथन सक्रिय",
           audio_btn: "फोकस ऑडियो",
           reset_btn: "रीसेट",
+          top_active_label: "सक्रिय:",
+          top_battery_label: "बैटरी:",
+          item_label: "प्रश्न",
+          statement_label: "कथन",
+          domain_label: "क्षेत्र",
+          trial_label: "परीक्षण",
+          step_label: "चरण",
+          exit_btn: "बाहर निकलें",
+          return_menu: "बैटरी मेनू पर लौटें",
+          btn_prev: "← पिछला",
+          btn_confirm_next: "पुष्टि करें और आगे बढ़ें →",
+          btn_submit_seq: "अनुक्रम जमा करें",
+          btn_download_pdf: "आधिकारिक नैदानिक दस्तावेज़ (PDF) डाउनलोड करें",
+
+          // Intro & Hero
           intro_badge: "वेक्सलर-मानकीकृत मानक इंजन (μ = 100, σ = 15) • 3D स्थानिक HUD",
           intro_title: 'होलोग्राफिक संज्ञानात्मक और <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-300 to-purple-400">आईक्यू एवं बुद्धिमत्ता</span>',
           intro_desc: "कैटेल-हॉर्न-कैरोल (CHC) सिद्धांत और नैदानिक न्यूरोकॉग्निटिव मानकों पर निर्मित। मिलीसेकंड प्रतिक्रिया विलंबता, अशाब्दिक संस्कृति-निष्पक्ष वस्तु अंशांकन और स्वचालित सामान्य क्षमता सूचकांक (GAI) के साथ चार संज्ञानात्मक आयामों का मूल्यांकन करता है।",
@@ -5026,13 +5164,94 @@
           dmts_btn: "▶ DMTS लॉन्च करें",
           nback_title: "न्यूरोप्लास्टिसिटी ट्रैकर (डुअल एन-बैक)",
           nback_desc: "अनुक्रमिक एन्कोडिंग बफर और सक्रिय पैडल के साथ जेगी पीएनएएस प्रतिमान।",
-          nback_btn: "▶ एन-बैक लॉन्च करें"
+          nback_btn: "▶ एन-बैक लॉन्च करें",
+          sidebar_title: "संज्ञानात्मक बैटरी हब",
+          sidebar_subtitle: "CHC और नैदानिक प्रोटोकॉल",
+
+          // Workspace & Subtests
+          spatial_suite: "स्थानिक सबटेस्ट सूट",
+          matrix_instructions: "तार्किक परिवर्तन निर्धारित करें और पूरा करने वाला होलोग्राफिक टुकड़ा चुनें।",
+          gq_instructions: "श्रृंखला को नियंत्रित करने वाले गणितीय फलन का निष्कर्ष निकालें।",
+          gq_seq_title: "गणितीय अनुक्रम समस्या",
+          corsi_instructions: "प्रदीप्त ब्लॉकों के अनुक्रम को ध्यान से देखें।",
+          corsi_status_memorize: "परीक्षण {trial}: चमकते ब्लॉकों का अनुक्रम याद रखें...",
+          corsi_status_your_turn: "आपकी बारी! उसी क्रम में ब्लॉकों को टैप करें जिस क्रम में वे चमके थे।",
+          corsi_indicator_displaying: "पैटर्न प्रदर्शित हो रहा है... ध्यान से देखें।",
+          corsi_indicator_selected: "अनुक्रम: {count} / {span} चयनित",
+          corsi_span_label: "स्पैन लंबाई: {span} ब्लॉक",
+          speed_instructions: "तुरंत निर्धारित करें: क्या लक्ष्य प्रतीक खोज व्यूह में दिखाई देता है?",
+          speed_time_remaining: "शेष समय:",
+          speed_target_label: "लक्ष्य प्रतीक",
+          speed_search_label: "खोज व्यूह",
+          speed_btn_yes: "[हाँ] उपस्थित है",
+          speed_btn_no: "[नहीं] अनुपस्थित है",
+          speed_btn_hint_y: "टैप करें या कुंजी: Y",
+          speed_btn_hint_n: "टैप करें या कुंजी: N",
+          response_bank_title: "उत्तर बैंक (टैप करें या [1-6])",
+          none_selected: "कोई चयनित नहीं",
+
+          // DMTS
+          dmts_phase1: "चरण 1: अमूर्त वेक्टर लक्ष्य ग्लिफ़ को याद करें...",
+          dmts_phase2: "चरण 2: मास्क बफर सक्रिय: स्मृति चिन्ह को बनाए रखना...",
+          dmts_phase3: "चरण 3: भेदभाव चरण: नीचे मिलान पैटर्न चुनें",
+
+          // Dual N-Back
+          nback_encoding_prompt: "एन्कोडिंग चरण: स्थानिक स्थिति और अक्षर याद रखें (चरण {step}/2)... स्वचालित आगे बढ़ रहा है",
+          nback_active_prompt: "मिलान का मूल्यांकन करें: क्या वर्तमान उत्तेजना 2 कदम पहले से मेल खाती है?",
+          nback_btn_continue: "अगला / जारी रखें (Space)",
+          nback_btn_pos: "स्थान मिलान",
+          nback_btn_let: "अक्षर मिलान",
+          nback_btn_both: "दोहरा मिलान",
+          nback_btn_none: "कोई मिलान नहीं",
+
+          // Personality Likert
+          likert_select_agreement: "सहमति स्तर चुनें:",
+          likert_tap_hint: "कार्ड टैप करें या कुंजी दबाएं [1] — [5]",
+          likert_strongly_disagree: "दृढ़ता से असहमत",
+          likert_disagree: "असहमत",
+          likert_neutral: "तटस्थ",
+          likert_agree: "सहमत",
+          likert_strongly_agree: "दृढ़ता से सहमत",
+          likert_motive_1: "पूरी तरह से गलत / अस्वीकार",
+          likert_motive_2: "शायद ही कभी सच / विरोध",
+          likert_motive_3: "अनिश्चित / प्रासंगिक",
+          likert_motive_4: "प्रायः सच / समर्थन",
+          likert_motive_5: "पूरी तरह सच / मूल लक्षण",
+
+          // Multi Intelligence Likert
+          multi_select_strength: "यह आपकी संज्ञानात्मक शक्ति का कितना सटीक वर्णन करता है?",
+          multi_low_match: "कम मेल",
+          multi_moderate_low: "मध्यम-कम",
+          multi_average_match: "औसत मेल",
+          multi_strong_match: "मजबूत मेल",
+          multi_definite_strength: "निश्चित शक्ति",
+          multi_motive_1: "न्यूनतम शक्ति / शायद ही इस्तेमाल",
+          multi_motive_2: "प्रासंगिक क्षमता / द्वितीयक",
+          multi_motive_3: "मध्यम / मानक क्षमता",
+          multi_motive_4: "लगातार शक्ति / अक्सर प्रयुक्त",
+          multi_motive_5: "प्रमुख लक्षण / स्वाभाविक महारत"
         },
+
         es: {
           select_language: "Seleccionar Idioma",
           session_online: "Sinapsis Neuronal en Línea",
           audio_btn: "Audio de Foco",
           reset_btn: "Reiniciar",
+          top_active_label: "ACTIVO:",
+          top_battery_label: "BATERÍA:",
+          item_label: "Ítem",
+          statement_label: "Declaración",
+          domain_label: "Dominio",
+          trial_label: "Ensayo",
+          step_label: "Paso",
+          exit_btn: "Salir",
+          return_menu: "Volver al Menú",
+          btn_prev: "← Anterior",
+          btn_confirm_next: "Confirmar y Siguiente →",
+          btn_submit_seq: "Enviar Secuencia",
+          btn_download_pdf: "Descargar Expediente Clínico Oficial (PDF)",
+
+          // Intro & Hero
           intro_badge: "Motor Normativo Wechsler (μ = 100, σ = 15) • HUD Espacial 3D",
           intro_title: 'Evaluación Cognitiva Holográfica e <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-300 to-purple-400">Inteligencia y CI</span>',
           intro_desc: "Basado en la teoría Cattell–Horn–Carroll (CHC) y estándares neurocognitivos clínicos. Evalúa cuatro dimensiones cognitivas fundamentales con latencia en milisegundos, calibración culturalmente imparcial y detección automática del Índice de Habilidad General (GAI).",
@@ -5059,13 +5278,94 @@
           dmts_btn: "▶ Lanzar DMTS",
           nback_title: "Rastreador de Neuroplasticidad (Dual N-Back)",
           nback_desc: "Paradigma Jaeggi PNAS con búfer de codificación secuencial y pedales activos.",
-          nback_btn: "▶ Lanzar N-Back"
+          nback_btn: "▶ Lanzar N-Back",
+          sidebar_title: "Centro de Batería Cognitiva",
+          sidebar_subtitle: "Cattell-Horn-Carroll y Protocolos Clínicos",
+
+          // Workspace & Subtests
+          spatial_suite: "Suite de Subpruebas Espaciales",
+          matrix_instructions: "Determine la transformación lógica y seleccione la pieza holográfica correspondiente.",
+          gq_instructions: "Deduzca la función matemática que rige la serie.",
+          gq_seq_title: "Problema de Secuencia Matemática",
+          corsi_instructions: "Observe con atención la secuencia de bloques iluminados.",
+          corsi_status_memorize: "Ensayo {trial}: Memorice la secuencia de bloques brillantes...",
+          corsi_status_your_turn: "¡Su turno! Toque los bloques en el orden EXACTO en que parpadearon.",
+          corsi_indicator_displaying: "Mostrando patrón... observe cuidadosamente.",
+          corsi_indicator_selected: "Secuencia: {count} / {span} seleccionados",
+          corsi_span_label: "Longitud de Amplitud: {span} Bloques",
+          speed_instructions: "¿Aparece el Símbolo Objetivo dentro de la Matriz de Búsqueda?",
+          speed_time_remaining: "TIEMPO RESTANTE:",
+          speed_target_label: "GLIFO OBJETIVO",
+          speed_search_label: "MATRIZ DE BÚSQUEDA",
+          speed_btn_yes: "[SÍ] PRESENTE",
+          speed_btn_no: "[NO] AUSENTE",
+          speed_btn_hint_y: "Toque o Tecla: Y",
+          speed_btn_hint_n: "Toque o Tecla: N",
+          response_bank_title: "Banco de Respuestas (Toque o [1-6])",
+          none_selected: "Ninguno seleccionado",
+
+          // DMTS
+          dmts_phase1: "Fase 1: Memorice el glifo objetivo vectorial abstracto...",
+          dmts_phase2: "Fase 2: MÁSCARA ACTIVA: Reteniendo la huella de memoria visual...",
+          dmts_phase3: "Fase 3: FASE DE DISCRIMINACIÓN: Seleccione el patrón coincidente",
+
+          // Dual N-Back
+          nback_encoding_prompt: "FASE DE CODIFICACIÓN: Memorice posición espacial y letra (Paso {step}/2)... Auto-avanzando",
+          nback_active_prompt: "¿Coincide el estímulo actual con el de hace 2 pasos?",
+          nback_btn_continue: "Siguiente / Continuar (Space)",
+          nback_btn_pos: "Coincidencia de Posición",
+          nback_btn_let: "Coincidencia de Letra",
+          nback_btn_both: "Coincidencia Dual",
+          nback_btn_none: "Sin Coincidencia",
+
+          // Personality Likert
+          likert_select_agreement: "Seleccione Nivel de Acuerdo:",
+          likert_tap_hint: "Toque tarjeta o presione tecla [1] — [5]",
+          likert_strongly_disagree: "Totalmente en Desacuerdo",
+          likert_disagree: "En Desacuerdo",
+          likert_neutral: "Neutral",
+          likert_agree: "De Acuerdo",
+          likert_strongly_agree: "Totalmente de Acuerdo",
+          likert_motive_1: "Totalmente falso / Rechazar",
+          likert_motive_2: "Raramente verdadero / Tiende en contra",
+          likert_motive_3: "Incierto / Contextual",
+          likert_motive_4: "Frecuentemente verdadero / Respaldar",
+          likert_motive_5: "Completamente verdadero / Rasgo central",
+
+          // Multi Intelligence Likert
+          multi_select_strength: "¿Con qué fuerza describe esto su capacidad cognitiva?",
+          multi_low_match: "Baja Afinidad",
+          multi_moderate_low: "Moderada-Baja",
+          multi_average_match: "Afinidad Media",
+          multi_strong_match: "Fuerte Afinidad",
+          multi_definite_strength: "Fortaleza Definitiva",
+          multi_motive_1: "Capacidad mínima / Raramente usada",
+          multi_motive_2: "Habilidad ocasional / Secundaria",
+          multi_motive_3: "Moderada / Capacidad estándar",
+          multi_motive_4: "Fortaleza constante / Frecuente",
+          multi_motive_5: "Rasgo dominante / Dominio natural"
         },
+
         ru: {
           select_language: "Выберите язык",
           session_online: "Нейронный синапс в сети",
           audio_btn: "Фокус-аудио",
           reset_btn: "Сброс",
+          top_active_label: "АКТИВНО:",
+          top_battery_label: "БАТАРЕЯ:",
+          item_label: "Вопрос",
+          statement_label: "Утверждение",
+          domain_label: "Область",
+          trial_label: "Проба",
+          step_label: "Шаг",
+          exit_btn: "Выход",
+          return_menu: "Вернуться в меню",
+          btn_prev: "← Назад",
+          btn_confirm_next: "Подтвердить и далее →",
+          btn_submit_seq: "Отправить последовательность",
+          btn_download_pdf: "Скачать официальное клиническое досье (PDF)",
+
+          // Intro & Hero
           intro_badge: "Калибровка Векслера (μ = 100, σ = 15) • Пространственный 3D HUD",
           intro_title: 'Голографическая когнитивная оценка и <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-300 to-purple-400">Интеллект (IQ)</span>',
           intro_desc: "Разработано на основе теории Кэттелла–Хорна–Кэрролла (CHC) и стандартов клинической нейропсихологии. Оценивает четыре когнитивных измерения с миллисекундной задержкой, невербальной калибровкой и автоматическим расчетом GAI.",
@@ -5092,8 +5392,78 @@
           dmts_btn: "▶ Запуск DMTS",
           nback_title: "Трекер нейропластичности (Dual N-Back)",
           nback_desc: "Парадигма Jaeggi PNAS с буфером кодирования и активными педалями ответа.",
-          nback_btn: "▶ Запуск N-Back"
+          nback_btn: "▶ Запуск N-Back",
+          sidebar_title: "Центр когнитивных тестов",
+          sidebar_subtitle: "Модель CHC и клинические протоколы",
+
+          // Workspace & Subtests
+          spatial_suite: "Пространственные субтесты",
+          matrix_instructions: "Определите логическую трансформацию и выберите подходящий элемент.",
+          gq_instructions: "Выявите математическую функцию, определяющую числовой ряд.",
+          gq_seq_title: "Задача на числовой ряд",
+          corsi_instructions: "Внимательно наблюдайте за последовательностью подсвечиваемых блоков.",
+          corsi_status_memorize: "Проба {trial}: Запомните порядок вспыхивающих блоков...",
+          corsi_status_your_turn: "Ваш ход! Нажмите на блоки в ТОЧНОМ порядке их вспышек.",
+          corsi_indicator_displaying: "Воспроизведение... наблюдайте внимательно.",
+          corsi_indicator_selected: "Выбрано: {count} / {span}",
+          corsi_span_label: "Длина ряда: {span} блоков",
+          speed_instructions: "Определите мгновенно: Присутствует ли целевой глиф в массиве поиска?",
+          speed_time_remaining: "ОСТАЛОСЬ ВРЕМЕНИ:",
+          speed_target_label: "ЦЕЛЕВОЙ ГЛИФ",
+          speed_search_label: "МАССИВ ПОИСКА",
+          speed_btn_yes: "[ДА] ПРИСУТСТВУЕТ",
+          speed_btn_no: "[НЕТ] ОТСУТСТВУЕТ",
+          speed_btn_hint_y: "Нажатие или клавиша: Y",
+          speed_btn_hint_n: "Нажатие или клавиша: N",
+          response_bank_title: "Панель ответов (Нажатие или [1-6])",
+          none_selected: "Не выбрано",
+
+          // DMTS
+          dmts_phase1: "Фаза 1: Запомните векторный целевой символ...",
+          dmts_phase2: "Фаза 2: МАСКА АКТИВНА: Удержание зрительного следа памяти...",
+          dmts_phase3: "Фаза 3: ФАЗА РАСПОЗНАВАНИЯ: Выберите совпадающий паттерн",
+
+          // Dual N-Back
+          nback_encoding_prompt: "ФАЗА КОДИРОВАНИЯ: Запомните позицию и букву (Шаг {step}/2)... Авто-переход",
+          nback_active_prompt: "ОЦЕНИТЕ СОВПАДЕНИЕ: Совпадает ли стимул с тем, что был 2 шага назад?",
+          nback_btn_continue: "Далее / Продолжить (Space)",
+          nback_btn_pos: "Совпадение позиции",
+          nback_btn_let: "Совпадение буквы",
+          nback_btn_both: "Двойное совпадение",
+          nback_btn_none: "Нет совпадения",
+
+          // Personality Likert
+          likert_select_agreement: "Выберите уровень согласия:",
+          likert_tap_hint: "Нажмите карточку или клавишу [1] — [5]",
+          likert_strongly_disagree: "Полностью не согласен",
+          likert_disagree: "Не согласен",
+          likert_neutral: "Нейтрально",
+          likert_agree: "Согласен",
+          likert_strongly_agree: "Полностью согласен",
+          likert_motive_1: "Абсолютно неверно / Отвергаю",
+          likert_motive_2: "Редко верно / Скорее против",
+          likert_motive_3: "Не уверен / Ситуативно",
+          likert_motive_4: "Часто верно / Поддерживаю",
+          likert_motive_5: "Абсолютно верно / Ключевая черта",
+
+          // Multi Intelligence Likert
+          multi_select_strength: "Насколько это отражает ваши способности?",
+          multi_low_match: "Слабое соответствие",
+          multi_moderate_low: "Ниже среднего",
+          multi_average_match: "Среднее соответствие",
+          multi_strong_match: "Выраженное свойство",
+          multi_definite_strength: "Ярко выраженный талант",
+          multi_motive_1: "Минимально / Редко используется",
+          multi_motive_2: "Вторичная способность",
+          multi_motive_3: "Стандартная способность",
+          multi_motive_4: "Постоянное преимущество",
+          multi_motive_5: "Доминирующий природный навык"
         }
+      },
+
+      t(key, fallback = '') {
+        const dict = this.translations[this.currentLang] || this.translations['en'];
+        return dict[key] || this.translations['en'][key] || fallback || key;
       },
 
       init() {
@@ -5114,11 +5484,320 @@
         const menu = document.getElementById('langDropdownMenu');
         if (menu) menu.classList.add('hidden');
 
+        // 1. Update static data-i18n elements
         const dict = this.translations[lang];
         document.querySelectorAll('[data-i18n]').forEach(el => {
           const key = el.getAttribute('data-i18n');
           if (dict[key]) {
             el.innerHTML = dict[key];
+          }
+        });
+
+        // 2. Refresh whichever screen/test is actively mounted
+        this.refreshActiveScreen();
+      },
+
+      refreshActiveScreen() {
+        const dict = this.translations[this.currentLang] || this.translations['en'];
+
+        // A. If Personality Test Screen is active
+        const screenPersonality = document.getElementById('screenPersonality');
+        if (screenPersonality && !screenPersonality.classList.contains('hidden') && window.PersonalityTestEngine) {
+          window.PersonalityTestEngine.showQuestion(window.PersonalityTestEngine.currentIndex);
+          this.updatePersonalityLikert();
+        }
+
+        // B. If Multiple Intelligences Screen is active
+        const screenMulti = document.getElementById('screenMulti');
+        if (screenMulti && !screenMulti.classList.contains('hidden') && window.MultiIntelligenceEngine) {
+          window.MultiIntelligenceEngine.showDomain(window.MultiIntelligenceEngine.currentIndex);
+          this.updateMultiLikert();
+        }
+
+        // C. If Clinical Screen is active
+        const screenClinical = document.getElementById('screenClinical');
+        if (screenClinical && !screenClinical.classList.contains('hidden') && window.ClinicalTestEngine) {
+          window.ClinicalTestEngine.showQuestion(window.ClinicalTestEngine.currentIndex);
+        }
+
+        // D. If Neuroplasticity (Dual N-Back) is active
+        const screenNeuro = document.getElementById('screenNeuroplasticity');
+        if (screenNeuro && !screenNeuro.classList.contains('hidden') && window.NBackEngine) {
+          const eng = window.NBackEngine;
+          const instEl = document.getElementById('nbackInstructionText');
+          if (instEl) {
+            if (eng.step < eng.n) {
+              instEl.textContent = dict.nback_encoding_prompt.replace('{step}', eng.step + 1);
+            } else {
+              instEl.textContent = dict.nback_active_prompt;
+            }
+          }
+          const stepBadge = document.getElementById('nbackStepBadge');
+          if (stepBadge) stepBadge.textContent = `${dict.step_label} ${eng.step + 1} of ${eng.totalSteps}`;
+          
+          const btnCont = document.getElementById('nbackBtnContinue');
+          if (btnCont) {
+            const span = btnCont.querySelector('span:first-child');
+            if (span) span.textContent = dict.nback_btn_continue;
+          }
+          const btnPos = document.getElementById('nbackBtnPos');
+          if (btnPos) { const s = btnPos.querySelector('span:first-child'); if (s) s.textContent = dict.nback_btn_pos; }
+          const btnLet = document.getElementById('nbackBtnLet');
+          if (btnLet) { const s = btnLet.querySelector('span:first-child'); if (s) s.textContent = dict.nback_btn_let; }
+          const btnBoth = document.getElementById('nbackBtnBoth');
+          if (btnBoth) { const s = btnBoth.querySelector('span:first-child'); if (s) s.textContent = dict.nback_btn_both; }
+          const btnNone = document.getElementById('nbackBtnNone');
+          if (btnNone) { const s = btnNone.querySelector('span:first-child'); if (s) s.textContent = dict.nback_btn_none; }
+        }
+
+        // E. If DMTS (Memory) is active
+        const screenMem = document.getElementById('screenMemory');
+        if (screenMem && !screenMem.classList.contains('hidden') && window.MemoryTestEngine) {
+          const eng = window.MemoryTestEngine;
+          const badge = document.getElementById('memoryTrialBadge');
+          if (badge) badge.textContent = `${dict.trial_label} ${eng.currentTrial + 1} of ${eng.totalTrials}`;
+        }
+
+        // F. If Core CHC Workspace is active
+        const screenWs = document.getElementById('screenWorkspace');
+        if (screenWs && !screenWs.classList.contains('hidden') && window.app) {
+          const subIdx = window.app.state.currentSubtestIndex;
+          const itemIdx = window.app.state.currentItemIndex;
+          if (subIdx === 0) {
+            window.app.loadMatrixItem(itemIdx);
+          } else if (subIdx === 1) {
+            const c = window.app.state.corsi;
+            const spanEl = document.getElementById('corsiSpanBadge');
+            if (spanEl) spanEl.textContent = dict.corsi_span_label.replace('{span}', c.currentSpan);
+            const submitBtn = document.getElementById('corsiSubmitBtn');
+            if (submitBtn) submitBtn.textContent = dict.btn_submit_seq;
+          } else if (subIdx === 2) {
+            window.app.loadQuantitativeItem(itemIdx);
+          } else if (subIdx === 3) {
+            const timeRem = document.getElementById('speedCountdown');
+            const instEl = document.querySelector('#speedContainer p');
+            if (instEl) instEl.textContent = dict.speed_instructions;
+          }
+          const prevBtn = document.getElementById('btnPrevItem');
+          if (prevBtn) prevBtn.textContent = dict.btn_prev;
+          const nextBtn = document.getElementById('btnNextItem');
+          if (nextBtn) nextBtn.textContent = dict.btn_confirm_next;
+        }
+      },
+
+
+      // Translation Helpers for Test Engines
+      getPersonalityItem(index) {
+        const lang = this.currentLang;
+        if (lang === 'en') return null;
+        
+        const hi_pers = [
+          { cat: 'रणनीतिक गणना (मैकियावेलियनिज़्म)', text: 'रणनीतिक गणना और महत्वपूर्ण योजनाओं को गुप्त रखना दीर्घकालिक सफलता के लिए आवश्यक है।' },
+          { cat: 'रणनीतिक गणना (मैकियावेलियनिज़्म)', text: 'प्रतिस्पर्धी बातचीत में, सभी पत्ते तुरंत खोलना एक विनाशकारी संरचनात्मक त्रुटि है।' },
+          { cat: 'रणनीतिक गणना (मैकियावेलियनिज़्म)', text: 'जब आप उद्देश्यों को लोगों के निजी स्वार्थ के संदर्भ में प्रस्तुत करते हैं, तो उन्हें आसानी से निर्देशित किया जा सकता है।' },
+          { cat: 'रणनीतिक गणना (मैकियावेलियनिज़्म)', text: 'दूसरों की सद्भावना पर निर्भर रहने की तुलना में परिणामों पर रणनीतिक लाभ बनाए रखना बेहतर है।' },
+          { cat: 'रणनीतिक गणना (मैकियावेलियनिज़्म)', text: 'सामरिक धैर्य और सही समय की प्रतीक्षा अक्सर आक्रामक प्रत्यक्ष टकराव से बेहतर प्रदर्शन करती है।' },
+          { cat: 'रणनीतिक गणना (मैकियावेलियनिज़्म)', text: 'जटिल पदानुक्रमों को नेविगेट करते समय, अदृश्य शक्ति गतिशीलता को समझना महत्वपूर्ण है।' },
+          { cat: 'भावनात्मक लचीलापन (संयम)', text: 'अराजक परिचालन आश्चर्यों के दौरान भी मैं भावनात्मक रूप से शांत और विश्लेषणात्मक बना रहता हूँ।' },
+          { cat: 'कर्तव्यनिष्ठा एवं निष्पादन', text: 'मैं बिना किसी पर्यवेक्षण के समय सीमा से काफी पहले ही बहु-चरणीय मांग वाली परियोजनाओं को लगातार पूरा करता हूँ।' },
+          { cat: 'प्रणालीगत अनुशासन', text: 'मैं स्वास्थ्य, बौद्धिक फोकस और निष्पादन के लिए व्यवस्थित व्यक्तिगत प्रोटोकॉल को कड़ाई से बनाए रखता हूँ।' }
+        ];
+
+        const es_pers = [
+          { cat: 'CÁLCULO ESTRATÉGICO (MAQUIAVELISMO)', text: 'El cálculo estratégico y mantener los planes críticos protegidos es esencial para el éxito a largo plazo.' },
+          { cat: 'CÁLCULO ESTRATÉGICO (MAQUIAVELISMO)', text: 'En una negociación competitiva, revelar todas las cartas de inmediato es un error catastrófico.' },
+          { cat: 'CÁLCULO ESTRATÉGICO (MAQUIAVELISMO)', text: 'La mayoría de las personas se guían fácilmente cuando se enmarcan los objetivos en términos de su propio interés.' },
+          { cat: 'CÁLCULO ESTRATÉGICO (MAQUIAVELISMO)', text: 'Es mejor mantener el control estratégico sobre los resultados que depender de la buena voluntad ajena.' },
+          { cat: 'CÁLCULO ESTRATÉGICO (MAQUIAVELISMO)', text: 'La paciencia táctica y esperar el momento óptimo a menudo supera a la confrontación directa.' },
+          { cat: 'CÁLCULO ESTRATÉGICO (MAQUIAVELISMO)', text: 'Al navegar jerarquías complejas, comprender las dinámicas de poder invisibles es vital.' },
+          { cat: 'SERENIDAD EN CRISIS', text: 'Permanezco emocionalmente sereno y analítico incluso durante sorpresas operativas caóticas.' },
+          { cat: 'CONCIENZUDA EJECUCIÓN', text: 'Completo consistentemente proyectos exigentes antes de los plazos sin necesidad de supervisión.' },
+          { cat: 'DISCIPLINA SISTÉMICA', text: 'Mantengo con rigor protocolos personales sistemáticos para la salud, el enfoque intelectual y la ejecución.' }
+        ];
+
+        const ru_pers = [
+          { cat: 'СТРАТЕГИЧЕСКИЙ РАСЧЕТ (МАКИАВЕЛЛИЗМ)', text: 'Стратегический расчет и сохранение ключевых планов в тайне имеют решающее значение для успеха.' },
+          { cat: 'СТРАТЕГИЧЕСКИЙ РАСЧЕТ (МАКИАВЕЛЛИЗМ)', text: 'В конкурентных переговорах немедленное раскрытие всех карт — катастрофическая ошибка.' },
+          { cat: 'СТРАТЕГИЧЕСКИЙ РАСЧЕТ (МАКИАВЕЛЛИЗМ)', text: 'Большинством людей легко управлять, если формулировать цели с точки зрения их личной выгоды.' },
+          { cat: 'СТРАТЕГИЧЕСКИЙ РАСЧЕТ (МАКИАВЕЛЛИЗМ)', text: 'Лучше сохранять стратегический контроль над результатами, чем полагаться на чужую доброжелательность.' },
+          { cat: 'СТРАТЕГИЧЕСКИЙ РАСЧЕТ (МАКИАВЕЛЛИЗМ)', text: 'Тактическое терпение и выжидание момента часто эффективнее прямой агрессии.' },
+          { cat: 'СТРАТЕГИЧЕСКИЙ РАСЧЕТ (МАКИАВЕЛЛИЗМ)', text: 'При взаимодействии с иерархиями жизненно важно понимать невидимую расстановку сил.' },
+          { cat: 'САМООБЛАДАНИЕ В КРИЗИСЕ', text: 'Я остаюсь эмоционально уравновешенным и сохраняю аналитический подход даже в условиях хаоса.' },
+          { cat: 'ДОБРОСОВЕСТНОСТЬ И ИСПОЛНЕНИЕ', text: 'Я систематически завершаю сложные многоэтапные проекты задолго до дедлайнов без надзора.' },
+          { cat: 'СИСТЕМНАЯ ДИСЦИПЛИНА', text: 'Я строго соблюдаю персональные протоколы для здоровья, интеллектуальной концентрации и продуктивности.' }
+        ];
+
+        if (lang === 'hi') return hi_pers[index] || null;
+        if (lang === 'es') return es_pers[index] || null;
+        if (lang === 'ru') return ru_pers[index] || null;
+        return null;
+      },
+
+      getMultiItem(index) {
+        const lang = this.currentLang;
+        if (lang === 'en') return null;
+
+        const hi_multi = [
+          { label: 'तार्किक-गणितीय बुद्धिमत्ता', text: 'मैं जटिल समस्याओं को स्वचालित रूप से एल्गोरिदम, तर्क वृक्षों या मात्रात्मक मॉडलों में विभाजित करता हूँ।' },
+          { label: 'स्थानिक-दृश्य बुद्धिमत्ता', text: 'मैं जटिल 3D वायरफ्रेम मॉडलों को मानसिक रूप से घुमा सकता हूँ और स्थानिक तंत्रों को स्पष्टता से देख सकता हूँ।' },
+          { label: 'भाषाई-मौखिक बुद्धिमत्ता', text: 'मैं सरल सटीकता के साथ वाक्य रचना, सूक्ष्म शब्दावली और बयानबाजी के ढांचे का उपयोग करता हूँ।' },
+          { label: 'शारीरिक-गत्यात्मक बुद्धिमत्ता', text: 'मेरे पास असाधारण न्यूरोमस्कुलर समन्वय, मांसपेशी स्मृति और ठीक-मोटर निपुणता है।' },
+          { label: 'संगीतात्मक-लयबद्ध बुद्धिमत्ता', text: 'मैं सहजता से ध्वनि परिदृश्यों में सुरीली आवृत्तियों, लय और सूक्ष्म पिच विचलन को पहचान लेता हूँ।' },
+          { label: 'पारस्परिक (सामाजिक) बुद्धिमत्ता', text: 'मैं सूक्ष्म-अभिव्यक्तियों, अंतर्निहित भावनात्मक उद्देश्यों और अनकहे सामाजिक गतिशीलता को तुरंत समझ लेता हूँ।' },
+          { label: 'अंतरावैयक्तिक (मेटाकॉग्निटिव)', text: 'मैं अपने आंतरिक पूर्वाग्रहों, भावनात्मक ट्रिगर्स और संज्ञानात्मक सीमाओं के बारे में गहरी आत्म-जागरूकता रखता हूँ।' },
+          { label: 'प्रकृतिवादी (प्रणालीगत) बुद्धिमत्ता', text: 'मैं प्रकृति में संरचनात्मक वर्गीकरण, जैविक पैटर्न और पारिस्थितिक प्रणालियों को तुरंत पहचान लेता हूँ।' }
+        ];
+
+        const es_multi = [
+          { label: 'INTELIGENCIA LÓGICO-MATEMÁTICA', text: 'Descompongo instintivamente problemas complejos en algoritmos formales, árboles lógicos o modelos cuantitativos.' },
+          { label: 'INTELIGENCIA ESPACIAL-VISUAL', text: 'Puedo rotar mentalmente modelos 3D complejos y visualizar mecanismos espaciales con total claridad.' },
+          { label: 'INTELIGENCIA LINGÜÍSTICO-VERBAL', text: 'Domino la sintaxis, el vocabulario matizado y los marcos retóricos con precisión y fluidez.' },
+          { label: 'INTELIGENCIA CORPORAL-CINESTÉSICA', text: 'Poseo una coordinación neuromuscular excepcional, memoria muscular y gran destreza motora fina.' },
+          { label: 'INTELIGENCIA MUSICAL-RÍTMICA', text: 'Aíslo sin esfuerzo frecuencias armónicas, polirritmos y sutiles desviaciones de tono en paisajes sonoros.' },
+          { label: 'INTELIGENCIA INTERPERSONAL', text: 'Decodifico al instante microexpresiones, motivaciones emocionales subyacentes y dinámicas sociales.' },
+          { label: 'INTELIGENCIA INTRAPERSONAL', text: 'Mantengo una profunda conciencia metacognitiva de mis sesgos internos, desencadenantes y límites.' },
+          { label: 'INTELIGENCIA NATURALISTA', text: 'Identifico rápidamente taxonomías estructurales, patrones orgánicos y sistemas biológicos en la naturaleza.' }
+        ];
+
+        const ru_multi = [
+          { label: 'ЛОГИКО-МАТЕМАТИЧЕСКИЙ ИНТЕЛЛЕКТ', text: 'Я инстинктивно разбиваю сложные задачи на формальные алгоритмы, деревья решений и количественные модели.' },
+          { label: 'ПРОСТРАНСТВЕННО-ВИЗУАЛЬНЫЙ ИНТЕЛЛЕКТ', text: 'Я могу мысленно вращать сложные трехмерные модели и ясно визуализировать пространственные механизмы.' },
+          { label: 'ЛИНГВИСТИЧЕСКИЙ ИНТЕЛЛЕКТ', text: 'Я легко владею синтаксисом, богатым словарным запасом и риторическими приемами.' },
+          { label: 'ТЕЛЕСНО-КИНЕСТЕТИЧЕСКИЙ ИНТЕЛЛЕКТ', text: 'Я обладаю превосходной нервно-мышечной координацией, мышечной памятью и мелкой моторикой.' },
+          { label: 'МУЗЫКАЛЬНО-РИТМИЧЕСКИЙ ИНТЕЛЛЕКТ', text: 'Я без труда улавливаю гармонические частоты, сложные полиритмы и тонкие изменения высоты звука.' },
+          { label: 'МЕЖЛИЧНОСТНЫЙ (СОЦИАЛЬНЫЙ) ИНТЕЛЛЕКТ', text: 'Я мгновенно считываю микромимику, скрытые эмоциональные мотивы и негласные социальные правила.' },
+          { label: 'ВНУТРИЛИЧНОСТНЫЙ ИНТЕЛЛЕКТ', text: 'Я обладаю глубоким метакогнитивным пониманием своих внутренних установок, триггеров и ограничений.' },
+          { label: 'ЕСТЕСТВЕННО-НАУЧНЫЙ ИНТЕЛЛЕКТ', text: 'Я мгновенно распознаю структурные закономерности, органические паттерны и биологические системы.' }
+        ];
+
+        if (lang === 'hi') return hi_multi[index % hi_multi.length] || null;
+        if (lang === 'es') return es_multi[index % es_multi.length] || null;
+        if (lang === 'ru') return ru_multi[index % ru_multi.length] || null;
+        return null;
+      },
+
+      getClinicalOptionLabel(label) {
+        const lang = this.currentLang;
+        if (lang === 'en') return label;
+
+        const map_hi = {
+          'Never': 'कभी नहीं',
+          'Rarely': 'शायद ही कभी',
+          'Sometimes': 'कभी-कभी',
+          'Often': 'अक्सर',
+          'Very Often': 'बहुत बार',
+          'Not at all': 'बिल्कुल नहीं',
+          'Several days': 'कई दिन',
+          'More than half the days': 'आधे से अधिक दिन',
+          'Nearly every day': 'लगभग हर दिन',
+          'A little': 'थोड़ा सा',
+          'Moderately': 'मध्यम रूप से',
+          'A lot': 'बहुत अधिक',
+          'Extremely': 'अत्यधिक',
+          'No / Disagree': 'नहीं / असहमत',
+          'Yes / Agree': 'हाँ / सहमत',
+          'Definitely Disagree': 'दृढ़ता से असहमत',
+          'Slightly Disagree': 'थोड़ा असहमत',
+          'Slightly Agree': 'थोड़ा सहमत',
+          'Definitely Agree': 'दृढ़ता से सहमत'
+        };
+
+        const map_es = {
+          'Never': 'Nunca',
+          'Rarely': 'Raramente',
+          'Sometimes': 'A veces',
+          'Often': 'A menudo',
+          'Very Often': 'Muy frecuentemente',
+          'Not at all': 'Para nada',
+          'Several days': 'Varios días',
+          'More than half the days': 'Más de la mitad de los días',
+          'Nearly every day': 'Casi todos los días',
+          'A little': 'Un poco',
+          'Moderately': 'Moderadamente',
+          'A lot': 'Bastante',
+          'Extremely': 'Extremadamente',
+          'No / Disagree': 'No / En desacuerdo',
+          'Yes / Agree': 'Sí / De acuerdo',
+          'Definitely Disagree': 'Definitivamente en desacuerdo',
+          'Slightly Disagree': 'Ligeramente en desacuerdo',
+          'Slightly Agree': 'Ligeramente de acuerdo',
+          'Definitely Agree': 'Definitivamente de acuerdo'
+        };
+
+        const map_ru = {
+          'Never': 'Никогда',
+          'Rarely': 'Редко',
+          'Sometimes': 'Иногда',
+          'Often': 'Часто',
+          'Very Often': 'Очень часто',
+          'Not at all': 'Совсем нет',
+          'Several days': 'Несколько дней',
+          'More than half the days': 'Больше половины дней',
+          'Nearly every day': 'Почти каждый день',
+          'A little': 'Немного',
+          'Moderately': 'Умеренно',
+          'A lot': 'Сильно',
+          'Extremely': 'Крайне сильно',
+          'No / Disagree': 'Нет / Не согласен',
+          'Yes / Agree': 'Да / Согласен',
+          'Definitely Disagree': 'Категорически не согласен',
+          'Slightly Disagree': 'Скорее не согласен',
+          'Slightly Agree': 'Скорее согласен',
+          'Definitely Agree': 'Полностью согласен'
+        };
+
+        if (lang === 'hi') return map_hi[label] || label;
+        if (lang === 'es') return map_es[label] || label;
+        if (lang === 'ru') return map_ru[label] || label;
+        return label;
+      },
+
+      updatePersonalityLikert() {
+        const dict = this.translations[this.currentLang] || this.translations['en'];
+        const container = document.getElementById('screenPersonality');
+        if (!container) return;
+
+        const labels = [
+          { text: dict.likert_strongly_disagree, motive: dict.likert_motive_1 },
+          { text: dict.likert_disagree, motive: dict.likert_motive_2 },
+          { text: dict.likert_neutral, motive: dict.likert_motive_3 },
+          { text: dict.likert_agree, motive: dict.likert_motive_4 },
+          { text: dict.likert_strongly_agree, motive: dict.likert_motive_5 }
+        ];
+
+        const buttons = container.querySelectorAll('button[onclick*="recordAnswer"]');
+        buttons.forEach((btn, idx) => {
+          if (labels[idx]) {
+            const spans = btn.querySelectorAll('span');
+            if (spans.length >= 2) {
+              spans[0].textContent = labels[idx].text;
+              spans[1].textContent = labels[idx].motive;
+            }
+          }
+        });
+      },
+
+      updateMultiLikert() {
+        const dict = this.translations[this.currentLang] || this.translations['en'];
+        const container = document.getElementById('screenMulti');
+        if (!container) return;
+
+        const labels = [
+          { text: dict.multi_low_match, motive: dict.multi_motive_1 },
+          { text: dict.multi_moderate_low, motive: dict.multi_motive_2 },
+          { text: dict.multi_average_match, motive: dict.multi_motive_3 },
+          { text: dict.multi_strong_match, motive: dict.multi_motive_4 },
+          { text: dict.multi_definite_strength, motive: dict.multi_motive_5 }
+        ];
+
+        const buttons = container.querySelectorAll('button[onclick*="recordAnswer"]');
+        buttons.forEach((btn, idx) => {
+          if (labels[idx]) {
+            const spans = btn.querySelectorAll('span');
+            if (spans.length >= 2) {
+              spans[0].textContent = labels[idx].text;
+              spans[1].textContent = labels[idx].motive;
+            }
           }
         });
       }
