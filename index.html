@@ -578,7 +578,7 @@
   </aside>
 
   <!-- ==================== HOLOGRAPHIC TOP HUD BAR ==================== -->
-  <header class="relative z-10 no-print border-b border-cyan-500/20 bg-slate-950/60 backdrop-blur-md px-2.5 sm:px-6 py-2 sm:py-3 flex items-center justify-between gap-1.5 sm:gap-2">
+  <header class="relative z-30 no-print border-b border-cyan-500/20 bg-slate-950/60 backdrop-blur-md px-2.5 sm:px-6 py-2 sm:py-3 flex items-center justify-between gap-1.5 sm:gap-2">
     <div class="flex items-center space-x-1.5 sm:space-x-3 shrink-0">
       
       <!-- Slide-Out Sidebar Toggle Button (ChatGPT Style) -->
@@ -600,7 +600,7 @@
       <div class="h-4 sm:h-5 w-px bg-cyan-500/20 hidden md:block"></div>
       <span id="sessionBadge" class="hidden md:inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
         <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
-        <span id="sessionStatusText">Neural Synapse Online</span>
+        <span id="sessionStatusText" data-i18n="session_online">Neural Synapse Online</span>
       </span>
     </div>
 
@@ -620,10 +620,41 @@
 
     <!-- Timer & Controls -->
     <div class="flex items-center space-x-1.5 sm:space-x-3 shrink-0">
+      <!-- Language Translation Selector (EN, HI, ES, RU) -->
+      <div class="relative inline-block text-left shrink-0" id="langSelectorContainer">
+        <button id="langDropdownBtn" onclick="toggleLanguageDropdown(event)" class="px-2 sm:px-2.5 py-1.5 rounded-lg bg-slate-900 border border-cyan-500/40 hover:border-cyan-400 text-cyan-300 font-mono text-[10px] sm:text-xs flex items-center space-x-1.5 backdrop-blur-md active:scale-95 transition touch-manipulation holo-glow-cyan shrink-0" title="Translate Interface Language">
+          <svg class="w-3.5 h-3.5 text-cyan-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+          </svg>
+          <span id="currentLangBadge" class="font-bold">EN</span>
+          <svg class="w-3 h-3 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div id="langDropdownMenu" class="hidden absolute right-0 mt-1.5 w-44 rounded-xl bg-slate-950/95 border border-cyan-500/40 backdrop-blur-2xl shadow-2xl py-1.5 z-50 text-xs font-mono">
+          <div class="px-3 py-1 text-[9px] uppercase tracking-wider text-slate-400 border-b border-cyan-500/20 font-bold" data-i18n="select_language">Select Language</div>
+          <button onclick="I18nEngine.setLanguage('en')" class="w-full text-left px-3 py-2 flex items-center justify-between hover:bg-cyan-500/20 text-slate-200 hover:text-cyan-300 transition">
+            <span class="flex items-center space-x-2"><span>🇬🇧</span><span>English</span></span>
+            <span class="text-[9px] text-cyan-400 font-bold">EN</span>
+          </button>
+          <button onclick="I18nEngine.setLanguage('hi')" class="w-full text-left px-3 py-2 flex items-center justify-between hover:bg-cyan-500/20 text-slate-200 hover:text-cyan-300 transition">
+            <span class="flex items-center space-x-2"><span>🇮🇳</span><span>हिन्दी (Hindi)</span></span>
+            <span class="text-[9px] text-cyan-400 font-bold">HI</span>
+          </button>
+          <button onclick="I18nEngine.setLanguage('es')" class="w-full text-left px-3 py-2 flex items-center justify-between hover:bg-cyan-500/20 text-slate-200 hover:text-cyan-300 transition">
+            <span class="flex items-center space-x-2"><span>🇪🇸</span><span>Español (Spanish)</span></span>
+            <span class="text-[9px] text-cyan-400 font-bold">ES</span>
+          </button>
+          <button onclick="I18nEngine.setLanguage('ru')" class="w-full text-left px-3 py-2 flex items-center justify-between hover:bg-cyan-500/20 text-slate-200 hover:text-cyan-300 transition">
+            <span class="flex items-center space-x-2"><span>🇷🇺</span><span>Русский (Russian)</span></span>
+            <span class="text-[9px] text-cyan-400 font-bold">RU</span>
+          </button>
+        </div>
+      </div>
       <!-- Focus Audio FM Docked in Header (Zero Bottom-Right Overlap) -->
       <button onclick="toggleAudioCard()" id="headerAudioBtn" class="px-2 sm:px-2.5 py-1.5 rounded-lg bg-slate-900 border border-purple-500/40 hover:border-purple-400 text-purple-300 font-mono text-[10px] sm:text-xs flex items-center space-x-1.5 backdrop-blur-md active:scale-95 transition touch-manipulation holo-glow-violet shrink-0" title="Toggle Brainwave Focus Audio Engine">
         <span class="w-2 h-2 rounded-full bg-purple-400" id="audioPillDot"></span>
-        <span id="audioPillText" class="hidden md:inline">Focus Audio</span>
+        <span id="audioPillText" class="hidden md:inline" data-i18n="audio_btn">Focus Audio</span>
         <span class="text-[9px] sm:text-[10px] bg-purple-900/60 px-1 py-0.5 rounded text-purple-200 font-bold" id="audioPillStatus">OFF</span>
       </button>
       <button onclick="toggleBgVideo()" id="btnVideoToggle" class="text-[10px] sm:text-xs font-mono bg-cyan-950/50 text-cyan-300 hover:text-white px-2 sm:px-3 py-1.5 rounded-lg border border-cyan-500/30 transition touch-manipulation">
@@ -636,7 +667,7 @@
         </svg>
         <span id="globalTimer" class="text-xs sm:text-sm font-bold text-white tracking-wider">00:00</span>
       </div>
-      <button onclick="app.abortSession()" class="text-[10px] sm:text-xs font-mono bg-slate-950 text-slate-400 hover:text-red-400 px-2 sm:px-3 py-1.5 rounded-lg border border-slate-800 hover:border-red-900/40 transition touch-manipulation">
+      <button onclick="app.abortSession()" class="text-[10px] sm:text-xs font-mono bg-slate-950 text-slate-400 hover:text-red-400 px-2 sm:px-3 py-1.5 rounded-lg border border-slate-800 hover:border-red-900/40 transition touch-manipulation" data-i18n="reset_btn">
         Reset
       </button>
     </div>
@@ -651,14 +682,14 @@
         
         <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-400/40 text-cyan-300 text-xs font-mono mb-4 holo-glow-cyan">
           <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
-          <span>Wechsler-Calibrated Norming Engine (μ = 100, σ = 15) • 3D Spatial HUD</span>
+          <span data-i18n="intro_badge">Wechsler-Calibrated Norming Engine (μ = 100, σ = 15) • 3D Spatial HUD</span>
         </div>
 
-        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-4">
+        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-4" data-i18n="intro_title">
           Holographic Cognitive & <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-300 to-purple-400">IQ and Intelligence</span>
         </h1>
         
-        <p class="text-slate-300 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed mb-8">
+        <p class="text-slate-300 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed mb-8" data-i18n="intro_desc">
           Built upon Cattell–Horn–Carroll (CHC) theory and clinical neurocognitive standards. Evaluates four fundamental cognitive dimensions with millisecond response latency, non-verbal culture-fair item calibration, and automated General Ability Index (GAI) detection.
         </p>
 
@@ -671,11 +702,11 @@
                 <span class="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-400/40 text-cyan-300 font-mono text-xs flex items-center justify-center font-bold">Gf</span>
                 <span class="text-[9px] font-mono bg-cyan-500/20 text-cyan-300 font-bold px-2 py-0.5 rounded">ACTIVE</span>
               </div>
-              <h3 class="font-bold text-white text-sm group-hover:text-cyan-300 transition">Fluid Matrix Induction</h3>
-              <p class="text-xs text-slate-400 mt-1 leading-relaxed">8 non-verbal geometric matrices testing topological rotation, XOR boolean operations, and symbolic induction.</p>
+              <h3 class="font-bold text-white text-sm group-hover:text-cyan-300 transition" data-i18n="subtest_gf_title">Fluid Matrix Induction</h3>
+              <p class="text-xs text-slate-400 mt-1 leading-relaxed" data-i18n="subtest_gf_desc">8 non-verbal geometric matrices testing topological rotation, XOR boolean operations, and symbolic induction.</p>
             </div>
             <button onclick="app.startSingleSubtest(0)" class="w-full py-2 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 font-mono text-xs font-bold transition active:scale-95 touch-manipulation">
-              ▶ Play Gf Matrix
+              <span data-i18n="subtest_gf_btn">▶ Play Gf Matrix</span>
             </button>
           </div>
 
@@ -686,11 +717,11 @@
                 <span class="w-8 h-8 rounded-lg bg-indigo-500/20 border border-indigo-400/40 text-indigo-300 font-mono text-xs flex items-center justify-center font-bold">Gwm</span>
                 <span class="text-[9px] font-mono bg-indigo-500/20 text-indigo-300 font-bold px-2 py-0.5 rounded">ACTIVE</span>
               </div>
-              <h3 class="font-bold text-white text-sm group-hover:text-indigo-300 transition">Spatial Working Memory</h3>
-              <p class="text-xs text-slate-400 mt-1 leading-relaxed">16-block interactive Corsi span measuring visuospatial memory encoding, sequence buffer, and prefrontal recall.</p>
+              <h3 class="font-bold text-white text-sm group-hover:text-indigo-300 transition" data-i18n="subtest_gwm_title">Spatial Working Memory</h3>
+              <p class="text-xs text-slate-400 mt-1 leading-relaxed" data-i18n="subtest_gwm_desc">16-block interactive Corsi span measuring visuospatial memory encoding, sequence buffer, and prefrontal recall.</p>
             </div>
             <button onclick="app.startSingleSubtest(1)" class="w-full py-2 rounded-xl bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/40 font-mono text-xs font-bold transition active:scale-95 touch-manipulation">
-              ▶ Play Corsi Memory
+              <span data-i18n="subtest_gwm_btn">▶ Play Corsi Memory</span>
             </button>
           </div>
 
@@ -701,11 +732,11 @@
                 <span class="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 font-mono text-xs flex items-center justify-center font-bold">Gq</span>
                 <span class="text-[9px] font-mono bg-emerald-500/20 text-emerald-300 font-bold px-2 py-0.5 rounded">ACTIVE</span>
               </div>
-              <h3 class="font-bold text-white text-sm group-hover:text-emerald-300 transition">Quantitative Induction</h3>
-              <p class="text-xs text-slate-400 mt-1 leading-relaxed">6 high-order quantitative problems testing recursive growth, prime power differentials, and mathematical logic.</p>
+              <h3 class="font-bold text-white text-sm group-hover:text-emerald-300 transition" data-i18n="subtest_gq_title">Quantitative Induction</h3>
+              <p class="text-xs text-slate-400 mt-1 leading-relaxed" data-i18n="subtest_gq_desc">6 high-order quantitative problems testing recursive growth, prime power differentials, and mathematical logic.</p>
             </div>
             <button onclick="app.startSingleSubtest(2)" class="w-full py-2 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 font-mono text-xs font-bold transition active:scale-95 touch-manipulation">
-              ▶ Play Quantitative
+              <span data-i18n="subtest_gq_btn">▶ Play Quantitative</span>
             </button>
           </div>
 
@@ -716,29 +747,29 @@
                 <span class="w-8 h-8 rounded-lg bg-purple-500/20 border border-purple-400/40 text-purple-300 font-mono text-xs flex items-center justify-center font-bold">Gs</span>
                 <span class="text-[9px] font-mono bg-purple-500/20 text-purple-300 font-bold px-2 py-0.5 rounded">ACTIVE</span>
               </div>
-              <h3 class="font-bold text-white text-sm group-hover:text-purple-300 transition">Processing Speed</h3>
-              <p class="text-xs text-slate-400 mt-1 leading-relaxed">45-second high-speed visual discrimination measuring symbol throughput, reaction time, and decision latency.</p>
+              <h3 class="font-bold text-white text-sm group-hover:text-purple-300 transition" data-i18n="subtest_gs_title">Processing Speed</h3>
+              <p class="text-xs text-slate-400 mt-1 leading-relaxed" data-i18n="subtest_gs_desc">45-second high-speed visual discrimination measuring symbol throughput, reaction time, and decision latency.</p>
             </div>
             <button onclick="app.startSingleSubtest(3)" class="w-full py-2 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 border border-purple-500/40 font-mono text-xs font-bold transition active:scale-95 touch-manipulation">
-              ▶ Play Speed Sprint
+              <span data-i18n="subtest_gs_btn">▶ Play Speed Sprint</span>
             </button>
           </div>
         </div>
 
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
           <button onclick="app.startFullBattery()" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-400 via-indigo-400 to-purple-500 hover:from-cyan-300 hover:to-purple-400 text-black font-extrabold text-sm font-mono tracking-wide transition holo-glow-cyan">
-            INITIALIZE HOLOGRAPHIC BATTERY →
+            <span data-i18n="btn_init_battery">INITIALIZE HOLOGRAPHIC BATTERY →</span>
           </button>
         </div>
 
         <!-- Specialized Neuroplasticity & Memory Modules Quick Launch -->
         <div class="mt-8 pt-6 border-t border-slate-800/80">
           <div class="flex items-center justify-between mb-4">
-            <h4 class="text-xs font-mono uppercase tracking-wider text-cyan-300 font-bold flex items-center gap-2">
+            <h4 class="text-xs font-mono uppercase tracking-wider text-cyan-300 font-bold flex items-center gap-2" data-i18n="specialized_heading">
               <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
               Specialized Executive & Neuroplasticity Modules
             </h4>
-            <span class="text-[10px] font-mono text-slate-400">Direct Launch • No Menu Search Required</span>
+            <span class="text-[10px] font-mono text-slate-400" data-i18n="specialized_sub">Direct Launch • No Menu Search Required</span>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
             <!-- DMTS -->
@@ -746,12 +777,12 @@
               <div>
                 <div class="flex items-center gap-2 mb-1">
                   <span class="w-6 h-6 rounded bg-cyan-500/20 text-cyan-300 font-mono text-xs flex items-center justify-center font-bold">DM</span>
-                  <h5 class="font-bold text-white text-xs group-hover:text-cyan-300 transition">Visual Memory Recognition (DMTS)</h5>
+                  <h5 class="font-bold text-white text-xs group-hover:text-cyan-300 transition" data-i18n="dmts_title">Visual Memory Recognition (DMTS)</h5>
                 </div>
-                <p class="text-[11px] text-slate-400">Sample-encoding, dynamic visual noise mask & 4-choice discrimination.</p>
+                <p class="text-[11px] text-slate-400" data-i18n="dmts_desc">Sample-encoding, dynamic visual noise mask & 4-choice discrimination.</p>
               </div>
               <button onclick="AssessmentController.launch('memory')" class="px-4 py-2 ml-3 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-400/50 font-mono text-xs font-bold whitespace-nowrap transition active:scale-95 touch-manipulation">
-                ▶ Launch DMTS
+                <span data-i18n="dmts_btn">▶ Launch DMTS</span>
               </button>
             </div>
             <!-- Dual N-Back -->
@@ -759,21 +790,21 @@
               <div>
                 <div class="flex items-center gap-2 mb-1">
                   <span class="w-6 h-6 rounded bg-indigo-500/20 text-indigo-300 font-mono text-xs flex items-center justify-center font-bold">NB</span>
-                  <h5 class="font-bold text-white text-xs group-hover:text-indigo-300 transition">Neuroplasticity Tracker (Dual N-Back)</h5>
+                  <h5 class="font-bold text-white text-xs group-hover:text-indigo-300 transition" data-i18n="nback_title">Neuroplasticity Tracker (Dual N-Back)</h5>
                 </div>
-                <p class="text-[11px] text-slate-400">Jaeggi PNAS paradigm with sequential encoding buffer & active pedals.</p>
+                <p class="text-[11px] text-slate-400" data-i18n="nback_desc">Jaeggi PNAS paradigm with sequential encoding buffer & active pedals.</p>
               </div>
               <button onclick="AssessmentController.launch('neuroplasticity')" class="px-4 py-2 ml-3 rounded-xl bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-400/50 font-mono text-xs font-bold whitespace-nowrap transition active:scale-95 touch-manipulation">
-                ▶ Launch N-Back
+                <span data-i18n="nback_btn">▶ Launch N-Back</span>
               </button>
             </div>
           </div>
         </div>
 
         <div class="mt-6 text-[11px] font-mono text-slate-400 flex items-center justify-center space-x-4">
-          <span>• Non-verbal Culture-Fair</span>
-          <span>• Interactive 3D WebGL Neural Matrix</span>
-          <span>• Automated WAIS-IV GAI Detection</span>
+          <span data-i18n="pill_culture_fair">• Non-verbal Culture-Fair</span>
+          <span data-i18n="pill_3d_matrix">• Interactive 3D WebGL Neural Matrix</span>
+          <span data-i18n="pill_gai_detect">• Automated WAIS-IV GAI Detection</span>
         </div>
       </div>
     </section>
@@ -4908,6 +4939,196 @@
         showScreen('screenGenericReport');
       }
     };
+
+
+    // ==================== I18N MULTI-LANGUAGE TRANSLATION ENGINE ====================
+    window.toggleLanguageDropdown = function(e) {
+      if (e) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+      const menu = document.getElementById('langDropdownMenu');
+      if (menu) menu.classList.toggle('hidden');
+    };
+
+    document.addEventListener('click', function(e) {
+      const container = document.getElementById('langSelectorContainer');
+      const menu = document.getElementById('langDropdownMenu');
+      if (menu && container && !container.contains(e.target)) {
+        menu.classList.add('hidden');
+      }
+    });
+
+    window.I18nEngine = {
+      currentLang: 'en',
+      translations: {
+        en: {
+          select_language: "Select Language",
+          session_online: "Neural Synapse Online",
+          audio_btn: "Focus Audio",
+          reset_btn: "Reset",
+          intro_badge: "Wechsler-Calibrated Norming Engine (μ = 100, σ = 15) • 3D Spatial HUD",
+          intro_title: 'Holographic Cognitive & <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-300 to-purple-400">IQ and Intelligence</span>',
+          intro_desc: "Built upon Cattell–Horn–Carroll (CHC) theory and clinical neurocognitive standards. Evaluates four fundamental cognitive dimensions with millisecond response latency, non-verbal culture-fair item calibration, and automated General Ability Index (GAI) detection.",
+          subtest_gf_title: "Fluid Matrix Induction",
+          subtest_gf_desc: "8 non-verbal geometric matrices testing topological rotation, XOR boolean operations, and symbolic induction.",
+          subtest_gf_btn: "▶ Play Gf Matrix",
+          subtest_gwm_title: "Spatial Working Memory",
+          subtest_gwm_desc: "16-block interactive Corsi span measuring visuospatial memory encoding, sequence buffer, and prefrontal recall.",
+          subtest_gwm_btn: "▶ Play Corsi Memory",
+          subtest_gq_title: "Quantitative Induction",
+          subtest_gq_desc: "6 high-order quantitative problems testing recursive growth, prime power differentials, and mathematical logic.",
+          subtest_gq_btn: "▶ Play Quantitative",
+          subtest_gs_title: "Processing Speed",
+          subtest_gs_desc: "45-second high-speed visual discrimination measuring symbol throughput, reaction time, and decision latency.",
+          subtest_gs_btn: "▶ Play Speed Sprint",
+          btn_init_battery: "INITIALIZE HOLOGRAPHIC BATTERY →",
+          pill_culture_fair: "• Non-verbal Culture-Fair",
+          pill_3d_matrix: "• Interactive 3D WebGL Neural Matrix",
+          pill_gai_detect: "• Automated WAIS-IV GAI Detection",
+          specialized_heading: '<span class="w-2 h-2 rounded-full bg-cyan-400 inline-block mr-2"></span>Specialized Executive & Neuroplasticity Modules',
+          specialized_sub: "Direct Launch • No Menu Search Required",
+          dmts_title: "Visual Memory Recognition (DMTS)",
+          dmts_desc: "Sample-encoding, dynamic visual noise mask & 4-choice discrimination.",
+          dmts_btn: "▶ Launch DMTS",
+          nback_title: "Neuroplasticity Tracker (Dual N-Back)",
+          nback_desc: "Jaeggi PNAS paradigm with sequential encoding buffer & active pedals.",
+          nback_btn: "▶ Launch N-Back"
+        },
+        hi: {
+          select_language: "भाषा चुनें",
+          session_online: "तंत्रिका अन्तर्ग्रथन सक्रिय",
+          audio_btn: "फोकस ऑडियो",
+          reset_btn: "रीसेट",
+          intro_badge: "वेक्सलर-मानकीकृत मानक इंजन (μ = 100, σ = 15) • 3D स्थानिक HUD",
+          intro_title: 'होलोग्राफिक संज्ञानात्मक और <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-300 to-purple-400">आईक्यू एवं बुद्धिमत्ता</span>',
+          intro_desc: "कैटेल-हॉर्न-कैरोल (CHC) सिद्धांत और नैदानिक न्यूरोकॉग्निटिव मानकों पर निर्मित। मिलीसेकंड प्रतिक्रिया विलंबता, अशाब्दिक संस्कृति-निष्पक्ष वस्तु अंशांकन और स्वचालित सामान्य क्षमता सूचकांक (GAI) के साथ चार संज्ञानात्मक आयामों का मूल्यांकन करता है।",
+          subtest_gf_title: "तरल मैट्रिक्स प्रेरण (Gf)",
+          subtest_gf_desc: "टोपोलॉजिकल रोटेशन, XOR बूलियन संचालन और प्रतीकात्मक प्रेरण का परीक्षण करने वाले 8 अशाब्दिक ज्यामितीय मैट्रिक्स।",
+          subtest_gf_btn: "▶ Gf मैट्रिक्स खेलें",
+          subtest_gwm_title: "स्थानिक कार्यशील स्मृति (Gwm)",
+          subtest_gwm_desc: "विज़ुओस्पेशियल मेमोरी एन्कोडिंग, सीक्वेंस बफर और प्रीफ्रंटल रिकॉल को मापने वाला 16-ब्लॉक इंटरेक्टिव कोर्सी स्पैन।",
+          subtest_gwm_btn: "▶ कोर्सी मेमोरी खेलें",
+          subtest_gq_title: "मात्रात्मक प्रेरण (Gq)",
+          subtest_gq_desc: "पुनरावर्ती वृद्धि, अभाज्य शक्ति अंतर और गणितीय तर्क का परीक्षण करने वाले 6 उच्च-क्रम मात्रात्मक प्रश्न।",
+          subtest_gq_btn: "▶ मात्रात्मक खेलें",
+          subtest_gs_title: "प्रसंस्करण गति (Gs)",
+          subtest_gs_desc: "प्रतीक थ्रूपुट, प्रतिक्रिया समय और निर्णय विलंबता को मापने वाला 45-सेकंड का उच्च गति दृश्य भेदभाव।",
+          subtest_gs_btn: "▶ गति स्प्रिंट खेलें",
+          btn_init_battery: "होलोग्राफिक बैटरी आरंभ करें →",
+          pill_culture_fair: "• अशाब्दिक संस्कृति-निष्पक्ष",
+          pill_3d_matrix: "• इंटरैक्टिव 3D न्यूरल मैट्रिक्स",
+          pill_gai_detect: "• स्वचालित WAIS-IV GAI पहचान",
+          specialized_heading: '<span class="w-2 h-2 rounded-full bg-cyan-400 inline-block mr-2"></span>विशिष्ट कार्यकारी और न्यूरोप्लास्टिसिटी मॉड्यूल',
+          specialized_sub: "प्रत्यक्ष लॉन्च • कोई मेनू खोज आवश्यक नहीं",
+          dmts_title: "दृश्य स्मृति पहचान (DMTS)",
+          dmts_desc: "नमूना-एन्कोडिंग, गतिशील दृश्य शोर मास्क और 4-विकल्प भेदभाव।",
+          dmts_btn: "▶ DMTS लॉन्च करें",
+          nback_title: "न्यूरोप्लास्टिसिटी ट्रैकर (डुअल एन-बैक)",
+          nback_desc: "अनुक्रमिक एन्कोडिंग बफर और सक्रिय पैडल के साथ जेगी पीएनएएस प्रतिमान।",
+          nback_btn: "▶ एन-बैक लॉन्च करें"
+        },
+        es: {
+          select_language: "Seleccionar Idioma",
+          session_online: "Sinapsis Neuronal en Línea",
+          audio_btn: "Audio de Foco",
+          reset_btn: "Reiniciar",
+          intro_badge: "Motor Normativo Wechsler (μ = 100, σ = 15) • HUD Espacial 3D",
+          intro_title: 'Evaluación Cognitiva Holográfica e <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-300 to-purple-400">Inteligencia y CI</span>',
+          intro_desc: "Basado en la teoría Cattell–Horn–Carroll (CHC) y estándares neurocognitivos clínicos. Evalúa cuatro dimensiones cognitivas fundamentales con latencia en milisegundos, calibración culturalmente imparcial y detección automática del Índice de Habilidad General (GAI).",
+          subtest_gf_title: "Inducción Matricial Fluida",
+          subtest_gf_desc: "8 matrices geométricas no verbales que evalúan rotación topológica, operaciones booleanas XOR e inducción simbólica.",
+          subtest_gf_btn: "▶ Jugar Matriz Gf",
+          subtest_gwm_title: "Memoria de Trabajo Espacial",
+          subtest_gwm_desc: "Amplitud Corsi interactiva de 16 bloques que mide codificación de memoria visoespacial, búfer de secuencia y memoria prefrontal.",
+          subtest_gwm_btn: "▶ Jugar Memoria Corsi",
+          subtest_gq_title: "Inducción Cuantitativa",
+          subtest_gq_desc: "6 problemas cuantitativos de alto orden que evalúan crecimiento recursivo, diferenciales de números primos y lógica matemática.",
+          subtest_gq_btn: "▶ Jugar Cuantitativo",
+          subtest_gs_title: "Velocidad de Procesamiento",
+          subtest_gs_desc: "Discriminación visual de alta velocidad de 45 segundos que mide el rendimiento de símbolos y latencia de decisión.",
+          subtest_gs_btn: "▶ Jugar Sprint de Velocidad",
+          btn_init_battery: "INICIALIZAR BATERÍA HOLOGRÁFICA →",
+          pill_culture_fair: "• No verbal Imparcial Culturalmente",
+          pill_3d_matrix: "• Matriz Neuronal WebGL 3D Interactiva",
+          pill_gai_detect: "• Detección Automatizada WAIS-IV GAI",
+          specialized_heading: '<span class="w-2 h-2 rounded-full bg-cyan-400 inline-block mr-2"></span>Módulos Especializados Ejecutivos y de Neuroplasticidad',
+          specialized_sub: "Lanzamiento Directo • Sin Búsqueda en Menú",
+          dmts_title: "Reconocimiento de Memoria Visual (DMTS)",
+          dmts_desc: "Codificación de muestra, máscara de ruido visual dinámico y discriminación de 4 opciones.",
+          dmts_btn: "▶ Lanzar DMTS",
+          nback_title: "Rastreador de Neuroplasticidad (Dual N-Back)",
+          nback_desc: "Paradigma Jaeggi PNAS con búfer de codificación secuencial y pedales activos.",
+          nback_btn: "▶ Lanzar N-Back"
+        },
+        ru: {
+          select_language: "Выберите язык",
+          session_online: "Нейронный синапс в сети",
+          audio_btn: "Фокус-аудио",
+          reset_btn: "Сброс",
+          intro_badge: "Калибровка Векслера (μ = 100, σ = 15) • Пространственный 3D HUD",
+          intro_title: 'Голографическая когнитивная оценка и <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-300 to-purple-400">Интеллект (IQ)</span>',
+          intro_desc: "Разработано на основе теории Кэттелла–Хорна–Кэрролла (CHC) и стандартов клинической нейропсихологии. Оценивает четыре когнитивных измерения с миллисекундной задержкой, невербальной калибровкой и автоматическим расчетом GAI.",
+          subtest_gf_title: "Индукция подвижных матриц",
+          subtest_gf_desc: "8 невербальных геометрических матриц, тестирующих топологическое вращение, операции XOR и символическую индукцию.",
+          subtest_gf_btn: "▶ Начать матрицу Gf",
+          subtest_gwm_title: "Пространственная рабочая память",
+          subtest_gwm_desc: "16-блочный интерактивный тест Корси для оценки зрительно-пространственной памяти, буфера последовательностей и префронтального воспроизведения.",
+          subtest_gwm_btn: "▶ Начать тест Корси",
+          subtest_gq_title: "Количественная индукция",
+          subtest_gq_desc: "6 количественных задач высокого порядка на рекурсивный рост, дифференциалы простых чисел и математическую логику.",
+          subtest_gq_btn: "▶ Начать вычисления",
+          subtest_gs_title: "Скорость обработки информации",
+          subtest_gs_desc: "45-секундная скоростная визуальная дискриминация символов, время реакции и задержка принятия решений.",
+          subtest_gs_btn: "▶ Начать спринт скорости",
+          btn_init_battery: "ЗАПУСТИТЬ ГОЛОГРАФИЧЕСКУЮ БАТАРЕЮ →",
+          pill_culture_fair: "• Невербальный кросс-культурный тест",
+          pill_3d_matrix: "• Интерактивная 3D WebGL нейросеть",
+          pill_gai_detect: "• Автоматический расчет WAIS-IV GAI",
+          specialized_heading: '<span class="w-2 h-2 rounded-full bg-cyan-400 inline-block mr-2"></span>Специализированные модули нейропластичности',
+          specialized_sub: "Прямой запуск • Без поиска в меню",
+          dmts_title: "Распознавание зрительной памяти (DMTS)",
+          dmts_desc: "Кодирование образца, динамическая шумовая маска и выбор из 4 вариантов.",
+          dmts_btn: "▶ Запуск DMTS",
+          nback_title: "Трекер нейропластичности (Dual N-Back)",
+          nback_desc: "Парадигма Jaeggi PNAS с буфером кодирования и активными педалями ответа.",
+          nback_btn: "▶ Запуск N-Back"
+        }
+      },
+
+      init() {
+        const saved = localStorage.getItem('neurometric_lang') || 'en';
+        this.setLanguage(saved, false);
+      },
+
+      setLanguage(lang, persist = true) {
+        if (!this.translations[lang]) lang = 'en';
+        this.currentLang = lang;
+        if (persist) {
+          try { localStorage.setItem('neurometric_lang', lang); } catch (e) {}
+        }
+
+        const badge = document.getElementById('currentLangBadge');
+        if (badge) badge.textContent = lang.toUpperCase();
+
+        const menu = document.getElementById('langDropdownMenu');
+        if (menu) menu.classList.add('hidden');
+
+        const dict = this.translations[lang];
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (dict[key]) {
+            el.innerHTML = dict[key];
+          }
+        });
+      }
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => window.I18nEngine.init());
+    } else {
+      window.I18nEngine.init();
+    }
 
 </script>
 </body>
