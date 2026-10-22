@@ -5219,7 +5219,7 @@
       // 2. Offscreen Container setup
       const reportRoot = document.createElement('div');
       reportRoot.id = 'clinicalMasterDossierPdfRoot';
-      reportRoot.style.cssText = 'position: absolute; left: -9999px; top: 0; width: 210mm; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #070B10; color: #E2E8F0;';
+      reportRoot.style.cssText = 'position: fixed; left: 0; top: 0; z-index: -9999; opacity: 1; pointer-events: none; width: 210mm; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #070B10; color: #E2E8F0;';
 
       const pageStyle = 'box-sizing: border-box; width: 210mm; min-height: 297mm; max-height: 297mm; padding: 10mm 14mm; background: #070B10; color: #E2E8F0; page-break-after: always; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between;';
 
@@ -5616,24 +5616,74 @@
       document.body.appendChild(reportRoot);
 
       if (typeof html2pdf !== 'undefined') {
-        const opt = {
-          margin: 0,
-          filename: `NeuroMetric_Clinical_Assessment_Dossier_${lang.toUpperCase()}.pdf`,
-          image: { type: 'jpeg', quality: 0.98 },
-          html2canvas: { scale: 2, useCORS: true, letterRendering: true, logging: false },
-          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-          pagebreak: { mode: ['css', 'legacy'] }
-        };
+        const pages = Array.from(reportRoot.children);
+        const fileName = `NeuroMetric_Clinical_Assessment_Dossier_${lang.toUpperCase()}.pdf`;
 
-        html2pdf().set(opt).from(reportRoot).save().then(() => {
-          setTimeout(() => {
-            if (reportRoot.parentNode && !reportRoot.dataset.preserve) reportRoot.parentNode.removeChild(reportRoot);
-          }, 2000);
-        }).catch(err => {
-          console.error('PDF export error:', err);
-          if (reportRoot.parentNode) reportRoot.parentNode.removeChild(reportRoot);
-          window.print();
-        });
+        // Render sleek HUD toast notification
+        const toast = document.createElement('div');
+        toast.id = 'nmPdfGenerationToast';
+        toast.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:999999;background:#0A101D;border:1px solid #00F0FF;color:#00F0FF;padding:12px 20px;border-radius:12px;font-family:monospace;font-size:12px;box-shadow:0 10px 30px rgba(0,240,255,0.25);display:flex;align-items:center;gap:10px;';
+        toast.innerHTML = `<span style="display:inline-block;width:14px;height:14px;border:2px solid #00F0FF;border-top-color:transparent;border-radius:50%;animation:nmSpin 0.8s linear infinite;"></span><span>Generating 3-Page Clinical Dossier (${lang.toUpperCase()})...</span><style>@keyframes nmSpin{to{transform:rotate(360deg)}}</style>`;
+        document.body.appendChild(toast);
+
+        (async () => {
+          try {
+            const opt = {
+              margin: 0,
+              image: { type: 'jpeg', quality: 0.95 },
+              html2canvas: { scale: 2, useCORS: true, logging: false },
+              jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            const w1 = html2pdf().set(opt).from(pages[0]);
+            const canvas1 = await w1.toCanvas().get('canvas');
+            const img1 = canvas1.toDataURL('image/jpeg', 0.95);
+
+            const w2 = html2pdf().set(opt).from(pages[1]);
+            const canvas2 = await w2.toCanvas().get('canvas');
+            const img2 = canvas2.toDataURL('image/jpeg', 0.95);
+
+            const w3 = html2pdf().set(opt).from(pages[2]);
+            const canvas3 = await w3.toCanvas().get('canvas');
+            const img3 = canvas3.toDataURL('image/jpeg', 0.95);
+
+            const pdf = await w1.toPdf().get('pdf');
+            while (pdf.internal.getNumberOfPages() > 0) {
+              pdf.deletePage(1);
+            }
+
+            pdf.addPage('a4', 'portrait');
+            pdf.addImage(img1, 'JPEG', 0, 0, 210, 297);
+
+            pdf.addPage('a4', 'portrait');
+            pdf.addImage(img2, 'JPEG', 0, 0, 210, 297);
+
+            pdf.addPage('a4', 'portrait');
+            pdf.addImage(img3, 'JPEG', 0, 0, 210, 297);
+
+            pdf.save(fileName);
+
+            toast.style.borderColor = '#10B981';
+            toast.style.color = '#10B981';
+            toast.innerHTML = `<span>✓ Dossier Generated & Downloaded (3 Pages A4)</span>`;
+            setTimeout(() => {
+              if (toast.parentNode) toast.parentNode.removeChild(toast);
+            }, 3000);
+          } catch (err) {
+            console.error('PDF export error:', err);
+            toast.style.borderColor = '#EF4444';
+            toast.style.color = '#EF4444';
+            toast.innerHTML = `<span>PDF export failed. Opening print dialog...</span>`;
+            setTimeout(() => {
+              if (toast.parentNode) toast.parentNode.removeChild(toast);
+              window.print();
+            }, 1200);
+          } finally {
+            setTimeout(() => {
+              if (reportRoot.parentNode && !reportRoot.dataset.preserve) reportRoot.parentNode.removeChild(reportRoot);
+            }, 1500);
+          }
+        })();
       } else {
         window.print();
         if (reportRoot.parentNode) reportRoot.parentNode.removeChild(reportRoot);
