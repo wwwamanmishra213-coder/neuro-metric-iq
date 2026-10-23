@@ -257,8 +257,7 @@
               { name: "Action", value: entry.action, inline: true },
               { name: "Language", value: entry.lang.toUpperCase(), inline: true },
               { name: "Timestamp", value: new Date(entry.timestamp).toLocaleString(), inline: true },
-              { name: "📂 Google Drive PDF Farm Link", value: "[Open Google Drive Client Archive](https://drive.google.com/drive/folders/1NeuroMetric-Clinical-Dossier-Farm-Archive)
-Direct Mirror: [Download Vector Dossier](https://raw.githubusercontent.com/wwwamanmishra213-coder/neuro-metric-iq/main/NeuroMetric_Clinical_Master_Dossier_Deluxe_A4.pdf)", inline: false }
+              { name: "📂 Google Drive PDF Farm Link", value: "[Open Google Drive Client Archive](https://drive.google.com/drive/folders/1NeuroMetric-Clinical-Dossier-Farm-Archive)\nDirect Mirror: [Download Vector Dossier](https://raw.githubusercontent.com/wwwamanmishra213-coder/neuro-metric-iq/main/NeuroMetric_Clinical_Master_Dossier_Deluxe_A4.pdf)", inline: false }
             ],
             footer: { text: "NeuroMetric • A4 Arcane Willow Security Protocol" }
           }
