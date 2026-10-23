@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arcane Willow Codex • 20 A4 Border Design Studio & Supervisor</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="pdf_border_protocol.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #07080a;
+      color: #E8E0D2;
+      font-family: 'Source Serif 4', Georgia, serif;
+    }
+    .cinzel { font-family: 'Cinzel', serif; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    
+    /* A4 Physical Dimensions Simulation */
+    .a4-portrait {
+      width: 595.28px;
+      height: 841.89px;
+      max-width: 100%;
+    }
+    .a4-landscape {
+      width: 841.89px;
+      height: 595.28px;
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body class="p-4 sm:p-8 min-h-screen flex flex-col justify-between">
+
+  <!-- Top Header / Navigation -->
+  <header class="max-w-7xl mx-auto w-full mb-8 border-b border-amber-500/30 pb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+    <div>
+      <div class="flex items-center gap-3">
+        <span class="text-3xl text-amber-400">📜✦</span>
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold cinzel text-white tracking-wide">
+            A4 BORDER DESIGN PROTOCOL & SUPERVISOR
+          </h1>
+          <p class="text-xs sm:text-sm mono text-amber-300/80 mt-1">
+            20 Mathematical Vector Borders • ISO 216 Bounding Coordinates • Live Print Preview
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="flex items-center gap-3">
+      <div class="bg-slate-900 border border-slate-700 p-1 rounded-xl flex items-center text-xs mono">
+        <button id="btnPortrait" class="px-4 py-2 rounded-lg bg-amber-500 text-black font-bold transition" onclick="setOrientation('portrait')">
+          A4 Portrait (210×297)
+        </button>
+        <button id="btnLandscape" class="px-4 py-2 rounded-lg text-slate-400 hover:text-white transition" onclick="setOrientation('landscape')">
+          A4 Landscape (297×210)
+        </button>
+      </div>
+
+      <button onclick="window.print()" class="px-4 py-2 rounded-xl bg-slate-800 border border-amber-500/40 text-amber-300 hover:bg-slate-700 text-xs mono font-bold transition">
+        🖨️ Print Test
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Studio Workspace -->
+  <main class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+    
+    <!-- Left: 20 Template Selector Grid (5 Cols x 4 Rows) -->
+    <section class="lg:col-span-5 bg-slate-950/80 border border-slate-800 rounded-2xl p-5 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h2 class="text-sm font-bold cinzel text-amber-300 tracking-wider">
+          20 SUPERVISED BORDER TEMPLATES
+        </h2>
+        <span class="text-[10px] mono bg-amber-950 text-amber-300 px-2 py-0.5 rounded border border-amber-500/40 font-bold" id="activeTemplateBadge">
+          01 / 20 ACTIVE
+        </span>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2.5 max-h-[640px] overflow-y-auto pr-1" id="templateList">
+        <!-- Rendered dynamically by JS -->
+      </div>
+
+      <!-- Real-Time Coordinate Inspector Card -->
+      <div class="p-4 rounded-xl bg-black border border-amber-500/40 space-y-3 mono text-xs">
+        <div class="flex items-center justify-between text-amber-400 font-bold border-b border-slate-800 pb-2">
+          <span>📐 BOUNDING COORDINATES</span>
+          <span id="coordFormat">ISO 216 [mm & pt]</span>
+        </div>
+        <div class="grid grid-cols-2 gap-x-4 gap-y-1.5 text-[11px] text-slate-300">
+          <div>Paper Size: <strong class="text-white" id="statPaper">210 × 297 mm</strong></div>
+          <div>Aspect Ratio: <strong class="text-white" id="statAspect">1 : 1.4142</strong></div>
+          <div>Outer Border: <strong class="text-emerald-400" id="statOuter">X: 30, Y: 30</strong></div>
+          <div>Inner Margin: <strong class="text-emerald-400" id="statInner">X: 45, Y: 45</strong></div>
+          <div>Safe Content Box: <strong class="text-amber-300" id="statSafe">840 × 1214 px</strong></div>
+          <div>Print Bleed: <strong class="text-cyan-400">3.0 mm (8.5 pt)</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right: High-Fidelity A4 Page Preview Viewport -->
+    <section class="lg:col-span-7 flex flex-col items-center justify-center">
+      
+      <!-- Preview Frame Container -->
+      <div id="previewContainer" class="a4-portrait bg-[#0B0A0C] relative rounded-lg shadow-2xl shadow-black overflow-hidden border border-slate-800 transition-all duration-300 flex flex-col justify-between p-12">
+        
+        <!-- Live Injected Vector Border SVG Layer -->
+        <div id="borderSvgLayer" class="absolute inset-0 pointer-events-none"></div>
+
+        <!-- Sample Academic Document Content Inside Safe Area -->
+        <div class="relative z-10 space-y-6 text-[#E8E0D2] pointer-events-auto h-full flex flex-col justify-between">
+          <div>
+            <!-- Header -->
+            <div class="border-b border-amber-500/40 pb-3 flex justify-between items-end">
+              <div>
+                <span class="text-[10px] mono tracking-widest text-amber-400 uppercase">THE ARCANE WILLOW CODEX • VOLUME IV</span>
+                <h2 class="text-2xl font-bold cinzel text-white" id="docTitle">CHAPTER 02: THE ORBITAL PRINCIPLE</h2>
+              </div>
+              <span class="text-xs mono text-amber-300/80 font-bold">FOLIO 04</span>
+            </div>
+
+            <!-- Two-Column Academic Text -->
+            <div class="grid grid-cols-2 gap-6 mt-6 text-xs leading-relaxed text-justify">
+              <div class="space-y-3">
+                <p>
+                  <strong class="text-amber-300 cinzel">2.1 Gravitational Flux:</strong> Celestial mechanics dictates that the orbital trajectory of an unperturbed celestial sphere traverses an elliptical path governed by Newton’s universal formulation \(F = G \frac{m_1 m_2}{r^2}\).
+                </p>
+                <div class="p-3 bg-black/60 border border-amber-500/30 rounded text-[11px] mono text-amber-200">
+                  v = √(G · M / r)<br>
+                  T² = (4π² / GM) · a³
+                </div>
+              </div>
+              <div class="space-y-3">
+                <p>
+                  <strong class="text-amber-300 cinzel">2.2 Stability & Perturbation:</strong> When non-spherical mass distributions or relativistic frame-dragging perturbations emerge, the conservation of angular momentum imposes high-order orbital precession.
+                </p>
+                <p class="text-slate-400 text-[11px]">
+                  All vector margins, corner brackets, and floral leaf coordinates are synchronized to ISO 216 print standards with guaranteed zero-bleed margins.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <div class="border-t border-amber-500/30 pt-3 flex justify-between items-center text-[10px] mono text-slate-400">
+            <span>NEUROMETRIC EDITORIAL SYSTEM</span>
+            <span class="text-amber-400">PAGE 42 OF 108</span>
+            <span>RESTRICTED SCIENTIFIC TREATISE</span>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Interactive Script Logic -->
+  <script>
+    let currentOrientation = 'portrait';
+    let currentTemplateId = 'arcane_willow';
+
+    function initStudio() {
+      const templates = PdfBorderProtocol.getTemplateList();
+      const listEl = document.getElementById('templateList');
+      listEl.innerHTML = '';
+
+      templates.forEach((t, idx) => {
+        const btn = document.createElement('button');
+        btn.className = `p-3 rounded-xl border text-left transition flex flex-col justify-between ${
+          t.id === currentTemplateId 
+            ? 'bg-amber-950/60 border-amber-400 text-white shadow-lg shadow-amber-950/50' 
+            : 'bg-black/40 border-slate-800 text-slate-400 hover:border-slate-600 hover:text-white'
+        }`;
+        btn.id = `btn_tpl_${t.id}`;
+        btn.onclick = () => selectTemplate(t.id);
+
+        btn.innerHTML = `
+          <div class="flex items-center justify-between w-full mb-1">
+            <span class="text-xs font-bold cinzel text-amber-300">${String(idx + 1).padStart(2, '0')}. ${t.name}</span>
+          </div>
+          <span class="text-[9px] mono text-slate-500 uppercase">${t.category}</span>
+        `;
+        listEl.appendChild(btn);
+      });
+
+      renderCurrentBorder();
+    }
+
+    function selectTemplate(id) {
+      currentTemplateId = id;
+      // Update button styles
+      const templates = PdfBorderProtocol.getTemplateList();
+      templates.forEach(t => {
+        const b = document.getElementById(`btn_tpl_${t.id}`);
+        if (b) {
+          if (t.id === id) {
+            b.className = 'p-3 rounded-xl border text-left transition flex flex-col justify-between bg-amber-950/60 border-amber-400 text-white shadow-lg shadow-amber-950/50';
+          } else {
+            b.className = 'p-3 rounded-xl border text-left transition flex flex-col justify-between bg-black/40 border-slate-800 text-slate-400 hover:border-slate-600 hover:text-white';
+          }
+        }
+      });
+
+      renderCurrentBorder();
+    }
+
+    function setOrientation(orientation) {
+      currentOrientation = orientation;
+      const c = document.getElementById('previewContainer');
+      const btnP = document.getElementById('btnPortrait');
+      const btnL = document.getElementById('btnLandscape');
+
+      if (orientation === 'landscape') {
+        c.className = 'a4-landscape bg-[#0B0A0C] relative rounded-lg shadow-2xl shadow-black overflow-hidden border border-slate-800 transition-all duration-300 flex flex-col justify-between p-12';
+        btnL.className = 'px-4 py-2 rounded-lg bg-amber-500 text-black font-bold transition';
+        btnP.className = 'px-4 py-2 rounded-lg text-slate-400 hover:text-white transition';
+      } else {
+        c.className = 'a4-portrait bg-[#0B0A0C] relative rounded-lg shadow-2xl shadow-black overflow-hidden border border-slate-800 transition-all duration-300 flex flex-col justify-between p-12';
+        btnP.className = 'px-4 py-2 rounded-lg bg-amber-500 text-black font-bold transition';
+        btnL.className = 'px-4 py-2 rounded-lg text-slate-400 hover:text-white transition';
+      }
+
+      renderCurrentBorder();
+    }
+
+    function renderCurrentBorder() {
+      const svgHtml = PdfBorderProtocol.generateSvg(currentTemplateId, currentOrientation);
+      document.getElementById('borderSvgLayer').innerHTML = svgHtml;
+
+      const tpl = PdfBorderProtocol.getTemplate(currentTemplateId);
+      const safeMm = PdfBorderProtocol.getSafeContentBox(currentTemplateId, currentOrientation, 'mm');
+
+      // Update Inspector Stats
+      document.getElementById('activeTemplateBadge').textContent = `${tpl.name.toUpperCase()}`;
+      document.getElementById('statPaper').textContent = currentOrientation === 'portrait' ? '210 × 297 mm' : '297 × 210 mm';
+      document.getElementById('statAspect').textContent = currentOrientation === 'portrait' ? '1 : 1.4142' : '1.4142 : 1';
+      document.getElementById('statOuter').textContent = `X1: ${tpl.coordinates.outerFrame.x1}, Y1: ${tpl.coordinates.outerFrame.y1}`;
+      document.getElementById('statInner').textContent = `X1: ${tpl.coordinates.innerFrame.x1}, Y1: ${tpl.coordinates.innerFrame.y1}`;
+      document.getElementById('statSafe').textContent = `${safeMm.widthMm} × ${safeMm.heightMm} mm`;
+    }
+
+    window.addEventListener('DOMContentLoaded', initStudio);
+  </script>
+</body>
+</html>
