@@ -683,7 +683,7 @@
   <span class="hidden md:inline">Daily Status</span>
   <span class="text-[9px] sm:text-[10px] bg-amber-950 px-1 py-0.5 rounded text-amber-200 font-bold" id="dailyAlarmHeaderPill">ALARM</span>
 </button>
-<button class="px-2 sm:px-2.5 py-1.5 rounded-lg bg-slate-900 border border-cyan-500/40 hover:border-cyan-400 text-cyan-300 font-mono text-[10px] sm:text-xs flex items-center space-x-1.5 backdrop-blur-md active:scale-95 transition touch-manipulation shrink-0" id="headerAdminShieldBtn" onclick="SecurityAdminEngine.openAdminPortal()" title="Admin Protocol: Enter Master Password ak432$ to unlock admin controls">
+<button class="px-2 sm:px-2.5 py-1.5 rounded-lg bg-slate-900 border border-cyan-500/40 hover:border-cyan-400 text-cyan-300 font-mono text-[10px] sm:text-xs flex items-center space-x-1.5 backdrop-blur-md active:scale-95 transition touch-manipulation shrink-0" id="headerAdminShieldBtn" onclick="SecurityAdminEngine.openAdminPortal()" title="Admin Protocol: Authenticator App 2FA & Audit Log">
   <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
   <span class="hidden md:inline">Admin</span>
   <span class="text-[9px] sm:text-[10px] bg-cyan-950 px-1 py-0.5 rounded text-cyan-200 font-bold">LOCK</span>
@@ -9376,7 +9376,7 @@ triggerDiagnosticIntermission(intermissionIndex) {
 
 
 <script>
-  // Dynamic Admin Unlock: When admin authenticates with ak432$, restore full direct PDF download
+  // Dynamic Admin Unlock: When admin authenticates with master password, restore full direct PDF download
   (function() {
     window.addEventListener('load', () => {
       const checkAdmin = () => {

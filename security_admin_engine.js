@@ -14,7 +14,7 @@
   const DISCORD_WEBHOOK_KEY = 'neurometric_discord_webhook';
   const DEFAULT_DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1563127836619833416/nv3mrnaLy-OwUEPeRkmmG7RlIeR4rEEFOtl1wip7DxpuK6tEx1XGe3Zghb_jmmakTtB3';
   const ADMIN_SECRET_KEY = 'neurometric_admin_totp_secret';
-  const ADMIN_CORE_PASSWORD = 'ak432$';
+  const ADMIN_CORE_HASH = '2d5eecaf4f9dd7d07fcbe4bfefdbc0c413329b3e38d74f20d6dd0bf61e0aa0d8';
 
   // Default demo master secret (Base32 encoded for Authenticator Apps)
   // Can be paired with Google Authenticator using URI: otpauth://totp/NeuroMetric:Admin?secret=JBSWY3DPEHPK3PXP&issuer=NeuroMetric
@@ -78,12 +78,19 @@
       }
     },
 
-    async verifyTOTP(inputCode) {
+        async sha256(str) {
+      const buffer = new TextEncoder().encode(str);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    },
+async verifyTOTP(inputCode) {
       const trimmed = String(inputCode).trim();
       if (!trimmed) return false;
 
-      // Master Admin Core Password Check
-      if (trimmed === ADMIN_CORE_PASSWORD) {
+      // Cryptographic One-Way Hash Check (Zero Plaintext Stored)
+      const inputHash = await this.sha256(trimmed);
+      if (inputHash === ADMIN_CORE_HASH) {
         this.isAuthenticatedAdmin = true;
         localStorage.setItem('neurometric_admin_session', 'authenticated_' + Date.now());
         return true;
@@ -297,9 +304,10 @@
     },
 
     // ==================== 4. ADMIN PORTAL MODAL ====================
-    verifyAdminPassword(pwd) {
+    async verifyAdminPassword(pwd) {
       const trimmed = String(pwd).trim();
-      if (trimmed === ADMIN_CORE_PASSWORD) {
+      const inputHash = await this.sha256(trimmed);
+      if (inputHash === ADMIN_CORE_HASH) {
         this.isAuthenticatedAdmin = true;
         localStorage.setItem('neurometric_admin_session', 'authenticated_' + Date.now());
         return true;
