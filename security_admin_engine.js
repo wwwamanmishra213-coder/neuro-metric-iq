@@ -12,6 +12,7 @@
   // In-memory runtime freeze to protect core scoring matrices
   const AUDIT_STORAGE_KEY = 'neurometric_user_audit_log';
   const DISCORD_WEBHOOK_KEY = 'neurometric_discord_webhook';
+  const DEFAULT_DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1563127836619833416/nv3mrnaLy-OwUEPeRkmmG7RlIeR4rEEFOtl1wip7DxpuK6tEx1XGe3Zghb_jmmakTtB3';
   const ADMIN_SECRET_KEY = 'neurometric_admin_totp_secret';
 
   // Default demo master secret (Base32 encoded for Authenticator Apps)
@@ -153,6 +154,8 @@
       if (this._pendingDownloadCallback) {
         this._pendingDownloadCallback();
         this._pendingDownloadCallback = null;
+      } else if (typeof window.exportClinicalPDF === 'function') {
+        window.exportClinicalPDF();
       }
     },
 
@@ -197,7 +200,7 @@
     },
 
     async dispatchDiscordWebhook(entry) {
-      const webhookUrl = localStorage.getItem(DISCORD_WEBHOOK_KEY);
+      const webhookUrl = localStorage.getItem(DISCORD_WEBHOOK_KEY) || DEFAULT_DISCORD_WEBHOOK;
       if (!webhookUrl) return;
 
       const payload = {
