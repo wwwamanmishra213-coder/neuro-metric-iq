@@ -42,36 +42,41 @@
       name: "Arcane Golden Willow",
       category: "Arcane Botanical",
       palette: { primary: "#C6A15B", secondary: "#E8CB83", accent: "#72512D", bg: "#0B0A0C" },
-      cornerSize: 130,
+      cornerSize: 80,
       sideMargin: 40,
       coordinates: {
-        outerFrame: { x1: 30, y1: 30, x2: 970, y2: 1384 },
-        innerFrame: { x1: 45, y1: 45, x2: 955, y2: 1369 },
-        safeBox: { x: 80, y: 100, width: 840, height: 1214 }
+        outerFrame: { x1: 28, y1: 28, x2: 972, y2: 1386 },
+        innerFrame: { x1: 40, y1: 40, x2: 960, y2: 1374 },
+        safeBox: { x: 70, y: 75, width: 860, height: 1264 }
       },
       render: (w, h, p) => `
-        <rect x="30" y="30" width="${w-60}" height="${h-60}" fill="none" stroke="${p.accent}" stroke-width="2" opacity="0.6"/>
-        <rect x="42" y="42" width="${w-84}" height="${h-84}" fill="none" stroke="${p.primary}" stroke-width="1.2" opacity="0.85"/>
-        <!-- Top-Left Willow Branch -->
-        <path d="M 42 160 C 70 120, 100 80, 160 42 C 120 70, 80 120, 42 160 Z" fill="${p.secondary}" opacity="0.35"/>
-        <path d="M 42 42 Q 130 65 170 140" fill="none" stroke="${p.primary}" stroke-width="2.5"/>
-        <circle cx="170" cy="140" r="4.5" fill="${p.secondary}"/>
-        <!-- Top-Right Branch -->
-        <path d="M ${w-42} 160 C ${w-70} 120, ${w-100} 80, ${w-160} 42 C ${w-120} 70, ${w-80} 120, ${w-42} 160 Z" fill="${p.secondary}" opacity="0.35"/>
-        <path d="M ${w-42} 42 Q ${w-130} 65 ${w-170} 140" fill="none" stroke="${p.primary}" stroke-width="2.5"/>
-        <circle cx="${w-170}" cy="140" r="4.5" fill="${p.secondary}"/>
-        <!-- Bottom-Left Branch -->
-        <path d="M 42 ${h-160} C 70 ${h-120}, 100 ${h-80}, 160 ${h-42} C 120 ${h-70}, 80 ${h-120}, 42 ${h-160} Z" fill="${p.secondary}" opacity="0.35"/>
-        <path d="M 42 ${h-42} Q 130 ${h-65} 170 ${h-140}" fill="none" stroke="${p.primary}" stroke-width="2.5"/>
-        <circle cx="170" cy="${h-140}" r="4.5" fill="${p.secondary}"/>
-        <!-- Bottom-Right Branch -->
-        <path d="M ${w-42} ${h-160} C ${w-70} ${h-120}, ${w-100} ${h-80}, ${w-160} ${h-42} C ${w-120} ${h-70}, ${w-80} ${h-120}, ${w-42} ${h-160} Z" fill="${p.secondary}" opacity="0.35"/>
-        <path d="M ${w-42} ${h-42} Q ${w-130} ${h-65} ${w-170} ${h-140}" fill="none" stroke="${p.primary}" stroke-width="2.5"/>
-        <circle cx="${w-170}" cy="${h-140}" r="4.5" fill="${p.secondary}"/>
-        <!-- Lateral Drooping Leaflets -->
-        <g opacity="0.45" stroke="${p.primary}" stroke-width="1.2">
-          <path d="M 42 350 Q 75 370 60 410 M 42 700 Q 75 720 60 760 M 42 1050 Q 75 1070 60 1110"/>
-          <path d="M ${w-42} 350 Q ${w-75} 370 ${w-60} 410 M ${w-42} 700 Q ${w-75} 720 ${w-60} 760 M ${w-42} 1050 Q ${w-75} 1070 ${w-60} 1110"/>
+        <!-- Double Regal Frame Perimeter -->
+        <rect x="26" y="26" width="${w-52}" height="${h-52}" fill="none" stroke="${p.accent}" stroke-width="1.8" opacity="0.75"/>
+        <rect x="38" y="38" width="${w-76}" height="${h-76}" fill="none" stroke="${p.primary}" stroke-width="1.2" opacity="0.9"/>
+        <rect x="44" y="44" width="${w-88}" height="${h-88}" fill="none" stroke="${p.secondary}" stroke-width="0.5" stroke-dasharray="4,4" opacity="0.5"/>
+
+        <!-- 4 Botanical Willow Corner Flourishes (Tightly Bounded: Zero Text Collision) -->
+        ${[ [38, 38, 1, 1], [w-38, 38, -1, 1], [38, h-38, 1, -1], [w-38, h-38, -1, -1] ].map(([cx, cy, sx, sy]) => `
+          <g transform="translate(${cx}, ${cy})">
+            <!-- Corner Rosette -->
+            <circle cx="0" cy="0" r="3.5" fill="${p.secondary}"/>
+            <polygon points="0,-9 9,0 0,9 -9,0" fill="none" stroke="${p.primary}" stroke-width="1"/>
+            <!-- Botanical Willow Branch (Curving strictly in corner margin) -->
+            <path d="M 0 0 Q ${sx * 16} ${sy * 6} ${sx * 26} ${sy * 26}" fill="none" stroke="${p.primary}" stroke-width="1.5"/>
+            <path d="M 0 0 Q ${sx * 6} ${sy * 16} ${sx * 26} ${sy * 26}" fill="none" stroke="${p.secondary}" stroke-width="1" opacity="0.7"/>
+            <circle cx="${sx * 26}" cy="${sy * 26}" r="2.5" fill="${p.secondary}"/>
+            <!-- Delicate Margin Leafbuds -->
+            <path d="M 0 ${sy * 18} Q ${sx * 5} ${sy * 24} 0 ${sy * 30}" fill="none" stroke="${p.primary}" stroke-width="1"/>
+            <path d="M ${sx * 18} 0 Q ${sx * 24} ${sy * 5} ${sx * 30} 0" fill="none" stroke="${p.primary}" stroke-width="1"/>
+          </g>
+        `).join('')}
+
+        <!-- Mid-Point Cardinal Diamond Seals -->
+        <g fill="${p.primary}">
+          <polygon points="${w/2},30 ${w/2+7},38 ${w/2},46 ${w/2-7},38"/>
+          <polygon points="${w/2},${h-46} ${w/2+7},${h-38} ${w/2},${h-30} ${w/2-7},${h-38}"/>
+          <polygon points="30,${h/2} 38,${h/2+7} 46,${h/2} 38,${h/2-7}"/>
+          <polygon points="${w-46},${h/2} ${w-38},${h/2+7} ${w-30},${h/2} ${w-38},${h/2-7}"/>
         </g>
       `
     },

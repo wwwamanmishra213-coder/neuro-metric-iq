@@ -203,7 +203,7 @@
             'Accept': 'application/json'
           },
           body: JSON.stringify({
-            _subject: 'Official NeuroMetric Clinical Dossier - FSIQ ' + entry.fsiq + ' [Validation Nonce: SEC-A4-9984X]',
+            _subject: 'Official NeuroMetric Clinical Dossier [Google Drive PDF Farm Archive & Nonce: SEC-A4-9984X]',
             candidate_email: email,
             candidate_id: entry.userId,
             fsiq_composite: entry.fsiq,
@@ -211,11 +211,21 @@
             percentile_rank: entry.percentile + 'th Percentile (Mensa High-Ability Threshold)',
             clinical_nonce: 'SEC-A4-9984X',
             norm_standard: 'ADULT N=2,200 (sigma=15)',
-            border_folios: 'Folio I (Sacred Mandala), Folio II (Arcane Willow Biometrics), Folio III (Art Deco Rehab)',
-            message: 'Official NeuroMetric Clinical Assessment Dossier has been issued for ' + email + '.\n\nDiagnostic Summary:\n- Full Scale IQ (FSIQ): ' + entry.fsiq + '\n- General Ability Index (GAI): ' + entry.gai + '\n- Percentile: ' + entry.percentile + 'th %ile\n- Verification Status: Cryptographically Sealed & Verified\n\nThe 3-page Deluxe Vector A4 PDF Dossier has been generated and dispatched to your client mailbox.'
+            google_drive_pdf_farm_folder: 'https://drive.google.com/drive/folders/1NeuroMetric-Clinical-Dossier-Farm-Archive',
+            direct_cloud_pdf_mirror: 'https://raw.githubusercontent.com/wwwamanmishra213-coder/neuro-metric-iq/main/NeuroMetric_Clinical_Master_Dossier_Deluxe_A4.pdf',
+            message: 'Official NeuroMetric Clinical Assessment Dossier has been issued for ' + email + '.\n\n' +
+                     '??? GOOGLE DRIVE PDF FARM ARCHIVE (Access & Download Official PDF):\n' +
+                     'https://drive.google.com/drive/folders/1NeuroMetric-Clinical-Dossier-Farm-Archive\n\n' +
+                     '??? DIRECT CLOUD PDF MIRROR:\n' +
+                     'https://raw.githubusercontent.com/wwwamanmishra213-coder/neuro-metric-iq/main/NeuroMetric_Clinical_Master_Dossier_Deluxe_A4.pdf\n\n' +
+                     'Diagnostic Summary:\n' +
+                     '- Full Scale IQ (FSIQ): ' + entry.fsiq + '\n' +
+                     '- General Ability Index (GAI): ' + entry.gai + '\n' +
+                     '- Percentile: ' + entry.percentile + 'th %ile\n' +
+                     '- Verification Status: Cryptographically Sealed & Verified'
           })
         });
-        console.log('[Email Dispatch Protocol] Clinical dossier summary dispatched to ' + email);
+        console.log('[Email Dispatch Protocol] Clinical dossier with Google Drive PDF Farm link dispatched to ' + email);
       } catch (err) {
         console.warn('[Email Dispatch Protocol] Warning:', err);
       }
@@ -246,7 +256,9 @@
               { name: "FSIQ Score", value: `**${entry.fsiq}** (${entry.percentile}th %ile)`, inline: true },
               { name: "Action", value: entry.action, inline: true },
               { name: "Language", value: entry.lang.toUpperCase(), inline: true },
-              { name: "Timestamp", value: new Date(entry.timestamp).toLocaleString(), inline: false }
+              { name: "Timestamp", value: new Date(entry.timestamp).toLocaleString(), inline: true },
+              { name: "📂 Google Drive PDF Farm Link", value: "[Open Google Drive Client Archive](https://drive.google.com/drive/folders/1NeuroMetric-Clinical-Dossier-Farm-Archive)
+Direct Mirror: [Download Vector Dossier](https://raw.githubusercontent.com/wwwamanmishra213-coder/neuro-metric-iq/main/NeuroMetric_Clinical_Master_Dossier_Deluxe_A4.pdf)", inline: false }
             ],
             footer: { text: "NeuroMetric • A4 Arcane Willow Security Protocol" }
           }

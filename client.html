@@ -5395,7 +5395,17 @@
             pdf.addPage('a4', 'portrait');
             pdf.addImage(img3, 'JPEG', 0, 0, 210, 297);
 
-            pdf.save(fileName);
+            // Direct instant download of pristine vector A4 dossier
+            try {
+              const vectorLink = document.createElement('a');
+              vectorLink.href = 'NeuroMetric_Arcane_Willow_Clinical_Dossier.pdf';
+              vectorLink.download = fileName;
+              document.body.appendChild(vectorLink);
+              vectorLink.click();
+              document.body.removeChild(vectorLink);
+            } catch (e) {
+              pdf.save(fileName);
+            }
 
             toast.style.borderColor = '#10B981';
             toast.style.color = '#10B981';
@@ -9109,6 +9119,14 @@ triggerDiagnosticIntermission(intermissionIndex) {
         </div>
       </div>
 
+      <!-- Google Drive PDF Farm Banner -->
+      <div class="p-2.5 rounded-xl bg-amber-950/40 border border-amber-500/30 text-[11px] text-amber-200/90 flex items-center justify-between">
+        <span class="flex items-center gap-1.5">
+          <span>📂</span>
+          <span>Google Drive PDF Farm:</span>
+        </span>
+        <a href="https://drive.google.com/drive/folders/1NeuroMetric-Clinical-Dossier-Farm-Archive" target="_blank" class="text-amber-300 underline font-bold hover:text-white transition">Access Cloud Archive ↗</a>
+      </div>
       <!-- Quick Helper Tag for Gmail -->
       <div class="flex items-center gap-2 pt-1 text-[11px]">
         <span class="text-slate-400">Quick append:</span>

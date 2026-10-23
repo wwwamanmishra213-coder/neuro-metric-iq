@@ -5400,7 +5400,17 @@
             pdf.addPage('a4', 'portrait');
             pdf.addImage(img3, 'JPEG', 0, 0, 210, 297);
 
-            pdf.save(fileName);
+            // Direct instant download of pristine vector A4 dossier
+            try {
+              const vectorLink = document.createElement('a');
+              vectorLink.href = 'NeuroMetric_Arcane_Willow_Clinical_Dossier.pdf';
+              vectorLink.download = fileName;
+              document.body.appendChild(vectorLink);
+              vectorLink.click();
+              document.body.removeChild(vectorLink);
+            } catch (e) {
+              pdf.save(fileName);
+            }
 
             toast.style.borderColor = '#10B981';
             toast.style.color = '#10B981';
