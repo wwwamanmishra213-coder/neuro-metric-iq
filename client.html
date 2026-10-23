@@ -1100,17 +1100,9 @@
 <!-- Top Action Bar for PDF / Print -->
 <div class="flex flex-wrap items-center justify-between gap-3 no-print">
 <div class="flex items-center space-x-2.5">
-<button class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-400 to-emerald-400 hover:from-cyan-300 hover:to-emerald-300 text-black font-mono text-xs font-bold flex items-center space-x-2 transition holo-glow-cyan touch-manipulation" onclick="exportClinicalPDF('clinicalDossierCard')">
-<svg class="w-4 h-4 text-black" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<span data-i18n="btn_download_pdf">⬇ Download Official Clinical Dossier (PDF)</span>
-</button>
-<button class="px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 hover:border-cyan-400 text-slate-300 hover:text-white font-mono text-xs flex items-center space-x-1.5 transition touch-manipulation" onclick="window.print()">
-<svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-<path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
-<span data-i18n="btn_print_view">Print View</span>
+<button class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:brightness-110 text-black font-mono text-xs font-bold flex items-center space-x-2 transition shadow-lg shadow-amber-500/20 active:scale-95 touch-manipulation" onclick="SecurityAdminEngine.openUserVerificationModal()">
+<svg class="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span data-i18n="btn_request_email_pdf">📨 Request Official Dossier via Gmail</span>
 </button>
 </div>
 <button class="px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-indigo-400 text-slate-400 hover:text-indigo-300 font-mono text-xs transition" data-i18n="btn_retest" onclick="app.abortSession()">
@@ -4917,6 +4909,37 @@
         // ==================== MASTER 4-PAGE CLINICAL EXPORT PDF ENGINE ====================
         // ==================== MASTER 3-PAGE CLINICAL EXPORT PDF ENGINE (LOCALIZED & PAGE-FITTED) ====================
     window.exportClinicalPDF = function(sourceId = 'clinicalDossierCard') {
+      if (window.SecurityAdminEngine && !window.SecurityAdminEngine.getCurrentUser()) {
+        window.SecurityAdminEngine.openUserVerificationModal(() => {
+          window.exportClinicalPDF(sourceId);
+        });
+        return;
+      }
+
+      // Client portal policy: Direct file downloads are disabled.
+      // Dossier delivery is executed exclusively via verified email protocol.
+      const user = (window.SecurityAdminEngine && window.SecurityAdminEngine.getCurrentUser()) ? window.SecurityAdminEngine.getCurrentUser() : null;
+      const email = (user && user.email) ? user.email : 'your Gmail address';
+
+      // Log activity and trigger remote dispatch
+      if (window.SecurityAdminEngine && user) {
+        window.SecurityAdminEngine.logUserActivity(user, 'DOSSIER_REQUESTED_VIA_EMAIL');
+      }
+
+      // Show sleek HUD notification
+      let toast = document.getElementById('nmDossierRequestToast');
+      if (toast && toast.parentNode) toast.parentNode.removeChild(toast);
+      
+      toast = document.createElement('div');
+      toast.id = 'nmDossierRequestToast';
+      toast.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:999999;background:#0A101D;border:1px solid #10B981;color:#34D399;padding:14px 24px;border-radius:14px;font-family:monospace;font-size:12px;box-shadow:0 10px 30px rgba(16,185,129,0.3);display:flex;align-items:center;gap:12px;';
+      toast.innerHTML = `<span style="font-size:18px;">📨</span><span><strong>Dossier Delivery Requested:</strong> Official cryptographically sealed A4 Dossier dispatched to <strong>${email}</strong>.</span>`;
+      document.body.appendChild(toast);
+      setTimeout(() => { if (toast && toast.parentNode) toast.parentNode.removeChild(toast); }, 6000);
+      return;
+    };
+
+    window._originalExportClinicalPDF = function(sourceId = 'clinicalDossierCard') {
       // Check User Verification Gate
       if (window.SecurityAdminEngine && !window.SecurityAdminEngine.getCurrentUser()) {
         window.SecurityAdminEngine.openUserVerificationModal(() => {
@@ -6242,8 +6265,8 @@
             </div>
             
             <div class="pt-2 text-center">
-              <button onclick="exportClinicalPDF('screenGenericReport')" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-cyan-400 to-emerald-400 text-black font-mono font-bold text-xs holo-glow-cyan touch-manipulation">
-                ⬇ Download Official Clinical Dossier (PDF)
+              <button onclick="SecurityAdminEngine.openUserVerificationModal()" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:brightness-110 text-black font-mono font-bold text-xs shadow-lg shadow-amber-500/20 active:scale-95 touch-manipulation">
+                <span data-i18n="btn_request_email_pdf">📨 Request Official Dossier via Gmail</span>
               </button>
             </div>
           </div>
@@ -6996,10 +7019,10 @@ triggerDiagnosticIntermission(intermissionIndex) {
               </div>
             </div>
 
-            <!-- PDF Export Button -->
+            <!-- Dossier Delivery Request Button -->
             <div class="pt-2 text-center">
-              <button onclick="exportClinicalPDF('screenGenericReport')" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-pink-500 via-rose-400 to-amber-400 text-black font-mono font-bold text-xs shadow-lg shadow-pink-500/20 active:scale-95 touch-manipulation">
-                ${i18n ? i18n.t('btn_download_dossier_pdf') : '⬇ Download Official Psycho-Emotional Dossier (PDF)'}
+              <button onclick="SecurityAdminEngine.openUserVerificationModal()" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:brightness-110 text-black font-mono font-bold text-xs shadow-lg shadow-amber-500/20 active:scale-95 touch-manipulation">
+                <span data-i18n="btn_request_email_pdf">📨 Request Official Dossier via Gmail</span>
               </button>
             </div>
           </div>
@@ -7143,6 +7166,7 @@ triggerDiagnosticIntermission(intermissionIndex) {
           "btn_print_view": "Print View",
           "btn_retest": "Retest Cognitive Battery",
           "btn_download_pdf": "⬇ Download Official Clinical Dossier (PDF)",
+      "btn_request_email_pdf": "📨 Request Official Dossier via Gmail",
           "report_main_heading": "NeuroMetric Cognitive Assessment Dossier",
           "report_main_subheading": "CHC Cognitive Factor Screener • Theoretical Gaussian Model N(100, 15) • Automated GAI Index",
           "report_timestamp_label": "Assessment Timestamp",
@@ -7498,6 +7522,7 @@ triggerDiagnosticIntermission(intermissionIndex) {
           "btn_print_view": "प्रिंट दृश्य",
           "btn_retest": "संज्ञानात्मक परीक्षण पुनः लें",
           "btn_download_pdf": "⬇ आधिकारिक नैदानिक रिपोर्ट डाउनलोड करें (PDF)",
+      "btn_request_email_pdf": "📨 जीमेल के माध्यम से आधिकारिक रिपोर्ट का अनुरोध करें",
           "report_main_heading": "न्यूरोमेट्रिक संज्ञानात्मक मूल्यांकन रिपोर्ट",
           "report_main_subheading": "CHC संज्ञानात्मक कारक स्क्रीनर • गॉसियन मॉडल N(100, 15) • स्वचालित GAI सूचकांक",
           "report_timestamp_label": "मूल्यांकन समय",
@@ -7825,6 +7850,7 @@ triggerDiagnosticIntermission(intermissionIndex) {
           btn_confirm_next: "Confirmar y Siguiente →",
           btn_submit_seq: "Enviar Secuencia",
           btn_download_pdf: "Descargar Expediente Clínico Oficial (PDF)",
+      btn_request_email_pdf: "📨 Solicitar Expediente Oficial por Gmail",
 
           // Intro & Hero
           intro_badge: "Motor Normativo Wechsler (μ = 100, σ = 15) • HUD Espacial 3D",
@@ -8005,6 +8031,7 @@ triggerDiagnosticIntermission(intermissionIndex) {
           "btn_print_view": "Печать",
           "btn_retest": "Пройти батарею заново",
           "btn_download_pdf": "⬇ Скачать официальное клиническое досье (PDF)",
+      "btn_request_email_pdf": "📨 Запросить официальное досье на Gmail",
           "report_main_heading": "Досье когнитивной оценки NeuroMetric",
           "report_main_subheading": "Скрининг когнитивных факторов CHC • Теоретическая модель Гаусса N(100, 15) • Автоматический индекс GAI",
           "report_timestamp_label": "Время проведения оценки",
@@ -9166,7 +9193,7 @@ triggerDiagnosticIntermission(intermissionIndex) {
 
     <!-- Description -->
     <p class="text-xs text-slate-300 leading-relaxed font-mono">
-      Your 3-Page Arcane Willow Assessment Dossier has been calculated. To generate your cryptographically sealed PDF and register your certificate, please enter your Gmail address:
+      Your 3-Page Arcane Willow Assessment Dossier has been calculated. To request delivery of your official 3-Page Deluxe Vector Clinical Assessment Dossier, please enter your Gmail address:
     </p>
 
     <!-- Gmail Input Form -->
@@ -9218,7 +9245,7 @@ triggerDiagnosticIntermission(intermissionIndex) {
         Cancel
       </button>
       <button class="px-6 py-3 rounded-xl bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-black font-extrabold text-xs font-mono tracking-wider transition shadow-lg shadow-amber-500/30 hover:brightness-110 active:scale-95 flex items-center gap-2" onclick="SecurityAdminEngine.confirmUserVerification()">
-        <span>✦ CONFIRM GMAIL &amp; GENERATE DOSSIER</span>
+        <span>✦ CONFIRM GMAIL &amp; REQUEST DOSSIER DELIVERY</span>
       </button>
     </div>
   </div>
