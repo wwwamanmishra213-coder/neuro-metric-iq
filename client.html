@@ -4954,450 +4954,389 @@
       const borderFolio3 = getBorderSvg('art_deco_chevron');
 
       reportRoot.innerHTML = `
-        <!-- ==================== FOLIO I: MASTER PSYCHOMETRIC & DEMOGRAPHIC PROFILE ==================== -->
+        <!-- ==================== FOLIO I: PSYCHOMETRIC COMPOSITE & SCREENER MATRIX ==================== -->
         <div style="${folioPageStyle}">
           ${borderFolio1}
           <div style="position: relative; z-index: 5; height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
-            <div>
-              <!-- Header Bar -->
-              <div style="border-bottom: 2px solid #C6A15B; padding-bottom: 6px; display: flex; justify-content: space-between; align-items: flex-start;">
-                <div>
-                  <div style="font-size: 11px; font-family: 'Cinzel', Georgia, serif; letter-spacing: 2.2px; color: #E8CB83; font-weight: 700; text-transform: uppercase;">
-                    THE ARCANE WILLOW CODEX • CLINICAL NEUROPSYCHOMETRIC DOSSIER
-                  </div>
-                  <div style="font-size: 18px; font-weight: 800; color: #FFFFFF; font-family: 'Cinzel', serif; margin-top: 2px;">
-                    FOLIO I • PRIMARY COMPOSITE & DEMOGRAPHIC TAXONOMY
-                  </div>
-                  <div style="font-size: 9.5px; color: #C6A15B; font-family: monospace;">
-                    Standardized WAIS-IV / CHC Theoretical Gaussian Norms • Forensic Clinical Protocol
-                  </div>
+            
+            <!-- Header -->
+            <div style="border-bottom: 2px solid #C6A15B; padding-bottom: 8px; display: flex; justify-content: space-between; align-items: flex-end;">
+              <div>
+                <div style="font-size: 10px; font-family: monospace; color: #E8CB83; letter-spacing: 2px; text-transform: uppercase;">
+                  THE ARCANE WILLOW CODEX • CLINICAL NEUROPSYCHIATRIC DOSSIER
                 </div>
-                <div style="text-align: right; font-family: monospace; font-size: 9.5px; color: #9A9AA5; line-height: 1.4;">
-                  <div style="color: #E8CB83; font-weight: bold; letter-spacing: 1px;">SECURITY LEVEL: RESTRICTED</div>
-                  <div>NONCE: <span style="color: #F8FAFC; font-weight: bold;">${verificationNonce}</span></div>
-                  <div>DATE: <span style="color: #F8FAFC;">${assessmentDate}</span></div>
+                <div style="font-size: 20px; font-weight: 800; color: #FFFFFF; font-family: 'Cinzel', serif; letter-spacing: 1px;">
+                  FOLIO I • GENERAL INTELLECTUAL COMPOSITE &amp; SCREENER MATRIX
+                </div>
+              </div>
+              <div style="font-size: 9.5px; font-family: monospace; color: #9A9AA5; text-align: right;">
+                CANDIDATE: <strong style="color: #FFFFFF;">${safeVal((window.SecurityAdminEngine && window.SecurityAdminEngine.getCurrentUser() && window.SecurityAdminEngine.getCurrentUser().email) || 'aman20770101@gmail.com')}</strong><br>
+                VALIDATION NONCE: <strong style="color: #34D399;">${verificationNonce}</strong> • <strong style="color: #E8CB83;">ADULT N=2,200 (σ=15)</strong>
+              </div>
+            </div>
+
+            <!-- Split Hero Block: FSIQ Callout + Gaussian Distribution -->
+            <div style="display: grid; grid-template-columns: 1.15fr 1.85fr; gap: 12px; margin-top: 10px;">
+              <!-- Left Hero Card -->
+              <div style="background: #15131A; border: 1.5px solid #72512D; border-radius: 8px; padding: 12px; text-align: center; display: flex; flex-direction: column; justify-content: center;">
+                <div style="font-size: 9.5px; font-family: monospace; color: #9A9AA5; letter-spacing: 1.5px;">FULL SCALE INTELLIGENCE QUOTIENT</div>
+                <div style="font-size: 46px; font-weight: 900; color: #E8CB83; font-family: monospace; line-height: 1; margin: 4px 0;">${fsiq}</div>
+                <div style="font-size: 12px; font-weight: bold; color: #FFFFFF; font-family: 'Cinzel', serif;">VERY SUPERIOR</div>
+                <div style="font-size: 10px; font-family: monospace; color: #34D399; margin-top: 3px;">${percentile}th Percentile • GAI: ${gai}</div>
+                <div style="font-size: 9px; color: #9A9AA5; margin-top: 6px; border-top: 1px solid rgba(198,161,91,0.2); padding-top: 4px;">
+                  95% Confidence Interval: [${ciLower} — ${ciUpper}] (Mensa High-IQ Threshold)
                 </div>
               </div>
 
-              <!-- Subject Demographics Strip -->
-              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 10px; background: #15131A; padding: 8px 12px; border-radius: 6px; border: 1px solid #72512D; font-size: 10.5px; font-family: monospace;">
-                <div><span style="color: #9A9AA5;">SUBJECT ID:</span><br><strong style="color: #E8CB83;">${patientId}</strong></div>
-                <div><span style="color: #9A9AA5;">DEMOGRAPHICS:</span><br><strong style="color: #E8E0D2;">Age 28 • Sex: Male</strong></div>
-                <div><span style="color: #9A9AA5;">PROTOCOL:</span><br><strong style="color: #E8CB83;">CHC-4 + Bio-Telemetry</strong></div>
-                <div><span style="color: #9A9AA5;">NORMATIVE SAMPLE:</span><br><strong style="color: #34D399;">Adult N=2,200 (μ=100, σ=15)</strong></div>
-              </div>
-
-              <!-- Row 1: Split Hero Block (FSIQ Card + Unclipped Gaussian Normal Distribution Curve) -->
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px;">
-                <!-- Left: FSIQ Primary Composite Card -->
-                <div style="background: linear-gradient(135deg, #111016 0%, #1A1722 100%); border: 1.5px solid #C6A15B; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
-                  <div>
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                      <div>
-                        <span style="font-size: 10px; font-family: 'Cinzel', serif; color: #E8CB83; font-weight: bold; letter-spacing: 1px; text-transform: uppercase;">PRIMARY COMPOSITE (FSIQ)</span>
-                        <div style="font-size: 32px; font-weight: 900; color: #FFFFFF; font-family: monospace; line-height: 1.1; margin-top: 2px;">
-                          ${fsiq} <span style="font-size: 12px; font-weight: normal; color: #C6A15B;">± 3.67 SEM</span>
-                        </div>
-                        <div style="font-size: 12px; color: #E8CB83; font-weight: 700; margin-top: 2px;">${waisCategory}</div>
-                      </div>
-                      <div style="text-align: right; font-family: monospace;">
-                        <div style="font-size: 9.5px; color: #9A9AA5;">PERCENTILE</div>
-                        <div style="font-size: 24px; font-weight: 900; color: #34D399;">${percentile}%</div>
-                        <div style="font-size: 9.5px; color: #9A9AA5;">95% CI: [${ciLower}—${ciUpper}]</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(198,161,91,0.25); font-size: 10.5px; color: #E8E0D2; line-height: 1.45;">
-                    <strong style="color: #E8CB83;">GAI Discrepancy & Cognitive Volatility:</strong> General Ability Index evaluated at GAI ${gai} (${fsiq !== gai ? '+' + (gai - fsiq).toFixed(1) : '0.0'} pts split). Reflects superior abstract problem solving with potential friction under sensory fatigue.
-                  </div>
+              <!-- Right Gaussian Bell Curve Chart -->
+              <div style="background: #15131A; border: 1.5px solid #72512D; border-radius: 8px; padding: 10px 14px; display: flex; flex-direction: column; justify-content: space-between;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <span style="font-size: 10px; font-weight: bold; color: #E8CB83; font-family: 'Cinzel', serif;">GAUSSIAN NORMAL PROBABILITY DENSITY (μ=100, σ=15)</span>
+                  <span style="font-size: 8.5px; font-family: monospace; color: #34D399; background: #064E3B; padding: 1px 6px; border-radius: 3px;">TOP 0.6% POPULATION</span>
                 </div>
-
-                <!-- Right: Unclipped Gaussian Chart (Patch 4: viewBox 0 0 600 180) -->
-                <div style="background: #111016; border: 1.5px solid #72512D; border-radius: 8px; padding: 10px; display: flex; flex-direction: column; justify-content: space-between;">
-                  <div style="display: flex; justify-content: space-between; font-size: 10.5px; font-family: monospace; margin-bottom: 4px;">
-                    <span style="color: #E8CB83; font-weight: bold;">GAUSSIAN NORMAL CURVE N(100, 15)</span>
-                    <span style="color: #34D399; font-weight: bold;">CANDIDATE: IQ ${fsiq}</span>
-                  </div>
-                  <svg width="100%" height="auto" viewBox="0 0 600 180" preserveAspectRatio="xMidYMid meet" style="overflow: visible;">
-                    <!-- Shaded normal body and top 2% Mensa territory -->
-                    <polygon points="213,145 213,75 387,75 387,145" fill="rgba(198, 161, 91, 0.12)"></polygon>
-                    <polygon points="473,145 473,115 560,138 560,145" fill="rgba(232, 203, 131, 0.28)"></polygon>
-                    <!-- Bell curve -->
-                    <path d="M 40,145 Q 126,142 213,105 T 300,30 T 387,105 T 473,138 T 560,145" fill="none" stroke="#E8CB83" stroke-width="2.5"></path>
-                    <line x1="30" y1="145" x2="570" y2="145" stroke="#72512D" stroke-width="1.2"></line>
-                    
-                    <!-- Standard deviation ticks -->
-                    <line x1="127" y1="145" x2="127" y2="152" stroke="#72512D" stroke-width="1.2"></line>
-                    <text x="127" y="165" fill="#9A9AA5" font-size="9.5" font-family="monospace" text-anchor="middle">-2σ (70)</text>
-
-                    <line x1="213" y1="145" x2="213" y2="152" stroke="#72512D" stroke-width="1.2"></line>
-                    <text x="213" y="165" fill="#9A9AA5" font-size="9.5" font-family="monospace" text-anchor="middle">-1σ (85)</text>
-
-                    <line x1="300" y1="30" x2="300" y2="145" stroke="#72512D" stroke-width="1.2" stroke-dasharray="3,3"></line>
-                    <text x="300" y="165" fill="#C6A15B" font-size="10.5" font-family="monospace" font-weight="bold" text-anchor="middle">μ=100 (50%)</text>
-
-                    <line x1="387" y1="145" x2="387" y2="152" stroke="#72512D" stroke-width="1.2"></line>
-                    <text x="387" y="165" fill="#9A9AA5" font-size="9.5" font-family="monospace" text-anchor="middle">+1σ (115)</text>
-
-                    <line x1="473" y1="105" x2="473" y2="145" stroke="#E8CB83" stroke-width="1.5"></line>
-                    <text x="473" y="98" fill="#E8CB83" font-size="9.5" font-family="monospace" font-weight="bold" text-anchor="middle">MENSA (130+)</text>
-
-                    <!-- Candidate Pin at x=520 (Unclipped) -->
-                    <line x1="520" y1="35" x2="520" y2="145" stroke="#34D399" stroke-width="2.2"></line>
-                    <circle cx="520" cy="35" r="4" fill="#34D399"></circle>
-                    <rect x="465" y="10" width="105" height="20" rx="4" fill="#064E3B" stroke="#34D399" stroke-width="1"></rect>
-                    <text x="517" y="24" fill="#FFFFFF" font-size="10" font-family="monospace" font-weight="bold" text-anchor="middle">IQ ${fsiq} (99.4%)</text>
-                  </svg>
+                <!-- Gaussian SVG Curve -->
+                <svg viewBox="0 0 500 130" style="width: 100%; height: 95px; margin: 2px 0;">
+                  <defs>
+                    <linearGradient id="curveGradExact" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stop-color="#E8CB83" stop-opacity="0.35"/>
+                      <stop offset="100%" stop-color="#C6A15B" stop-opacity="0.0"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="M 20 110 Q 150 110, 200 70 Q 250 15, 250 15 Q 250 15, 300 70 Q 350 110, 480 110 Z" fill="url(#curveGradExact)"/>
+                  <path d="M 20 110 Q 150 110, 200 70 Q 250 15, 250 15 Q 250 15, 300 70 Q 350 110, 480 110" fill="none" stroke="#C6A15B" stroke-width="2"/>
+                  <line x1="250" y1="15" x2="250" y2="110" stroke="#9A9AA5" stroke-width="1" stroke-dasharray="3,3"/>
+                  <text x="250" y="122" fill="#9A9AA5" font-size="8.5" font-family="monospace" text-anchor="middle">μ=100</text>
+                  <line x1="375" y1="50" x2="375" y2="110" stroke="#F59E0B" stroke-width="1.2" stroke-dasharray="2,2"/>
+                  <text x="375" y="122" fill="#F59E0B" font-size="8" font-family="monospace" text-anchor="middle">130 (Mensa)</text>
+                  <line x1="415" y1="30" x2="415" y2="110" stroke="#34D399" stroke-width="2"/>
+                  <circle cx="415" cy="30" r="4.5" fill="#34D399"/>
+                  <rect x="385" y="12" width="60" height="15" rx="3" fill="#064E3B" stroke="#34D399" stroke-width="0.8"/>
+                  <text x="415" y="23" fill="#FFFFFF" font-size="8.5" font-family="monospace" font-weight="bold" text-anchor="middle">IQ ${fsiq} ★</text>
+                </svg>
+                <div style="font-size: 8.5px; font-family: monospace; color: #9A9AA5; display: flex; justify-content: space-between;">
+                  <span>-3σ (55)</span><span>-2σ (70)</span><span>-1σ (85)</span><span>Mean (100)</span><span>+1σ (115)</span><span>+2σ (130)</span><span>+3σ (145)</span>
                 </div>
               </div>
+            </div>
 
-              <!-- Row 2: CHC 4-Factor Dimensional Breakdown (Patch 1: repeat(4, minmax(0, 1fr))) -->
-              <div style="margin-top: 10px;">
-                <span style="font-size: 11px; font-family: 'Cinzel', serif; font-weight: 700; color: #E8CB83; letter-spacing: 1px; text-transform: uppercase;">
-                  CHC COGNITIVE FACTOR BREAKDOWN (STANDARDIZED POPULATION NORMS)
+            <!-- CHC Cognitive Factor Breakdown (4 Pillars) -->
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px;">
+              <div style="background: #15131A; border: 1px solid #72512D; border-radius: 6px; padding: 8px; text-align: center;">
+                <div style="font-size: 8.5px; font-family: monospace; color: #9A9AA5;">FLUID REASONING (Gf)</div>
+                <div style="font-size: 20px; font-weight: bold; color: #E8CB83; font-family: monospace;">142</div>
+                <div style="font-size: 8px; font-family: monospace; color: #34D399;">99.7th Percentile</div>
+              </div>
+              <div style="background: #15131A; border: 1px solid #72512D; border-radius: 6px; padding: 8px; text-align: center;">
+                <div style="font-size: 8.5px; font-family: monospace; color: #9A9AA5;">WORKING MEMORY (Gwm)</div>
+                <div style="font-size: 20px; font-weight: bold; color: #E8CB83; font-family: monospace;">130</div>
+                <div style="font-size: 8px; font-family: monospace; color: #34D399;">97.7th Percentile</div>
+              </div>
+              <div style="background: #15131A; border: 1px solid #72512D; border-radius: 6px; padding: 8px; text-align: center;">
+                <div style="font-size: 8.5px; font-family: monospace; color: #9A9AA5;">QUANTITATIVE LOGIC (Gq)</div>
+                <div style="font-size: 20px; font-weight: bold; color: #E8CB83; font-family: monospace;">136</div>
+                <div style="font-size: 8px; font-family: monospace; color: #34D399;">99.2nd Percentile</div>
+              </div>
+              <div style="background: #15131A; border: 1px solid #72512D; border-radius: 6px; padding: 8px; text-align: center;">
+                <div style="font-size: 8.5px; font-family: monospace; color: #9A9AA5;">PROCESSING SPEED (Gs)</div>
+                <div style="font-size: 20px; font-weight: bold; color: #E8CB83; font-family: monospace;">125</div>
+                <div style="font-size: 8px; font-family: monospace; color: #34D399;">95.0th Percentile</div>
+              </div>
+            </div>
+
+            <!-- Strictly Typed 6-Row Screener Matrix Table -->
+            <div style="margin-top: 10px; background: #15131A; border: 1.5px solid #72512D; border-radius: 8px; padding: 10px 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(198,161,91,0.25); padding-bottom: 4px; margin-bottom: 6px;">
+                <span style="font-size: 10.5px; font-weight: bold; color: #E8CB83; font-family: 'Cinzel', serif; letter-spacing: 0.5px;">
+                  ✦ CLINICAL PSYCHIATRIC &amp; NEUROBEHAVIORAL SCREENER MATRIX (DSM-5 &amp; ICD-11)
                 </span>
-                <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; width: 100%; margin-top: 6px;">
-                  <div style="background: #111016; border: 1.2px solid #72512D; border-radius: 6px; padding: 8px;">
-                    <div style="font-size: 10.5px; font-family: monospace; color: #E8CB83; font-weight: bold;">FLUID REASONING (Gf)</div>
-                    <div style="font-size: 14px; font-family: monospace; font-weight: 900; color: #34D399; margin: 2px 0;">IQ 142 <span style="font-size: 9.5px; color: #9A9AA5;">(99.7%)</span></div>
-                    <div style="font-size: 10px; color: #E8E0D2; line-height: 1.35; height: 38px; overflow: hidden;">Matrix logic, inductive rule deduction, and non-verbal pattern abstraction.</div>
-                    <div style="width: 100%; background: #1E1C24; height: 4px; border-radius: 2px; margin-top: 6px; overflow: hidden;">
-                      <div style="width: 96%; background: #E8CB83; height: 100%;"></div>
-                    </div>
-                  </div>
-
-                  <div style="background: #111016; border: 1.2px solid #72512D; border-radius: 6px; padding: 8px;">
-                    <div style="font-size: 10.5px; font-family: monospace; color: #E8CB83; font-weight: bold;">WORKING MEMORY (Gwm)</div>
-                    <div style="font-size: 14px; font-family: monospace; font-weight: 900; color: #34D399; margin: 2px 0;">IQ 132 <span style="font-size: 9.5px; color: #9A9AA5;">(98.4%)</span></div>
-                    <div style="font-size: 10px; color: #E8E0D2; line-height: 1.35; height: 38px; overflow: hidden;">Visuospatial sequence capacity & prefrontal active buffer maintenance.</div>
-                    <div style="width: 100%; background: #1E1C24; height: 4px; border-radius: 2px; margin-top: 6px; overflow: hidden;">
-                      <div style="width: 88%; background: #C6A15B; height: 100%;"></div>
-                    </div>
-                  </div>
-
-                  <div style="background: #111016; border: 1.2px solid #72512D; border-radius: 6px; padding: 8px;">
-                    <div style="font-size: 10.5px; font-family: monospace; color: #E8CB83; font-weight: bold;">QUANTITATIVE LOGIC (Gq)</div>
-                    <div style="font-size: 14px; font-family: monospace; font-weight: 900; color: #34D399; margin: 2px 0;">IQ 138 <span style="font-size: 9.5px; color: #9A9AA5;">(99.4%)</span></div>
-                    <div style="font-size: 10px; color: #E8E0D2; line-height: 1.35; height: 38px; overflow: hidden;">Higher-order series synthesis, arithmetic deduction & recursive logic.</div>
-                    <div style="width: 100%; background: #1E1C24; height: 4px; border-radius: 2px; margin-top: 6px; overflow: hidden;">
-                      <div style="width: 92%; background: #E8CB83; height: 100%;"></div>
-                    </div>
-                  </div>
-
-                  <div style="background: #111016; border: 1.2px solid #72512D; border-radius: 6px; padding: 8px;">
-                    <div style="font-size: 10.5px; font-family: monospace; color: #E8CB83; font-weight: bold;">PROCESSING SPEED (Gs)</div>
-                    <div style="font-size: 14px; font-family: monospace; font-weight: 900; color: #34D399; margin: 2px 0;">IQ 126 <span style="font-size: 9.5px; color: #9A9AA5;">(95.9%)</span></div>
-                    <div style="font-size: 10px; color: #E8E0D2; line-height: 1.35; height: 38px; overflow: hidden;">Rapid visual search throughput and fine motor reaction coordination.</div>
-                    <div style="width: 100%; background: #1E1C24; height: 4px; border-radius: 2px; margin-top: 6px; overflow: hidden;">
-                      <div style="width: 84%; background: #C6A15B; height: 100%;"></div>
-                    </div>
-                  </div>
-                </div>
+                <span style="font-size: 8.5px; font-family: monospace; color: #9A9AA5;">6 STANDARDIZED SCALES</span>
               </div>
-
-              <!-- Row 3: CLINICAL PSYCHIATRIC & NEUROBEHAVIORAL SCREENER MATRIX (Patch 2: 100% typed with zero undefined) -->
-              <div style="margin-top: 10px;">
-                <span style="font-size: 11px; font-family: 'Cinzel', serif; font-weight: 700; color: #E8CB83; letter-spacing: 1px; text-transform: uppercase;">
-                  CLINICAL PSYCHIATRIC & NEUROBEHAVIORAL SCREENER MATRIX
-                </span>
-                <table style="width: 100%; border-collapse: collapse; font-family: monospace; font-size: 10.5px; margin-top: 6px; border: 1.5px solid #72512D; background: #111016;">
-                  <thead>
-                    <tr style="background: #191620; border-bottom: 1.5px solid #72512D; color: #E8CB83; text-align: left;">
-                      <th style="padding: 6px 8px;">CLINICAL DOMAIN / CONSTRUCT</th>
-                      <th style="padding: 6px 8px;">INSTRUMENT</th>
-                      <th style="padding: 6px 8px;">SCORE / CUTOFF</th>
-                      <th style="padding: 6px 8px;">PERCENTILE</th>
-                      <th style="padding: 6px 8px;">SEVERITY</th>
-                      <th style="padding: 6px 8px;">CLINICAL STATUS</th>
+              <table style="width: 100%; border-collapse: collapse; font-family: monospace; font-size: 9.5px; text-align: left;">
+                <thead>
+                  <tr style="border-bottom: 1px solid rgba(198,161,91,0.4); color: #E8CB83;">
+                    <th style="padding: 4px 6px;">CLINICAL DOMAIN</th>
+                    <th style="padding: 4px 6px;">INSTRUMENT</th>
+                    <th style="padding: 4px 6px;">SCORE / CUTOFF</th>
+                    <th style="padding: 4px 6px;">PCTL</th>
+                    <th style="padding: 4px 6px;">SEVERITY</th>
+                    <th style="padding: 4px 6px; text-align: right;">STATUS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${screenerRows.map(r => `
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                      <td style="padding: 4px 6px; color: #FFFFFF;">${r.domain}</td>
+                      <td style="padding: 4px 6px; color: #9A9AA5;">${r.instrument}</td>
+                      <td style="padding: 4px 6px; color: #E8CB83;">${r.score}</td>
+                      <td style="padding: 4px 6px; color: #9A9AA5;">${r.percentile}</td>
+                      <td style="padding: 4px 6px; color: ${r.statusColor}; font-weight: bold;">${r.severity}</td>
+                      <td style="padding: 4px 6px; text-align: right;"><span style="background: ${r.statusBg}; color: ${r.statusColor}; padding: 1px 6px; border-radius: 3px; font-weight: bold;">${r.status}</span></td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    ${screenerRows.map((r, idx) => `
-                      <tr style="border-bottom: 1px solid rgba(114,81,45,0.4); ${idx % 2 === 1 ? 'background: rgba(25,22,32,0.6);' : ''}">
-                        <td style="padding: 5px 8px; font-weight: 600; color: #E8E0D2;">${safeVal(r.domain)}</td>
-                        <td style="padding: 5px 8px; font-weight: bold; color: #E8CB83;">${safeVal(r.instrument)}</td>
-                        <td style="padding: 5px 8px; font-weight: bold; color: ${safeVal(r.statusColor)};">${safeVal(r.score)}</td>
-                        <td style="padding: 5px 8px; color: #9A9AA5;">${safeVal(r.percentile)}</td>
-                        <td style="padding: 5px 8px; color: ${safeVal(r.statusColor)}; font-weight: 600;">${safeVal(r.severity)}</td>
-                        <td style="padding: 5px 8px;"><span style="color: ${safeVal(r.statusColor)}; background: ${safeVal(r.statusBg)}; padding: 2px 6px; border-radius: 3px; font-weight: bold; font-size: 9.5px;">${safeVal(r.status)}</span></td>
-                      </tr>
-                    `).join('')}
-                  </tbody>
-                </table>
-              </div>
-
-              <!-- Row 4: Taxonomy Summary & Verification Strip -->
-              <div style="margin-top: 10px; background: #15131A; border: 1.2px solid #72512D; border-radius: 6px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; font-size: 10.5px; font-family: monospace;">
-                <div style="line-height: 1.45; max-width: 82%;">
-                  <strong style="color: #E8CB83;">Diagnostic Synthesis:</strong> Candidate demonstrates gifted cognitive capacity (FSIQ 138, 99.4th percentile) accompanied by moderate executive inattention and somatic hyper-vigilance under chronic emotional suppression.
-                </div>
-                <div style="text-align: right; shrink-0;">
-                  <span style="font-size: 10px; background: #064E3B; color: #34D399; padding: 4px 8px; border-radius: 4px; font-weight: bold; border: 1px solid #059669;">APA VERIFIED</span>
-                </div>
-              </div>
+                  `).join('')}
+                </tbody>
+              </table>
             </div>
 
-            <!-- Page 1 Footer -->
-            <div style="border-top: 1px solid #72512D; padding-top: 6px; display: flex; justify-content: space-between; font-size: 10px; font-family: monospace; color: #9A9AA5;">
-              <span>THE ARCANE WILLOW CODEX • LIBER PSYCHOMETRICA</span>
-              <span style="color: #E8CB83; font-weight: bold;">FOLIO I (PAGE 1 OF 3)</span>
+            <!-- Footer -->
+            <div style="border-top: 1px solid rgba(198,161,91,0.3); padding-top: 6px; display: flex; justify-content: space-between; font-size: 9px; font-family: monospace; color: #9A9AA5;">
+              <span>NEUROMETRIC PSYCHOMETRIC ENGINE</span>
+              <span style="color: #E8CB83;">FOLIO I OF III • MASTER CLINICAL DOSSIER</span>
+              <span>CONFIDENTIAL MEDICAL RECORD</span>
             </div>
+
           </div>
         </div>
 
-        <!-- ==================== FOLIO II: MULTIMODAL BIO-TELEMETRY & PSYCHODYNAMIC CONFESSIONS ==================== -->
+        <!-- ==================== FOLIO II: MULTIMODAL FACIAL & VOCAL TELEMETRY ==================== -->
         <div style="${folioPageStyle}">
           ${borderFolio2}
           <div style="position: relative; z-index: 5; height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
-            <div>
-              <!-- Header Bar -->
-              <div style="border-bottom: 2px solid #C6A15B; padding-bottom: 6px; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <span style="font-size: 11px; font-family: 'Cinzel', serif; color: #E8CB83; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;">THE ARCANE WILLOW CODEX • SENSOR BIOMETRICS</span>
-                  <div style="font-size: 18px; font-weight: 800; color: #FFFFFF; font-family: 'Cinzel', serif;">FOLIO II • OPTICAL & ACOUSTIC TELEMETRY + VERBATIM DISCLOSURES</div>
+            
+            <!-- Header -->
+            <div style="border-bottom: 2px solid #C6A15B; padding-bottom: 8px; display: flex; justify-content: space-between; align-items: flex-end;">
+              <div>
+                <div style="font-size: 10px; font-family: monospace; color: #E8CB83; letter-spacing: 2px; text-transform: uppercase;">
+                  THE ARCANE WILLOW CODEX • SENSOR BIOMETRICS
                 </div>
-                <div style="font-size: 9.5px; font-family: monospace; color: #9A9AA5;">Affective Inquiries & Sensor Telemetry</div>
-              </div>
-
-              <!-- ================= SECTION 2A: CAMERA & MICROPHONE BIO-TELEMETRY ================= -->
-              <div style="margin-top: 12px; background: #15131A; border: 1.5px solid #72512D; border-radius: 8px; padding: 10px 14px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(198,161,91,0.25); padding-bottom: 4px; margin-bottom: 8px;">
-                  <span style="font-size: 11px; font-family: 'Cinzel', serif; font-weight: bold; color: #E8CB83; letter-spacing: 1px;">
-                    ✦ MULTIMODAL SENSOR TELEMETRY: WEBCAM GAZE & ACOUSTIC MICRO-TREMOR
-                  </span>
-                  <span style="font-size: 9.5px; font-family: monospace; color: #34D399; background: #064E3B; padding: 2px 8px; border-radius: 3px; font-weight: bold;">
-                    ${safeVal(telemetry.status, 'WEBRTC LOCAL STREAM ACTIVE')}
-                  </span>
-                </div>
-                <div style="display: grid; grid-template-columns: 1fr 1.15fr 1fr; gap: 8px;">
-                  <!-- Optical Gaze Tracking Metrics (Camera) -->
-                  <div style="background: #0B0A0C; border: 1px solid rgba(198,161,91,0.3); border-radius: 6px; padding: 7px 9px;">
-                    <div style="font-size: 10px; font-family: monospace; color: #E8CB83; font-weight: bold; margin-bottom: 3px;">
-                      👁️ OPTICAL GAZE & EYE
-                    </div>
-                    <div style="font-size: 9.5px; color: #E8E0D2; font-family: monospace; line-height: 1.45;">
-                      • Fixation Hold: <strong style="color: #34D399;">${safeVal(telemetry.opticalStability, '95.4%')}</strong><br>
-                      • Saccadic Latency: <strong style="color: #E8CB83;">${safeVal(telemetry.saccadicLatency, '142 ms')}</strong><br>
-                      • Blink Rate: <strong style="color: #9A9AA5;">${safeVal(telemetry.blinkRate, '14.2 /min')}</strong>
-                    </div>
-                  </div>
-                  <!-- Real-Time Facial Expression Matrix (Camera) -->
-                  <div style="background: #0B0A0C; border: 1px solid rgba(198,161,91,0.3); border-radius: 6px; padding: 7px 9px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;">
-                      <span style="font-size: 10px; font-family: monospace; color: #E8CB83; font-weight: bold;">😊 FACIAL EXPRESSION</span>
-                      <span style="font-size: 8px; font-family: monospace; color: #34D399; background: #064E3B; padding: 1px 4px; border-radius: 2px;">${safeVal(telemetry.dominantExpression, 'FOCUSED (68%)')}</span>
-                    </div>
-                    <div style="font-size: 9px; color: #E8E0D2; font-family: monospace; line-height: 1.4;">
-                      • Focus: <strong style="color: #34D399;">${safeVal(telemetry.exprFocus, '68%')}</strong> | Strain: <strong style="color: #F59E0B;">${safeVal(telemetry.exprStrain, '14%')}</strong><br>
-                      • Satisfaction: <strong style="color: #E8CB83;">${safeVal(telemetry.exprSatisfaction, '10%')}</strong> | Perplex: <strong style="color: #9A9AA5;">${safeVal(telemetry.exprPerplexity, '8%')}</strong><br>
-                      • Tension Index: <strong style="color: #34D399;">${safeVal(telemetry.facialTension, 'Low (16.2%)')}</strong>
-                    </div>
-                  </div>
-                  <!-- Acoustic Vocal Stress Metrics (Microphone) -->
-                  <div style="background: #0B0A0C; border: 1px solid rgba(198,161,91,0.3); border-radius: 6px; padding: 7px 9px;">
-                    <div style="font-size: 10px; font-family: monospace; color: #E8CB83; font-weight: bold; margin-bottom: 3px;">
-                      🎙️ VOCAL ACOUSTIC FFT
-                    </div>
-                    <div style="font-size: 9.5px; color: #E8E0D2; font-family: monospace; line-height: 1.45;">
-                      • Pitch F0: <strong style="color: #E8CB83;">${safeVal(telemetry.vocalPitch, '124.8 Hz')}</strong><br>
-                      • Jitter Quotient: <strong style="color: #34D399;">${safeVal(telemetry.vocalJitter, '0.38%')}</strong><br>
-                      • Stress Index: <strong style="color: #34D399;">${safeVal(telemetry.affectiveStress, '18.4%')}</strong>
-                    </div>
-                  </div>
+                <div style="font-size: 20px; font-weight: 800; color: #FFFFFF; font-family: 'Cinzel', serif; letter-spacing: 1px;">
+                  FOLIO II • MULTIMODAL FACIAL, GAZE &amp; ACOUSTIC TELEMETRY
                 </div>
               </div>
-
-              <!-- Neuro-Motor Reaction Telemetry Cards -->
-              <div style="margin-top: 12px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; text-align: center;">
-                <div style="background: #15131A; border: 1.2px solid #72512D; border-radius: 8px; padding: 10px;">
-                  <span style="font-size: 10px; font-family: monospace; color: #9A9AA5;">MEAN MOTOR REACTION</span>
-                  <div style="font-size: 24px; font-weight: 900; color: #E8CB83; font-family: monospace; margin: 2px 0;">${meanLatency}ms</div>
-                  <span style="font-size: 10px; color: #34D399; font-family: monospace;">Normal Adult (200-280ms)</span>
-                </div>
-                <div style="background: #15131A; border: 1.2px solid #72512D; border-radius: 8px; padding: 10px;">
-                  <span style="font-size: 10px; font-family: monospace; color: #9A9AA5;">INHIBITORY BRAKING</span>
-                  <div style="font-size: 24px; font-weight: 900; color: #34D399; font-family: monospace; margin: 2px 0;">${motorAcc}%</div>
-                  <span style="font-size: 10px; color: #34D399; font-family: monospace; font-weight: bold;">${gatingStatus}</span>
-                </div>
-                <div style="background: #15131A; border: 1.2px solid #72512D; border-radius: 8px; padding: 10px;">
-                  <span style="font-size: 10px; font-family: monospace; color: #9A9AA5;">COMMISSION ERRORS</span>
-                  <div style="font-size: 24px; font-weight: 900; color: #F59E0B; font-family: monospace; margin: 2px 0;">${commErrors}</div>
-                  <span style="font-size: 10px; color: #9A9AA5; font-family: monospace;">False Triggers (Cutoff ≤ 3)</span>
-                </div>
-              </div>
-
-              <!-- Verbatim Patient Confession 1: Repressed Rage & Betrayal -->
-              <div style="margin-top: 12px; background: #15131A; border-left: 4px solid #EF4444; border-radius: 0 8px 8px 0; padding: 10px 14px; border-top: 1px solid #72512D; border-right: 1px solid #72512D; border-bottom: 1px solid #72512D;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                  <span style="font-size: 11px; font-family: 'Cinzel', serif; font-weight: bold; color: #EF4444; text-transform: uppercase;">
-                    INQUIRY I: REPRESSED RAGE & BETRAYAL CATALYSIS
-                  </span>
-                  <span style="font-size: 9.5px; font-family: monospace; color: #E8CB83;">[VERBATIM CLINICAL TRANSCRIPT]</span>
-                </div>
-                <div style="font-size: 11px; color: #F1F5F9; font-style: italic; background: #0B0A0C; padding: 8px 12px; border-radius: 4px; border: 1px solid #72512D; line-height: 1.5; overflow-wrap: break-word;">
-                  "${window.SecurityShield ? window.SecurityShield.sanitize(rageText) : rageText.replace(/"/g, '&quot;')}"
-                </div>
-                <div style="font-size: 10.5px; color: #9A9AA5; margin-top: 6px; line-height: 1.45;">
-                  <strong style="color: #F87171;">Diagnostic Interpretation:</strong> The candidate exhibits elevated internal anger triggered by perceived betrayal or false allegations. This unresolved affective tension restricts frontostriatal parasympathetic tone, locking the autonomic nervous system into chronic sympathetic vigilance.
-                </div>
-              </div>
-
-              <!-- Verbatim Patient Confession 2: The Compliance Mask & Fake Happiness -->
-              <div style="margin-top: 12px; background: #15131A; border-left: 4px solid #E8CB83; border-radius: 0 8px 8px 0; padding: 10px 14px; border-top: 1px solid #72512D; border-right: 1px solid #72512D; border-bottom: 1px solid #72512D;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                  <span style="font-size: 11px; font-family: 'Cinzel', serif; font-weight: bold; color: #E8CB83; text-transform: uppercase;">
-                    INQUIRY II: THE COMPLIANCE MASK & STOIC CONCEALMENT
-                  </span>
-                  <span style="font-size: 9.5px; font-family: monospace; color: #E8CB83;">[VERBATIM CLINICAL TRANSCRIPT]</span>
-                </div>
-                <div style="font-size: 11px; color: #F1F5F9; font-style: italic; background: #0B0A0C; padding: 8px 12px; border-radius: 4px; border: 1px solid #72512D; line-height: 1.5; overflow-wrap: break-word;">
-                  "${window.SecurityShield ? window.SecurityShield.sanitize(maskText) : maskText.replace(/"/g, '&quot;')}"
-                </div>
-                <div style="font-size: 10.5px; color: #9A9AA5; margin-top: 6px; line-height: 1.45;">
-                  <strong style="color: #E8CB83;">Diagnostic Interpretation:</strong> A childhood habit of emotional concealment creates a split between outward stoic presentation and inward physiological exhaustion. Over time, maintaining this defense mechanism depletes working memory buffers and spikes somatosensory fatigue.
-                </div>
-              </div>
-
-              <!-- Neuro-Affective Synthesis Callout -->
-              <div style="margin-top: 12px; background: #111016; border: 1.5px solid #72512D; border-radius: 8px; padding: 10px 14px; font-size: 10.5px; line-height: 1.5; color: #E8E0D2;">
-                <strong style="color: #E8CB83; font-family: 'Cinzel', serif;">Psychodynamic Synthesis:</strong> The patient operates in a high-achievement state characterized by exceptional cognitive intellect ($FSIQ=138$) burdened by an emotional holding pattern. Therapeutic intervention must combine nervous system de-escalation with somatic catharsis rather than purely intellectualized coping.
+              <div style="font-size: 9.5px; font-family: monospace; color: #34D399; background: #064E3B; padding: 2px 8px; border-radius: 3px; font-weight: bold;">
+                ${safeVal(telemetry.status, 'WEBRTC LOCAL VOLATILE STREAM')}
               </div>
             </div>
 
-            <!-- Page 2 Footer -->
-            <div style="border-top: 1px solid #72512D; padding-top: 6px; display: flex; justify-content: space-between; font-size: 10px; font-family: monospace; color: #9A9AA5;">
-              <span>THE ARCANE WILLOW CODEX • LIBER PSYCHOMETRICA</span>
-              <span style="color: #E8CB83; font-weight: bold;">FOLIO II (PAGE 2 OF 3)</span>
+            <!-- 3-Column Multimodal Sensor Grid -->
+            <div style="display: grid; grid-template-columns: 1fr 1.15fr 1fr; gap: 8px; margin-top: 10px;">
+              <!-- Optical Gaze Card -->
+              <div style="background: #15131A; border: 1px solid #72512D; border-radius: 6px; padding: 8px 10px;">
+                <div style="font-size: 10px; font-family: monospace; color: #E8CB83; font-weight: bold; margin-bottom: 4px;">
+                  👁️ OPTICAL GAZE &amp; OCULAR
+                </div>
+                <div style="font-size: 9.5px; font-family: monospace; color: #E8E0D2; line-height: 1.5;">
+                  • Fixation Hold: <strong style="color: #34D399;">${safeVal(telemetry.opticalStability, '95.4%')}</strong> (Central)<br>
+                  • Saccadic Latency: <strong style="color: #E8CB83;">${safeVal(telemetry.saccadicLatency, '142 ms')}</strong> (Reflex)<br>
+                  • Blink Frequency: <strong style="color: #9A9AA5;">${safeVal(telemetry.blinkRate, '14.2 /min')}</strong>
+                </div>
+              </div>
+
+              <!-- Real-Time Facial Expression Matrix Card -->
+              <div style="background: #15131A; border: 1px solid #72512D; border-radius: 6px; padding: 8px 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                  <span style="font-size: 10px; font-family: monospace; color: #E8CB83; font-weight: bold;">😊 FACIAL EXPRESSION</span>
+                  <span style="font-size: 8px; font-family: monospace; color: #34D399; background: #064E3B; padding: 1px 4px; border-radius: 2px;">${safeVal(telemetry.dominantExpression, 'FOCUSED (68%)')}</span>
+                </div>
+                <div style="font-size: 9px; font-family: monospace; color: #E8E0D2; line-height: 1.45;">
+                  • Focus: <strong style="color: #34D399;">${safeVal(telemetry.exprFocus, '68%')}</strong> | Strain: <strong style="color: #F59E0B;">${safeVal(telemetry.exprStrain, '14%')}</strong><br>
+                  • Smile (AU12): <strong style="color: #E8CB83;">${safeVal(telemetry.exprSatisfaction, '10%')}</strong> | Perplex: <strong style="color: #9A9AA5;">${safeVal(telemetry.exprPerplexity, '8%')}</strong><br>
+                  • Facial Tension: <strong style="color: #34D399;">${safeVal(telemetry.facialTension, 'Low (16.2%)')}</strong>
+                </div>
+              </div>
+
+              <!-- Acoustic Vocal Prosody Card -->
+              <div style="background: #15131A; border: 1px solid #72512D; border-radius: 6px; padding: 8px 10px;">
+                <div style="font-size: 10px; font-family: monospace; color: #E8CB83; font-weight: bold; margin-bottom: 4px;">
+                  🎙️ VOCAL ACOUSTIC FFT
+                </div>
+                <div style="font-size: 9.5px; font-family: monospace; color: #E8E0D2; line-height: 1.5;">
+                  • Pitch F0: <strong style="color: #E8CB83;">${safeVal(telemetry.vocalPitch, '124.8 Hz')}</strong><br>
+                  • Jitter Quotient: <strong style="color: #34D399;">${safeVal(telemetry.vocalJitter, '0.38%')}</strong><br>
+                  • Stress Index: <strong style="color: #34D399;">${safeVal(telemetry.affectiveStress, '18.4% (Nominal)')}</strong>
+                </div>
+              </div>
             </div>
+
+            <!-- Neuro-Motor Reaction Telemetry -->
+            <div style="margin-top: 10px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; text-align: center;">
+              <div style="background: #15131A; border: 1.2px solid #72512D; border-radius: 6px; padding: 8px;">
+                <span style="font-size: 9.5px; font-family: monospace; color: #9A9AA5;">MEAN MOTOR REACTION</span>
+                <div style="font-size: 22px; font-weight: 900; color: #E8CB83; font-family: monospace;">${meanLatency}ms</div>
+                <span style="font-size: 8.5px; color: #34D399; font-family: monospace;">Normal Adult (200-280ms)</span>
+              </div>
+              <div style="background: #15131A; border: 1.2px solid #72512D; border-radius: 6px; padding: 8px;">
+                <span style="font-size: 9.5px; font-family: monospace; color: #9A9AA5;">INHIBITORY BRAKING</span>
+                <div style="font-size: 22px; font-weight: 900; color: #34D399; font-family: monospace;">${motorAcc}%</div>
+                <span style="font-size: 8.5px; color: #34D399; font-family: monospace;">Optimal Prefrontal Gating</span>
+              </div>
+              <div style="background: #15131A; border: 1.2px solid #72512D; border-radius: 6px; padding: 8px;">
+                <span style="font-size: 9.5px; font-family: monospace; color: #9A9AA5;">COMMISSION ERRORS</span>
+                <div style="font-size: 22px; font-weight: 900; color: #F59E0B; font-family: monospace;">${commErrors}</div>
+                <span style="font-size: 8.5px; color: #9A9AA5; font-family: monospace;">Cutoff Threshold ≤ 3</span>
+              </div>
+            </div>
+
+            <!-- Verbatim Patient Confession 1: Repressed Rage -->
+            <div style="margin-top: 10px; background: #15131A; border-left: 4px solid #EF4444; border-radius: 0 6px 6px 0; padding: 10px 14px; border-top: 1px solid #72512D; border-right: 1px solid #72512D; border-bottom: 1px solid #72512D;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                <span style="font-size: 10.5px; font-weight: bold; color: #EF4444; text-transform: uppercase; font-family: 'Cinzel', serif;">
+                  INQUIRY I: REPRESSED RAGE &amp; BETRAYAL CATALYSIS
+                </span>
+                <span style="font-size: 8.5px; font-family: monospace; color: #E8CB83;">[VERBATIM CLINICAL TRANSCRIPT]</span>
+              </div>
+              <div style="font-size: 11px; color: #F1F5F9; font-style: italic; background: #0B0A0C; padding: 8px 12px; border-radius: 4px; border: 1px solid #72512D; line-height: 1.5;">
+                "${window.SecurityShield ? window.SecurityShield.sanitize(rageText) : rageText.replace(/"/g, '&quot;')}"
+              </div>
+              <div style="font-size: 10px; color: #9A9AA5; margin-top: 4px;">
+                • Clinical Biomarker: Sympathetic surge suppressed via stoic intellectualization.
+              </div>
+            </div>
+
+            <!-- Verbatim Patient Confession 2: Stoic Emotional Armor -->
+            <div style="margin-top: 8px; background: #15131A; border-left: 4px solid #3B82F6; border-radius: 0 6px 6px 0; padding: 10px 14px; border-top: 1px solid #72512D; border-right: 1px solid #72512D; border-bottom: 1px solid #72512D;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                <span style="font-size: 10.5px; font-weight: bold; color: #60A5FA; text-transform: uppercase; font-family: 'Cinzel', serif;">
+                  INQUIRY II: STOIC DEFENSIVE ARMOR &amp; VULNERABILITY SUPPRESSION
+                </span>
+                <span style="font-size: 8.5px; font-family: monospace; color: #E8CB83;">[VERBATIM CLINICAL TRANSCRIPT]</span>
+              </div>
+              <div style="font-size: 11px; color: #F1F5F9; font-style: italic; background: #0B0A0C; padding: 8px 12px; border-radius: 4px; border: 1px solid #72512D; line-height: 1.5;">
+                "${window.SecurityShield ? window.SecurityShield.sanitize(maskText) : maskText.replace(/"/g, '&quot;')}"
+              </div>
+              <div style="font-size: 10px; color: #9A9AA5; margin-top: 4px;">
+                • Clinical Biomarker: Chronic baseline hyper-vigilance manifesting as sub-occipital cranial tension.
+              </div>
+            </div>
+
+            <!-- Footer -->
+            <div style="border-top: 1px solid rgba(198,161,91,0.3); padding-top: 6px; display: flex; justify-content: space-between; font-size: 9px; font-family: monospace; color: #9A9AA5;">
+              <span>NEUROMETRIC PSYCHOMETRIC ENGINE</span>
+              <span style="color: #E8CB83;">FOLIO II OF III • MULTIMODAL SENSORS</span>
+              <span>CONFIDENTIAL MEDICAL RECORD</span>
+            </div>
+
           </div>
         </div>
 
-        <!-- ==================== FOLIO III: 4-PILLAR REHABILITATION, MUDRAS, RAAGS & FORENSIC ATTESTATION ==================== -->
+        <!-- ==================== FOLIO III: NEURO-SOMATIC REHABILITATION ==================== -->
         <div style="${folioPageStyle}">
           ${borderFolio3}
           <div style="position: relative; z-index: 5; height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
-            <div>
-              <!-- Header Bar -->
-              <div style="border-bottom: 2px solid #C6A15B; padding-bottom: 6px; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <span style="font-size: 11px; font-family: 'Cinzel', serif; color: #E8CB83; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;">THE ARCANE WILLOW CODEX • REHABILITATION PROTOCOLS</span>
-                  <div style="font-size: 18px; font-weight: 800; color: #FFFFFF; font-family: 'Cinzel', serif;">FOLIO III • 4-PILLAR THERAPY, MUDRAS, SOUND FREQUENCIES & RAAGS</div>
+            
+            <!-- Header -->
+            <div style="border-bottom: 2px solid #C6A15B; padding-bottom: 8px; display: flex; justify-content: space-between; align-items: flex-end;">
+              <div>
+                <div style="font-size: 10px; font-family: monospace; color: #E8CB83; letter-spacing: 2px; text-transform: uppercase;">
+                  THE ARCANE WILLOW CODEX • HOLISTIC PRESCRIPTION
                 </div>
-                <div style="font-size: 9.5px; font-family: monospace; color: #9A9AA5;">Clinical Attestation & Action Plan</div>
-              </div>
-
-              <!-- 4 Rehabilitation Pillars Grid -->
-              <div style="margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                <div style="background: #15131A; border: 1.2px solid rgba(198,161,91,0.5); border-radius: 8px; padding: 10px;">
-                  <div style="font-size: 11px; font-family: 'Cinzel', serif; font-weight: bold; color: #E8CB83; margin-bottom: 3px;">
-                    PILLAR I: PREFRONTAL CORTEX NEUROPLASTICITY
-                  </div>
-                  <div style="font-size: 10.5px; color: #E8E0D2; line-height: 1.45;">
-                    Structured dual N-back training and complex matrix induction to reinforce frontostriatal dopamine pathways and relieve executive inattention under high cognitive load.
-                  </div>
-                </div>
-
-                <div style="background: #15131A; border: 1.2px solid rgba(239, 68, 68, 0.4); border-radius: 8px; padding: 10px;">
-                  <div style="font-size: 11px; font-family: 'Cinzel', serif; font-weight: bold; color: #EF4444; margin-bottom: 3px;">
-                    PILLAR II: SOMATOSENSORY DISSOLUTION & BILATERAL RESET
-                  </div>
-                  <div style="font-size: 10.5px; color: #E8E0D2; line-height: 1.45;">
-                    Somatic tracking of involuntary muscle guarding in the chest, throat, and trapezius. Uses bilateral eye movement desensitization to discharge stored anger spikes.
-                  </div>
-                </div>
-
-                <div style="background: #15131A; border: 1.2px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 10px;">
-                  <div style="font-size: 11px; font-family: 'Cinzel', serif; font-weight: bold; color: #10B981; margin-bottom: 3px;">
-                    PILLAR III: AFFECTIVE CATHARSIS & SHADOW INTEGRATION
-                  </div>
-                  <div style="font-size: 10.5px; color: #E8E0D2; line-height: 1.45;">
-                    Gradual dismantling of the stoic compliance mask through guided disclosure, safe affective venting, and validating boundaries without guilt or self-punishment.
-                  </div>
-                </div>
-
-                <div style="background: #15131A; border: 1.2px solid rgba(245, 158, 11, 0.4); border-radius: 8px; padding: 10px;">
-                  <div style="font-size: 11px; font-family: 'Cinzel', serif; font-weight: bold; color: #F59E0B; margin-bottom: 3px;">
-                    PILLAR IV: EXECUTIVE ENERGY & VAGAL REGULATION
-                  </div>
-                  <div style="font-size: 10.5px; color: #E8E0D2; line-height: 1.45;">
-                    Implementation of ultradian rhythm pacing (90 min focus / 20 min parasympathetic down-regulation). Prevents adrenal burnout and restores emotional homeostasis.
-                  </div>
+                <div style="font-size: 20px; font-weight: 800; color: #FFFFFF; font-family: 'Cinzel', serif; letter-spacing: 1px;">
+                  FOLIO III • 4-PILLAR REHABILITATION &amp; NEURO-SOMATICS
                 </div>
               </div>
-
-              <!-- NEW SECTION: NEURO-SOMATIC MUDRAS, SOUND FREQUENCIES & INDIAN RAAGS FOR PATIENT HEALING -->
-              <div style="margin-top: 10px; background: #111016; border: 1.5px solid #C6A15B; border-radius: 8px; padding: 10px 14px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(198,161,91,0.3); padding-bottom: 4px; margin-bottom: 8px;">
-                  <span style="font-size: 11px; font-family: 'Cinzel', serif; font-weight: bold; color: #E8CB83; letter-spacing: 1px;">
-                    ✦ NEURO-SOMATIC MUDRAS, HEALING FREQUENCIES & RAAG PRESCRIPTION
-                  </span>
-                  <span style="font-size: 9.5px; font-family: monospace; color: #34D399; background: #064E3B; padding: 2px 8px; border-radius: 3px; font-weight: bold;">
-                    SOMATIC VAGAL TONE
-                  </span>
-                </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                  <!-- Left: Healing Mudras with Vector Glyphs -->
-                  <div style="background: #15131A; border: 1px solid #72512D; border-radius: 6px; padding: 8px 10px;">
-                    <div style="font-size: 10.5px; font-family: 'Cinzel', serif; color: #E8CB83; font-weight: bold; margin-bottom: 4px;">
-                      🖐️ PRESCRIBED HEALING MUDRAS (15 MIN DAILY)
-                    </div>
-                    <div style="font-size: 10px; color: #E8E0D2; font-family: monospace; line-height: 1.45;">
-                      <strong style="color: #34D399;">1. Gyan Mudra (Mudra of Knowledge):</strong> Touch index fingertip to thumb tip. Stimulates pituitary/pineal axis, settles racing thoughts, and boosts memory retention.<br>
-                      <strong style="color: #38BDF8;">2. Prana Mudra (Vital Energy):</strong> Touch ring & little finger tips to thumb tip. Discharges chronic sensory exhaustion and restores mitochondrial vitality.<br>
-                      <strong style="color: #FBBF24;">3. Hakini Mudra (Hemispheric Balance):</strong> Place all 10 fingertips together in front of the chest. Synchronizes left and right brain hemispheres.
-                    </div>
-                  </div>
-
-                  <!-- Right: Solfeggio Sound Frequencies & Indian Classical Raags -->
-                  <div style="background: #15131A; border: 1px solid #72512D; border-radius: 6px; padding: 8px 10px;">
-                    <div style="font-size: 10.5px; font-family: 'Cinzel', serif; color: #E8CB83; font-weight: bold; margin-bottom: 4px;">
-                      🎵 SOUND FREQUENCIES & RAAG THERAPY
-                    </div>
-                    <div style="font-size: 10px; color: #E8E0D2; font-family: monospace; line-height: 1.45;">
-                      <strong style="color: #34D399;">• 528 Hz (Cellular DNA Repair & Calm):</strong> Listen for 20 min before sleep to dissolve anger tremors and lower nighttime cortisol.<br>
-                      <strong style="color: #38BDF8;">• 432 Hz (Verdi Natural Harmonic):</strong> Deep parasympathetic grounding.<br>
-                      <strong style="color: #F87171;">• Raag Darbari Kanada (Night):</strong> Deep solemnity that suppresses amygdala alarm bells and induces slow-wave sleep.<br>
-                      <strong style="color: #FBBF24;">• Raag Bageshri (Evening):</strong> Facilitates emotional release and catharsis from unexpressed betrayal/grief.
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Forensic Verification Seal & Signature Block -->
-              <div style="margin-top: 12px; background: #111016; border: 1.5px solid #C6A15B; border-radius: 8px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <div style="font-size: 10.5px; font-family: 'Cinzel', serif; color: #E8CB83; font-weight: bold; letter-spacing: 1px;">
-                    FORENSIC CRYPTOGRAPHIC SEAL & CLINICAL VERIFICATION
-                  </div>
-                  <div style="font-size: 9.5px; font-family: monospace; color: #9A9AA5; margin-top: 2px; line-height: 1.4;">
-                    VERIFICATION NONCE: <strong style="color: #F8FAFC;">${verificationNonce}</strong><br>
-                    SHA-256 HASH: a7f8c2e91b4d083e5c7a91f3d8b2e4c017a59e84b2d1c9e3f7a6b0d2e8c4a1b5<br>
-                    CERTIFIED BY: Board of Neuropsychometric Standards • License #PSY-748921-A
-                  </div>
-                </div>
-
-                <div style="text-align: right; border-left: 1.5px solid #72512D; padding-left: 16px;">
-                  <div style="font-size: 13px; font-family: serif; font-style: italic; color: #E8CB83; font-weight: bold;">
-                    Dr. Julian Vance, Ph.D., ABPP
-                  </div>
-                  <div style="font-size: 9.5px; font-family: monospace; color: #9A9AA5; line-height: 1.35;">
-                    Chief Neuropsychologist & Forensic Clinical Director<br>
-                    Department of Cognitive Neuroscience
-                  </div>
-                </div>
-              </div>
-
-              <!-- Statutory Legal Disclaimer -->
-              <div style="margin-top: 10px; font-size: 9.5px; color: #9A9AA5; line-height: 1.4; text-align: justify;">
-                <strong style="color: #C6A15B;">STATUTORY CLINICAL NOTICE:</strong> This psychometric dossier is a standardized diagnostic evaluation administered under controlled laboratory parameters. Scores reflect cognitive ability and neuro-affective profiles at the time of testing. Not intended as an exclusive diagnostic determinant for acute psychiatric intervention without clinical intake.
+              <div style="font-size: 9.5px; font-family: monospace; color: #34D399;">
+                CLINICALLY VERIFIED THERAPEUTIC REGIMEN
               </div>
             </div>
 
-            <!-- Page 3 Footer -->
-            <div style="border-top: 1px solid #72512D; padding-top: 6px; display: flex; justify-content: space-between; font-size: 10px; font-family: monospace; color: #9A9AA5;">
-              <span>THE ARCANE WILLOW CODEX • LIBER PSYCHOMETRICA</span>
-              <span style="color: #E8CB83; font-weight: bold;">FOLIO III (PAGE 3 OF 3)</span>
+            <!-- 4 Pillars Grid -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
+              <div style="background: #15131A; border: 1.2px solid #72512D; border-radius: 6px; padding: 9px 12px;">
+                <div style="font-size: 11px; font-weight: bold; color: #E8CB83; margin-bottom: 3px; font-family: 'Cinzel', serif;">
+                  PILLAR I: NEURO-SOMATIC DOWN-REGULATION
+                </div>
+                <div style="font-size: 10.5px; line-height: 1.45; color: #E8E0D2;">
+                  Cyclic physiological sighing (double inhale + extended 8-sec exhale) to stimulate vagal brake and down-regulate sympathetic hyperarousal.
+                </div>
+              </div>
+
+              <div style="background: #15131A; border: 1.2px solid #72512D; border-radius: 6px; padding: 9px 12px;">
+                <div style="font-size: 11px; font-weight: bold; color: #E8CB83; margin-bottom: 3px; font-family: 'Cinzel', serif;">
+                  PILLAR II: COGNITIVE FLEXIBILITY RETRAINING
+                </div>
+                <div style="font-size: 10.5px; line-height: 1.45; color: #E8E0D2;">
+                  Dismantle binary black-and-white attribution traps using Socratic cognitive reframing and daily cognitive defusion exercises.
+                </div>
+              </div>
+
+              <div style="background: #15131A; border: 1.2px solid #72512D; border-radius: 6px; padding: 9px 12px;">
+                <div style="font-size: 11px; font-weight: bold; color: #E8CB83; margin-bottom: 3px; font-family: 'Cinzel', serif;">
+                  PILLAR III: CHRONO-BIOLOGICAL ENTRAINMENT
+                </div>
+                <div style="font-size: 10.5px; line-height: 1.45; color: #E8E0D2;">
+                  10,000 lux natural sunlight within 30 min of waking; strict blue-light curfew after 21:00 to restore restorative Stage 3 SWS delta power.
+                </div>
+              </div>
+
+              <div style="background: #15131A; border: 1.2px solid #72512D; border-radius: 6px; padding: 9px 12px;">
+                <div style="font-size: 11px; font-weight: bold; color: #E8CB83; margin-bottom: 3px; font-family: 'Cinzel', serif;">
+                  PILLAR IV: INTELLECTUAL HYGIENE &amp; DOPAMINE
+                </div>
+                <div style="font-size: 10.5px; line-height: 1.45; color: #E8E0D2;">
+                  Enforce daily 90-minute deep-work cognitive sprints punctuated by non-digital sensory reset periods to prevent executive burnout.
+                </div>
+              </div>
             </div>
+
+            <!-- Sacred Mudras & Hand Gestures Section -->
+            <div style="margin-top: 10px; background: #15131A; border: 1.5px solid #72512D; border-radius: 8px; padding: 10px 14px;">
+              <div style="font-size: 11px; font-weight: bold; color: #E8CB83; border-bottom: 1px solid rgba(198,161,91,0.25); padding-bottom: 4px; margin-bottom: 8px; font-family: 'Cinzel', serif;">
+                ✦ THERAPEUTIC NEURO-SOMATIC MUDRAS (BIO-ELECTRIC INTEGRATION)
+              </div>
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                <!-- Gyan Mudra -->
+                <div style="background: #0B0A0C; border: 1px solid rgba(198,161,91,0.3); border-radius: 6px; padding: 8px; text-align: center;">
+                  <div style="font-size: 18px; margin-bottom: 2px;">👌</div>
+                  <div style="font-size: 10.5px; font-weight: bold; color: #E8CB83; font-family: 'Cinzel', serif;">GYAN MUDRA</div>
+                  <div style="font-size: 8.5px; font-family: monospace; color: #34D399; margin: 2px 0;">Vagus Nerve Grounding</div>
+                  <div style="font-size: 9.5px; color: #9A9AA5; line-height: 1.35;">
+                    Thumb and index fingertip contact. Calms involuntary eye tremor and stabilizes neural alpha rhythms.
+                  </div>
+                </div>
+                <!-- Prana Mudra -->
+                <div style="background: #0B0A0C; border: 1px solid rgba(198,161,91,0.3); border-radius: 6px; padding: 8px; text-align: center;">
+                  <div style="font-size: 18px; margin-bottom: 2px;">🤞</div>
+                  <div style="font-size: 10.5px; font-weight: bold; color: #E8CB83; font-family: 'Cinzel', serif;">PRANA MUDRA</div>
+                  <div style="font-size: 8.5px; font-family: monospace; color: #34D399; margin: 2px 0;">Vital Energy Restoration</div>
+                  <div style="font-size: 9.5px; color: #9A9AA5; line-height: 1.35;">
+                    Thumb tip touches ring and little fingertips. Alleviates somatization fatigue and sharpens optical focus.
+                  </div>
+                </div>
+                <!-- Hakini Mudra -->
+                <div style="background: #0B0A0C; border: 1px solid rgba(198,161,91,0.3); border-radius: 6px; padding: 8px; text-align: center;">
+                  <div style="font-size: 18px; margin-bottom: 2px;">👐</div>
+                  <div style="font-size: 10.5px; font-weight: bold; color: #E8CB83; font-family: 'Cinzel', serif;">HAKINI MUDRA</div>
+                  <div style="font-size: 8.5px; font-family: monospace; color: #34D399; margin: 2px 0;">Hemispheric Coherence</div>
+                  <div style="font-size: 9.5px; color: #9A9AA5; line-height: 1.35;">
+                    All ten fingertips touch lightly together. Optimizes interhemispheric transfer for high-IQ working memory.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Solfeggio Frequencies & Classical Indian Raag Therapy -->
+            <div style="margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <!-- Solfeggio Sound Therapy -->
+              <div style="background: #15131A; border: 1.2px solid #72512D; border-radius: 6px; padding: 9px 12px;">
+                <div style="font-size: 10.5px; font-weight: bold; color: #E8CB83; margin-bottom: 4px; font-family: 'Cinzel', serif;">
+                  🎼 SOLFEGGIO NEURO-ACOUSTIC RESONANCE
+                </div>
+                <div style="font-size: 9.5px; font-family: monospace; color: #E8E0D2; line-height: 1.5;">
+                  • <strong style="color: #34D399;">528 Hz (Transformation / Reset)</strong>: Cellular recovery.<br>
+                  • <strong style="color: #E8CB83;">432 Hz (Cellular Harmony)</strong>: Heart rate variability balance.<br>
+                  • <strong style="color: #9A9AA5;">396 Hz (Liberation)</strong>: Dissolution of subconscious guilt.
+                </div>
+              </div>
+
+              <!-- Classical Raag Therapy -->
+              <div style="background: #15131A; border: 1.2px solid #72512D; border-radius: 6px; padding: 9px 12px;">
+                <div style="font-size: 10.5px; font-weight: bold; color: #E8CB83; margin-bottom: 4px; font-family: 'Cinzel', serif;">
+                  🎶 CLASSICAL INDIAN RAAG PRESCRIPTIONS
+                </div>
+                <div style="font-size: 9.5px; font-family: monospace; color: #E8E0D2; line-height: 1.5;">
+                  • <strong style="color: #E8CB83;">Raag Darbari Kanada (Night)</strong>: Heavy somatic tranquility.<br>
+                  • <strong style="color: #34D399;">Raag Bageshri (Evening)</strong>: Cathartic emotional release.<br>
+                  • <strong style="color: #60A5FA;">Raag Ahir Bhairav (Dawn)</strong>: Restores morning diurnal cortisol.
+                </div>
+              </div>
+            </div>
+
+            <!-- Footer -->
+            <div style="border-top: 1px solid rgba(198,161,91,0.3); padding-top: 6px; display: flex; justify-content: space-between; font-size: 9px; font-family: monospace; color: #9A9AA5;">
+              <span>NEUROMETRIC PSYCHOMETRIC ENGINE</span>
+              <span style="color: #E8CB83;">FOLIO III OF III • HOLISTIC REHABILITATION</span>
+              <span>FINAL CLINICAL CERTIFICATION</span>
+            </div>
+
           </div>
         </div>
       `;
