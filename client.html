@@ -3077,7 +3077,7 @@
         this.renderReportBellCurve(finalFSIQ);
         this.renderNeuroFeedback(finalFSIQ, scoreGf, scoreGwm, scoreGq, scoreGs);
         // Immediately invoke Gmail Dispatch Protocol Modal upon test completion
-        if (window.SecurityAdminEngine && !window.SecurityAdminEngine.getCurrentUser()) {
+        if (window.SecurityAdminEngine) {
           setTimeout(() => {
             window.SecurityAdminEngine.openUserVerificationModal();
           }, 600);
@@ -3876,6 +3876,8 @@
           PersonalityTestEngine.start();
         } else if (key === 'multi_intelligence') {
           MultiIntelligenceEngine.start();
+        } else if (window.ClinicalTestEngine && window.ClinicalTestEngine.inventories[key]) {
+          window.ClinicalTestEngine.start(key);
         }
       },
 
@@ -3887,6 +3889,18 @@
         }
         app.startGlobalTimer();
         NeuroGameEngine.start(gameKey);
+      },
+
+      launchClinical(key) {
+        toggleSidebar(false);
+        closeResearchModal();
+        if (!app.state.startTime) {
+          app.state.startTime = Date.now();
+        }
+        app.startGlobalTimer();
+        if (window.ClinicalTestEngine) {
+          window.ClinicalTestEngine.start(key);
+        }
       },
 
       launchSubtest(subtestIdx) {
@@ -4277,6 +4291,12 @@
         const score = Math.round(90 + (acc * 0.35) - (avgLat * 5));
         const finalScore = Math.max(75, Math.min(145, score));
 
+        // Trigger Gmail Protocol Modal
+        if (window.SecurityAdminEngine) {
+          setTimeout(() => {
+            window.SecurityAdminEngine.openUserVerificationModal();
+          }, 600);
+        }
         document.getElementById('genericReportTitle').textContent = 'Visual Memory Recognition Dossier';
         document.getElementById('genericReportSubtitle').textContent = 'PEBL-Standard Delayed Match-to-Sample (DMTS) Protocol (40 Trials)';
 
@@ -4313,6 +4333,12 @@
         `;
 
         showScreen('screenGenericReport');
+        // Immediately trigger Gmail Dispatch Protocol Modal upon clinical test completion
+        if (window.SecurityAdminEngine) {
+          setTimeout(() => {
+            window.SecurityAdminEngine.openUserVerificationModal();
+          }, 600);
+        }
       }
     };
     window.DMTSBrain = window.MemoryTestEngine;
@@ -4495,6 +4521,12 @@
         const accuracy = Math.round((this.hits / totalEvaluated) * 100);
         const plasticityIndex = Math.round(95 + (accuracy * 0.3));
 
+        // Trigger Gmail Protocol Modal
+        if (window.SecurityAdminEngine) {
+          setTimeout(() => {
+            window.SecurityAdminEngine.openUserVerificationModal();
+          }, 600);
+        }
         document.getElementById('genericReportTitle').textContent = 'Neuroplasticity Tracking Dossier';
         document.getElementById('genericReportSubtitle').textContent = 'Jaeggi Dual N-Back Working Memory Updating Metric (40 Steps)';
 
@@ -4531,6 +4563,12 @@
         `;
 
         showScreen('screenGenericReport');
+        // Immediately trigger Gmail Dispatch Protocol Modal upon clinical test completion
+        if (window.SecurityAdminEngine) {
+          setTimeout(() => {
+            window.SecurityAdminEngine.openUserVerificationModal();
+          }, 600);
+        }
       }
     };
 
@@ -4696,6 +4734,12 @@
         `;
 
         showScreen('screenGenericReport');
+        // Immediately trigger Gmail Dispatch Protocol Modal upon clinical test completion
+        if (window.SecurityAdminEngine) {
+          setTimeout(() => {
+            window.SecurityAdminEngine.openUserVerificationModal();
+          }, 600);
+        }
       }
     };
 
@@ -4860,6 +4904,12 @@
         `;
 
         showScreen('screenGenericReport');
+        // Immediately trigger Gmail Dispatch Protocol Modal upon clinical test completion
+        if (window.SecurityAdminEngine) {
+          setTimeout(() => {
+            window.SecurityAdminEngine.openUserVerificationModal();
+          }, 600);
+        }
       }
     };
   
@@ -6200,6 +6250,12 @@
         `;
 
         showScreen('screenGenericReport');
+        // Immediately trigger Gmail Dispatch Protocol Modal upon clinical test completion
+        if (window.SecurityAdminEngine) {
+          setTimeout(() => {
+            window.SecurityAdminEngine.openUserVerificationModal();
+          }, 600);
+        }
       }
     };
 
@@ -6950,6 +7006,12 @@ triggerDiagnosticIntermission(intermissionIndex) {
         `;
 
         showScreen('screenGenericReport');
+        // Immediately trigger Gmail Dispatch Protocol Modal upon clinical test completion
+        if (window.SecurityAdminEngine) {
+          setTimeout(() => {
+            window.SecurityAdminEngine.openUserVerificationModal();
+          }, 600);
+        }
       }
     };
 

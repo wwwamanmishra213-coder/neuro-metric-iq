@@ -124,6 +124,15 @@
       this._pendingDownloadCallback = onSuccessCallback;
       const modal = document.getElementById('userVerificationGateModal');
       if (modal) {
+        // Pre-fill existing email if available
+        const current = this.getCurrentUser();
+        const input = document.getElementById('gateUserEmail');
+        if (input) {
+          if (current && current.email) {
+            input.value = current.email;
+          }
+          setTimeout(() => input.focus(), 150);
+        }
         modal.classList.remove('hidden');
         modal.classList.add('flex');
       } else {
