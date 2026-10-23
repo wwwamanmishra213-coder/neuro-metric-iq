@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeuroMetric Security Protocol & User Audit Gate</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { background-color: #06080F; color: #E2E8F0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .cinzel { font-family: 'Cinzel', serif; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body class="p-6 md:p-12 min-h-screen flex flex-col items-center justify-center space-y-10">
+
+  <!-- Header Banner -->
+  <div class="text-center space-y-2 max-w-2xl">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-950/80 border border-amber-500/50 text-amber-300 text-xs mono">
+      <span>🔒 SHIELD ARCHITECTURE</span> • <span>AUTHENTICATOR 2FA & USER TELEMETRY</span>
+    </div>
+    <h1 class="text-3xl font-extrabold cinzel text-white tracking-wide">
+      NEUROMETRIC ACCESS SECURITY GATES
+    </h1>
+    <p class="text-xs text-slate-400 mono">
+      Dual Protocol: User Verification Gate (Pre-Download) & Admin Authenticator Portal
+    </p>
+  </div>
+
+  <!-- Dual Layout Grid -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl w-full">
+
+    <!-- 1. USER ACCESS & PDF DOWNLOAD VERIFICATION GATE -->
+    <div class="bg-slate-950/90 border border-amber-500/40 rounded-3xl p-7 shadow-2xl shadow-amber-950/40 relative flex flex-col justify-between">
+      <div class="space-y-5">
+        <div class="flex items-center justify-between border-b border-amber-500/20 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl text-amber-400">📜</span>
+            <div>
+              <h2 class="text-lg font-bold cinzel text-white">PATIENT DOSSIER VERIFICATION</h2>
+              <span class="text-[10px] mono text-amber-400">Step Required Before Master PDF Generation</span>
+            </div>
+          </div>
+          <span class="text-[9px] mono bg-emerald-950 text-emerald-400 border border-emerald-500/40 px-2 py-0.5 rounded font-bold">
+            CLIENT-SAFE
+          </span>
+        </div>
+
+        <p class="text-xs text-slate-300 leading-relaxed">
+          To bind your official psychometric certification and generate the cryptographically stamped A4 dossier, please confirm your verification email:
+        </p>
+
+        <!-- Input Form -->
+        <div class="space-y-3 mono text-xs">
+          <div>
+            <label class="block text-slate-400 text-[11px] mb-1">PATIENT / USER EMAIL ID:</label>
+            <input type="email" value="alexander.wright@cognition-lab.org" class="w-full bg-black/70 border border-slate-700 focus:border-amber-400 rounded-xl px-4 py-2.5 text-white outline-none transition" readonly>
+          </div>
+          <div>
+            <label class="block text-slate-400 text-[11px] mb-1">SESSION TOKEN / ACCESS ID:</label>
+            <input type="text" value="NM-USR-8842-710X" class="w-full bg-black/70 border border-slate-700 text-slate-400 rounded-xl px-4 py-2.5 font-bold outline-none" readonly>
+          </div>
+        </div>
+
+        <!-- Discord Webhook Dispatch Preview Card -->
+        <div class="p-3.5 rounded-xl bg-black/70 border border-indigo-500/30 text-[11px] mono space-y-1.5">
+          <div class="flex items-center justify-between text-indigo-400 font-bold text-xs">
+            <span class="flex items-center gap-1.5"><span>📡</span> DISCORD ADMIN TELEMETRY</span>
+            <span class="text-emerald-400 text-[10px]">CONNECTED</span>
+          </div>
+          <p class="text-slate-400 text-[10px]">
+            Real-time webhook payload dispatches User ID, Assessment Score (FSIQ: 138), and Timestamp to private admin channel with zero plaintext passwords.
+          </p>
+        </div>
+      </div>
+
+      <!-- Action Button -->
+      <div class="pt-6 border-t border-slate-800 mt-6">
+        <button class="w-full py-3 rounded-xl bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-black font-extrabold cinzel text-xs tracking-wider transition shadow-lg shadow-amber-500/20 hover:brightness-110 active:scale-95">
+          ✦ VERIFY CREDENTIALS & DOWNLOAD DOSSIER (PDF)
+        </button>
+      </div>
+    </div>
+
+    <!-- 2. ADMIN AUTHENTICATOR APP (TOTP 2FA) PORTAL -->
+    <div class="bg-slate-950/90 border border-cyan-500/40 rounded-3xl p-7 shadow-2xl shadow-cyan-950/40 relative flex flex-col justify-between">
+      <div class="space-y-5">
+        <div class="flex items-center justify-between border-b border-cyan-500/20 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl text-cyan-400">🛡️</span>
+            <div>
+              <h2 class="text-lg font-bold cinzel text-white">ADMIN SHIELD PROTOCOL</h2>
+              <span class="text-[10px] mono text-cyan-400">Authenticator App (TOTP RFC 6238)</span>
+            </div>
+          </div>
+          <span class="text-[9px] mono bg-cyan-950 text-cyan-400 border border-cyan-500/40 px-2 py-0.5 rounded font-bold">
+            RESTRICTED 2FA
+          </span>
+        </div>
+
+        <p class="text-xs text-slate-300 leading-relaxed">
+          Core scoring algorithms and source code telemetry are shielded behind a time-based 6-digit one-time password (TOTP) synced with your mobile Authenticator app:
+        </p>
+
+        <!-- 6-Digit Code Input Simulator -->
+        <div class="space-y-2 text-center">
+          <span class="mono text-[11px] text-slate-400">ENTER 6-DIGIT CODE FROM AUTHENTICATOR:</span>
+          <div class="flex justify-center gap-2 mono">
+            <span class="w-10 h-12 rounded-lg bg-black/80 border border-cyan-400/60 flex items-center justify-center text-lg font-bold text-cyan-300">8</span>
+            <span class="w-10 h-12 rounded-lg bg-black/80 border border-cyan-400/60 flex items-center justify-center text-lg font-bold text-cyan-300">4</span>
+            <span class="w-10 h-12 rounded-lg bg-black/80 border border-cyan-400/60 flex items-center justify-center text-lg font-bold text-cyan-300">2</span>
+            <span class="w-10 h-12 rounded-lg bg-black/80 border border-cyan-400/60 flex items-center justify-center text-lg font-bold text-cyan-300">9</span>
+            <span class="w-10 h-12 rounded-lg bg-black/80 border border-cyan-400/60 flex items-center justify-center text-lg font-bold text-cyan-300">1</span>
+            <span class="w-10 h-12 rounded-lg bg-black/80 border border-cyan-400/60 flex items-center justify-center text-lg font-bold text-cyan-300">0</span>
+          </div>
+        </div>
+
+        <!-- Live User Audit Log Table -->
+        <div class="bg-black/60 border border-slate-800 rounded-xl p-3 mono text-[10px] space-y-2">
+          <div class="flex justify-between text-slate-400 font-bold border-b border-slate-800 pb-1">
+            <span>USER ID</span>
+            <span>VERIFIED EMAIL</span>
+            <span>FSIQ</span>
+            <span>STATUS</span>
+          </div>
+          <div class="flex justify-between text-slate-300">
+            <span class="text-cyan-400">USR-8842</span>
+            <span>alex***@cognition.org</span>
+            <span class="text-amber-300 font-bold">138</span>
+            <span class="text-emerald-400">COMPLETED</span>
+          </div>
+          <div class="flex justify-between text-slate-300">
+            <span class="text-cyan-400">USR-8841</span>
+            <span>elena.v***@med.ru</span>
+            <span class="text-amber-300 font-bold">142</span>
+            <span class="text-emerald-400">COMPLETED</span>
+          </div>
+          <div class="flex justify-between text-slate-300">
+            <span class="text-cyan-400">USR-8840</span>
+            <span>marcus.d***@univ.es</span>
+            <span class="text-amber-300 font-bold">129</span>
+            <span class="text-amber-400">DOWNLOADED</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Button -->
+      <div class="pt-6 border-t border-slate-800 mt-6">
+        <button class="w-full py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-extrabold cinzel text-xs tracking-wider transition shadow-lg shadow-cyan-500/20 active:scale-95">
+          ✦ UNLOCK ADMIN CONSOLE & USER ACTIVITY LOG
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

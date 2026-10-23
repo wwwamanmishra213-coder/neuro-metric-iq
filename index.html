@@ -12,6 +12,7 @@
 <!-- NeuroMetric Modular Scoring & Psychometrics Engine -->
 <script src="scoring-engine.js"></script>
 <script src="pdf_border_protocol.js"></script>
+<script src="security_admin_engine.js"></script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
@@ -651,6 +652,12 @@
   <span class="w-2 h-2 rounded-full bg-amber-400" id="bioPillDot"></span>
   <span class="hidden md:inline" data-i18n="biotelemetry_btn">Bio-Telemetry</span>
   <span class="text-[9px] sm:text-[10px] bg-amber-900/60 px-1 py-0.5 rounded text-amber-200 font-bold" id="bioPillStatus">OFF</span>
+</button>
+<!-- Admin Shield 2FA Button -->
+<button class="px-2 sm:px-2.5 py-1.5 rounded-lg bg-slate-900 border border-cyan-500/40 hover:border-cyan-400 text-cyan-300 font-mono text-[10px] sm:text-xs flex items-center space-x-1.5 backdrop-blur-md active:scale-95 transition touch-manipulation shrink-0" id="headerAdminShieldBtn" onclick="SecurityAdminEngine.openAdminPortal()" title="Admin Protocol: Authenticator App 2FA & Audit Log">
+  <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+  <span class="hidden md:inline">Admin 2FA</span>
+  <span class="text-[9px] sm:text-[10px] bg-cyan-950 px-1 py-0.5 rounded text-cyan-200 font-bold">SHIELD</span>
 </button>
 <!-- Focus Audio FM Docked in Header (Zero Bottom-Right Overlap) -->
 <button class="px-2 sm:px-2.5 py-1.5 rounded-lg bg-slate-900 border border-purple-500/40 hover:border-purple-400 text-purple-300 font-mono text-[10px] sm:text-xs flex items-center space-x-1.5 backdrop-blur-md active:scale-95 transition touch-manipulation holo-glow-violet shrink-0" id="headerAudioBtn" onclick="toggleAudioCard()" title="Toggle Brainwave Focus Audio Engine">
@@ -4859,6 +4866,13 @@
         // ==================== MASTER 4-PAGE CLINICAL EXPORT PDF ENGINE ====================
         // ==================== MASTER 3-PAGE CLINICAL EXPORT PDF ENGINE (LOCALIZED & PAGE-FITTED) ====================
     window.exportClinicalPDF = function(sourceId = 'clinicalDossierCard') {
+      // Check User Verification Gate
+      if (window.SecurityAdminEngine && !window.SecurityAdminEngine.getCurrentUser()) {
+        window.SecurityAdminEngine.openUserVerificationModal(() => {
+          window.exportClinicalPDF(sourceId);
+        });
+        return;
+      }
       const state = (window.app && window.app.state) ? window.app.state : {};
       const gameEngine = window.NeuroGameEngine || {};
       const responses = gameEngine.patientResponses || {};
@@ -9119,5 +9133,132 @@ triggerDiagnosticIntermission(intermissionIndex) {
     }
 
 </script>
+
+<!-- ==================== USER VERIFICATION GATE MODAL (PRE-PDF DOWNLOAD) ==================== -->
+<div class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden items-center justify-center p-4 no-print" id="userVerificationGateModal">
+  <div class="holo-card max-w-md w-full rounded-3xl p-6 sm:p-7 space-y-4 relative border border-amber-500/40 shadow-2xl shadow-amber-950/60 font-sans">
+    <div class="flex items-start justify-between border-b border-amber-500/20 pb-3">
+      <div class="flex items-center space-x-3">
+        <span class="text-2xl text-amber-400">📜</span>
+        <div>
+          <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2 font-mono">
+            <span>PATIENT DOSSIER VERIFICATION</span>
+          </h3>
+          <span class="text-[10px] font-mono text-amber-300/80 uppercase tracking-widest">Pre-Download Audit & Cryptographic Seal</span>
+        </div>
+      </div>
+      <button class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-700 hover:border-amber-400 text-slate-400 hover:text-white flex items-center justify-center text-sm font-mono transition" onclick="SecurityAdminEngine.closeUserVerificationModal()">✕</button>
+    </div>
+
+    <p class="text-xs text-slate-300 leading-relaxed font-mono">
+      To authenticate and seal your official A4 Clinical Dossier with a tamper-proof validation nonce, please enter your email address:
+    </p>
+
+    <div class="space-y-3 font-mono text-xs">
+      <div>
+        <label class="block text-slate-400 text-[11px] mb-1">CANDIDATE / USER EMAIL ID:</label>
+        <input type="email" id="gateUserEmail" placeholder="candidate@example.com" class="w-full bg-slate-950 border border-slate-700 focus:border-amber-400 rounded-xl px-3.5 py-2.5 text-white outline-none transition text-xs">
+      </div>
+    </div>
+
+    <div class="p-3 rounded-xl bg-black/60 border border-amber-500/30 text-[10.5px] font-mono text-slate-400 space-y-1">
+      <div class="text-amber-300 font-bold flex items-center gap-1.5">
+        <span>🔒</span> <span>PRIVACY-FIRST SENTINEL</span>
+      </div>
+      <div>Passwords are never collected. Email is mapped to a transient Candidate ID (e.g. USR-8842) for verifiable dossier ownership.</div>
+    </div>
+
+    <div class="pt-3 border-t border-amber-500/20 flex items-center justify-end gap-3">
+      <button class="px-4 py-2 rounded-xl border border-slate-700 text-slate-400 text-xs font-mono hover:text-white transition" onclick="SecurityAdminEngine.closeUserVerificationModal()">
+        Cancel
+      </button>
+      <button class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 text-black font-extrabold text-xs font-mono transition shadow-lg shadow-amber-500/30 hover:brightness-110 active:scale-95" onclick="SecurityAdminEngine.confirmUserVerification()">
+        ✦ Seal & Generate PDF
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== ADMIN SHIELD AUTHENTICATOR (TOTP 2FA) PORTAL ==================== -->
+<div class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden items-center justify-center p-4 no-print" id="adminPortalModal">
+  <div class="holo-card max-w-2xl w-full rounded-3xl p-6 sm:p-7 space-y-4 relative border border-cyan-500/40 shadow-2xl shadow-cyan-950/60 font-sans max-h-[90vh] overflow-y-auto">
+    <div class="flex items-start justify-between border-b border-cyan-500/20 pb-3">
+      <div class="flex items-center space-x-3">
+        <span class="text-2xl text-cyan-400">🛡️</span>
+        <div>
+          <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2 font-mono">
+            <span>ADMIN PROTOCOL & CODE SHIELD</span>
+            <span class="text-[9px] font-mono px-2 py-0.5 rounded bg-cyan-950 border border-cyan-500/50 text-cyan-300 font-bold">2FA PROTECTED</span>
+          </h3>
+          <span class="text-[10px] font-mono text-cyan-300/80 uppercase tracking-widest">RFC 6238 TOTP (Google / Microsoft Authenticator)</span>
+        </div>
+      </div>
+      <button class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-700 hover:border-cyan-400 text-slate-400 hover:text-white flex items-center justify-center text-sm font-mono transition" onclick="SecurityAdminEngine.closeAdminPortal()">✕</button>
+    </div>
+
+    <!-- 2FA Authenticator Challenge -->
+    <div class="p-4 rounded-xl bg-slate-950/80 border border-cyan-500/30 space-y-3 font-mono text-xs">
+      <div class="flex justify-between items-center">
+        <span class="text-slate-300">ENTER 6-DIGIT CODE FROM YOUR AUTHENTICATOR APP:</span>
+        <span class="text-[10px] text-cyan-400">STEP 30 SEC</span>
+      </div>
+      <div class="flex gap-2">
+        <input type="text" id="adminTotpInput" maxlength="6" placeholder="842910" class="flex-1 bg-black border border-slate-700 focus:border-cyan-400 rounded-xl px-4 py-2.5 text-center text-lg tracking-widest font-bold text-cyan-300 outline-none">
+        <button class="px-5 py-2.5 rounded-xl bg-cyan-500 text-black font-bold text-xs hover:bg-cyan-400 transition" onclick="SecurityAdminEngine.submitAdmin2FA()">
+          Verify 2FA
+        </button>
+      </div>
+      <div id="admin2FAStatus" class="text-[11px] font-bold text-slate-400">
+        Demo Lab Passcode: 842910 or your mobile Authenticator code.
+      </div>
+    </div>
+
+    <!-- Protected Admin Console (Revealed upon 2FA verification) -->
+    <div id="adminProtectedSection" class="space-y-4 pt-2">
+      <!-- Discord Webhook Integration -->
+      <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-2 font-mono text-xs">
+        <div class="flex items-center justify-between">
+          <span class="text-indigo-400 font-bold flex items-center gap-1.5">
+            <span>📡</span> DISCORD TELEMETRY WEBHOOK
+          </span>
+          <span class="text-[10px] text-slate-400">Instant Event Notification</span>
+        </div>
+        <div class="flex gap-2">
+          <input type="url" id="adminDiscordUrlInput" placeholder="https://discord.com/api/webhooks/..." class="flex-1 bg-black border border-slate-700 rounded-xl px-3 py-2 text-white text-[11px] outline-none">
+          <button class="px-3 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-[10px] transition" onclick="if(SecurityAdminEngine.setDiscordWebhook(document.getElementById('adminDiscordUrlInput').value)){alert('Discord Webhook Connected!');}else{alert('Invalid Discord Webhook URL');}">
+            Connect
+          </button>
+        </div>
+      </div>
+
+      <!-- Live Candidate Audit Log -->
+      <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-2 font-mono text-xs">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+          <span class="text-white font-bold flex items-center gap-1.5">
+            <span>👥</span> VERIFIED CANDIDATE ACCESS & AUDIT LOG
+          </span>
+          <span class="text-[10px] text-emerald-400">ACTIVE TELEMETRY</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left">
+            <thead>
+              <tr class="text-slate-400 border-b border-slate-800 text-[10px]">
+                <th class="py-1.5">USER ID</th>
+                <th class="py-1.5">EMAIL</th>
+                <th class="py-1.5">FSIQ</th>
+                <th class="py-1.5">ACTION</th>
+                <th class="py-1.5">TIME</th>
+              </tr>
+            </thead>
+            <tbody id="adminAuditTableBody">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
