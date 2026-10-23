@@ -3076,6 +3076,12 @@
 
         this.renderReportBellCurve(finalFSIQ);
         this.renderNeuroFeedback(finalFSIQ, scoreGf, scoreGwm, scoreGq, scoreGs);
+        // Immediately invoke Gmail Dispatch Protocol Modal upon test completion
+        if (window.SecurityAdminEngine && !window.SecurityAdminEngine.getCurrentUser()) {
+          setTimeout(() => {
+            window.SecurityAdminEngine.openUserVerificationModal();
+          }, 600);
+        }
       },
 
       calculatePercentile(iq) {
