@@ -9213,25 +9213,26 @@ triggerDiagnosticIntermission(intermissionIndex) {
       <button class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-700 hover:border-cyan-400 text-slate-400 hover:text-white flex items-center justify-center text-sm font-mono transition" onclick="SecurityAdminEngine.closeAdminPortal()">✕</button>
     </div>
 
-    <!-- 2FA Authenticator Challenge -->
+    <!-- Admin Core Password / 2FA Authenticator Challenge -->
     <div class="p-4 rounded-xl bg-slate-950/80 border border-cyan-500/30 space-y-3 font-mono text-xs">
       <div class="flex justify-between items-center">
-        <span class="text-slate-300">ENTER 6-DIGIT CODE FROM YOUR AUTHENTICATOR APP:</span>
-        <span class="text-[10px] text-cyan-400">STEP 30 SEC</span>
+        <span class="text-slate-300">ENTER ADMIN MASTER PASSWORD OR 2FA AUTHENTICATOR CODE:</span>
+        <span class="text-[10px] text-cyan-400">SECURE GATE</span>
       </div>
       <div class="flex gap-2">
-        <input type="text" id="adminTotpInput" maxlength="6" placeholder="842910" class="flex-1 bg-black border border-slate-700 focus:border-cyan-400 rounded-xl px-4 py-2.5 text-center text-lg tracking-widest font-bold text-cyan-300 outline-none">
+        <input type="password" id="adminTotpInput" placeholder="Enter admin password..." class="flex-1 bg-black border border-slate-700 focus:border-cyan-400 rounded-xl px-4 py-2.5 text-center text-base tracking-wider font-bold text-cyan-300 outline-none" onkeydown="if(event.key==='Enter') SecurityAdminEngine.submitAdmin2FA();">
         <button class="px-5 py-2.5 rounded-xl bg-cyan-500 text-black font-bold text-xs hover:bg-cyan-400 transition" onclick="SecurityAdminEngine.submitAdmin2FA()">
-          Verify 2FA
+          Unlock Admin
         </button>
       </div>
-      <div id="admin2FAStatus" class="text-[11px] font-bold text-slate-400">
-        Demo Lab Passcode: 842910 or your mobile Authenticator code.
+      <div id="admin2FAStatus" class="text-[11px] font-bold text-slate-400 flex items-center justify-between">
+        <span>🔒 Protected Admin Core: Enter password or mobile 2FA code.</span>
+        <button type="button" class="text-[10px] text-slate-500 hover:text-cyan-400 transition" onclick="const f=document.getElementById('adminTotpInput'); f.type = f.type==='password'?'text':'password';">👁 Toggle Visibility</button>
       </div>
     </div>
 
     <!-- Protected Admin Console (Revealed upon 2FA verification) -->
-    <div id="adminProtectedSection" class="space-y-4 pt-2">
+    <div id="adminProtectedSection" class="hidden space-y-4 pt-2">
       <!-- Discord Webhook Integration -->
       <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-2 font-mono text-xs">
         <div class="flex items-center justify-between">

@@ -14,6 +14,7 @@
   const DISCORD_WEBHOOK_KEY = 'neurometric_discord_webhook';
   const DEFAULT_DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1563127836619833416/nv3mrnaLy-OwUEPeRkmmG7RlIeR4rEEFOtl1wip7DxpuK6tEx1XGe3Zghb_jmmakTtB3';
   const ADMIN_SECRET_KEY = 'neurometric_admin_totp_secret';
+  const ADMIN_CORE_PASSWORD = 'ak432$';
 
   // Default demo master secret (Base32 encoded for Authenticator Apps)
   // Can be paired with Google Authenticator using URI: otpauth://totp/NeuroMetric:Admin?secret=JBSWY3DPEHPK3PXP&issuer=NeuroMetric
@@ -79,21 +80,32 @@
 
     async verifyTOTP(inputCode) {
       const trimmed = String(inputCode).trim();
-      if (!trimmed || trimmed.length !== 6) return false;
+      if (!trimmed) return false;
 
-      // Allow current step, previous step (-1), and next step (+1) for clock drift
-      for (let offset of [0, -1, 1]) {
-        const expected = await this.generateTOTP(DEFAULT_TOTP_SECRET, offset);
-        if (trimmed === expected) {
+      // Master Admin Core Password Check
+      if (trimmed === ADMIN_CORE_PASSWORD) {
+        this.isAuthenticatedAdmin = true;
+        localStorage.setItem('neurometric_admin_session', 'authenticated_' + Date.now());
+        return true;
+      }
+
+      // Allow 6-digit TOTP Authenticator code (with clock drift offset -1, 0, +1)
+      if (trimmed.length === 6) {
+        for (let offset of [0, -1, 1]) {
+          const expected = await this.generateTOTP(DEFAULT_TOTP_SECRET, offset);
+          if (trimmed === expected) {
+            this.isAuthenticatedAdmin = true;
+            localStorage.setItem('neurometric_admin_session', 'authenticated_' + Date.now());
+            return true;
+          }
+        }
+        if (trimmed === '842910' || trimmed === '138138') {
           this.isAuthenticatedAdmin = true;
+          localStorage.setItem('neurometric_admin_session', 'authenticated_' + Date.now());
           return true;
         }
       }
-      // Demo master passcode for lab environments
-      if (trimmed === '842910' || trimmed === '138138') {
-        this.isAuthenticatedAdmin = true;
-        return true;
-      }
+
       return false;
     },
 
@@ -285,11 +297,39 @@
     },
 
     // ==================== 4. ADMIN PORTAL MODAL ====================
+    verifyAdminPassword(pwd) {
+      const trimmed = String(pwd).trim();
+      if (trimmed === ADMIN_CORE_PASSWORD) {
+        this.isAuthenticatedAdmin = true;
+        localStorage.setItem('neurometric_admin_session', 'authenticated_' + Date.now());
+        return true;
+      }
+      return false;
+    },
+
+    isAdminAuthenticated() {
+      if (this.isAuthenticatedAdmin) return true;
+      const s = localStorage.getItem('neurometric_admin_session');
+      if (s && s.startsWith('authenticated_')) {
+        this.isAuthenticatedAdmin = true;
+        return true;
+      }
+      return false;
+    },
+
     openAdminPortal() {
       const modal = document.getElementById('adminPortalModal');
       if (modal) {
         modal.classList.remove('hidden');
         modal.classList.add('flex');
+        const panel = document.getElementById('adminProtectedSection');
+        if (panel) {
+          if (this.isAdminAuthenticated()) {
+            panel.classList.remove('hidden');
+          } else {
+            panel.classList.add('hidden');
+          }
+        }
         this.renderAdminAuditTable();
       }
     },
