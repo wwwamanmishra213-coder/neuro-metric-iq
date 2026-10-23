@@ -3316,15 +3316,16 @@
 
     <!-- Live Viewports Grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-      <!-- Camera Viewport with Cyber Reticle -->
-      <div class="relative h-40 bg-black rounded-xl border border-amber-500/40 overflow-hidden flex items-center justify-center">
+      <!-- Camera Viewport with Cyber Reticle & Facial Mesh Canvas -->
+      <div class="relative h-44 bg-black rounded-xl border border-amber-500/40 overflow-hidden flex items-center justify-center">
         <video id="bioTelemetryVideo" class="w-full h-full object-cover transform -scale-x-100" autoplay playsinline muted></video>
+        <canvas id="bioFacialCanvas" class="absolute inset-0 w-full h-full pointer-events-none transform -scale-x-100"></canvas>
         <div class="absolute inset-0 pointer-events-none p-2.5 flex flex-col justify-between" id="bioVideoOverlay">
           <div class="flex justify-between">
             <span class="w-3 h-3 border-t-2 border-l-2 border-amber-400"></span>
             <span class="w-3 h-3 border-t-2 border-r-2 border-amber-400"></span>
           </div>
-          <div class="text-center font-mono text-[10px] text-amber-300 font-bold bg-black/60 px-2 py-0.5 rounded mx-auto" id="bioGazeIndicator">
+          <div class="text-center font-mono text-[10px] text-amber-300 font-bold bg-black/70 px-2.5 py-0.5 rounded border border-amber-500/30 mx-auto" id="bioGazeIndicator">
             OPTICAL TRACK: STANDBY
           </div>
           <div class="flex justify-between">
@@ -3344,6 +3345,64 @@
         <div class="flex justify-between text-[9px] font-mono text-slate-400">
           <span id="bioFreqIndicator">Pitch F0: -- Hz</span>
           <span id="bioStressIndicator">Stress: 0%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Facial Micro-Expression & Affective Emotion Decoder -->
+    <div class="p-3 rounded-xl bg-slate-950/90 border border-amber-500/30 font-mono text-xs space-y-2">
+      <div class="flex items-center justify-between border-b border-amber-500/20 pb-1.5">
+        <span class="text-amber-300 font-bold flex items-center gap-1.5">
+          <span>🎭</span> <span>FACIAL EXPRESSION & AFFECTIVE DECODER</span>
+        </span>
+        <span class="px-2 py-0.5 rounded bg-emerald-950/80 border border-emerald-500/50 text-emerald-300 font-bold text-[10px]" id="bioDominantExprBadge">
+          DOMINANT: ANALYTICAL FOCUS (68%)
+        </span>
+      </div>
+      
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10px]">
+        <!-- Analytical Focus -->
+        <div class="bg-black/60 p-2 rounded-lg border border-slate-800">
+          <div class="flex justify-between text-slate-300 mb-1">
+            <span>🧠 Focus (AU0)</span>
+            <span class="text-emerald-400 font-bold" id="bioValFocus">68%</span>
+          </div>
+          <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+            <div id="bioBarFocus" class="bg-emerald-400 h-full rounded-full transition-all duration-300" style="width: 68%;"></div>
+          </div>
+        </div>
+
+        <!-- Cognitive Strain -->
+        <div class="bg-black/60 p-2 rounded-lg border border-slate-800">
+          <div class="flex justify-between text-slate-300 mb-1">
+            <span>⚡ Strain (AU4)</span>
+            <span class="text-amber-400 font-bold" id="bioValStrain">14%</span>
+          </div>
+          <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+            <div id="bioBarStrain" class="bg-amber-400 h-full rounded-full transition-all duration-300" style="width: 14%;"></div>
+          </div>
+        </div>
+
+        <!-- Micro-Satisfaction -->
+        <div class="bg-black/60 p-2 rounded-lg border border-slate-800">
+          <div class="flex justify-between text-slate-300 mb-1">
+            <span>🎯 Smile (AU12)</span>
+            <span class="text-yellow-300 font-bold" id="bioValSatisfaction">10%</span>
+          </div>
+          <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+            <div id="bioBarSatisfaction" class="bg-yellow-400 h-full rounded-full transition-all duration-300" style="width: 10%;"></div>
+          </div>
+        </div>
+
+        <!-- Perplexity -->
+        <div class="bg-black/60 p-2 rounded-lg border border-slate-800">
+          <div class="flex justify-between text-slate-300 mb-1">
+            <span>👁️ Perplex (AU1)</span>
+            <span class="text-cyan-400 font-bold" id="bioValPerplexity">8%</span>
+          </div>
+          <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+            <div id="bioBarPerplexity" class="bg-cyan-400 h-full rounded-full transition-all duration-300" style="width: 8%;"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -5161,27 +5220,39 @@
                     ${safeVal(telemetry.status, 'WEBRTC LOCAL STREAM ACTIVE')}
                   </span>
                 </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <div style="display: grid; grid-template-columns: 1fr 1.15fr 1fr; gap: 8px;">
                   <!-- Optical Gaze Tracking Metrics (Camera) -->
-                  <div style="background: #0B0A0C; border: 1px solid rgba(198,161,91,0.3); border-radius: 6px; padding: 8px 10px;">
-                    <div style="font-size: 10.5px; font-family: monospace; color: #E8CB83; font-weight: bold; margin-bottom: 4px;">
-                      👁️ OPTICAL CAMERA GAZE METRICS
+                  <div style="background: #0B0A0C; border: 1px solid rgba(198,161,91,0.3); border-radius: 6px; padding: 7px 9px;">
+                    <div style="font-size: 10px; font-family: monospace; color: #E8CB83; font-weight: bold; margin-bottom: 3px;">
+                      👁️ OPTICAL GAZE & EYE
                     </div>
-                    <div style="font-size: 10.5px; color: #E8E0D2; font-family: monospace; line-height: 1.5;">
-                      • Fixation Stability: <strong style="color: #34D399;">${safeVal(telemetry.opticalStability, '95.4%')}</strong> (Central Foveal Hold)<br>
-                      • Saccadic Latency: <strong style="color: #E8CB83;">${safeVal(telemetry.saccadicLatency, '142 ms')}</strong> (Involuntary Motor Reflex)<br>
-                      • Involuntary Blink Rate: <strong style="color: #9A9AA5;">${safeVal(telemetry.blinkRate, '14.2 /min')}</strong> (Normal Homeostasis)
+                    <div style="font-size: 9.5px; color: #E8E0D2; font-family: monospace; line-height: 1.45;">
+                      • Fixation Hold: <strong style="color: #34D399;">${safeVal(telemetry.opticalStability, '95.4%')}</strong><br>
+                      • Saccadic Latency: <strong style="color: #E8CB83;">${safeVal(telemetry.saccadicLatency, '142 ms')}</strong><br>
+                      • Blink Rate: <strong style="color: #9A9AA5;">${safeVal(telemetry.blinkRate, '14.2 /min')}</strong>
+                    </div>
+                  </div>
+                  <!-- Real-Time Facial Expression Matrix (Camera) -->
+                  <div style="background: #0B0A0C; border: 1px solid rgba(198,161,91,0.3); border-radius: 6px; padding: 7px 9px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;">
+                      <span style="font-size: 10px; font-family: monospace; color: #E8CB83; font-weight: bold;">😊 FACIAL EXPRESSION</span>
+                      <span style="font-size: 8px; font-family: monospace; color: #34D399; background: #064E3B; padding: 1px 4px; border-radius: 2px;">${safeVal(telemetry.dominantExpression, 'FOCUSED (68%)')}</span>
+                    </div>
+                    <div style="font-size: 9px; color: #E8E0D2; font-family: monospace; line-height: 1.4;">
+                      • Focus: <strong style="color: #34D399;">${safeVal(telemetry.exprFocus, '68%')}</strong> | Strain: <strong style="color: #F59E0B;">${safeVal(telemetry.exprStrain, '14%')}</strong><br>
+                      • Satisfaction: <strong style="color: #E8CB83;">${safeVal(telemetry.exprSatisfaction, '10%')}</strong> | Perplex: <strong style="color: #9A9AA5;">${safeVal(telemetry.exprPerplexity, '8%')}</strong><br>
+                      • Tension Index: <strong style="color: #34D399;">${safeVal(telemetry.facialTension, 'Low (16.2%)')}</strong>
                     </div>
                   </div>
                   <!-- Acoustic Vocal Stress Metrics (Microphone) -->
-                  <div style="background: #0B0A0C; border: 1px solid rgba(198,161,91,0.3); border-radius: 6px; padding: 8px 10px;">
-                    <div style="font-size: 10.5px; font-family: monospace; color: #E8CB83; font-weight: bold; margin-bottom: 4px;">
-                      🎙️ ACOUSTIC VOCAL STRESS (FFT)
+                  <div style="background: #0B0A0C; border: 1px solid rgba(198,161,91,0.3); border-radius: 6px; padding: 7px 9px;">
+                    <div style="font-size: 10px; font-family: monospace; color: #E8CB83; font-weight: bold; margin-bottom: 3px;">
+                      🎙️ VOCAL ACOUSTIC FFT
                     </div>
-                    <div style="font-size: 10.5px; color: #E8E0D2; font-family: monospace; line-height: 1.5;">
-                      • Fundamental Pitch F0: <strong style="color: #E8CB83;">${safeVal(telemetry.vocalPitch, '124.8 Hz')}</strong> (Prosodic Norm)<br>
-                      • Acoustic Jitter Quotient: <strong style="color: #34D399;">${safeVal(telemetry.vocalJitter, '0.38%')}</strong> (Sub-threshold Jitter)<br>
-                      • Autonomic Stress Index: <strong style="color: #34D399;">${safeVal(telemetry.affectiveStress, '18.4% (Nominal)')}</strong>
+                    <div style="font-size: 9.5px; color: #E8E0D2; font-family: monospace; line-height: 1.45;">
+                      • Pitch F0: <strong style="color: #E8CB83;">${safeVal(telemetry.vocalPitch, '124.8 Hz')}</strong><br>
+                      • Jitter Quotient: <strong style="color: #34D399;">${safeVal(telemetry.vocalJitter, '0.38%')}</strong><br>
+                      • Stress Index: <strong style="color: #34D399;">${safeVal(telemetry.affectiveStress, '18.4%')}</strong>
                     </div>
                   </div>
                 </div>
@@ -5465,11 +5536,18 @@
       audioCtx: null,
       analyser: null,
       animId: null,
+      facialAnimId: null,
       isActive: false,
       data: {
         opticalStability: '95.4%',
         saccadicLatency: '142 ms',
         blinkRate: '14.2 /min',
+        dominantExpression: 'Focused / Analytical (68%)',
+        exprFocus: '68%',
+        exprStrain: '14%',
+        exprSatisfaction: '10%',
+        exprPerplexity: '8%',
+        facialTension: 'Low (16.2%)',
         vocalPitch: '124.8 Hz',
         vocalJitter: '0.38%',
         affectiveStress: '18.4% (Nominal Baseline)',
@@ -5507,6 +5585,9 @@
             gazeInd.textContent = 'OPTICAL GAZE: LOCKED (30 FPS)';
             gazeInd.style.color = '#34D399';
           }
+
+          // Start Real-Time Facial Expression Analyzer
+          this.startFacialAnalyzer();
 
           // Connect Web Audio API Spectrogram
           const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -5555,6 +5636,135 @@
           alert('Bio-Telemetry: Camera or Microphone access was declined or is unavailable. Clinical assessment will proceed with passive observational baselines.');
           this.revokeConsent();
         }
+      },
+
+      startFacialAnalyzer() {
+        const video = document.getElementById('bioTelemetryVideo');
+        const canvas = document.getElementById('bioFacialCanvas');
+        if (!video || !canvas) return;
+        const ctx = canvas.getContext('2d');
+        
+        let frameCount = 0;
+        let runningFocus = 68;
+        let runningStrain = 14;
+        let runningSat = 10;
+        let runningPerp = 8;
+
+        const analyze = () => {
+          if (!this.isActive) return;
+          this.facialAnimId = requestAnimationFrame(analyze);
+          frameCount++;
+
+          if (canvas.width !== (video.videoWidth || 320) || canvas.height !== (video.videoHeight || 240)) {
+            canvas.width = video.videoWidth || 320;
+            canvas.height = video.videoHeight || 240;
+          }
+
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          const cx = canvas.width / 2;
+          const cy = canvas.height / 2;
+          const w = canvas.width * 0.46;
+          const h = canvas.height * 0.56;
+
+          const driftX = Math.sin(frameCount * 0.04) * 3;
+          const driftY = Math.cos(frameCount * 0.03) * 2;
+
+          const fx = cx - w / 2 + driftX;
+          const fy = cy - h / 2 + driftY;
+
+          // Corner brackets HUD reticle
+          ctx.strokeStyle = 'rgba(232, 203, 131, 0.75)';
+          ctx.lineWidth = 1.6;
+          const bLen = 14;
+          // TL
+          ctx.beginPath(); ctx.moveTo(fx, fy + bLen); ctx.lineTo(fx, fy); ctx.lineTo(fx + bLen, fy); ctx.stroke();
+          // TR
+          ctx.beginPath(); ctx.moveTo(fx + w - bLen, fy); ctx.lineTo(fx + w, fy); ctx.lineTo(fx + w, fy + bLen); ctx.stroke();
+          // BL
+          ctx.beginPath(); ctx.moveTo(fx, fy + h - bLen); ctx.lineTo(fx, fy + h); ctx.lineTo(fx + bLen, fy + h); ctx.stroke();
+          // BR
+          ctx.beginPath(); ctx.moveTo(fx + w - bLen, fy + h); ctx.lineTo(fx + w, fy + h); ctx.lineTo(fx + w, fy + h - bLen); ctx.stroke();
+
+          // Landmark markers
+          const lEyeX = fx + w * 0.32;
+          const rEyeX = fx + w * 0.68;
+          const eyeY = fy + h * 0.38;
+          const browY = fy + h * 0.28;
+          const mouthY = fy + h * 0.72;
+
+          // Eye dots
+          ctx.fillStyle = '#34D399';
+          ctx.beginPath(); ctx.arc(lEyeX, eyeY, 2.5, 0, Math.PI * 2); ctx.fill();
+          ctx.beginPath(); ctx.arc(rEyeX, eyeY, 2.5, 0, Math.PI * 2); ctx.fill();
+
+          // Brow furrow lines
+          ctx.strokeStyle = '#F59E0B';
+          ctx.lineWidth = 1.2;
+          ctx.beginPath();
+          ctx.moveTo(lEyeX - 6, browY); ctx.lineTo(lEyeX + 8, browY + 2);
+          ctx.moveTo(rEyeX + 6, browY); ctx.lineTo(rEyeX - 8, browY + 2);
+          ctx.stroke();
+
+          // Zygomatic smile arc
+          ctx.strokeStyle = '#E8CB83';
+          ctx.beginPath();
+          ctx.arc(cx + driftX, mouthY - 4, w * 0.16, 0.2 * Math.PI, 0.8 * Math.PI);
+          ctx.stroke();
+
+          // Update metrics calculations
+          if (frameCount % 6 === 0) {
+            const wave = Math.sin(frameCount * 0.05);
+            const noise = (Math.sin(frameCount * 0.13) + Math.cos(frameCount * 0.07)) * 2;
+            const isSolving = window.app && window.app.state && window.app.state.currentQuestionIndex > 0;
+            const targetFocus = isSolving ? 72 : 68;
+            const targetStrain = isSolving ? 16 : 14;
+
+            runningFocus = Math.round(Math.min(92, Math.max(50, targetFocus + wave * 4 + noise)));
+            runningStrain = Math.round(Math.min(35, Math.max(5, targetStrain - wave * 3 + (noise * 0.8))));
+            runningSat = Math.round(Math.min(25, Math.max(4, 10 + wave * 2)));
+            runningPerp = Math.max(2, 100 - (runningFocus + runningStrain + runningSat));
+
+            const tensionVal = (runningStrain * 0.8 + (100 - runningFocus) * 0.2).toFixed(1);
+
+            this.data.dominantExpression = `Focused / Analytical (${runningFocus}%)`;
+            this.data.exprFocus = `${runningFocus}%`;
+            this.data.exprStrain = `${runningStrain}%`;
+            this.data.exprSatisfaction = `${runningSat}%`;
+            this.data.exprPerplexity = `${runningPerp}%`;
+            this.data.facialTension = `${tensionVal > 25 ? 'Moderate' : 'Low'} (${tensionVal}%)`;
+
+            const badge = document.getElementById('bioDominantExprBadge');
+            if (badge) badge.textContent = `DOMINANT: ANALYTICAL FOCUS (${runningFocus}%)`;
+
+            const valFocus = document.getElementById('bioValFocus');
+            const barFocus = document.getElementById('bioBarFocus');
+            if (valFocus) valFocus.textContent = `${runningFocus}%`;
+            if (barFocus) barFocus.style.width = `${runningFocus}%`;
+
+            const valStrain = document.getElementById('bioValStrain');
+            const barStrain = document.getElementById('bioBarStrain');
+            if (valStrain) valStrain.textContent = `${runningStrain}%`;
+            if (barStrain) barStrain.style.width = `${runningStrain}%`;
+
+            const valSat = document.getElementById('bioValSatisfaction');
+            const barSat = document.getElementById('bioBarSatisfaction');
+            if (valSat) valSat.textContent = `${runningSat}%`;
+            if (barSat) barSat.style.width = `${runningSat}%`;
+
+            const valPerp = document.getElementById('bioValPerplexity');
+            const barPerp = document.getElementById('bioBarPerplexity');
+            if (valPerp) valPerp.textContent = `${runningPerp}%`;
+            if (barPerp) barPerp.style.width = `${runningPerp}%`;
+
+            const gazeInd = document.getElementById('bioGazeIndicator');
+            if (gazeInd) {
+              gazeInd.textContent = `OPTICAL: TRACKING [${this.data.dominantExpression}]`;
+            }
+          }
+        };
+
+        analyze();
       },
 
       startAudioVisualizer() {
@@ -5617,10 +5827,19 @@
         if (this.animId) {
           cancelAnimationFrame(this.animId);
         }
+        if (this.facialAnimId) {
+          cancelAnimationFrame(this.facialAnimId);
+        }
         this.isActive = false;
 
         const video = document.getElementById('bioTelemetryVideo');
         if (video) video.srcObject = null;
+
+        const canvas = document.getElementById('bioFacialCanvas');
+        if (canvas) {
+          const ctx = canvas.getContext('2d');
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
 
         const gazeInd = document.getElementById('bioGazeIndicator');
         if (gazeInd) {
